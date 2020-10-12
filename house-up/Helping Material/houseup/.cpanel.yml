@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home3/mydoorbu/public_html/houseup/
+    - /bin/cp testIndex.html $DEPLOYPATH
+    - /bin/cp style.css $DEPLOYPATH

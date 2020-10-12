@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>HouseUp</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+        <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+                <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,700,900" rel="stylesheet"> -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/style.css">
+    <!-- Google fonts - Popppins for copy-->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Regular:300,400,800"> -->
+    <!-- orion icons-->
+    <link rel="stylesheet" href="css/orionicons.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="img/favicon.png?3">
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <!-- navbar-->
+    <header class="header">
+      <nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow"><a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead"><i class="fas fa-align-left"></i></a><a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base"></strong><img src="img/logo.svg" alt="..." style="max-width: 3rem" class=" my-2 my-lg-0"></a>
+        <ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+          <li class="nav-item">
+            <form id="searchForm" class="ml-auto d-none d-lg-block">
+              <div class="form-group position-relative mb-0">
+                <button type="submit" style="top: -3px; left: 0;" class="position-absolute bg-white border-0 p-0"><i class="o-search-magnify-1 text-gray text-lg"></i></button>
+                <input type="search" placeholder="Search ..." class="form-control form-control-sm border-0 no-shadow pl-4">
+              </div>
+            </form>
+          </li>
+          <li class="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-gray-400 px-1"><i class="fa fa-bell"></i><span class="notification-icon"></span></a>
+            <div aria-labelledby="notifications" class="dropdown-menu"><a href="#" class="dropdown-item">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-sm bg-violet text-white"><i class="fab fa-twitter"></i></div>
+                  <div class="text ml-2">
+                    <p class="mb-0">You have 2 followers</p>
+                  </div>
+                </div></a><a href="#" class="dropdown-item"> 
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-sm bg-green text-white"><i class="fas fa-envelope"></i></div>
+                  <div class="text ml-2">
+                    <p class="mb-0">You have 6 new messages</p>
+                  </div>
+                </div></a><a href="#" class="dropdown-item">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-sm bg-blue text-white"><i class="fas fa-upload"></i></div>
+                  <div class="text ml-2">
+                    <p class="mb-0">Server rebooted</p>
+                  </div>
+                </div></a><a href="#" class="dropdown-item">
+                <div class="d-flex align-items-center">
+                  <div class="icon icon-sm bg-violet text-white"><i class="fab fa-twitter"></i></div>
+                  <div class="text ml-2">
+                    <p class="mb-0">You have 2 followers</p>
+                  </div>
+                </div></a>
+              <div class="dropdown-divider"></div><a href="#" class="dropdown-item text-center"><small class="font-weight-bold headings-font-family text-uppercase">View all notifications</small></a>
+            </div>
+          </li>
+          <li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+            <div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Mark Stephen</strong><small>Web Developer</small></a>
+              <div class="dropdown-divider"></div><a href="#" class="dropdown-item">Settings</a><a href="#" class="dropdown-item">Activity log       </a>
+              <div class="dropdown-divider"></div><a href="login.html" class="dropdown-item">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="d-flex align-items-stretch">
+      <div id="sidebar" class="sidebar py-3">
+        <ul class="sidebar-menu list-unstyled">
+              <li class="sidebar-list-item"><a href="index.html" class="sidebar-link text-muted"><i class="o-home-1 mr-3 text-gray"></i><span>Home</span></a></li>
+              <li class="sidebar-list-item"><a href="vendor.html" class="sidebar-link text-muted"><i class="o-profile-1 mr-3 text-gray"></i><span>Vender</span></a></li>
+              <li class="sidebar-list-item"><a href="user.html" class="sidebar-link text-muted"><i class="o-user-1 mr-3 text-gray"></i><span>User</span></a></li>
+              <li class="sidebar-list-item"><a href="properties.html" class="sidebar-link text-muted"><i class="o-earth-globe-1 mr-3 text-gray"></i><span>Properties</span></a></li>
+              <li class="sidebar-list-item"><a href="feature.html" class="sidebar-link text-muted"><i class="o-trophy-1 mr-3 text-gray"></i><span>Feature Post</span></a></li>
+              <li class="sidebar-list-item"><a href="boost.html" class="sidebar-link text-muted"><i class="o-sales-up-1 mr-3 text-gray"></i><span>Post Bost</span></a></li>
+                    <li class="sidebar-list-item"><a href="account.html" class="sidebar-link text-muted"><i class="o-document-1 mr-3 text-gray"></i><span>Accounts</span></a></li> 
+              <li class="sidebar-list-item"><a href="help.html" class="sidebar-link text-muted"><i class="o-clock-1 mr-3 text-gray"></i><span>Help & Support</span></a></li>              
+              <li class="sidebar-list-item"><a href="login.html" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>Logout</span></a></li>
+        </ul>
+      </div>
+    
+    <div class="page-holder w-100 d-flex flex-wrap">
+        <div class="container-fluid px-xl-5">
+
+          <section class="py-5">
+            <div class="row">
+
+        <div class="pxp-content">
+            <div class=" mt-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                            <h2 class="pxp-sp-top-title">Beautiful House in Marina</h2>
+                            <p class="pxp-sp-top-address pxp-text-light">542 29th Avenue, Marina District, San Francisco, CA 94121</p>
+                        <div class="col-sm-12 col-md-7">
+                            <div class="clearfix d-block d-xl-none"></div>
+                            <div class="pxp-sp-top-feat mt-3 mt-md-0">
+                                <div>5 <span>BD</span></div>
+                                <div>4 <span>BA</span></div>
+                                <div>3,945 <span>SF</span></div>
+                            </div>
+                            <div class="pxp-sp-top-price mt-3 mt-md-0">$5,198,000</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pxp-single-property-gallery-container mt-4 mt-md-5">
+                <div class="pxp-single-property-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" class="pxp-sp-gallery-main-img">
+                        <a href="images/prop-7-1-big.jpg" itemprop="contentUrl" data-size="1920x1280" class="pxp-cover" style="background-image: url(images/prop-7-1-big.jpg);"></a>
+                        <figcaption itemprop="caption description">Image caption</figcaption>
+                    </figure>
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                        <a href="images/prop-2-3-gallery.jpg" itemprop="contentUrl" data-size="1920x1459" class="pxp-cover" style="background-image: url(images/prop-2-3-gallery.jpg);"></a>
+                        <figcaption itemprop="caption description">Image caption</figcaption>
+                    </figure>
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                        <a href="images/prop-2-3-gallery.jpg" itemprop="contentUrl" data-size="1920x2560" class="pxp-cover" style="background-image: url(images/prop-2-3-gallery.jpg);"></a>
+                        <figcaption itemprop="caption description">Image caption</figcaption>
+                    </figure>
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                        <a href="images/prop-2-3-gallery.jpg" itemprop="contentUrl" data-size="1920x1280" class="pxp-cover" style="background-image: url(images/prop-2-3-gallery.jpg);"></a>
+                        <figcaption itemprop="caption description">Image caption</figcaption>
+                    </figure>
+                    <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                        <a href="images/prop-1-3-gallery.jpg" itemprop="contentUrl" data-size="1920x1280" class="pxp-cover" style="background-image: url(images/prop-1-3-gallery.jpg);"></a>
+                        <figcaption itemprop="caption description">Image caption</figcaption>
+                    </figure>
+                </div>
+                <a href="#" class="pxp-sp-gallery-btn">View Photos</a>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="container mt-100">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="pxp-single-property-section">
+                            <h3>Key Details</h3>
+                            <div class="row mt-3 mt-md-4">
+                                <div class="col-sm-6">
+                                    <div class="pxp-sp-key-details-item">
+                                        <div class="pxp-sp-kd-item-label text-uppercase">Status</div>
+                                        <div class="pxp-sp-kd-item-value">Coming Soon</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pxp-sp-key-details-item">
+                                        <div class="pxp-sp-kd-item-label text-uppercase">Property Type</div>
+                                        <div class="pxp-sp-kd-item-value">Apartment</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pxp-sp-key-details-item">
+                                        <div class="pxp-sp-kd-item-label text-uppercase">Year Built</div>
+                                        <div class="pxp-sp-kd-item-value">1980</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pxp-sp-key-details-item">
+                                        <div class="pxp-sp-kd-item-label text-uppercase">Stories</div>
+                                        <div class="pxp-sp-kd-item-value">23</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pxp-sp-key-details-item">
+                                        <div class="pxp-sp-kd-item-label text-uppercase">Room Count</div>
+                                        <div class="pxp-sp-kd-item-value">6</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pxp-sp-key-details-item">
+                                        <div class="pxp-sp-kd-item-label text-uppercase">Parking Spaces</div>
+                                        <div class="pxp-sp-kd-item-value">2</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pxp-single-property-section mt-4 mt-md-5">
+                            <h3>Overview</h3>
+                            <div class="mt-3 mt-md-4">
+                                <p>Fully furnished. Elegantly appointed condominium unit situated on premier location. PS6. The wide entry hall leads to a large living room with dining area. This expansive 2 bedroom and 2 renovated marble bathroom apartment has great windows. Despite the interior views, the apartments Southern and Eastern exposures allow for lovely natural light to fill every room. The master suite is surrounded by handcrafted milkwork and features incredible walk-in closet and storage space. The second bedroom is<span class="pxp-dots">...</span><span class="pxp-dots-more"> a corner room with double windows. The kitchen has fabulous space, new appliances, and a laundry area. Other features include rich herringbone floors, crown moldings and coffered ceilings throughout the apartment. 1049 5th Avenue is a classic pre-war building located across from Central Park, the reservoir and The Metropolitan Museum. Elegant lobby and 24 hours doorman. This is a pet-friendly building. 
+                                <br><br>
+                                Conveniently located close to several trendy fitness centers like Equinox, New York Sports Clubs & Crunch. Fine restaurants around the area, as well as top-ranked schools. 2% Flip tax paid by buyer to the condominium. Building just put an assessment for 18 months of approximately $500 per month.</span></p>
+                                <a href="#" class="pxp-sp-more text-uppercase"><span class="pxp-sp-more-1">Continue Reading <span class="fa fa-angle-down"></span></span><span class="pxp-sp-more-2">Show Less <span class="fa fa-angle-up"></span></span></a>
+                            </div>
+                        </div>
+
+                        <div class="pxp-single-property-section mt-4 mt-md-5">
+                            <h3>Amenities</h3>
+                            <div class="row mt-3 mt-md-4">
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-wifi"></span> Internet</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-car"></span> Garage</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-sun-o"></span> Air Conditioning</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-bullseye"></span> Dishwasher</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-recycle"></span> Disposal</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-clone"></span> Balcony</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-futbol-o"></span> Gym</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-smile-o"></span> Playroom</div>
+                                </div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="pxp-sp-amenities-item"><span class="fa fa-glass"></span> Bar</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pxp-single-property-section mt-4 mt-md-5">
+                            <h3>Explore the Area</h3>
+                            <div class="pxp-sp-pois-nav mt-3 mt-md-4">
+                                <div class="pxp-sp-pois-nav-transportation text-uppercase">Transportation</div>
+                                <div class="pxp-sp-pois-nav-restaurants text-uppercase">Restaurants</div>
+                                <div class="pxp-sp-pois-nav-shopping text-uppercase">Shopping</div>
+                                <div class="pxp-sp-pois-nav-cafes text-uppercase">Cafes & Bars</div>
+                                <div class="pxp-sp-pois-nav-arts text-uppercase">Arts & Entertainment</div>
+                                <div class="pxp-sp-pois-nav-fitness text-uppercase">Fitness</div>
+                            </div>
+                            <div id="pxp-sp-map" class="mt-3"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="pxp-single-property-section pxp-sp-agent-section mt-4 mt-md-5 mt-lg-0">
+                            <h3>Listed By</h3>
+                            <div class="pxp-sp-agent mt-3 mt-md-4">
+                                <a href="single-agent.html" class="pxp-sp-agent-fig pxp-cover rounded-lg" style="background-image: url(images/agent-4.jpg); background-position: top center"></a>
+                                <div class="pxp-sp-agent-info">
+                                    <div class="pxp-sp-agent-info-name"><a href="single-agent.html">Erika Tillman</a></div>
+                                    <div class="pxp-sp-agent-info-rating"><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></div>
+                                    <div class="pxp-sp-agent-info-email"><a href="mailto:erika.tillman@ HouseUPcom">erika.tillman@ HouseUPcom</a></div>
+                                    <div class="pxp-sp-agent-info-phone"><span class="fa fa-phone"></span> (123) 456-7890</div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="pxp-sp-agent-btns mt-3 mt-md-4">
+                                    <a href="#pxp-contact-agent" class="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"><span class="fa fa-envelope-o"></span> Contact Agent</a>
+                                    <a href="#pxp-contact-agent" class="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span class="fa fa-calendar-check-o"></span> Request Tour</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                </div>
+
+            </div>
+
+          </section>
+        </div>
+        <footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 text-center text-md-left text-primary">
+                <p class="mb-2 mb-md-0">HouseUp &copy; 2018-2020</p>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    <!-- JavaScript files-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper.js/umd/popper.min.js"> </script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="js/charts-home.js"></script>
+    <script src="js/front.js"></script>
+            <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_KEY_HERE&amp;libraries=geometry&amp;libraries=places"></script>
+        <script src="js/photoswipe.min.js"></script> 
+        <script src="js/photoswipe-ui-default.min.js"></script>
+        <script src="js/jquery.sticky.js"></script>
+        <script src="js/gallery.js"></script>
+        <script src="js/infobox.js"></script>
+        <script src="js/single-map.js"></script>
+        <script src="js/Chart.min.js"></script>
+        <script src="js/main.js"></script>
+  </body>
+</html>
