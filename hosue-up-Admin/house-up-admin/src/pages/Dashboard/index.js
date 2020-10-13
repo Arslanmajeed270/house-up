@@ -56,7 +56,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-violet" />
                             <div className="text">
-                              <h6 className="mb-0"> {dashboardData.length && dashboardData[0].dashboardCountLabel } </h6><span className="text-gray"> {dashboardData.length && dashboardData[0].dashboardCount } </span>
+                              <h6 className="mb-0"> {dashboardData && dashboardData.length && dashboardData[0].dashboardCountLabel } </h6><span className="text-gray"> {dashboardData && dashboardData.length && dashboardData[0].dashboardCount } </span>
                             </div>
                           </div>
                           <div className="icon text-white bg-violet"><i className="fas fa-user" /></div>
@@ -67,7 +67,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-green" />
                             <div className="text">
-                              <h6 className="mb-0"> {dashboardData.length && dashboardData[1].dashboardCountLabel }</h6><span className="text-gray">{dashboardData.length && dashboardData[1].dashboardCount }</span>
+                              <h6 className="mb-0"> {dashboardData && dashboardData.length && dashboardData[1].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[1].dashboardCount }</span>
                             </div>
                           </div>
                           <div className="icon text-white bg-green"><i className="fas fa-user-tie" /></div>
@@ -78,7 +78,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-blue" />
                             <div className="text">
-                              <h6 className="mb-0">{dashboardData.length && dashboardData[2].dashboardCountLabel }</h6><span className="text-gray">{dashboardData.length && dashboardData[2].dashboardCount }</span>
+                              <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[2].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[2].dashboardCount }</span>
                             </div>
                           </div>
                           <div className="icon text-white bg-blue"><i className="fas fa-map-marker-alt" /></div>
@@ -89,7 +89,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-red" />
                             <div className="text">
-                              <h6 className="mb-0">{dashboardData.length && dashboardData[3].dashboardCountLabel }</h6><span className="text-gray">{dashboardData.length && dashboardData[3].dashboardCount }</span>
+                              <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[3].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[3].dashboardCount }</span>
                             </div>
                           </div>
                           <div className="icon text-white bg-red"><i className="fas fa-receipt" /></div>
@@ -117,7 +117,7 @@ componentDidMount() {
                           <div className="card-body">
                             <div className="row align-items-center flex-row">
                               <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>{dashboardData.length && dashboardData[4].dashboardCount }</span><span className="dot bg-green d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData.length && dashboardData[4].dashboardCountLabel }</span>
+                                <h2 className="mb-0 d-flex align-items-center"><span>{dashboardData && dashboardData.length && dashboardData[4].dashboardCount }</span><span className="dot bg-green d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{ dashboardData && dashboardData.length && dashboardData[4].dashboardCountLabel }</span>
                                 <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
                               </div>
                               <div className="col-lg-7">
@@ -130,7 +130,7 @@ componentDidMount() {
                           <div className="card-body">
                             <div className="row align-items-center flex-row">
                               <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>{dashboardData.length && dashboardData[5].dashboardCount }</span><span className="dot bg-violet d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData.length && dashboardData[5].dashboardCountLabel }</span>
+                                <h2 className="mb-0 d-flex align-items-center"><span>{ dashboardData && dashboardData.length && dashboardData[5].dashboardCount }</span><span className="dot bg-violet d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{ dashboardData && dashboardData.length && dashboardData[5].dashboardCountLabel }</span>
                                 <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
                               </div>
                               <div className="col-lg-7">
@@ -147,7 +147,7 @@ componentDidMount() {
                           <div className="card-body">
                             <div className="row align-items-center mb-3 flex-row">
                               <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>${dashboardData.length && dashboardData[6].dashboardCount }</span><span className="dot bg-violet d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData.length && dashboardData[6].dashboardCountLabel }</span>
+                                <h2 className="mb-0 d-flex align-items-center"><span>${dashboardData && dashboardData.length && dashboardData[6].dashboardCount }</span><span className="dot bg-violet d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData && dashboardData.length && dashboardData[6].dashboardCountLabel }</span>
                                 <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
                               </div>
                               <div className="col-lg-7">
@@ -160,7 +160,7 @@ componentDidMount() {
                           <div className="card-body">
                             <div className="row align-items-center flex-row">
                               <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>${dashboardData.length && dashboardData[7].dashboardCount }</span><span className="dot bg-green d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData.length && dashboardData[7].dashboardCountLabel }</span>
+                                <h2 className="mb-0 d-flex align-items-center"><span>${dashboardData && dashboardData.length && dashboardData[7].dashboardCount }</span><span className="dot bg-green d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountLabel }</span>
                                 <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
                               </div>
                               <div className="col-lg-7">

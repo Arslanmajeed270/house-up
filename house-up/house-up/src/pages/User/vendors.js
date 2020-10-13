@@ -1,9 +1,48 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class vendors extends Component {
-    state = {  }
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+
+class vendor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      vendorsData: []
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+  
+    let page = props.page;
+
+    let stateChanged = false;
+    let changedState = {};
+
+
+    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+      changedState.loading = page.loading;  
+      stateChanged = true;
+    }
+    if(page && JSON.stringify(state.vendorsData) !== JSON.stringify(page.vendorsData)){
+      changedState.vendorsData = page.vendorsData;  
+      stateChanged = true;
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+
+  }
+
+  componentDidMount() {
+    this.props.onGetVendorsData();
+  }
+
     render() { 
+      const { vendorsData } = this.state;
+      console.log('checking vendorsData in vendors: ', vendorsData);
+
         return ( 
             <React.Fragment>
                 <div className="pxp-content">
@@ -180,5 +219,16 @@ class vendors extends Component {
          );
     }
 }
+const mapStateToProps = state => {
+  return {
+    page: state.page
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetVendorsData: () => dispatch(actions.getVendorsData())
+  }
+};
  
-export default vendors;
+export default connect(mapStateToProps, mapDispatchToProps)(vendor);

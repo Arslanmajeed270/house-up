@@ -41,7 +41,7 @@ class index extends Component {
                 <Header sideBarHandler = {()=>this.sideBarHandler()}
                  notificationToggle = { () => this.notificationToggle()} 
                  userToggleHandler = { () => this.userToggleHandler()} 
-                 notificationState = {this.state.notiuserToggleficationShow}
+                 notificationState = {this.state.notificationShow}
                  userShowState = {this.state.userShow}
                   />
                 <div className="d-flex align-items-stretch">

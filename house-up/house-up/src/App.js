@@ -76,6 +76,11 @@ function App() {
         exact 
         path={'/vendors'}
         component={Index}
+      />
+      <Route
+        exact 
+        path={'/index'}
+        component={Index}
       /> 
     </React.Fragment>
   );

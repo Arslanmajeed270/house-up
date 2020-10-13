@@ -1,6 +1,7 @@
 import {
 	PAGE_LOADING,
-	PAGE_LOADED
+	PAGE_LOADED,
+	SET_VENDORS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -21,6 +22,11 @@ export default function (state = initialState, action) {
 				...state,
 				loading: false
 			};
+		case SET_VENDORS:
+			return {
+				vendorsData : action.payload
+			};
+			
 	default:
 			return state;
 	}

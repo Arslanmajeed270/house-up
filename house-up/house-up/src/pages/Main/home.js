@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Carousel from 'react-bootstrap/Carousel';
 
 class home extends Component {
     state = {  }
@@ -37,9 +38,10 @@ class home extends Component {
                 <div className="container-fluid pxp-props-carousel-right mt-100">
                   <h2 className="pxp-section-h2">Featured Properties</h2>
                   <p className="pxp-text-light">Browse our latest hot offers</p>
-                  <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
+                  <Carousel className="pxp-props-carousel-right-container mt-4 mt-md-5">
+                  
                     <div className="owl-carousel pxp-props-carousel-right-stage">
-                      <div>
+                      <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
@@ -50,8 +52,8 @@ class home extends Component {
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
                         </Link>
-                      </div>
-                      <div>
+                      </Carousel.Item>
+                      <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-1-gallery.jpg)'}} />
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
@@ -62,8 +64,8 @@ class home extends Component {
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
                         </Link>
-                      </div>
-                      <div>
+                      </Carousel.Item>
+                      <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-3-1-gallery.jpg)'}} />
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
@@ -74,8 +76,8 @@ class home extends Component {
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
                         </Link>
-                      </div>
-                      <div>
+                      </Carousel.Item>
+                      <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-gallery.jpg)'}} />
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
@@ -86,20 +88,20 @@ class home extends Component {
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
                         </Link>
-                      </div>
-                      <div>
+                      </Carousel.Item>
+                      <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-8-1-gallery.jpg)'}} />
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
-                          <div className="pxp-prop-card-1-details">
+                          <Carousel.Caption className="pxp-prop-card-1-details">
                             <div className="pxp-prop-card-1-details-title">Modern Residence</div>
                             <div className="pxp-prop-card-1-details-price">$7,995</div>
                             <div className="pxp-prop-card-1-details-features text-uppercase">4 BD <span>|</span> 1.5 BA <span>|</span> 2,240 SF</div>
-                          </div>
-                          <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+                          </Carousel.Caption>
+                          <Carousel.Caption className="pxp-prop-card-1-details-cta text-uppercase">View Details</Carousel.Caption>
                         </Link>
-                      </div>
-                      <div>
+                      </Carousel.Item>
+                      <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-9-1-gallery.jpg)'}} />
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
@@ -110,10 +112,10 @@ class home extends Component {
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
                         </Link>
-                      </div>
+                      </Carousel.Item>
                     </div>
                     <Link to='/properties'  className="pxp-primary-cta text-uppercase mt-4 mt-md-5 pxp-animate">Browse All</Link>
-                  </div>
+                  </Carousel>
                 </div>
                 <div className="pxp-services pxp-cover mt-100 pt-100 mb-200" style={{backgroundImage: 'url(assets/images/services-h-fig.jpg)'}}>
                   <h2 className="text-center pxp-section-h2">Why Choose Us</h2>

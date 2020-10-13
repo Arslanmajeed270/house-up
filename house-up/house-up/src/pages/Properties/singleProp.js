@@ -45,31 +45,31 @@ class singleProp extends Component {
                 <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
-                      <Link to="assest/images/prop-7-1-big.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-big.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-big.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assests/images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assets/images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assets/images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assets/images/prop-1-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
@@ -339,13 +339,13 @@ class singleProp extends Component {
                         <h3>Schools in Marina District</h3>
                         <ul className="nav nav-tabs pxp-nav-tabs mt-3 mt-md-4">
                           <li className="nav-item">
-                            <Link className="nav-link active" to="#elementary" data-toggle="tab">Elementary</Link>
+                            <Link className="nav-link active" to="" data-toggle="tab">Elementary</Link>
                           </li>
                           <li className="nav-item">
-                            <Link className="nav-link" to="#middle" data-toggle="tab">Middle</Link>
+                            <Link className="nav-link" to="" data-toggle="tab">Middle</Link>
                           </li>
                           <li className="nav-item">
-                            <Link className="nav-link" to="#high" data-toggle="tab">High</Link>
+                            <Link className="nav-link" to="" data-toggle="tab">High</Link>
                           </li>
                         </ul>
                         <div className="tab-content mt-3">
@@ -543,7 +543,7 @@ class singleProp extends Component {
                               <span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" />
                             </div>
                             <div className="pxp-sp-agent-info-email">
-                              <Link to="mailto:erika.tillman@ HouseUPcom">erika.tillman@ HouseUPcom</Link>
+                              <Link to="">erika.tillman@ HouseUPcom</Link>
                             </div>
                             <div className="pxp-sp-agent-info-phone">
                               <span className="fa fa-phone" /> (123) 456-7890
@@ -551,8 +551,8 @@ class singleProp extends Component {
                           </div>
                           <div className="clearfix" />
                           <div className="pxp-sp-agent-btns mt-3 mt-md-4">
-                            <Link href="#pxp-contact-agent" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-envelope-o" /> Contact Us</Link>
-                            <Link href="#pxp-contact-agent" className="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-calendar-check-o" /> Request
+                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-envelope-o" /> Contact Us</Link>
+                            <Link to="" className="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-calendar-check-o" /> Request
                               Tour</Link>
                           </div>
                         </div>

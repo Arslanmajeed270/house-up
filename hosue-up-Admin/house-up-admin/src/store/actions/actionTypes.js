@@ -14,3 +14,11 @@ export const PAGE_LOADED = 'PAGE_LOADED';
 
 //DASHBOARD ACTIONS
 export const SET_DASHBOARD = 'SET_DASHBOARD';
+
+
+// VENDORS ACTION
+export const SET_VENDORS = 'SET_VENDORS';
+
+
+//USERS ACTION
+export const SET_USERS = 'SET_USERS';

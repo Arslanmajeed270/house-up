@@ -49,7 +49,7 @@ class header extends Component {
                       </div>
                       <div className="col-5 col-md-2 text-right">
                         <Link to="" className="pxp-header-nav-trigger" ><span className="fa fa-bars" /></Link>
-                        <Link to="" className="pxp-header-user pxp-signin-trigger" onClick={()=>this.}><span className="fa fa-user-o" /></Link>
+                        <Link to="" className="pxp-header-user pxp-signin-trigger" ><span className="fa fa-user-o" /></Link>
                       </div>
                     </div>
                   </div>
@@ -74,13 +74,13 @@ class header extends Component {
                                 <input type="password" className="form-control" id="pxp-signin-pass" placeholder="Enter your password" />
                             </div>
                             <div className="form-group">
-                                <a href="#" className="pxp-agent-contact-modal-btn">Sign In</a>
+                                <Link to="#" className="pxp-agent-contact-modal-btn">Sign In</Link>
                             </div>
                             <div className="form-group mt-4 text-center pxp-modal-small">
-                                <a href="#" className="pxp-modal-link">Forgot password</a>
+                                <Link to="#" className="pxp-modal-link">Forgot password</Link>
                             </div>
                             <div className="text-center pxp-modal-small">
-                                New to HouseUP? <a href="javascript:void(0);" className="pxp-modal-link pxp-signup-trigger">Create an account</a>
+                                New to HouseUP? <Link to="" className="pxp-modal-link pxp-signup-trigger">Create an account</Link>
                             </div>
                             </form>
                         </div>
@@ -121,10 +121,10 @@ class header extends Component {
                                 <input type="password" className="form-control" id="pxp-signup-pass" placeholder="Create a password" />
                             </div>
                             <div className="form-group">
-                                <a href="#" className="pxp-agent-contact-modal-btn">Sign Up</a>
+                                <Link to="#" className="pxp-agent-contact-modal-btn">Sign Up</Link>
                             </div>
                             <div className="text-center mt-4 pxp-modal-small">
-                                Already have an account? <a href="javascript:void(0);" className="pxp-modal-link pxp-signin-trigger">Sign in</a>
+                                Already have an account? <Link to="" className="pxp-modal-link pxp-signin-trigger">Sign in</Link>
                             </div>
                             </form>
                         </div>

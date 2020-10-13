@@ -10,5 +10,7 @@ export {
     setPageLoading,
     clearPageLoading,
     clearErrors,
-    getDashboardData
+    getDashboardData,
+    getVendorsData,
+    getUsersData
 } from './pageActions';
