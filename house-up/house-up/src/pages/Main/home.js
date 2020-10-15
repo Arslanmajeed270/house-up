@@ -1,10 +1,52 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Carousel from 'react-bootstrap/Carousel';
+
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+import { Carousel } from 'react-bootstrap';
+
+// import Carousel from 'react-bootstrap/Carousel';
 
 class home extends Component {
-    state = {  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      homePageData : {}
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+  
+    let page = props.page;
+
+    let stateChanged = false;
+    let changedState = {};
+
+
+    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+      changedState.loading = page.loading;  
+      stateChanged = true;
+    }
+    if(page && JSON.stringify(state.homePageData) !== JSON.stringify(page.homePageData)){
+      changedState.homePageData = page.homePageData;  
+      stateChanged = true;
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+
+  }
+
+  componentDidMount() {
+    console.log('homePage componenet did mount');
+    this.props.onGetHomePageData();
+  }
+
     render() { 
+      const { homePageData } = this.state;
+      console.log('checking homePageData in HomePage: ', homePageData);
+
         return ( 
             <React.Fragment>
               <div className="pxp-content">
@@ -19,7 +61,7 @@ class home extends Component {
                           <div className="col-sm-12 col-md-4">
                             <div className="form-group">
                               <select className="custom-select">
-                                <option selected>Buy</option>
+                                <option >Buy</option>
                                 <option value={1}>Rent</option>
                               </select>
                             </div>
@@ -44,6 +86,7 @@ class home extends Component {
                       <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
+                          <Carousel.Caption>
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
                           <div className="pxp-prop-card-1-details">
                             <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
@@ -51,11 +94,13 @@ class home extends Component {
                             <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+                          </Carousel.Caption>
                         </Link>
                       </Carousel.Item>
                       <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-1-gallery.jpg)'}} />
+                          <Carousel.Caption>
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
                           <div className="pxp-prop-card-1-details">
                             <div className="pxp-prop-card-1-details-title">Colorful Little Apartment</div>
@@ -63,11 +108,13 @@ class home extends Component {
                             <div className="pxp-prop-card-1-details-features text-uppercase">1 BD <span>|</span> 1 BA <span>|</span> 500 SF</div>
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+                          </Carousel.Caption>
                         </Link>
                       </Carousel.Item>
                       <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-3-1-gallery.jpg)'}} />
+                          <Carousel.Caption>
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
                           <div className="pxp-prop-card-1-details">
                             <div className="pxp-prop-card-1-details-title">Cozy Two Bedroom Apartment</div>
@@ -75,11 +122,13 @@ class home extends Component {
                             <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 870 SF</div>
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+                          </Carousel.Caption>
                         </Link>
                       </Carousel.Item>
                       <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-gallery.jpg)'}} />
+                          <Carousel.Caption>
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
                           <div className="pxp-prop-card-1-details">
                             <div className="pxp-prop-card-1-details-title">Beautiful House in Marina</div>
@@ -87,23 +136,27 @@ class home extends Component {
                             <div className="pxp-prop-card-1-details-features text-uppercase">5 BD <span>|</span> 4.5 BA <span>|</span> 3,945 SF</div>
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+                          </Carousel.Caption>
                         </Link>
                       </Carousel.Item>
                       <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-8-1-gallery.jpg)'}} />
+                          <Carousel.Caption>
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
                           <Carousel.Caption className="pxp-prop-card-1-details">
                             <div className="pxp-prop-card-1-details-title">Modern Residence</div>
                             <div className="pxp-prop-card-1-details-price">$7,995</div>
                             <div className="pxp-prop-card-1-details-features text-uppercase">4 BD <span>|</span> 1.5 BA <span>|</span> 2,240 SF</div>
                           </Carousel.Caption>
-                          <Carousel.Caption className="pxp-prop-card-1-details-cta text-uppercase">View Details</Carousel.Caption>
+                          <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+                          </Carousel.Caption>
                         </Link>
                       </Carousel.Item>
                       <Carousel.Item>
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg">
                           <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-9-1-gallery.jpg)'}} />
+                          <Carousel.Caption>
                           <div className="pxp-prop-card-1-gradient pxp-animate" />
                           <div className="pxp-prop-card-1-details">
                             <div className="pxp-prop-card-1-details-title">Luxury Mansion</div>
@@ -111,6 +164,7 @@ class home extends Component {
                             <div className="pxp-prop-card-1-details-features text-uppercase">4 BD <span>|</span> 5 BA <span>|</span> 5,200 SF</div>
                           </div>
                           <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+                          </Carousel.Caption>
                         </Link>
                       </Carousel.Item>
                     </div>
@@ -181,6 +235,7 @@ class home extends Component {
                         <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
                       </Link>
                     </div>
+                    
                     <div className="col-sm-12 col-md-6 col-lg-4">
                       <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
                         <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-2.jpg)'}} />
@@ -256,63 +311,26 @@ class home extends Component {
                   <h2 className="pxp-section-h2">Our Featured Vendors</h2>
                   <p className="pxp-text-light">We will help you sell your home</p>
                   <div className="row mt-4 mt-md-5">
-                    <div className="col-sm-12 col-md-6 col-lg-3">
-                      <Link to='/single-vendor'  className="pxp-agents-1-item">
-                        <div className="pxp-agents-1-item-fig-container rounded-lg">
-                          <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-1.jpg)', backgroundPosition: 'top center'}} />
-                        </div>
-                        <div className="pxp-agents-1-item-details rounded-lg">
-                          <div className="pxp-agents-1-item-details-name">Scott Goodwin</div>
-                          <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (123) 456-7890</div>
-                          <div className="pxp-agents-1-item-details-spacer" />
-                          <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                        </div>
-                        <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
-                      </Link>
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-3">
-                      <Link to='/single-vendor'  className="pxp-agents-1-item">
-                        <div className="pxp-agents-1-item-fig-container rounded-lg">
-                          <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-2.jpg)', backgroundPosition: 'top center'}} />
-                        </div>
-                        <div className="pxp-agents-1-item-details rounded-lg">
-                          <div className="pxp-agents-1-item-details-name">Alayna Becker</div>
-                          <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (456) 123-7890</div>
-                          <div className="pxp-agents-1-item-details-spacer" />
-                          <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                        </div>
-                        <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star-o" /></span></div>
-                      </Link>
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-3">
-                      <Link to='/single-vendor'  className="pxp-agents-1-item">
-                        <div className="pxp-agents-1-item-fig-container rounded-lg">
-                          <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-3.jpg)', backgroundPosition: 'top center'}} />
-                        </div>
-                        <div className="pxp-agents-1-item-details rounded-lg">
-                          <div className="pxp-agents-1-item-details-name">Melvin Blackwell</div>
-                          <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (789) 123-4560</div>
-                          <div className="pxp-agents-1-item-details-spacer" />
-                          <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                        </div>
-                        <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
-                      </Link>
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-3">
-                      <Link to='/single-vendor'  className="pxp-agents-1-item">
-                        <div className="pxp-agents-1-item-fig-container rounded-lg">
-                          <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-4.jpg)', backgroundPosition: 'top center'}} />
-                        </div>
-                        <div className="pxp-agents-1-item-details rounded-lg">
-                          <div className="pxp-agents-1-item-details-name">Erika Tillman</div>
-                          <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (890) 456-1237</div>
-                          <div className="pxp-agents-1-item-details-spacer" />
-                          <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                        </div>
-                        <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star-o" /></span></div>
-                      </Link>
-                    </div>
-                  </div>
+                    {homePageData && homePageData.vendors ? 
+                      homePageData.vendors.map( (data, index) =>
+                      index <4 && 
+                      <div key={index} className="col-sm-12 col-md-6 col-lg-3">
+                        <Link to={`/single-vendor-${data && data.userId && data.userId}`}  className="pxp-agents-1-item">
+                          <div className="pxp-agents-1-item-fig-container rounded-lg">
+                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: `url(${data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/agent-2.jpg'})`, backgroundPosition: 'top center'}} />
+                          </div>
+                          <div className="pxp-agents-1-item-details rounded-lg">
+                            <div className="pxp-agents-1-item-details-name">{data.firstName} {data.lastName}</div>
+                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> {data.msisdn}</div>
+                            <div className="pxp-agents-1-item-details-spacer" />
+                            <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
+                          </div>
+                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
+                        </Link>
+                      </div>
+                      )
+                      : ""           
+                      }
                   <Link to='/vendors'  className="pxp-primary-cta text-uppercase mt-1 mt-md-4 pxp-animate">See All Vendors</Link>
                 </div>
                 <div className="container mt-100">
@@ -362,9 +380,23 @@ class home extends Component {
                   </div>
                 </div>
               </div>
+              </div>
             </React.Fragment>
          );
     }
 }
  
-export default home;
+const mapStateToProps = state => {
+  return {
+    page: state.page
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  console.log('mapDispatchToProps in HomePage ' );
+  return {
+      onGetHomePageData: () => dispatch(actions.getHomePageData())
+  }
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(home);

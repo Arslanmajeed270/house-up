@@ -9,5 +9,10 @@ export {
     setPageLoading,
     clearPageLoading,
     clearErrors,
-    getVendorsData
+    getHomePageData
 } from './pageActions';
+
+export {
+    getVendorsData,
+    getSingleVendorData
+} from './vendorPageAction';

@@ -1,41 +1,89 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 
 
 class singleVendor extends Component {
-    state = {  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      singleVendorData: {},
+      id: null
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+  
+    let vendor = props.vendor;
+
+    let stateChanged = false;
+    let changedState = {};
+
+    if(vendor && JSON.stringify(state.singleVendorData) !== JSON.stringify(vendor.singleVendorData)){
+      changedState.singleVendorData = vendor.singleVendorData;  
+      stateChanged = true;
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+
+  }
+
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    console.log('checking id in sigle vendero: ', id);
+    this.setState({
+      id: id
+    });
+
+    let userData = {
+      userId: id
+    }
+    this.props.onGetSingleVendorsData(userData);
+  }
+
     render() { 
+      const { singleVendorData } = this.state;
+      console.log('SINGLE VENDORS');
+      console.log('checking singleVendorsData in vendors: ', singleVendorData);
+      
         return ( 
             <React.Fragment>
-                <div className="pxp-content">
+              <div className="pxp-content">
                 <div className="pxp-agents mt-100">
                   <div className="container">
                     <div className="row">
                       <div className="col-sm-12 col-lg-8">
-                        <h1 className="pxp-page-header float-left">Erika Tillman</h1>
-                        <span className="pxp-agent-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
+                        <h1 className="pxp-page-header float-left">{ singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </h1>
+                        <span className="pxp-agent-rating"><span className="fa fa-star" />
+                        <span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
                         <div className="clearfix" />
-                        <p>Licensed Associate Real Estate Broker</p>
+                        <p>{singleVendorData && singleVendorData.aboutBusiness}</p>
                         <div className="mt-4 mt-md-5">
-                          <div className="pxp-agent-email"><Link href="mailto:erika.tillman@ HouseUPcom"><span className="fa fa-envelope-o" /> erika.tillman@ HouseUPcom</Link></div>
-                          <div className="pxp-agent-phone"><span className="fa fa-phone" /> (123) 456-7890</div>
+                          <div className="pxp-agent-email">
+                            <Link to={singleVendorData && singleVendorData.emailAddress }>
+                              <span className="fa fa-envelope-o" /> {singleVendorData && singleVendorData.emailAddress}</Link></div>
+                          <div className="pxp-agent-phone"><span className="fa fa-phone" /> {singleVendorData && singleVendorData.msisdn}</div>
                         </div>
                         <div className="mt-4 mt-md-5">
-                          <Link href="#pxp-work-with" className="pxp-agent-contact-btn" data-toggle="modal" data-target="#pxp-work-with">Work with Erika Tillman</Link>
+                          <Link to="#pxp-work-with" className="pxp-agent-contact-btn" data-toggle="modal" data-target="#pxp-work-with">
+                            Work with {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </Link>
                         </div>
                       </div>
                       <div className="col-sm-12 offset-lg-1 col-lg-3">
-                        <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" style={{backgroundImage: 'url(assets/images/agent-4.jpg)', backgroundPosition: '50% 0%'}} />
+                        <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl : 'assets/images/agent-2.jpg'})`, backgroundPosition: '50% 0%'}} />
                       </div>
                     </div>
                     <div className="row">
                       <div className="col-sm-12 col-lg-8">
                         <div className="pxp-agent-section mt-4 mt-md-5">
-                          <h3>About Erika Tillman</h3>
+                          <h3>About {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </h3>
                           <div className="mt-3 mt-md-4">
-                            <p>Award winner and nominee, Erika Tillman, is one of NYC’s top producing vendors. In 2016 she was a Top Producer Individual by sales volume and GCI. This high achiever received, among other recognitions, a Quadruple Platinum Award and was cover of Outfront Magazine in December 2016.</p>
+                            <p>Award winner and nominee, {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} , is one of NYC’s top producing vendors. In 2016 she was a Top Producer Individual by sales volume and GCI. This high achiever received, among other recognitions, a Quadruple Platinum Award and was cover of Outfront Magazine in December 2016.</p>
                             <p>She is known as one of the smartest and most dedicated vendorts in the City. She has earned an excellent reputation with high-end developers. Her clientele includes some of the wealthiest Family Offices in the world, including royalty, and she works attending each generation’s needs and risk profile. She is the perfect vendor for the most demanding clients and runs her business 24/7. </p>
                           </div>
                         </div>
@@ -44,9 +92,7 @@ class singleVendor extends Component {
                         <div className="pxp-agent-section mt-4 mt-md-5">
                           <h3>Specialities</h3>
                           <ul className="list-unstyled pxp-agent-specialities mt-3 mt-md-4">
-                            <li>International Buyers and Sellers</li>
-                            <li>Investors</li>
-                            <li>Family Offices</li>
+                            <li>{singleVendorData && singleVendorData.keywordsDescribeYourBusiness}</li>
                           </ul>
                         </div>
                         <div className="pxp-agent-section mt-4 mt-md-5">
@@ -60,7 +106,7 @@ class singleVendor extends Component {
                         </div>
                       </div>
                     </div>
-                    <h2 className="pxp-section-h2 mt-100">Listings by Erika Tillman</h2>
+                    <h2 className="pxp-section-h2 mt-100">Listings by {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </h2>
                     <div className="row mt-4 mt-md-5">
                       <div className="col-sm-12 col-md-6 col-lg-4">
                         <Link to='/single-prop'  className="pxp-prop-card-1 rounded-lg mb-4">
@@ -167,7 +213,7 @@ class singleVendor extends Component {
                               <div className="media mt-2 mt-md-3">
                                 <img src="assets/images/customer-3.jpg" className="mr-3" alt="..." />
                                 <div className="media-body">
-                                  <h5>Erika Tillman</h5>
+                                  <h5>Scott Goodwin</h5>
                                   <div className="pxp-agent-comments-date">April 9, 2019 at 2:33 pm</div>
                                   <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                                 </div>
@@ -212,4 +258,16 @@ class singleVendor extends Component {
     }
 }
  
-export default singleVendor;
+const mapStateToProps = state => {
+  return {
+    vendor: state.vendor
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetSingleVendorsData: (userData) => dispatch(actions.getSingleVendorData(userData))
+  }
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(singleVendor);

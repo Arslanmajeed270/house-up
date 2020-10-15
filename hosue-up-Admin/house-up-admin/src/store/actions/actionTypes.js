@@ -18,7 +18,10 @@ export const SET_DASHBOARD = 'SET_DASHBOARD';
 
 // VENDORS ACTION
 export const SET_VENDORS = 'SET_VENDORS';
+export const SET_SINGLE_VENDOR = 'SET_SINGLE_VENDOR';
 
 
 //USERS ACTION
 export const SET_USERS = 'SET_USERS';
+export const SET_SINGLE_USER = 'SET_SINGLE_USER';
+

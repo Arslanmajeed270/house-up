@@ -1,38 +1,19 @@
 import {
-	PAGE_LOADING,
-	PAGE_LOADED,
-	SET_DASHBOARD,
 	SET_VENDORS,
 	SET_USERS,
-	SET_SINGLE_VENDOR
+	SET_SINGLE_VENDOR,
+	SET_SINGLE_USER
 } from '../actions/actionTypes';
 
 const initialState = {
-	loading: false,
-	dashboardData: [],
 	vendorsData : [],
 	usersData : [],
-	singleVendorData : {}
+	singleVendorData : {},
+	singleUserData : {}
 };
 
 export default function (state = initialState, action) {
 	switch (action.type) {
-
-		case PAGE_LOADING:
-			return {
-				...state,
-				loading: true
-			};
-
-		case PAGE_LOADED:
-			return {
-				...state,
-				loading: false
-			};
-		case SET_DASHBOARD:
-			return {
-				dashboardData: action.payload
-			};
 		case SET_VENDORS:
 			return {
 				vendorsData: action.payload
@@ -45,6 +26,10 @@ export default function (state = initialState, action) {
 			return {
 				singleVendorData: action.payload
 			};
+		case SET_SINGLE_USER:
+			return {
+				singleUserData: action.payload
+			};	
 	default:
 			return state;
 	}

@@ -5,7 +5,7 @@ import {
     PAGE_LOADING,
 	PAGE_LOADED,
 	CLEAR_ERRORS,
-	SET_VENDORS,
+	SET_HOME_DATA,
 	SET_ERRORS
 } from './actionTypes';
 
@@ -15,7 +15,6 @@ let backendServerURL = process.env.REACT_APP_API_URL;
 
 
 export const setPageLoading = () => {
-	// console.log('setPageLoading');
 	return {
 		type: PAGE_LOADING
 	};
@@ -23,7 +22,6 @@ export const setPageLoading = () => {
 
 
 export const clearPageLoading = () => {
-	// console.log('clearPageLoading');
 	return {
 		type: PAGE_LOADED
 	};
@@ -34,29 +32,27 @@ export const clearErrors = () => {
 	};
 };
 
-//Vendors  - Get vendors data from backend
-export const getVendorsData = () => dispatch => {
-    dispatch(setPageLoading());
-	console.log('checking backendServerURL: ', backendServerURL);
+//Home  - Get HomePage data from backend
+export const getHomePageData = () => dispatch => {
     axios
     .post(
-		backendServerURL+'/getUsers',
+		backendServerURL+'/home',
 		{
-			"userTypeId": 2
+			"userTypeId": 1
 		}
     )
     .then(res => {
-		console.log('checking getVendorsData: ', res);
+		console.log('checking Home page data' , res);
         dispatch(
 			{
-				type: SET_VENDORS,
-				payload: res.data && res.data.data &&  res.data.data.users ? res.data.data.users : []
+				type: SET_HOME_DATA,
+				payload: res.data && res.data.data  ? res.data.data : {}
 			}
 		);        
     })
     .catch(err => {
-        console.log("error: ", err);
-        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	  console.log('checking error on homepage')
+		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
     })      
-    .finally(() => dispatch(clearPageLoading()))
 };
+

@@ -1,11 +1,12 @@
 import {
 	PAGE_LOADING,
 	PAGE_LOADED,
-	SET_VENDORS
+	SET_HOME_DATA
 } from '../actions/actionTypes';
 
 const initialState = {
-	loading: false
+	loading: false,
+	homePageData :{}
 };
 
 export default function (state = initialState, action) {
@@ -16,17 +17,15 @@ export default function (state = initialState, action) {
 				...state,
 				loading: true
 			};
-
 		case PAGE_LOADED:
 			return {
 				...state,
 				loading: false
 			};
-		case SET_VENDORS:
+		case SET_HOME_DATA:
 			return {
-				vendorsData : action.payload
+				homePageData : action.payload
 			};
-			
 	default:
 			return state;
 	}

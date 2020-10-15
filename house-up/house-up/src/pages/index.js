@@ -6,19 +6,8 @@ import Footer from '../components/footer';
 
 class index extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         logInPopUp : false,
-    //         signUpPopUp : false     
-    //     };
-    // }
+    constructor(props) {
 
-    // logInPopUpHandler = () => {
-    //     this.setState({
-    //         logInPopUp : !this.state.logInPopUp
-    //     })
-    // }
 
 
     render() {

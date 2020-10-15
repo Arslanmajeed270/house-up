@@ -7,7 +7,6 @@ class about extends Component {
     render() { 
         return ( 
             <React.Fragment>
-                <div>
                 <div className="pxp-hero vh-100">
                     <div className="pxp-hero-bg pxp-cover pxp-cover-bottom" style={{backgroundImage: 'url(assets/images/hero-1.jpg)'}} />
                     <div className="pxp-hero-opacity" />
@@ -19,7 +18,7 @@ class about extends Component {
                             <div className="col-sm-12 col-md-4">
                               <div className="form-group">
                                 <select className="custom-select">
-                                  <option selected>Buy</option>
+                                  <option >Buy</option>
                                   <option value={1}>Rent</option>
                                 </select>
                               </div>
@@ -374,7 +373,6 @@ class about extends Component {
                       </div>
                     </div>
                   </div>
-                </div>
             </React.Fragment>
          );
     }

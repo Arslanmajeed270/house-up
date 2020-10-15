@@ -13,18 +13,13 @@ class vendor extends Component {
   }
   static getDerivedStateFromProps(props, state) {
   
-    let page = props.page;
+    let userPage = props.userPage;
 
     let stateChanged = false;
     let changedState = {};
 
-
-    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
-      changedState.loading = page.loading;  
-      stateChanged = true;
-    }
-    if(page && JSON.stringify(state.vendorsData) !== JSON.stringify(page.vendorsData)){
-      changedState.vendorsData = page.vendorsData;  
+    if(userPage && JSON.stringify(state.vendorsData) !== JSON.stringify(userPage.vendorsData)){
+      changedState.vendorsData = userPage.vendorsData;  
       stateChanged = true;
     }
 
@@ -43,12 +38,7 @@ class vendor extends Component {
       const { vendorsData } = this.state;
       console.log('checking vendorsData in vendors: ', vendorsData);
 
-      // const fullDate = vendorsData.createDate;
-      // const date = fullDate.split("/");
-
-
         return ( 
-
             <React.Fragment>
                 <div className="page-holder w-100 d-flex flex-wrap">
                 <div className="container-fluid px-xl-5">
@@ -57,11 +47,11 @@ class vendor extends Component {
                       {vendorsData && vendorsData.length ? 
                       vendorsData.map( (data, index) => 
                         <div key={index} className="col-lg-12">
-                          <Link to="single-vendor" className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                          <Link to={`/single-vendor-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
                           <div className="row">
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                               <strong className="h5 mb-0">12<sup className="smaller text-gray font-weight-normal">Aug</sup></strong><img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/avatar-2.jpg"} alt="Profile" style={{maxWidth: '3rem'}} className="rounded-circle mx-3 my-2 my-lg-0" />
-                              <h6 className="mb-0">C{data.firstName} {data.lastName}</h6>
+                              <h6 className="mb-0">{data.firstName} {data.lastName}</h6>
                             </div>
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                               <h6 className="mb-0">{data.emailAddress}</h6>
@@ -142,7 +132,7 @@ class vendor extends Component {
 
 const mapStateToProps = state => {
   return {
-    page: state.page
+    userPage: state.userPage
   }
 };
 

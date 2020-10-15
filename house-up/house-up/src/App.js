@@ -24,7 +24,7 @@ function App() {
       />
         <Route
         exact 
-        path={'/single-vendor'}
+        path={'/single-vendor-:id'}
         component={Index}
       />
         <Route

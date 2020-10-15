@@ -12,17 +12,13 @@ class user extends Component {
   }
   static getDerivedStateFromProps(props, state) {
   
-    let page = props.page;
+    let userPage = props.userPage;
 
     let stateChanged = false;
     let changedState = {};
 
-    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
-      changedState.loading = page.loading;  
-      stateChanged = true;
-    }
-    if(page && JSON.stringify(state.usersData) !== JSON.stringify(page.usersData)){
-      changedState.usersData = page.usersData;  
+    if(userPage && JSON.stringify(state.usersData) !== JSON.stringify(userPage.usersData)){
+      changedState.usersData = userPage.usersData;  
       stateChanged = true;
     }
 
@@ -49,10 +45,10 @@ class user extends Component {
                     {usersData && usersData.length ? 
                       usersData.map( (data, index) =>
                       <div key={index} className="col-lg-12">
-                        <Link to="single-user" className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                        <Link to={`/single-User-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
                           <div className="row">
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <strong className="h5 mb-0">12<sup className="smaller text-gray font-weight-normal">Aug</sup></strong>
+                              <strong className="h5 mb-0">{data.createDate}<sup className="smaller text-gray font-weight-normal">Aug</sup></strong>
                               <img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/avatar-2.jpg"} alt="..." style={{maxWidth: '3rem'}} className="rounded-circle mx-3 my-2 my-lg-0" />
                                 <h6 className="mb-0">{data.firstName} {data.lastName}</h6>
                             </div>
@@ -73,7 +69,7 @@ class user extends Component {
                       : ''
                     }            
 
-                      <div className="col-lg-12"><Link to="single-user" className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                      {/* <div className="col-lg-12"><Link to="single-user" className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
                           <div className="row">
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left"><strong className="h5 mb-0">14<sup className="smaller text-gray font-weight-normal">Aug</sup></strong><img src={"assets/img/avatar-2.jpg"} alt="..." style={{maxWidth: '3rem'}} className="rounded-circle mx-3 my-2 my-lg-0" />
                               <h6 className="mb-0">Ryan Gosling</h6>
@@ -90,7 +86,7 @@ class user extends Component {
                             <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                               <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 mt-lg-0 text-dark exclode">Active</div>
                             </div>                                       
-                          </div></Link></div>
+                          </div></Link></div> */}
                     </div></section>
                 </div>
                 <footer className="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
@@ -110,7 +106,7 @@ class user extends Component {
 
 const mapStateToProps = state => {
   return {
-    page: state.page
+    userPage: state.userPage
   }
 };
 
