@@ -12,9 +12,9 @@ import {
 const backendServerURL = process.env.REACT_APP_API_URL;
 
 
+
 //Vendors  - Get vendors data from backend
 export const getVendorsData = () => dispatch => {
-	console.log('checking backendServerURL: ', backendServerURL);
     axios
     .post(
 		backendServerURL+'/getUsers',
@@ -23,7 +23,6 @@ export const getVendorsData = () => dispatch => {
 		}
     )
     .then(res => {
-		console.log('checking getVendorsData: ', res);
         dispatch(
 			{
 				type: SET_VENDORS,
@@ -39,7 +38,6 @@ export const getVendorsData = () => dispatch => {
 
 //Users  - Get users data from backend
 export const getUsersData = () => dispatch => {
-	console.log('checking backendServerURL: ', backendServerURL);
     axios
     .post(
 		backendServerURL+'/getUsers',
@@ -48,7 +46,6 @@ export const getUsersData = () => dispatch => {
 		}
     )
     .then(res => {
-		console.log('checking getUsersData: ', res);
         dispatch(
 			{
 				type: SET_USERS,
@@ -57,7 +54,6 @@ export const getUsersData = () => dispatch => {
 		);        
     })
     .catch(err => {
-        console.log("error: ", err);
 		dispatch({type: SET_ERRORS, 
 		payload: err && err.response && err.response.data ? err.response.data : {}})
     })      
@@ -69,7 +65,6 @@ export const getSingleVendorData = (userData) => dispatch => {
     axios
     .post(backendServerURL+'/getUser',userData)
     .then(res => {
-		console.log('checking getSingleVendorsData: ', res);
         dispatch(
 			{
 				type: SET_SINGLE_VENDOR,
@@ -78,8 +73,6 @@ export const getSingleVendorData = (userData) => dispatch => {
 		);        
     })
     .catch(err => {
-		console.log("error: ", err);
-		console.log('checking error');
 		dispatch({type: SET_ERRORS, 
 		payload: err && err.response && err.response.data ? err.response.data : {}})
     })      
@@ -87,11 +80,9 @@ export const getSingleVendorData = (userData) => dispatch => {
 
 //SingleUser  - Get SingleUser data from backend
 export const getSingleUserData = (userData) => dispatch => {
-	console.log('checking backendServerURL: ', backendServerURL);
     axios
     .post(backendServerURL+'/getUser',userData)
     .then(res => {
-		console.log('checking getSingleUserData: ', res);
         dispatch(
 			{
 				type: SET_SINGLE_USER,
@@ -100,8 +91,6 @@ export const getSingleUserData = (userData) => dispatch => {
 		);        
     })
     .catch(err => {
-		console.log("error: ", err);
-		console.log('checking error');
 		dispatch({type: SET_ERRORS, 
 		payload: err && err.response && err.response.data ? err.response.data : {}})
     })      

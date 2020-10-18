@@ -32,9 +32,13 @@ class user extends Component {
   componentDidMount() {
     this.props.onGetUsersData();
   }
+
+  dateHandler = (date) => {
+    return <strong className="h5 mb-0">{date.split('/')[0]}<sup className="smaller text-gray font-weight-normal">{date.split('/')[1]}</sup></strong>;
+  }
+
     render() { 
       const { usersData } = this.state;
-      console.log('checking usersData in users: ', usersData);
 
         return ( 
             <React.Fragment>
@@ -48,8 +52,8 @@ class user extends Component {
                         <Link to={`/single-User-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
                           <div className="row">
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <strong className="h5 mb-0">{data.createDate}<sup className="smaller text-gray font-weight-normal">Aug</sup></strong>
-                              <img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/avatar-2.jpg"} alt="..." style={{maxWidth: '3rem'}} className="rounded-circle mx-3 my-2 my-lg-0" />
+                              {this.dateHandler(data.createDate)}
+                              <img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/demo.png"} alt="..." style={{maxWidth: '3rem' , maxHeight:'3rem' , backgroundColor:'#008CF8'}} className="rounded-circle mx-3 my-2 my-lg-0" />
                                 <h6 className="mb-0">{data.firstName} {data.lastName}</h6>
                             </div>
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">

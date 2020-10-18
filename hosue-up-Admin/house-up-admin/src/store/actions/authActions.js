@@ -1,6 +1,4 @@
 import axios from 'axios';
-import setAuthToken from '../../utils/setAuthToken';
-import jwt_decode from 'jwt-decode';
 
 import {
     SET_ERRORS, 
@@ -23,23 +21,24 @@ export const loginUser = (userData, history) => dispatch => {
 
     axios
     .post(
-        backendServerURL+'/auth/login', 
+        backendServerURL+'/authenticateAdminUser', 
         userData
     )
     .then(res => {
-        
-        const {token} = res.data;
-        localStorage.setItem('jwtToken', token);
-        setAuthToken(token);
-        const decoded = jwt_decode(token);
-        dispatch(setCurrentUser(decoded));
+  
+        // const {token} = res.data;
+        // const decoded = jwt_decode(token);
+        // setAuthToken(token);
+        if(res.data &&  res.data.data && res.data.data.user ){
+            localStorage.setItem('jwtToken', res.data.data.user) ;
+            dispatch(setCurrentUser(res.data.data.user));
+        }
 
         dispatch(clearErrors())
-        history.push(`/dashboard`)
+        history.push(`/`)
         
     })
     .catch(err => {
-        console.log("error: ", err);
         dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
     })      
     .finally(() => dispatch(clearPageLoading()))
@@ -62,13 +61,11 @@ export const clearCurrentUser = () => {
 
 
 // Log user out (Verified)
-export const logoutUser = () => dispatch => {
-    // console.log("History in logoutUser: ", history);
+export const logoutUser = (history) => dispatch => {
     localStorage.removeItem('jwtToken');
-    setAuthToken(false);
+    // setAuthToken(false);
     dispatch(clearCurrentUser());
-    // console.log("History is: ", history);
-    // history.push('/login');
+    history.push('/login');
 };
 
 

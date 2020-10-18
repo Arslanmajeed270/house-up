@@ -1,111 +1,119 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
+import React , {Component} from 'react';
+import {Route, Redirect, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import PrivateRoute from './components/common/PrivateRoute';    
+import * as actions from './store/actions/index';
+
 
 import Index from "./pages";
+import LogIn from './components/Auth/Login/content'
 
-function App() {
+class App extends Component {
+    render() {
+
+        let loginCheck = false;
+    
+        if (localStorage.jwtToken) {
+          
+        //   setAuthToken(localStorage.jwtToken);
+        //   const decoded = jwt_decode(localStorage.jwtToken);
+          this.props.setCurrentUser(localStorage.jwtToken);
+          loginCheck = true;  
+        //   const currentTime = Date.now()/1000;
+      
+        //   if (decoded.exp < currentTime) {
+        //       this.props.logoutUser();
+        //       window.location.href = routesPrefix+'login';
+        //   }
+    
+      }
+
+
   return (
     <React.Fragment>
                 <Route      
                     exact 
-                    path={"/"} 
-                    component={
-                        () => <Index />
-                    }
-                />
-                <Route      
-                    exact 
                     path={"/login"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={LogIn}
                 />
-                <Route      
+                <PrivateRoute      
+                    exact 
+                    path={"/"} 
+                    component={Index}
+                />
+                <PrivateRoute      
                     exact 
                     path={"/index"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/account"} 
-                    component={
-                        () => <Index/>
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/boost"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/charts"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/feature"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/helper"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/properties"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/single-prop"} 
-                    component={
-                    () => <Index />
-                }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/single-user"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index }
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/single-vendor"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
-                <Route      
+                <PrivateRoute      
                     exact 
                     path={"/user"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index }
                 />
-                <Route      
+                <PrivateRoute         
                     exact 
                     path={"/Vendors"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
+                <Redirect to={loginCheck ? '/' : '/login'} />
     </React.Fragment>
-  );
+  )
+                }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+    return {
+      setCurrentUser: () => dispatch(actions.setCurrentUser()),
+      logoutUser: () => dispatch(actions.logoutUser())
+    };
+  };
+  
+  
+  export default withRouter(connect(null,mapDispatchToProps)(App));

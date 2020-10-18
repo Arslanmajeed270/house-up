@@ -43,7 +43,6 @@ componentDidMount() {
 
     render() { 
       const { dashboardData } = this.state;
-      console.log('checking dashboardData in index: ', dashboardData);
      
         return ( 
             <React.Fragment>

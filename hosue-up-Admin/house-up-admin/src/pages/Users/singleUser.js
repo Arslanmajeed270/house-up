@@ -32,7 +32,6 @@ class singleUser extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    console.log('checking id in sigle User: ', id);
     this.setState({
       id: id
     });
@@ -45,8 +44,6 @@ class singleUser extends Component {
 
     render() { 
       const { singleUserData } = this.state;
-      console.log('SINGLE User');
-      console.log('checking singleUserData in User: ', singleUserData);
       
         return ( 
             <React.Fragment>
@@ -63,7 +60,7 @@ class singleUser extends Component {
                           <div className="col-sm-12 col-lg-3">
                             <div className="pxp-agent-section mt-4 mt-md-5">
                               <div className="pxp-user-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0"
-                               style={{backgroundImage: `url(${singleUserData && singleUserData.profilePictureUrl ? singleUserData.profilePictureUrl : "assets/images/agent-2.jpg"})`, backgroundPosition: '50% 0%'}} />
+                               style={{backgroundImage: `url(${singleUserData && singleUserData.profilePictureUrl ? singleUserData.profilePictureUrl : require("../../assets/img/demo.png")})`, backgroundPosition: '50% 0%'}} />
                             </div>
                           </div>
                           <div className="col-sm-12 col-lg-8">
