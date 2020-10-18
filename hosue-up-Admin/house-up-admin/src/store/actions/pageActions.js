@@ -56,3 +56,4 @@ export const getDashboardData = () => dispatch => {
     })      
     .finally(() => dispatch(clearPageLoading()))
 };
+

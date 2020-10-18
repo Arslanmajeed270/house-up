@@ -1,10 +1,12 @@
 import {
 	PAGE_LOADING,
-	PAGE_LOADED
+	PAGE_LOADED,
+	SET_INDEX_DATA
 } from '../actions/actionTypes';
 
 const initialState = {
-	loading: false
+	loading: false,
+	indexPageData :{}
 };
 
 export default function (state = initialState, action) {
@@ -15,11 +17,14 @@ export default function (state = initialState, action) {
 				...state,
 				loading: true
 			};
-
 		case PAGE_LOADED:
 			return {
 				...state,
 				loading: false
+			};
+		case SET_INDEX_DATA:
+			return {
+				indexPageData : action.payload
 			};
 	default:
 			return state;

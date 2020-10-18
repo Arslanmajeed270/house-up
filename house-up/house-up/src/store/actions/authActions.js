@@ -107,3 +107,4 @@ export const resetUserPassword = (inputData, verificationToken, history) => disp
     .catch(err => dispatch({type: SET_ERRORS, payload: err.response.data}))
     .finally(() => dispatch(clearPageLoading()));
 };
+

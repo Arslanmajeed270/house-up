@@ -24,7 +24,7 @@ function App() {
       />
         <Route
         exact 
-        path={'/single-vendor'}
+        path={'/single-vendor-:id'}
         component={Index}
       />
         <Route
@@ -75,6 +75,11 @@ function App() {
       <Route
         exact 
         path={'/vendors'}
+        component={Index}
+      />
+      <Route
+        exact 
+        path={'/index'}
         component={Index}
       /> 
     </React.Fragment>

@@ -21,120 +21,88 @@ import Index from '../components/Home';
 class Routes extends React.Component {
 
 	render(){
-		console.log("checking props: ", this.props);
+		// console.log("checking props in routes.js:  ", this.props);
 		return (
 			<Router>
 				<Route      
 					exact 
 					path={"/"} 
-					component={
-						() => <Home />
-					}
+					component={Home}
 				/>
 				<Route      
 					exact 
 					path={"/index"} 
-					component={
-						() => <Index />
-					}
+					component={Index}
 				/>
 				<Route      
 					exact 
 					path={"/about"} 
-					component={
-						() => <About />
-					}
+					component={About}
 				/>
 				<Route      
 					exact 
 					path={"/add-new-prop"} 
-					component={
-						() => <AddNewProp />
-					}
+					component={AddNewProp}
 				/>
 				<Route      
 					exact 
-					path={"/single-vendor"} 
-					component={
-						() => <SingleVendor />
-					}
+					path={"/single-vendor-:id"} 
+					component={SingleVendor}
 				/>
 				<Route      
 					exact 
 					path={"/blogs"} 
-					component={
-						() => <Blogs />
-					}
+					component={Blogs}
 				/>
 				<Route      
 					exact 
 					path={"/about"} 
-					component={
-						() => <About />
-					}
+					component={About}
 				/>
 				<Route      
 					exact 
 					path={"/coming-soon"} 
-					component={
-						() => <ComingSoon />
-					}
+					component={ComingSoon}
 				/>
 				<Route      
 					exact 
 					path={"/comments"} 
-					component={
-						() => <Comments />
-					}
+					component={Comments}
 				/>
 				<Route      
 					exact 
 					path={"/contact"} 
-					component={
-						() => <Contact />
-					}
+					component={Contact}
 				/>
 				<Route      
 					exact 
 					path={"/home"} 
-					component={
-						() => <Home />
-					}
+					component={Home}
 				/>
 				<Route      
 					exact 
 					path={"/privacy"} 
-					component={
-						() => <Privacy />
-					}
+					component={Privacy}
 				/>
 				<Route      
 					exact 
 					path={"/properties"} 
-					component={
-						() => <Properties />
-					}
+					component={Properties}
 				/>
 				<Route      
 					exact 
 					path={"/single-post"} 
-					component={
-						() => <SinglePost />
-					}
+					component={SinglePost}
 				/>
 				<Route      
 					exact 
 					path={"/single-prop"} 
-					component={
-						() => <SingleProp />
-					}
+					component={SingleProp}
 				/>
 				<Route      
 					exact 
 					path={"/vendors"} 
-					component={
-						() => <Vendors />
-					}
+					component={Vendors}
 				/>
 			</Router>
 		);

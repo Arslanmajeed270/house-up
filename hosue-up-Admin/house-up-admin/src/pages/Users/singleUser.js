@@ -1,9 +1,53 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 class singleUser extends Component {
-    state = {  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      singleUserData: {},
+      id: null
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+  
+    let userPage = props.userPage;
+
+    let stateChanged = false;
+    let changedState = {};
+
+    if(userPage && JSON.stringify(state.singleUserData) !== JSON.stringify(userPage.singleUserData)){
+      changedState.singleUserData = userPage.singleUserData;  
+      stateChanged = true;
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+
+  }
+
+  componentDidMount() {
+    const id = this.props.match.params.id;
+    console.log('checking id in sigle User: ', id);
+    this.setState({
+      id: id
+    });
+
+    let userData = {
+      userId: id
+    }
+    this.props.onGetSingleUserData(userData);
+  }
+
     render() { 
+      const { singleUserData } = this.state;
+      console.log('SINGLE User');
+      console.log('checking singleUserData in User: ', singleUserData);
+      
         return ( 
             <React.Fragment>
               <div className="page-holder w-100 d-flex flex-wrap">
@@ -18,39 +62,29 @@ class singleUser extends Component {
                         <div className="row">
                           <div className="col-sm-12 col-lg-3">
                             <div className="pxp-agent-section mt-4 mt-md-5">
-                              <div className="pxp-user-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" style={{backgroundImage: 'url(assets/images/customer-4.jpg)', backgroundPosition: '50% 0%'}} />
+                              <div className="pxp-user-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0"
+                               style={{backgroundImage: `url(${singleUserData && singleUserData.profilePictureUrl ? singleUserData.profilePictureUrl : "assets/images/agent-2.jpg"})`, backgroundPosition: '50% 0%'}} />
                             </div>
                           </div>
                           <div className="col-sm-12 col-lg-8">
                             <div className="pxp-agent-section mt-4 mt-md-5">
-                              <h3>Erika Tillman</h3>
+                              <h3>{ singleUserData && singleUserData.firstName} { singleUserData && singleUserData.lastName}</h3>
                               <div className="mt-3 mt-md-4">
                                 <div className="col-lg-12"><Link to="" className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
                                     <div className="row">
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">@christian.bale12</h6>
+                                        <h6 className="mb-0">{ singleUserData && singleUserData.userName}</h6>
                                       </div>
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">+92 300 8134076</h6>
+                                        <h6 className="mb-0">{ singleUserData && singleUserData.msisdn}</h6>
                                       </div>
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">christian.bale12@gmail.com</h6>
+                                        <h6 className="mb-0">@{ singleUserData && singleUserData.emailAddress}</h6>
                                       </div>
                                       <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">Sale Property</div>
+                                        <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">{ singleUserData && singleUserData.keywordsDescribeYourBusiness}</div>
                                       </div> 
-                                      <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">Vendor Service</div>
-                                      </div>
-                                      <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">Residential</div>
-                                      </div>
-                                      <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">Commercial</div>
-                                      </div>  
-                                      <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">Lawyer</div>
-                                      </div>                            
+                                                                
                                     </div></Link></div>
                                 <p>Award winner and nominee, Erika Tillman, is one of NYC’s top producing agents. In 2016 she was a Top Producer Individual by sales volume and GCI. This high achiever received, among other recognitions, a Quadruple Platinum Award and was cover of Outfront Magazine in December 2016.</p>
                               </div>
@@ -140,5 +174,16 @@ class singleUser extends Component {
          );
     }
 }
+const mapStateToProps = state => {
+  return {
+    userPage: state.userPage
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetSingleUserData: (userData) => dispatch(actions.getSingleUserData(userData))
+  }
+};
  
-export default singleUser;
+export default connect(mapStateToProps, mapDispatchToProps)(singleUser);

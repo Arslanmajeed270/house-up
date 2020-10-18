@@ -30,7 +30,7 @@ class footer extends Component {
                                 <li><Link to='/vendors'>Vendors</Link></li>
                                 <li><Link to='/blogs'>Resources</Link></li>
                                 {/*   <li><Link to="">Demos</Link></li> */}
-                                <li><Link href="/contact">Contact Us</Link></li>
+                                <li><Link to="/contact">Contact Us</Link></li>
                               </ul>
                             </div>
                             <div className="col-sm-12 col-md-4">

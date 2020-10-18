@@ -5,8 +5,6 @@ import Footer from '../components/footer';
 
 
 class index extends Component {
-
-
     render() {
         return (
             <React.Fragment>
