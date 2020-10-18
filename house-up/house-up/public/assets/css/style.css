@@ -4709,6 +4709,7 @@ fieldset[disabled] .checkbox.custom-checkbox input:checked+span {
     }
     .pxp-props-carousel-right {
         padding-left: calc((100% - 960px) / 2 + 15px);
+        margin-left: 120px !important;
     }
     .pxp-testim-1 {
         padding-left: calc((100% - 960px) / 2 + 15px);

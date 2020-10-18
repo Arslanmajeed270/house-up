@@ -9,7 +9,7 @@ export {
     setPageLoading,
     clearPageLoading,
     clearErrors,
-    getHomePageData
+    getIndexPageData
 } from './pageActions';
 
 export {
