@@ -10,7 +10,6 @@ import {
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
-// let routesPrefix = '/;
    
 
 
@@ -36,10 +35,10 @@ export const clearErrors = () => {
 export const getIndexPageData = () => dispatch => {
     axios
     .post(
-		// backendServerURL+'/home',
-		// {
-		// 	"userTypeId": 1
-		// }
+		backendServerURL+'/home',
+		{
+			"userTypeId": 1
+		}
     )
     .then(res => {
 		console.log('checking Home page data' , res);
