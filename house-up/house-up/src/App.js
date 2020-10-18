@@ -12,6 +12,13 @@ function App() {
         path={'/'}
         component={Index}
       />
+        <Route
+        exact 
+        path={'/home'}
+        component={
+          () => <Index animateHeader={true} />
+        }
+      />
       <Route
         exact 
         path={'/about'}
@@ -19,7 +26,7 @@ function App() {
       />
         <Route
         exact 
-        path={'/add-new-prop'}
+        path={'/add-property'}
         component={Index}
       />
         <Route
@@ -49,11 +56,6 @@ function App() {
       />
         <Route
         exact 
-        path={'/home'}
-        component={Index}
-      />
-        <Route
-        exact 
         path={'/privacy'}
         component={Index}
       />
@@ -69,7 +71,7 @@ function App() {
       />
       <Route
         exact 
-        path={'/single-prop'}
+        path={'/single-property'}
         component={Index}
       />  
       <Route
@@ -77,11 +79,6 @@ function App() {
         path={'/vendors'}
         component={Index}
       />
-      <Route
-        exact 
-        path={'/index'}
-        component={Index}
-      /> 
     </React.Fragment>
   );
 }

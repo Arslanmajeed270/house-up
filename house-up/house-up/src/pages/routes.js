@@ -1,21 +1,20 @@
 import React from 'react';
 import {BrowserRouter as Router , Route,  withRouter} from 'react-router-dom';
 
-
-import About from './Main/about';
+import About from './About/about';
 import AddNewProp from './Properties/addNewProp';
 import SingleVendor from './User/singleVendor';
-import Blogs from './Main/blogs';
-import Comments from './Main/comments';
-import Contact from './Main/contact';
-import Home from './Main/home';
-import Privacy from './Main/privacy';
+import Blogs from './Blogs/blogs';
+import Comments from './Comments/comments';
+import Contact from './Contact/contact';
+import Home from './Home/home';
+import Privacy from './Privacy/privacy';
 import Properties from './Properties/properties';
 import SinglePost from './Properties/singlePost';
 import SingleProp from './Properties/singleProp';
 import Vendors from './User/vendors';
-import ComingSoon from './Main/comingSoon';
-import Index from '../components/Home';
+import ComingSoon from './CommingSoom/comingSoon';
+import Index from './Index';
 
 
 class Routes extends React.Component {
@@ -27,12 +26,12 @@ class Routes extends React.Component {
 				<Route      
 					exact 
 					path={"/"} 
-					component={Home}
+					component={Index}
 				/>
 				<Route      
 					exact 
-					path={"/index"} 
-					component={Index}
+					path={"/home"} 
+					component={Home}
 				/>
 				<Route      
 					exact 
@@ -41,7 +40,7 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/add-new-prop"} 
+					path={"/add-property"} 
 					component={AddNewProp}
 				/>
 				<Route      
@@ -76,11 +75,6 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/home"} 
-					component={Home}
-				/>
-				<Route      
-					exact 
 					path={"/privacy"} 
 					component={Privacy}
 				/>
@@ -96,7 +90,7 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/single-prop"} 
+					path={"/single-property"} 
 					component={SingleProp}
 				/>
 				<Route      
