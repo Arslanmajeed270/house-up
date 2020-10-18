@@ -5,7 +5,7 @@ import {
     PAGE_LOADING,
 	PAGE_LOADED,
 	CLEAR_ERRORS,
-	SET_HOME_DATA,
+	SET_INDEX_DATA,
 	SET_ERRORS
 } from './actionTypes';
 
@@ -32,8 +32,8 @@ export const clearErrors = () => {
 	};
 };
 
-//Home  - Get HomePage data from backend
-export const getHomePageData = () => dispatch => {
+//INDEX  - Get indexPage data from backend
+export const getIndexPageData = () => dispatch => {
     axios
     .post(
 		backendServerURL+'/home',
@@ -45,7 +45,7 @@ export const getHomePageData = () => dispatch => {
 		console.log('checking Home page data' , res);
         dispatch(
 			{
-				type: SET_HOME_DATA,
+				type: SET_INDEX_DATA,
 				payload: res.data && res.data.data  ? res.data.data : {}
 			}
 		);        
