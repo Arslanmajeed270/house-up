@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.owl-carousel.pxp-props-carousel-right-stage-2 li.alice-carousel__stage-item.__active {
+  width: 100px !important;
+}
+

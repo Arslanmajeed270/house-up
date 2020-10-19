@@ -5,10 +5,12 @@ import Footer from '../components/footer';
 
 
 class index extends Component {
+
     render() {
+        const animateHeader = this.props.animateHeader;
         return (
             <React.Fragment>
-                <Header />
+                <Header animateHeader={animateHeader} />
                 <Routes />
                 <Footer />            
             </React.Fragment>

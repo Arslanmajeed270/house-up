@@ -10,7 +10,6 @@ import {
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
-// let routesPrefix = '/;
    
 
 
