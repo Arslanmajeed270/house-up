@@ -67,9 +67,10 @@ class index extends Component {
 const locationItems = [];
 if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts.length){
   for(let i=0; i<indexPageData.propertyCounts.length; i++){
-    let locationItem = (<div>
+    let locationItem = (<div className="neighbourhoods_slider">
       <Link to="#" />
-      <div className="pxp-prop-card-explore" style={{backgroundImage: 'url(assets/images/dashboard/ottawa.png)'}}><Link to="#">
+      <div className="pxp-prop-card-explore" style={{backgroundImage: `url(${ 
+        indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].properties[0] && indexPageData.propertyCounts[i].properties[0].imageList[0] && indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL ? indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }}><Link to="#">
           <div className="d-table w-100 ">
             <div className="d-table-cell va-bottom neighbours-height paddg">
               <h2>OSHAWA</h2>
@@ -143,16 +144,16 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                                 <div className="row">
                                   <div className="col-md-9 col-sm-9 col-8">
                                     <div className="vendor-detail">
-                                      {data && data.firstName} {data && data.lastName}
+                                      { data && data.firstName ?  data.firstName : ''} {data && data.lastName ? data.lastName : ''}
                                       <p>
-                                        <span>{data && data.keywordsDescribeYourBusiness ? data.keywordsDescribeYourBusiness : " " }</span>
+                                        <span>{ data && data.keywordsDescribeYourBusiness && data.keywordsDescribeYourBusiness !== "null" ? data.keywordsDescribeYourBusiness : " " }</span>
                                         <i className="fa fa-star blue" />
                                         <i className="fa fa-star blue" />
                                         <i className="fa fa-star blue" />
                                         <i className="fa fa-star grey" />
                                         <i className="fa fa-star grey" />
                                       </p>
-                                      <span className="address-span">{data && data.address}</span>
+                                      <span className="address-span">{ data && data.address ? data.address : '' }</span>
                                     </div>
                                   </div>
                                   <div className="col-md-3 col-sm-3 col-4">
@@ -161,7 +162,6 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                                 </div>
                               </div>
                             </Link>
-
                             )
                             }
                             <div key={index} className="sort-by">
@@ -187,12 +187,24 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                               </li>
                             </ul>
                             <Link to="">
-                            <div class="pxp-prop-card-featured" style={{backgroundImage: `url(${data && data.object && data.object.user && data.object.user.profilePictureUrl ? data.object.user.profilePictureUrl : "assets/images/dashboard/sherlin.png"} )`}}>
+                              {data.category && data.category === "Post" ? 
+                              <div className="dashboard-newsfeed-img" 
+                              style={{
+                                backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/dashboard/nearby-7.png") }  )` }}>
+                              </div>
+                              :
+                              null
+                            }
+
+                            
 
                             { data.category && data.category === "Property" ?
-                              <>
+                              <div class="pxp-prop-card-featured" 
+                              style={{
+                                backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL :  require("../../assets/images/dashboard/nearby-7.png") } )`}}
+                              >
                               <div class="for-rent">
-                              <h4>FOR RENT</h4>
+                              <h4> {data.object && data.object.adTitle ? data.object.adTitle : '' } </h4>
                           </div>               
                            <div class="d-table w-100 ">
                               <div class="d-table-cell va-bottom featured-height">
@@ -200,7 +212,7 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                                   <div class="row">
                                       <div class="col-md-6 col-sm-6 col-6">
                                           <div class="feature-head">
-                                              <span><b> $98.00</b>/per night</span>
+                                              <span><b> {data.object && data.object.price ? `${data.object.currency && data.object.currency.symbol ? data.object.currency.symbol : '$' }${data.object.price}.00` : '0'}</b>/per night</span>
                                           </div>
                                       </div>
                                       <div class="col-md-6 col-sm-6 col-6">
@@ -208,10 +220,8 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                                   </div>
                               </div>
                           </div>
-                          </>
-                            
+                          </div>
                                : null }
-                               </div>
                               </Link>
                             <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
                             <div />
@@ -286,8 +296,8 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                               </div>
                               <div className="col-md-7 col-nopadd">
                                 <div className="suggested-vendor-name">
-                                  <p>{data && data.firstName} {data && data.lastName}</p>
-                                  <span>{data && data.keywordsDescribeYourBusiness}</span>
+                                  <p>{data && data.firstName ? data.firstName : ''} {data && data.lastName ? data.lastName : '' }</p>
+                                  <span>{data && data.keywordsDescribeYourBusiness && data.keywordsDescribeYourBusiness !== 'null' ? data.keywordsDescribeYourBusiness : '' }</span>
                                 </div>
                               </div>
                               <div className="col-md-3">
@@ -321,29 +331,6 @@ const locationResponcive  = {
   568: { items: 1 },
   1024: { items: 1.3 },
 };
-// const locationItems =[
-//   <div>
-//     <Link to="" /><div className=" nodecor pxp-prop-card-explore" style={{backgroundImage: 'url(assets/images/dashboard/toronto.png)'}}><Link to="">
-//         <div className="d-table w-100 ">
-//           <div className="d-table-cell va-bottom neighbours-height paddg">
-//             <div className="cities-name"> TORONTO</div>
-//             <div className="cities-Properties"> 23 Properties</div>
-//           </div>
-//         </div></Link>
-//     </div>
-//   </div>,
-//   <div>
-//     <Link to='/properties' /><div className="pxp-prop-card-explore" style={{backgroundImage: 'url(assets/images/dashboard/ontario.png)'}}><Link to='/properties'>
-//         <div className="d-table w-100 ">
-//           <div className="d-table-cell va-bottom neighbours-height paddg">
-//             <h2>BARRIE</h2>
-//             <p>15 Properties</p>
-//           </div>
-//         </div></Link>
-//     </div>
-//   </div>,
-  
-// ]
  
 const mapStateToProps = state => {
   return {

@@ -16,3 +16,10 @@ code {
   width: 100px !important;
 }
 
+.neighbourhoods_slider{
+  width: 475px;
+}
+
+.neighbourhoods_slider .pxp-prop-card-explore{
+  width: 445px;
+}
