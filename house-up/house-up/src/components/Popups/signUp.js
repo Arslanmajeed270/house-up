@@ -1,55 +1,52 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
 
-class signUp extends Component {
+class signUpPopup extends Component {
     render() {
         return (
-            <React.Fragment>
-                <div className="modal fade" id="pxp-signup-modal" tabhome={-1} role="dialog" aria-labelledby="pxpSignupModal" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered" role="document">
-                    <div className="modal-content">
-                    <div className="modal-header">
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div className="modal-body">
-                        <h5 className="modal-title" id="pxpSignupModal">Create an account</h5>
-                        <form className="mt-4">
-                        <div className="row">
-                            <div className="col-6">
-                            <div className="form-group">
-                                <label htmlFor="pxp-signup-firstname">First Name</label>
-                                <input type="text" className="form-control" id="pxp-signup-firstname" placeholder="Enter first name" />
+                <Modal 
+                    show={this.props.signupState}
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    >
+                    <Modal.Header closeButton>
+                    </Modal.Header>
+                    <Modal.Body >
+                    <h5 class="modal-title" id="pxpSignupModal">Create an account</h5>
+                        <form class="mt-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="pxp-signup-firstname">First Name</label>
+                                        <input type="text" class="form-control" id="pxp-signup-firstname" placeholder="Enter first name" />
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="pxp-signup-lastname">Last Name</label>
+                                        <input type="text" class="form-control" id="pxp-signup-lastname" placeholder="Enter last name" />
+                                    </div>
+                                </div>
                             </div>
+                            <div class="form-group">
+                                <label for="pxp-signup-email">Email</label>
+                                <input type="text" class="form-control" id="pxp-signup-email" placeholder="Enter your email address" />
                             </div>
-                            <div className="col-6">
-                            <div className="form-group">
-                                <label htmlFor="pxp-signup-lastname">Last Name</label>
-                                <input type="text" className="form-control" id="pxp-signup-lastname" placeholder="Enter last name" />
+                            <div class="form-group">
+                                <label for="pxp-signup-pass">Password</label>
+                                <input type="password" class="form-control" id="pxp-signup-pass" placeholder="Create a password" />
                             </div>
+                            <div class="form-group">
+                                <Link to="#" class="pxp-agent-contact-modal-btn">Sign Up</Link>
                             </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="pxp-signup-email">Email</label>
-                            <input type="text" className="form-control" id="pxp-signup-email" placeholder="Enter your email address" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="pxp-signup-pass">Password</label>
-                            <input type="password" className="form-control" id="pxp-signup-pass" placeholder="Create a password" />
-                        </div>
-                        <div className="form-group">
-                            <Link to="#" className="pxp-agent-contact-modal-btn">Sign Up</Link>
-                        </div>
-                        <div className="text-center mt-4 pxp-modal-small">
-                            Already have an account? <Link to="" className="pxp-modal-link pxp-signin-trigger">Sign in</Link>
-                        </div>
+                            <div class="text-center mt-4 pxp-modal-small">
+                                Already have an account? <Link to="" class="pxp-modal-link pxp-signin-trigger">Sign in</Link>
+                            </div>
                         </form>
-                    </div>
-                    </div>
-                </div>
-                </div>
-          </React.Fragment>
+                    </Modal.Body>
+                </Modal>  
         )
     }
 }
-export default signUp;
+export default signUpPopup;

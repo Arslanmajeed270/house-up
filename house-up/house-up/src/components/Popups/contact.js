@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
 
-class message extends Component {
+class contactPopup extends Component {
     render() {
         return (
-            <React.Fragment>
-                <div className="modal fade" id="pxp-contact-agent" tabhome={-1} role="dialog" aria-labelledby="pxpContactAgentModal" aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <h5 className="modal-title" id="pxpContactAgentModal">
+                <Modal 
+                    show={this.props.contactModalState}
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton >
+                    </Modal.Header>
+                    <Modal.Body >
+                    <h5 className="modal-title" id="pxpContactAgentModal">
                             Contact Information
                             </h5>
                             <form className="mt-4">
@@ -31,18 +31,15 @@ class message extends Component {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="pxp-contact-agent-message">Message</label>
-                                <textarea className="form-control" id="pxp-contact-agent-message" rows={4} defaultValue={"I would like more information about Beautiful House in Marina on 542 29th Avenue."} />
+                                <textarea className="form-control" id="pxp-contact-agent-message" rows={4} defaultValue="" />
                             </div>
                             <div className="form-group mt-4">
-                                <a href="#" className="pxp-agent-contact-modal-btn">Send Message</a>
+                                <Link to="" className="pxp-agent-contact-modal-btn">Send Message</Link>
                             </div>
                             </form>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-            </React.Fragment>
+                    </Modal.Body>
+                </Modal> 
         )
     }
 }
-export default message;
+export default contactPopup;
