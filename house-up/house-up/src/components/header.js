@@ -1,7 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import SignInPopup from './Popups/signIn';
+
 class header extends Component {
+
+constructor(props) {
+    super(props);
+    this.state = {
+      loginState : false,
+      signupState : false
+    };
+  }
+
+
+  loginPopupHanlder = () =>{
+    this.setState({
+      loginState : !this.state.loginState
+    });
+  }
+
+  signupPopupHanlder = () =>{
+    this.setState({
+      signupState : !this.state.signupState
+    });
+  }
+
     render() { 
       const animateHeader = this.props.animateHeader;
         return ( 
@@ -46,8 +70,18 @@ class header extends Component {
                       </div>
                     </div>
                     <div className="col-5 col-md-1 text-right">
-                      <Link to="" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
-                      <Link to="" className="pxp-header-user pxp-signin-trigger forborder" ><span className="far fa-user" /></Link>
+                      <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
+                      <Link to="#" className="pxp-header-user pxp-signin-trigger forborder" 
+                        onClick={this.loginPopupHanlder} ><span className="far fa-user" /></Link>
+                      {this.state.loginState ? <SignInPopup  
+                        loginState = {this.state.loginState}
+                        signupState = {this.state.signupState}
+                        loginPopupHanldern = {this.loginPopupHanlder}
+                        signupPopupHanlder = {this.signupPopupHanlder}
+                      />
+                    : null
+                    }
+                      
                     </div>
                   </div>
                 </div>
@@ -92,3 +126,4 @@ class header extends Component {
 }
  
 export default header;
+

@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ContactPopup from '../../components/Popups/contact';
 
 class singleProp extends Component {
-    state = {  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      contactModalState : false
+    };
+  }
+
+
+
+    contactPopupHanlder = () =>{
+      this.setState({
+        contactModalState : !this.state.contactModalState
+      });
+      console.log('cecking login pop handler', this.state.signupState);
+    }
+
     render() { 
         return ( 
             <React.Fragment>
@@ -551,7 +567,9 @@ class singleProp extends Component {
                           </div>
                           <div className="clearfix" />
                           <div className="pxp-sp-agent-btns mt-3 mt-md-4">
-                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-envelope-o" /> Contact Us</Link>
+                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"  onClick={this.contactPopupHanlder}  ><span className="fa fa-envelope-o"/>
+                            {this.state.contactModalState ? <ContactPopup  contactModalState={this.state.contactModalState}  /> :null }
+                             Contact Us</Link>
                             <Link to="" className="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-calendar-check-o" /> Request
                               Tour</Link>
                           </div>

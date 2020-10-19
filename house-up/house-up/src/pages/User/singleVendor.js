@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import WorkPopup from '../../components/Popups/workVendor';
 
 
 
@@ -11,7 +12,8 @@ class singleVendor extends Component {
     super(props);
     this.state = {
       singleVendorData: {},
-      id: null
+      id: null,
+      workModalState : false
     };
   }
   static getDerivedStateFromProps(props, state) {
@@ -46,6 +48,13 @@ class singleVendor extends Component {
     this.props.onGetSingleVendorsData(userData);
   }
 
+
+  workPopupHanlder = () =>{
+    this.setState({
+      workModalState : !this.state.workModalState
+    });
+  }
+
     render() { 
       const { singleVendorData } = this.state;
       console.log('SINGLE VENDORS');
@@ -70,7 +79,8 @@ class singleVendor extends Component {
                           <div className="pxp-agent-phone"><span className="fa fa-phone" /> {singleVendorData && singleVendorData.msisdn}</div>
                         </div>
                         <div className="mt-4 mt-md-5">
-                          <Link to="#pxp-work-with" className="pxp-agent-contact-btn" data-toggle="modal" data-target="#pxp-work-with">
+                          <Link to="#pxp-work-with" className="pxp-agent-contact-btn" data-toggle="modal" data-target="#pxp-work-with" onClick={this.workPopupHanlder} >
+                            {this.state.workModalState ? <WorkPopup workModalState={this.state.workModalState} /> : null }
                             Work with {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </Link>
                         </div>
                       </div>
@@ -98,10 +108,10 @@ class singleVendor extends Component {
                         <div className="pxp-agent-section mt-4 mt-md-5">
                           <h3>Social Media</h3>
                           <ul className="list-unstyled pxp-agent-social mt-3 mt-md-4">
-                            <li><Link to=""><span className="fa fa-facebook" /></Link></li>
-                            <li><Link to=""><span className="fa fa-twitter" /></Link></li>
-                            <li><Link to=""><span className="fa fa-pinterest" /></Link></li>
-                            <li><Link to=""><span className="fa fa-linkedin" /></Link></li>
+                            <li><Link to="#"><span className="fa fa-facebook" /></Link></li>
+                            <li><Link to="#"><span className="fa fa-twitter" /></Link></li>
+                            <li><Link to="#"><span className="fa fa-pinterest" /></Link></li>
+                            <li><Link to="#"><span className="fa fa-linkedin" /></Link></li>
                           </ul>
                         </div>
                       </div>
@@ -182,10 +192,10 @@ class singleVendor extends Component {
                       </div>
                     </div>
                     <ul className="pagination pxp-paginantion mt-3 mt-md-4">
-                      <li className="page-item active"><Link className="page-link" to="">1</Link></li>
-                      <li className="page-item"><Link className="page-link" to="">2</Link></li>
-                      <li className="page-item"><Link className="page-link" to="">3</Link></li>
-                      <li className="page-item"><Link className="page-link" to="">Next <span className="fa fa-angle-right" /></Link></li>
+                      <li className="page-item active"><Link className="page-link" to="#">1</Link></li>
+                      <li className="page-item"><Link className="page-link" to="#">2</Link></li>
+                      <li className="page-item"><Link className="page-link" to="#">3</Link></li>
+                      <li className="page-item"><Link className="page-link" to="#">Next <span className="fa fa-angle-right" /></Link></li>
                     </ul>
                     <div className="row mt-100">
                       <div className="col-sm-12 col-lg-1" />
@@ -244,7 +254,7 @@ class singleVendor extends Component {
                                 <label htmlFor="pxp-agent-comments-review">Write a Review</label>
                                 <textarea className="form-control" id="pxp-agent-comments-review" rows={6} placeholder="Write your review here..." defaultValue={""} />
                               </div>
-                              <Link to="" className="pxp-agent-comments-form-btn">Post Review</Link>
+                              <Link to="#" className="pxp-agent-comments-form-btn">Post Review</Link>
                             </form>
                           </div>
                         </div>
