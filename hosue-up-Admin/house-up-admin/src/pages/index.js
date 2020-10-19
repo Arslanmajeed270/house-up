@@ -17,19 +17,16 @@ class index extends Component {
     }
 
     sideBarHandler = () =>{
-        console.log('checking');
             this.setState ({
                 sideBarShow : !this.state.sideBarShow 
         })
     }
     notificationToggle = () => {
-        console.log('checking');
             this.setState ({
                 notificationShow : !this.state.notificationShow
         })
       }
       userToggleHandler = () => {
-        console.log('checking');
             this.setState ({
                 userShow : !this.state.userShow
         })

@@ -1,9 +1,44 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/authActions';
 class Content extends Component {
+
+
+  constructor(props) {
+    super(props);
+    this.state = {
+        email: '',
+        password: '',
+    };
+}
+
+  
+onChange = e => {
+  this.setState({
+    [e.target.name]: e.target.value
+  });
+}
+
+
+ onSubmit = e => {
+  console.log('checking click handler');
+
+       e.preventDefault();
+
+       const userData = {
+            emailAddress: this.state.email,
+            password: this.state.password,
+            channel: "HouseUp"
+       };
+
+       this.props.onLogin(userData, this.props.history);
+   }
     state = {  }
     render() { 
+      const { email, password} = this.state;
+
         return ( 
             <React.Fragment>
               <div className="page-holder d-flex align-items-center">
@@ -18,10 +53,22 @@ class Content extends Component {
                       <p className="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>
                       <form id="loginForm" action="index.html" className="mt-4">
                         <div className="form-group mb-4">
-                          <input type="text" name="username" placeholder="Username or Email address" className="form-control border-0 shadow form-control-lg" />
+                          <input type="text" 
+                            name="email"
+                            placeholder="Username or Email address" 
+                            className="form-control border-0 shadow form-control-lg" 
+                            value={ email}
+                            onChange={this.onChange}
+                           />
                         </div>
                         <div className="form-group mb-4">
-                          <input type="password" name="passowrd" placeholder="Password" className="form-control border-0 shadow form-control-lg text-violet" />
+                          <input type="password" 
+                            name="password" 
+                            placeholder="Password" 
+                            className="form-control border-0 shadow form-control-lg text-violet"
+                            value={password}
+                            onChange={this.onChange} 
+                          />
                         </div>
                         <div className="form-group mb-4">
                           <div className="custom-control custom-checkbox">
@@ -29,17 +76,32 @@ class Content extends Component {
                             <label htmlFor="customCheck1" className="custom-control-label">Remember Me</label>
                           </div>
                         </div>
-                        <button type="submit" className="btn btn-primary shadow px-5">Log in</button>
+                        <button type="submit" 
+                          className="btn btn-primary shadow px-5"
+                          onClick={this.onSubmit}
+                            >Log in</button>
                       </form>
                     </div>
                   </div>
                   <p className="mt-5 mb-0 text-gray-400 text-center">Design by <Link to="https://bootstrapious.com/admin-templates" className="external text-gray-400">Bootstrapious</Link> &amp; Your company</p>
-                  {/* Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)                 */}
-                </div>
+                  </div>
               </div>
             </React.Fragment>
          );
     }
 }
  
-export default Content;
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onLogin: (email, history) => dispatch(actions.loginUser(email, history)),
+      
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Content);

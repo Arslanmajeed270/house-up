@@ -33,7 +33,6 @@ class singleVendor extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    console.log('checking id in sigle vendero: ', id);
     this.setState({
       id: id
     });
@@ -46,8 +45,6 @@ class singleVendor extends Component {
 
     render() { 
       const { singleVendorData } = this.state;
-      console.log('SINGLE VENDORS');
-      console.log('checking singleVendorsData in vendors: ', singleVendorData);
       
         return ( 
             <React.Fragment>
@@ -64,7 +61,7 @@ class singleVendor extends Component {
                           <div className="col-sm-12 col-lg-3">
                             <div className="pxp-agent-section mt-4 mt-md-5">
                               <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
-                              style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl : 'assets/images/agent-1.jpg' })`, backgroundPosition: '50% 0%'}} />
+                              style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl :  require("../../assets/img/demo.png") })`, backgroundPosition: '50% 0%'}} />
                             </div>
                           </div>
                           <div className="col-sm-12 col-lg-8">
@@ -96,7 +93,22 @@ class singleVendor extends Component {
                                       </div>
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <h6 className="mb-0">{singleVendorData && singleVendorData.address}</h6>
-                                      </div>                                     
+                                      </div>   
+                                      <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                                        <Link to="" className="no-anchor-style buisness-documents">Business Registration Document</Link>
+                                        <Link to="" className="no-anchor-style buisness-documents">Supporting Documents (optional) </Link>
+                                      </div>
+                                      <div className="bottom-line">
+                                        <div className="subscription" >
+                                          <button className="btn btn-primary vendor-subscription" >Monthly Subscriber</button>
+                                        </div>
+                                        <div className="status">
+                                          <select className="vendor-status" >
+                                            <option value="" selected="selected">Active</option>
+                                            <option value="">Inactive</option>
+                                          </select>
+                                        </div>
+                                      </div>                                   
                                     </div></Link></div>
                                 <p>Award winner and nominee, Erika Tillman, is one of NYC’s top producing agents. In 2016 she was a Top Producer Individual by sales volume and GCI. This high achiever received, among other recognitions, a Quadruple Platinum Award and was cover of Outfront Magazine in December 2016.</p>
                               </div>

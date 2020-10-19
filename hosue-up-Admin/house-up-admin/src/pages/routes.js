@@ -14,7 +14,6 @@ import SingleUser from './Users/singleUser';
 import SingleVendor from './Users/singleVendor';
 import User from './Users/user';
 import Vendors from './Users/vendor';
-import LogIn from '../components/Auth/Login/content';
 
 
 class routes extends Component {
@@ -25,11 +24,6 @@ class routes extends Component {
                     exact 
                     path={"/"} 
                     component={Index}
-                />
-                <Route      
-                    exact 
-                    path={"/login"} 
-                    component={LogIn}
                 />
                 <Route      
                     exact 
