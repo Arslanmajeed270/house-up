@@ -94,7 +94,7 @@ class vendor extends Component {
                       <div key={index} className="col-sm-12 col-md-6 col-lg-3">
                         <Link to={`/single-vendor-${data && data.userId && data.userId}`}  className="pxp-agents-1-item">
                           <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: `url(${data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/agent-2.jpg'})`, backgroundPosition: 'top center'}} />
+                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: `url(${data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`, backgroundPosition: 'top center'}} />
                           </div>
                           <div className="pxp-agents-1-item-details rounded-lg">
                             <div className="pxp-agents-1-item-details-name">{data.firstName} {data.lastName}</div>

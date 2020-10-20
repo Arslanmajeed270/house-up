@@ -1,6 +1,5 @@
 import axios from 'axios';
 import setAuthToken from '../../utils/setAuthToken';
-import jwt_decode from 'jwt-decode';
 
 import {
     SET_ERRORS, 
@@ -23,19 +22,27 @@ export const loginUser = (userData, history) => dispatch => {
 
     axios
     .post(
-        backendServerURL+'/auth/login', 
+        backendServerURL+'/authenticateUser', 
         userData
     )
     .then(res => {
         
-        const {token} = res.data;
-        localStorage.setItem('jwtToken', token);
-        setAuthToken(token);
-        const decoded = jwt_decode(token);
-        dispatch(setCurrentUser(decoded));
+        // const {token} = res.data;
+        // localStorage.setItem('jwtToken', token);
+        // setAuthToken(token);
+        // const decoded = jwt_decode(token);
+        // dispatch(setCurrentUser(decoded));
+
+        // dispatch(clearErrors())
+        // history.push(`/dashboard`)
+        console.log("res from backend while login",res);
+        if(res.data &&  res.data.data && res.data.data.user ){
+            localStorage.setItem('jwtToken', res.data.data.user) ;
+            dispatch(setCurrentUser(res.data.data.user));
+        }
 
         dispatch(clearErrors())
-        history.push(`/dashboard`)
+        history.push(`/`)
         
     })
     .catch(err => {

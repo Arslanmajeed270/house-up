@@ -85,7 +85,7 @@ class singleVendor extends Component {
                         </div>
                       </div>
                       <div className="col-sm-12 offset-lg-1 col-lg-3">
-                        <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl : 'assets/images/agent-2.jpg'})`, backgroundPosition: '50% 0%'}} />
+                        <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`, backgroundPosition: '50% 0%'}} />
                       </div>
                     </div>
                     <div className="row">

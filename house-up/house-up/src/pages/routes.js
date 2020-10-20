@@ -14,13 +14,12 @@ import SinglePost from './Properties/singlePost';
 import SingleProp from './Properties/singleProp';
 import Vendors from './User/vendors';
 import ComingSoon from './CommingSoom/comingSoon';
-import Index from './Index';
+import Index from './Index/index';
 
 
 class Routes extends React.Component {
 
 	render(){
-		// console.log("checking props in routes.js:  ", this.props);
 		return (
 			<Router>
 				<Route      

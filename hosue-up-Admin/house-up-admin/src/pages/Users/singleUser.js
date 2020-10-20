@@ -60,7 +60,7 @@ class singleUser extends Component {
                           <div className="col-sm-12 col-lg-3">
                             <div className="pxp-agent-section mt-4 mt-md-5">
                               <div className="pxp-user-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0"
-                               style={{backgroundImage: `url(${singleUserData && singleUserData.profilePictureUrl ? singleUserData.profilePictureUrl : require("../../assets/img/demo.png")})`, backgroundPosition: '50% 0%'}} />
+                               style={{backgroundImage: `url(${singleUserData && singleUserData.profilePictureUrl ? singleUserData.profilePictureUrl : require("../../assets/images/ic_profile_placeholder.png")})`, backgroundPosition: '50% 0%'}} />
                             </div>
                           </div>
                           <div className="col-sm-12 col-lg-8">
@@ -89,7 +89,7 @@ class singleUser extends Component {
                           </div>
                         </div>
                       </div>
-                      <h2 className="pxp-section-h2 mt-100">Listings by Erika Tillman</h2>
+                      {/* <h2 className="pxp-section-h2 mt-100">Listings by Erika Tillman</h2>
                       <div className="row mt-4 mt-md-5">
                         <div className="col-sm-12 col-md-6 col-lg-4">
                           <Link to="single-prop" className="pxp-prop-card-1 rounded-lg mb-4">
@@ -164,6 +164,7 @@ class singleUser extends Component {
                           </Link>
                         </div>
                       </div>
+                     */}
                     </div>
                   </section></div>
               </div>

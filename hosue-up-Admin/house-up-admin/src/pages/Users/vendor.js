@@ -30,6 +30,16 @@ class vendor extends Component {
 
   }
 
+  updateUserState = (userStateDesc , userId) =>
+  {
+    let userData = {
+      userId,
+      userStateDesc
+    };
+    console.log(userData);
+    this.props.onUpdateUserState(userData);
+  }
+
   componentDidMount() {
     this.props.onGetVendorsData();
   }
@@ -49,7 +59,7 @@ class vendor extends Component {
                     <div className="row">
                       {vendorsData && vendorsData.length ? 
                       vendorsData.map( (data, index) => 
-                      data.userStatusDesc === "Active" ?
+                      data.userStatusDesc === "Active" || data.userStatusDesc === "Approved" ?
                         <div key={index} className="col-lg-12">
                           <Link to={`/single-vendor-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
                           <div className="row">   
@@ -79,24 +89,25 @@ class vendor extends Component {
                               <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">{data.businessStartDate}</div>
                             </div>
                             <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 text-dark exclode">{data.address}</div>
+                              <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 text-dark exclode">{data.streetAddress}</div>
                             </div>                                       
                           </div>
                           </Link>
                         </div> 
                         :
+                         data.userStatusDesc ==="In Review" ?
                         <div key={index} className="row">
                           <div className="col-sm-12 col-lg-3">
                             <div className="pxp-agent-section mt-4 mt-md-5">
                               <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
-                              style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/agent-1.jpg' })`, backgroundPosition: '50% 0%'}} />
+                              style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png"' })`, backgroundPosition: '50% 0%'}} />
                             </div>
                           </div>
                           <div className="col-sm-12 col-lg-8">
                             <div className="pxp-agent-section mt-4 mt-md-5">
                               <h3>{data.firstName} {data.lastName} </h3>
                               <div className="mt-3 mt-md-4">
-                                <div className="col-lg-12"><Link to="/single-vendor" className="message card px-5 py-3 mb-4 no-anchor-style">
+                                <div className="col-lg-12"><Link to="#" className="message card px-5 py-3 mb-4 no-anchor-style">
                                     <div className="row">
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <h6 className="mb-0">@{data.userName} </h6>
@@ -132,8 +143,8 @@ class vendor extends Component {
                                       </div>
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <Link className="no-anchor-style buisness-documents" style={{width:'100%'}}>Supporting Documents (optional) </Link>
-                                        <button className="btn btn-primary approve-reject" >Approve</button>
-                                        <button className="btn btn-danger approve-reject" >Reject</button>
+                                        <button className="btn btn-primary approve-reject" onClick={()=>this.updateUserState("Approved" , data.userId)}>Approve</button>
+                                        <button className="btn btn-danger approve-reject" onClick={()=>this.updateUserState("Rejected" , data.userId)}>Reject</button>
                                       </div>
                                                                           
                                     </div></Link></div>
@@ -141,7 +152,8 @@ class vendor extends Component {
                             </div>
                           </div>
                         </div>
-                     
+                      
+                      : " "
 
                       )
                       : ''
@@ -173,7 +185,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetVendorsData: () => dispatch(actions.getVendorsData())
+      onGetVendorsData: () => dispatch(actions.getVendorsData()),
+      onUpdateUserState : (userData)=> dispatch(actions.updateUserState(userData))
   }
 };
  

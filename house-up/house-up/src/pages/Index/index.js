@@ -9,9 +9,7 @@ import "react-alice-carousel/lib/alice-carousel.css";
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-// import { Carousel } from 'react-bootstrap';
 
-// import Carousel from 'react-bootstrap/Carousel';
 
 class index extends Component {
   constructor(props) {
@@ -64,27 +62,26 @@ class index extends Component {
 
 
 
-const locationItems = [];
-if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts.length){
-  for(let i=0; i<indexPageData.propertyCounts.length; i++){
-    let locationItem = (<div className="neighbourhoods_slider">
-      <Link to="#" />
-      <div className="pxp-prop-card-explore" style={{backgroundImage: `url(${ 
-        indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].properties[0] && indexPageData.propertyCounts[i].properties[0].imageList[0] && indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL ? indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }}><Link to="#">
-          <div className="d-table w-100 ">
-            <div className="d-table-cell va-bottom neighbours-height paddg">
-              <h2>OSHAWA</h2>
-              <p>{indexPageData.propertyCounts[i].propertyCount} Properties</p>
-            </div>
-          </div></Link>
+  const locationItems = [];
+  if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts.length){
+    for(let i=0; i<indexPageData.propertyCounts.length; i++){
+      let locationItem = (<div className="neighbourhoods_slider">
+        <Link to="#" />
+        <div className="pxp-prop-card-explore" style={{backgroundImage: `url(${ 
+          indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].properties[0] && indexPageData.propertyCounts[i].properties[0].imageList[0] && indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL ? indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }}><Link to="#">
+            <div className="d-table w-100 ">
+              <div className="d-table-cell va-bottom neighbours-height paddg">
+                <h2>OSHAWA</h2>
+                <p>{indexPageData.propertyCounts[i].propertyCount} Properties</p>
+              </div>
+            </div></Link>
+        </div>
       </div>
-    </div>
-    ); 
-    locationItems.push(locationItem);
+      ); 
+      locationItems.push(locationItem);
+    }
   }
-}
 
-      // console.log('checking items: ', items);
         return ( 
             <React.Fragment>
               <main>
@@ -109,10 +106,24 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                               </div>
                             </div>
                           </div>
+                          <div key={index} className="sort-by">
+                            <div className="sort-heading mt-4" style={{marginBottom: '10px'}}>
+                              <div className="row">
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                                  <div className="sort-by-heading hhhsize">
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 col-sm-6 col-6">
+                                  <div className="sort-by-heading imgsize">
+                                    <p>SORT BY <img src="assets/images/icons/sort-by.png" alt="" /></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                             {
                             indexPageData && indexPageData.postNdPropertiesList &&
                             indexPageData.postNdPropertiesList.map((data, index) =>
-                            <React.Fragment>
+                            <React.Fragment key={index}>
                             {index === 2 && 
                             <div className="explore-our-neighbours">
                             <div className="row">
@@ -135,6 +146,7 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                                 </div>
                             </div>
                         </div>
+                        
                             } 
                             {index === 9 && 
                             indexPageData && indexPageData.vendors && indexPageData.vendors.map((data, index)=>
@@ -157,40 +169,35 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                                     </div>
                                   </div>
                                   <div className="col-md-3 col-sm-3 col-4">
-                                    <div className="vendor-img" style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/dashboard/hashmi.png'})`}} />
+                                    <div className="vendor-img" style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/dashboard/ic_profile_placeholder.png'})`}} />
                                   </div>
                                 </div>
                               </div>
                             </Link>
                             )
                             }
-                            <div key={index} className="sort-by">
-                            <div className="sort-heading mt-4" style={{marginBottom: '10px'}}>
-                              <div className="row">
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                  <div className="sort-by-heading hhhsize">
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                  <div className="sort-by-heading imgsize">
-                                    <p>SORT BY <img src="assets/images/icons/sort-by.png" alt="" /></p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                            
                             <div className="dashboard-newsfeed">
                           <div className="dashboard-newsfeed-content">
                             <ul className="news-feed-user-ul">
                               <li>
-                                <span className="news-feed-user-imgs" style={{backgroundImage: `url(${data && data.object && data.object.user && data.object.user.profilePictureUrl ? data.object.user.profilePictureUrl : "assets/images/dashboard/sherlin.png"} )`}} />
-                                <span className="news-feed-user-name">{data && data.object && data.object.user && data.object.user.firstName} {data && data.object && data.object.user && data.object.user.lastName}</span>
+
+                                <span className={data && data.object && data.object.user && data.object.user.userTypeId ===  2 ? "news-feed-user-img" : "news-feed-user-imgs"} style={{backgroundImage: `url(${data && data.object && data.object.user && data.object.user.profilePictureUrl ? data.object.user.profilePictureUrl : "assets/images/dashboard/ic_profile_placeholder.png"} )`}} />
+                                <span style={{fontSize:'20px' , fontWeight:'bold', padding:'0px 7px 0px 10px' }} className="news-feed-user-name">{data && data.object && data.object.user && data.object.user.firstName} {data && data.object && data.object.user && data.object.user.lastName} . 
+                                  <Link to=""> Follow</Link>
+                                  <h2 style={{fontSize:'20px'}}><i className="fa fa-map-marker-alt"></i> {data && data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.date} </h2>
+                                </span>  
+                              </li>
+                              <li>
+                                {/* <div className="dashboard-newsfeed-header">{data && data.category==="Post" ? (data && data.object && data.object.postText) : (data.object && data.object.adTitle)}</div> */}
+                                <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
                               </li>
                             </ul>
                             <Link to="">
                               {data.category && data.category === "Post" ? 
                               <div className="dashboard-newsfeed-img" 
                               style={{
-                                backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/dashboard/nearby-7.png") }  )` }}>
+                                backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/ic_post_placeholder.png") }  )` }}>
                               </div>
                               :
                               null
@@ -199,23 +206,22 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                             
 
                             { data.category && data.category === "Property" ?
-                              <div class="pxp-prop-card-featured" 
+                              <div className="pxp-prop-card-featured" 
                               style={{
-                                backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL :  require("../../assets/images/dashboard/nearby-7.png") } )`}}
+                                backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL :  require("../../assets/images/ic_post_placeholder.png") } )`}}
                               >
-                              <div class="for-rent">
+                              <div className="for-rent">
                               <h4> {data.object && data.object.adTitle ? data.object.adTitle : '' } </h4>
                           </div>               
-                           <div class="d-table w-100 ">
-                              <div class="d-table-cell va-bottom featured-height">
-                                  <h2><i class="fa fa-map-marker-alt"></i> Toronto</h2>
-                                  <div class="row">
-                                      <div class="col-md-6 col-sm-6 col-6">
-                                          <div class="feature-head">
-                                              <span><b> {data.object && data.object.price ? `${data.object.currency && data.object.currency.symbol ? data.object.currency.symbol : '$' }${data.object.price}.00` : '0'}</b>/per night</span>
+                           <div className="d-table w-100 ">
+                              <div className="d-table-cell va-bottom featured-height">
+                                  <div className="row">
+                                      <div className="col-md-6 col-sm-6 col-6">
+                                          <div className="feature-head">
+                                              <span><b> {data.object && data.object.price ? `${data.object.currency && data.object.currency.symbol ? data.object.currency.symbol : '$' }${data.object.price}.00` : '0'}</b></span>
                                           </div>
                                       </div>
-                                      <div class="col-md-6 col-sm-6 col-6">
+                                      <div className="col-md-6 col-sm-6 col-6">
                                       </div>
                                   </div>
                               </div>
@@ -224,32 +230,19 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                                : null }
                               </Link>
                             <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
-                            <div />
-                            <div className="dashboard-newsfeed-header">{data && data.category==="Post" ? (data && data.object && data.object.postText) : (data.object && data.object.adTitle)}</div>
-                            <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
                             <div className="row">
-                              <div className="col-lg-4 col-md-4 col-sm-3 col-4">
-                                <div className="news-feed-icon-user">
-                                  <p className="heart-p"><i className="far fa-heart" /> Like</p>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-4 col-sm-5 col-4">
-                                <div className="news-feed-icon-user">
-                                  <p className="comment-p"><i className="far fa-comment-alt" /> Comments</p>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-4 col-sm-4 col-4">
-                                <div className="news-feed-icon-user">
-                                  <p className="heart-p"><i className="far fa-share-square" /> Share</p>
-                                </div>
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
+                                  <i className="far fa-heart post-navbar-items" />
+                                  <i className="far fa-comment-alt post-navbar-items" />
+                                  <i className="far fa-share-square post-navbar-items" />
                               </div>
                             </div>
                           </div>
                         </div> 
-                        </div>
                             </React.Fragment>
                             )
                           }
+                        </div>
                         </div> 
                       </div>
                     </div>
@@ -259,7 +252,7 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                         <div className="main-user">
                           <div className="row">
                             <div className="col-md-3">
-                              <div className="min-user-img" style={{backgroundImage: `url(${indexPageData && indexPageData.vendors ? indexPageData.vendors[0].profilePictureUrl : 'assets/images/dashboard/hashmi.png'})`}} />
+                              <div className="min-user-img" style={{backgroundImage: `url(${indexPageData && indexPageData.vendors ? indexPageData.vendors[0].profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
                             </div>
                             <div className="col-md-9  col-nopadd">
                               <div className="main-user-content">
@@ -291,7 +284,7 @@ if(indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts
                             <div className="row">
                               <div className="col-md-2">
                                 <Link to={`/single-vendor-${data && data.userId && data.userId}`}><div className="suggested-vendor-img">
-                                    <img src={data && data.profilePictureUrl ? data.profilePictureUrl : "assets/images/dashboard/liaquat.png"} alt=""/>
+                                    <img src={data && data.profilePictureUrl ? data.profilePictureUrl : "assets/images/dashboard/ic_profile_placeholder.png"} alt=""/>
                                   </div></Link>
                               </div>
                               <div className="col-md-7 col-nopadd">

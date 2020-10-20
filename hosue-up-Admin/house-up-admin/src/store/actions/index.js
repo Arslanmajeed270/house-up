@@ -16,5 +16,6 @@ export {
     getVendorsData,
     getUsersData,
     getSingleVendorData,
-    getSingleUserData
+    getSingleUserData,
+    updateUserState
 } from './userActions';

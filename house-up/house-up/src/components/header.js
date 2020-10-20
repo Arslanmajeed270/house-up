@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PhoneNumber from './Popups/phoneNumber';
 
 import SignInPopup from './Popups/signIn';
+import CongrationPopup from './Popups/congratulation';
+import VendorSignupPopup from './Popups/vendorSignupPopup';
 
 class header extends Component {
 
@@ -9,21 +12,40 @@ constructor(props) {
     super(props);
     this.state = {
       loginState : false,
-      signupState : false
+      signupState : false,
+      phoneNumberState:false,
+      congrationPopup:false,
+      vendorSignupState : false
     };
   }
-
+  congrationPopupHanlder = () =>{
+    this.setState({
+      congrationPopup : !this.state.congrationPopup
+    });
+  }
+  vendorSignupPopupHanlder = () =>{
+    this.setState({
+      vendorSignupState : !this.state.vendorSignupState
+    });
+  }
 
   loginPopupHanlder = () =>{
     this.setState({
       loginState : !this.state.loginState
     });
+    console.log(this.state.loginState);
+  }
+  phoneNumberPopupHanlder = () =>{
+    this.setState({
+      phoneNumberState : !this.state.phoneNumberState
+    });
   }
 
   signupPopupHanlder = () =>{
     this.setState({
-      signupState : !this.state.signupState
+      signupState : !this.state.signupState,
     });
+   
   }
 
     render() { 
@@ -72,12 +94,10 @@ constructor(props) {
                     <div className="col-5 col-md-1 text-right">
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
                       <Link to="#" className="pxp-header-user pxp-signin-trigger forborder" 
-                        onClick={this.loginPopupHanlder} ><span className="far fa-user" /></Link>
-                      {this.state.loginState ? <SignInPopup  
-                        loginState = {this.state.loginState}
-                        signupState = {this.state.signupState}
-                        loginPopupHanldern = {this.loginPopupHanlder}
-                        signupPopupHanlder = {this.signupPopupHanlder}
+                        onClick={this.vendorSignupPopupHanlder} ><span className="far fa-user" /></Link>
+                      {this.state.vendorSignupState ? <VendorSignupPopup  
+                        vendorSignupState = {this.state.vendorSignupState}
+                       
                       />
                     : null
                     }
@@ -86,41 +106,7 @@ constructor(props) {
                   </div>
                 </div>
               </div>
-
-               <div className="modal fade show" id="pxp-signin-modal" tabhome={-1} role="dialog" aria-labelledby="pxpSigninModal" aria-modal="true" >
-                    <div className="modal-dialog modal-dialog-centered" role="document">
-                        <div className="modal-content">
-                        <div className="modal-header">
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <h5 className="modal-title" id="pxpSigninModal">Welcome back!</h5>
-                            <form className="mt-4">
-                            <div className="form-group">
-                                <label htmlFor="pxp-signin-email">Email</label>
-                                <input type="text" className="form-control" id="pxp-signin-email" placeholder="Enter your email address" />
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="pxp-signin-pass">Password</label>
-                                <input type="password" className="form-control" id="pxp-signin-pass" placeholder="Enter your password" />
-                            </div>
-                            <div className="form-group">
-                                <Link to="#" className="pxp-agent-contact-modal-btn">Sign In</Link>
-                            </div>
-                            <div className="form-group mt-4 text-center pxp-modal-small">
-                                <Link to="#" className="pxp-modal-link">Forgot password</Link>
-                            </div>
-                            <div className="text-center pxp-modal-small">
-                                New to HouseUP? <Link to="" className="pxp-modal-link pxp-signup-trigger">Create an account</Link>
-                            </div>
-                            </form>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-          </React.Fragment>
+            </React.Fragment>
          );
     }
 }
