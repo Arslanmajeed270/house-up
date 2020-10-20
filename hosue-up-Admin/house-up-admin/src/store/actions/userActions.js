@@ -6,7 +6,8 @@ import {
 	SET_VENDORS,
 	SET_USERS,
 	SET_SINGLE_VENDOR,
-	SET_SINGLE_USER
+	SET_SINGLE_USER,
+	SET_USER_STATE
 } from './actionTypes';   
 
 const backendServerURL = process.env.REACT_APP_API_URL;
@@ -23,6 +24,7 @@ export const getVendorsData = () => dispatch => {
 		}
     )
     .then(res => {
+		console.log(res);
         dispatch(
 			{
 				type: SET_VENDORS,
@@ -89,6 +91,21 @@ export const getSingleUserData = (userData) => dispatch => {
 				payload: res.data && res.data.data &&  res.data.data.user ? res.data.data.user : {}
 			}
 		);        
+    })
+    .catch(err => {
+		dispatch({type: SET_ERRORS, 
+		payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+};
+
+//Vendors  - Update Vendors State
+export const updateUserState = (userData) => dispatch => {
+	console.log("checking userData: ", userData);
+    axios
+    .post(backendServerURL+'/updateUserState',userData)
+    .then(res => {
+		console.log('checking resonse data ',res);
+		dispatch(getVendorsData());
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, 

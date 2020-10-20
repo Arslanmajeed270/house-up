@@ -23,3 +23,40 @@ code {
 .neighbourhoods_slider .pxp-prop-card-explore{
   width: 445px;
 }
+
+.post-navbar-items{
+  margin-right: 20px;
+}
+.post-navbar{
+  font-size: 30px;
+  padding: 5px 15px;
+}
+.modal.show .modal-dialog
+{
+  max-width: 500px;
+}
+.modal-header {
+  border-bottom: none;
+  padding: 15px 15px 0px 15px;
+}
+.modal-body {
+  padding: 0px 40px 40px 40px;
+
+}
+
+  
+.signupCards {
+
+  height: 200px;
+ border-radius: 5px;
+  background: #fff;
+  border: 1px solid #EDEDF2;
+  margin-bottom: 25px;
+
+}
+.vendor-img{
+  max-width: 130px;
+  max-height: 130px;
+  margin: 10px 20px 10px 140px;
+
+}

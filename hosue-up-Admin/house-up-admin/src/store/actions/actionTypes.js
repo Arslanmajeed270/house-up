@@ -24,4 +24,5 @@ export const SET_SINGLE_VENDOR = 'SET_SINGLE_VENDOR';
 //USERS ACTION
 export const SET_USERS = 'SET_USERS';
 export const SET_SINGLE_USER = 'SET_SINGLE_USER';
+export const SET_USER_STATE = 'SET_USER_STATE';
 

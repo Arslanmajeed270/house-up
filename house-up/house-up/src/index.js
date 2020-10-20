@@ -14,12 +14,14 @@ import * as serviceWorker from './serviceWorker';
 //importing redux
 import pageReducer from './store/reducers/pageReducer';
 import vendorReducer from './store/reducers/vendorReducers';
+import authReducer from './store/reducers/authReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   page: pageReducer,
-  vendor: vendorReducer
+  vendor: vendorReducer,
+  auth : authReducer
 });
 
 //const store = createStore(burgerBuilderReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

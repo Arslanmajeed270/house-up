@@ -5695,7 +5695,7 @@ main{
     font-size: 16px;
     padding-left: 10px;
     padding-bottom: 5px;
-     border-bottom: 1px solid #EDEDF2;
+     /* border-bottom: 1px solid #EDEDF2; */
 }
 .dashboard-newsfeed-content p{
     font-size: 22px;
@@ -5840,7 +5840,7 @@ span.news-feed-user-date {
 
 .pxp-prop-card-featured{
     /*border-radius: 10px;*/
-    margin-bottom: 25px;
+    /* margin-bottom: 25px; */
     background-size: cover;
     background-position: center top;
     position: relative;

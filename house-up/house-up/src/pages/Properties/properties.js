@@ -356,9 +356,9 @@ class properties extends Component {
                       <li className="page-item"><Link className="page-link" to="">Next <span className="fa fa-angle-right" /></Link></li>
                     </ul>
                   </div>
-                  {/*                 <div class="pxp-footer pxp-content-side-wrapper">
-                            <div class="pxp-footer-bottom">
-                                <div class="pxp-footer-copyright">&copy;  HouseUP All Rights Reserved. 2019</div>
+                  {/*                 <div className="pxp-footer pxp-content-side-wrapper">
+                            <div className="pxp-footer-bottom">
+                                <div className="pxp-footer-copyright">&copy;  HouseUP All Rights Reserved. 2019</div>
                             </div>
                         </div> */}
                 </div>

@@ -61,7 +61,7 @@ class singleVendor extends Component {
                           <div className="col-sm-12 col-lg-3">
                             <div className="pxp-agent-section mt-4 mt-md-5">
                               <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
-                              style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl :  require("../../assets/img/demo.png") })`, backgroundPosition: '50% 0%'}} />
+                              style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl :  require("../../assets/images/ic_profile_placeholder.png") })`, backgroundPosition: '50% 0%'}} />
                             </div>
                           </div>
                           <div className="col-sm-12 col-lg-8">
@@ -92,7 +92,7 @@ class singleVendor extends Component {
                                         <h6 className="mb-0">{singleVendorData && singleVendorData.keywordsDescribeYourBusiness}</h6>
                                       </div>
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{singleVendorData && singleVendorData.address}</h6>
+                                        <h6 className="mb-0">{singleVendorData && singleVendorData.streetAddress}</h6>
                                       </div>   
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <Link to="" className="no-anchor-style buisness-documents">Business Registration Document</Link>
@@ -110,7 +110,6 @@ class singleVendor extends Component {
                                         </div>
                                       </div>                                   
                                     </div></Link></div>
-                                <p>Award winner and nominee, Erika Tillman, is one of NYC’s top producing agents. In 2016 she was a Top Producer Individual by sales volume and GCI. This high achiever received, among other recognitions, a Quadruple Platinum Award and was cover of Outfront Magazine in December 2016.</p>
                               </div>
                             </div>
                           </div>

@@ -265,16 +265,16 @@ class home extends Component {
                   <div className="row mt-5">
                     <div className="col-sm-12 col-md-6 col-lg-6">
                       <Link to="" className="pxp-plans-1-item ">
-                        {/* <div class="pxp-plans-1-item-label">Most Popular</div> 
+                        {/* <div className="pxp-plans-1-item-label">Most Popular</div> 
                         <div className="pxp-plans-1-item-fig">
                           <img src="assets/images/plan-professional.svg" alt="..." />
                         </div>
                         <div className="pxp-plans-1-item-title">Monthly</div>
                         <ul className="pxp-plans-1-item-features list-unstyled">
                           {/* <li>10 Listings</li> */}
-                          {/*                                      <span class="pxp-plans-1-item-price-currency">$</span>
-                                        <span class="pxp-plans-1-item-price-sum">29.99</span>
-                                        <span class="pxp-plans-1-item-price-period"> / months</span> 
+                          {/*                                      <span className="pxp-plans-1-item-price-currency">$</span>
+                                        <span className="pxp-plans-1-item-price-sum">29.99</span>
+                                        <span className="pxp-plans-1-item-price-period"> / months</span> 
                         </ul>
                         <div className="pxp-plans-1-item-price">
                           <span className="pxp-plans-1-item-price-currency">$</span>

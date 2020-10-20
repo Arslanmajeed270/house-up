@@ -2,14 +2,16 @@ import {
 	SET_VENDORS,
 	SET_USERS,
 	SET_SINGLE_VENDOR,
-	SET_SINGLE_USER
+	SET_SINGLE_USER,
+	SET_USER_STATE
 } from '../actions/actionTypes';
 
 const initialState = {
 	vendorsData : [],
 	usersData : [],
 	singleVendorData : {},
-	singleUserData : {}
+	singleUserData : {},
+	userState:false
 };
 
 export default function (state = initialState, action) {
@@ -29,6 +31,10 @@ export default function (state = initialState, action) {
 		case SET_SINGLE_USER:
 			return {
 				singleUserData: action.payload
+			};
+		case SET_USER_STATE:
+			return {
+				userState: action.payload
 			};	
 	default:
 			return state;
