@@ -12,7 +12,7 @@ class index extends Component {
             <React.Fragment>
                 <Header animateHeader={animateHeader} />
                 <Routes />
-                <Footer />            
+                {this.props.hideFooter === true ? " " : <Footer /> }
             </React.Fragment>
         )
     }

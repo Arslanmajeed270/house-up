@@ -43,6 +43,7 @@ componentDidMount() {
 
     render() { 
       const { dashboardData } = this.state;
+      console.log(dashboardData);
      
         return ( 
             <React.Fragment>
@@ -103,7 +104,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-violet" />
                             <div className="text">
-                              <h6 className="mb-0"> {dashboardData && dashboardData.length && dashboardData[0].dashboardCountLabel } </h6><span className="text-gray"> {dashboardData && dashboardData.length && dashboardData[0].dashboardCount } </span>
+                              <h6 className="mb-0"> {dashboardData && dashboardData.length && dashboardData[4].dashboardCountLabel } </h6><span className="text-gray"> {dashboardData && dashboardData.length && dashboardData[4].dashboardCount } </span>
                             </div>
                           </div>
                           <div className="icon text-white bg-violet"><i className="fas fa-user" /></div>
@@ -114,7 +115,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-green" />
                             <div className="text">
-                              <h6 className="mb-0"> {dashboardData && dashboardData.length && dashboardData[1].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[1].dashboardCount }</span>
+                              <h6 className="mb-0"> {dashboardData && dashboardData.length && dashboardData[5].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[5].dashboardCount }</span>
                             </div>
                           </div>
                           <div className="icon text-white bg-green"><i className="fas fa-user-tie" /></div>
@@ -125,7 +126,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-blue" />
                             <div className="text">
-                              <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[2].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[2].dashboardCount }</span>
+                              <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[6].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountUnitLabel} {dashboardData && dashboardData.length && dashboardData[6].dashboardCount }</span>
                             </div>
                           </div>
                           <div className="icon text-white bg-blue"><i className="fas fa-map-marker-alt" /></div>
@@ -136,7 +137,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-red" />
                             <div className="text">
-                              <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[3].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[3].dashboardCount }</span>
+        <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountUnitLabel} {dashboardData && dashboardData.length && dashboardData[7].dashboardCount }</span>
                             </div>
                           </div>
                           <div className="icon text-white bg-red"><i className="fas fa-receipt" /></div>

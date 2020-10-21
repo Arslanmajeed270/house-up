@@ -7,20 +7,20 @@ class congrationPopup extends Component {
     render() { 
         return ( 
             <Modal 
-            show={this.props.congrationPopup}
+            show={this.props.congratulationState}
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            size="md"
             >
-            <Modal.Header closeButton onClick={this.props.congrationPopupHanlder}>
-            </Modal.Header>
-            <Modal.Body >
+            
+            <Modal.Body onClick={this.props.congratulationPopupHandler}>
             <div className="form-group">
 
-            <div class="text-center">Users</div>
+            <div class="text-center" style={{fontSize: '30px',fontWeight: '500',padding: '20px'}}>CONGRATULATIONS!</div>
 </div>
 <div className="form-group">
 
-            <div class="text-center">jdsfhsdkf kdrj d kdf riodk fikd huif</div> 
+            <div class="text-center" style={{fontSize: '30px'}}>You are Successfully Registered.</div> 
 </div>
             <div className="form-group">
                         <button

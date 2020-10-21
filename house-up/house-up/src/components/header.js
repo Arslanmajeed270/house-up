@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PhoneNumber from './Popups/phoneNumber';
-
-import SignInPopup from './Popups/signIn';
+import UserSignup from'./Popups/userSignup';
 import CongrationPopup from './Popups/congratulation';
-import VendorSignupPopup from './Popups/vendorSignupPopup';
+import SignIn from './Popups/signIn';
+import SignupSelection from './Popups/signupSelection';
+import VendorSignup from './Popups/vendorSignup';
 
 class header extends Component {
 
@@ -12,41 +13,51 @@ constructor(props) {
     super(props);
     this.state = {
       loginState : false,
-      signupState : false,
-      phoneNumberState:false,
-      congrationPopup:false,
-      vendorSignupState : false
+      signupSelectionState : false,
+      phoneNoState:false,
+      userSignupState:false,
+      congratulationState:false,
+      vendorSignupState:false
     };
   }
-  congrationPopupHanlder = () =>{
-    this.setState({
-      congrationPopup : !this.state.congrationPopup
-    });
-  }
-  vendorSignupPopupHanlder = () =>{
-    this.setState({
-      vendorSignupState : !this.state.vendorSignupState
-    });
-  }
 
-  loginPopupHanlder = () =>{
+  loginPopupHandler = () =>
+  {
+    console.log('clicked');
     this.setState({
       loginState : !this.state.loginState
     });
-    console.log(this.state.loginState);
   }
-  phoneNumberPopupHanlder = () =>{
+  signupSelectionPopupHandler =()=>{
+    console.log('selection Clicked');
     this.setState({
-      phoneNumberState : !this.state.phoneNumberState
+      signupSelectionState:!this.state.signupSelectionState,
+    });
+  }
+  phoneNoVerificationPopupHandler =()=>{
+    this.setState({
+      phoneNoState:!this.state.phoneNoState,
+    });
+  }
+  userSignupPopupHandler =()=>{
+    this.setState({
+      userSignupState:!this.state.userSignupState,
+    });
+  }
+  congratulationPopupHandler =()=>{
+    this.setState({
+      congratulationState:!this.state.congratulationState,
     });
   }
 
-  signupPopupHanlder = () =>{
+  vendorSignupPopupHandler =() =>{
     this.setState({
-      signupState : !this.state.signupState,
+      vendorSignupState:!this.state.vendorSignupState,
     });
-   
   }
+  
+  
+  
 
     render() { 
       const animateHeader = this.props.animateHeader;
@@ -94,14 +105,14 @@ constructor(props) {
                     <div className="col-5 col-md-1 text-right">
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
                       <Link to="#" className="pxp-header-user pxp-signin-trigger forborder" 
-                        onClick={this.vendorSignupPopupHanlder} ><span className="far fa-user" /></Link>
-                      {this.state.vendorSignupState ? <VendorSignupPopup  
-                        vendorSignupState = {this.state.vendorSignupState}
-                       
-                      />
-                    : null
-                    }
-                      
+                        onClick={this.userSignupPopupHandler}
+                        ><span className="far fa-user" /></Link> 
+                        {
+                          this.state.userSignupState ? <UserSignup 
+                          userSignupState ={this.state.userSignupState}
+                          userSignupPopupHandler = {this.userSignupPopupHandler}
+                          /> : null
+                        }
                     </div>
                   </div>
                 </div>

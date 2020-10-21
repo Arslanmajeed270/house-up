@@ -1,7 +1,8 @@
 export {
     loginUser,
     logoutUser,
-    setCurrentUser
+    setCurrentUser,
+    createVendor
 } from './authActions';
 
 

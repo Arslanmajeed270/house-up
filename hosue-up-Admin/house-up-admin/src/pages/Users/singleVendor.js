@@ -68,7 +68,7 @@ class singleVendor extends Component {
                             <div className="pxp-agent-section mt-4 mt-md-5">
                               <h3>{ singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </h3>
                               <div className="mt-3 mt-md-4">
-                                <div className="col-lg-12"><Link to="#" className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                                <div className="col-lg-12"><Link to="#" className="message card px-5 py-3 mb-4 no-anchor-style">
                                     <div className="row">
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <h6 className="mb-0">@{singleVendorData && singleVendorData.userName} </h6>
@@ -95,20 +95,33 @@ class singleVendor extends Component {
                                         <h6 className="mb-0">{singleVendorData && singleVendorData.streetAddress}</h6>
                                       </div>   
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <Link to="" className="no-anchor-style buisness-documents">Business Registration Document</Link>
-                                        <Link to="" className="no-anchor-style buisness-documents">Supporting Documents (optional) </Link>
+                                        <Link to="#" className="no-anchor-style buisness-documents">Business Registration Document</Link>
+                                        <Link to="#" className="no-anchor-style buisness-documents">Supporting Documents (optional) </Link>
                                       </div>
                                       <div className="bottom-line">
+                                      
+                                        {singleVendorData && singleVendorData.packageSubscribed ?
+                                      <>
                                         <div className="subscription" >
-                                          <button className="btn btn-primary vendor-subscription" >Monthly Subscriber</button>
+                                          <button className="btn btn-primary vendor-subscription" >{singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName ? singleVendorData.packageSubscribed.packageDetail.packageName : " "} Subscriber</button>
                                         </div>
+                                      
+                                      <h6 className="mb-0" style={{marginTop:'17px' , float:'left'}}>${singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName ? singleVendorData.packageSubscribed.packageDetail.packagePrice : " "}</h6>
+                                     
+                                      
+                                      </>  
+                                    : <div className="subscription" >
+                                        <button className="btn btn-primary vendor-subscription" >Not Subscribed</button>
+                                      </div> 
+                                    }
+                                        
                                         <div className="status">
                                           <select className="vendor-status" >
-                                            <option value="" selected="selected">Active</option>
+                                            <option value="" >Active</option>
                                             <option value="">Inactive</option>
                                           </select>
                                         </div>
-                                      </div>                                   
+                                        </div>
                                     </div></Link></div>
                               </div>
                             </div>

@@ -22,9 +22,15 @@ class Routes extends React.Component {
 	render(){
 		return (
 			<Router>
+				
 				<Route      
 					exact 
 					path={"/"} 
+					component={Home}
+				/>
+				<Route      
+					exact 
+					path={"/index"} 
 					component={Index}
 				/>
 				<Route      

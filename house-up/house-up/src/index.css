@@ -31,10 +31,10 @@ code {
   font-size: 30px;
   padding: 5px 15px;
 }
-.modal.show .modal-dialog
+/* .modal.show .modal-dialog
 {
   max-width: 500px;
-}
+} */
 .modal-header {
   border-bottom: none;
   padding: 15px 15px 0px 15px;
@@ -43,7 +43,13 @@ code {
   padding: 0px 40px 40px 40px;
 
 }
-
+.logo-signupModal{
+  margin: 0px 10px 3px 55px;
+  width: 100px;
+}
+.text-center{
+  color: #3F3F3F;
+}
   
 .signupCards {
 
@@ -55,8 +61,14 @@ code {
 
 }
 .vendor-img{
-  max-width: 130px;
-  max-height: 130px;
-  margin: 10px 20px 10px 140px;
+  max-width: 100px;
+  max-height: 100px;
+  margin: 10px 20px 11px 155px;
 
+}
+.user{
+  font-size: 25px;
+}
+.user-description{
+  font-size: 14px;
 }

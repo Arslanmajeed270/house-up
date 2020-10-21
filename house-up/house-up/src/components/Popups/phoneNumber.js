@@ -6,27 +6,28 @@ class phoneNumber extends Component {
     render() { 
         return ( 
             <Modal 
-            show={this.props.phoneNumberState}
+            show={this.props.phoneNoState}
             aria-labelledby="contained-modal-title-vcenter"
             centered
             size="sm"
             >
-            <Modal.Header >
+            <Modal.Header closeButton onClick={this.props.phoneNoVerificationPopupHandler}>
             </Modal.Header>
             <Modal.Body >
-                <img src="assets/icons/logo.png" alt="" className="logo-signupModal" />
+                <img src="assets/images/icons/logo.png" alt="" className="logo-signupModal" />
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
                             id="pxp-signin-email" 
-                            placeholder="Enter your email address" 
-                            name="email"
+                            placeholder="Phone Number" 
                          />
-                    </div> <div className="form-group">
+                        </div> 
+                        <div className="form-group">
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            >Sign In</button>
+                            >Sign In
+                        </button>
                     </div>
              </Modal.Body>
         </Modal>  

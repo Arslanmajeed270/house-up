@@ -61,7 +61,7 @@ class vendor extends Component {
                       vendorsData.map( (data, index) => 
                       data.userStatusDesc === "Active" || data.userStatusDesc === "Approved" ?
                         <div key={index} className="col-lg-12">
-                          <Link to={`/single-vendor-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                          <Link to={`/single-vendor-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4  no-anchor-style">
                           <div className="row">   
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                               {this.dateHandler(data.createDate)}<img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/demo.png"} alt="Profile" style={{maxWidth: '48px', maxHeight:'48px' , backgroundColor:'#008CF8'}} className="rounded-circle mx-3 my-2 my-lg-0" />
