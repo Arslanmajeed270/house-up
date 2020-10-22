@@ -5,6 +5,8 @@ import {
     SET_ERRORS, 
     SET_CURRENT_USER,
     CLEAR_CURRENT_USER,
+    CREATE_USER,
+    CREATE_VENDOR
 } from './actionTypes';
 
 import {
@@ -115,3 +117,120 @@ export const resetUserPassword = (inputData, verificationToken, history) => disp
     .finally(() => dispatch(clearPageLoading()));
 };
 
+
+
+
+// signupUser - signupUser from the web page
+export const createUser = (userData) => dispatch => {
+    dispatch(setPageLoading());
+    axios
+    .post(
+        backendServerURL+'/registerUser', 
+        userData
+    )
+    .then(res => {   
+        // const {token} = res.data;
+        // localStorage.setItem('jwtToken', token);
+        // setAuthToken(token);
+        // const decoded = jwt_decode(token);
+        // dispatch(setCurrentUser(decoded));
+
+        // dispatch(clearErrors())
+        // history.push(`/dashboard`)
+        // console.log("res from backend while login",res);
+        // if(res.data &&  res.data.data && res.data.data.user ){
+        //     localStorage.setItem('jwtToken', res.data.data.user) ;
+        //     dispatch(setCurrentUser(res.data.data.user));
+        // }
+
+        // dispatch(clearErrors())
+        // history.push(`/`)
+        console.log('res from backend after signup',res);
+        
+    })
+    .catch(err => {
+        console.log("error: ", err);
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+    .finally(() => dispatch(clearPageLoading()))
+};
+
+
+// signupVendor - signupvendor from the web page
+export const createVendor = (userData) => dispatch => {
+    dispatch(setPageLoading());
+
+    axios
+    .post(
+        backendServerURL+'/registerUser', 
+        userData
+    )
+    .then(res => {
+        // const {token} = res.data;
+        // localStorage.setItem('jwtToken', token);
+        // setAuthToken(token);
+        // const decoded = jwt_decode(token);
+        // dispatch(setCurrentUser(decoded));
+
+        // dispatch(clearErrors())
+        // history.push(`/dashboard`)
+        // console.log("res from backend while login",res);
+        // if(res.data &&  res.data.data && res.data.data.user ){
+        //     localStorage.setItem('jwtToken', res.data.data.user) ;
+        //     dispatch(setCurrentUser(res.data.data.user));
+        // }
+
+        // dispatch(clearErrors())
+        // history.push(`/`)
+        console.log('res from backend after signup',res);
+        
+    })
+    .catch(err => {
+        console.log("error: ", err);
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+    .finally(() => dispatch(clearPageLoading()))
+};
+
+
+// signupVendor - signupvendor from the web page
+export const generatePin = (data) => dispatch => {
+    dispatch(setPageLoading());
+    console.log('checking data: ', data);
+    axios
+    .post(
+        backendServerURL+'/generatePin', 
+        data
+    )
+    .then(res => {
+        dispatch(clearErrors())
+        console.log('checking response in generatePin',res);
+        
+    })
+    .catch(err => {
+        console.log("error: ", err);
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+    .finally(() => dispatch(clearPageLoading()))
+};
+
+// signupVendor - signupvendor from the web page
+export const verifyPin = (data) => dispatch => {
+    dispatch(setPageLoading());
+    console.log('checking data: ', data);
+
+    axios
+    .post(
+        backendServerURL+'/verifyPin', 
+        data
+    )
+    .then(res => {
+        dispatch(clearErrors())
+        console.log('checking response in verifyPin',res);
+    })
+    .catch(err => {
+        console.log("error: ", err);
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+    .finally(() => dispatch(clearPageLoading()))
+};

@@ -49,7 +49,7 @@ class user extends Component {
                     {usersData && usersData.length ? 
                       usersData.map( (data, index) =>
                       <div key={index} className="col-lg-12">
-                        <Link to={`/single-User-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                        <Link to={`/single-User-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4  no-anchor-style">
                           <div className="row">
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                               {this.dateHandler(data.createDate)}
@@ -73,7 +73,7 @@ class user extends Component {
                       : ''
                     }            
 
-                      {/* <div className="col-lg-12"><Link to="single-user" className="message card px-5 py-3 mb-4 bg-hover-gradient-primary no-anchor-style">
+                      {/* <div className="col-lg-12"><Link to="single-user" className="message card px-5 py-3 mb-4  no-anchor-style">
                           <div className="row">
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left"><strong className="h5 mb-0">14<sup className="smaller text-gray font-weight-normal">Aug</sup></strong><img src={"assets/img/avatar-2.jpg"} alt="..." style={{maxWidth: '3rem'}} className="rounded-circle mx-3 my-2 my-lg-0" />
                               <h6 className="mb-0">Ryan Gosling</h6>

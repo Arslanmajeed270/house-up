@@ -1,7 +1,10 @@
 export {
     loginUser,
     logoutUser,
-    setCurrentUser
+    setCurrentUser,
+    createVendor,
+    verifyPin,
+    generatePin
 } from './authActions';
 
 

@@ -1,53 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PhoneNumber from './Popups/phoneNumber';
-
-import SignInPopup from './Popups/signIn';
-import CongrationPopup from './Popups/congratulation';
-import VendorSignupPopup from './Popups/vendorSignupPopup';
 
 class header extends Component {
-
-constructor(props) {
-    super(props);
-    this.state = {
-      loginState : false,
-      signupState : false,
-      phoneNumberState:false,
-      congrationPopup:false,
-      vendorSignupState : false
-    };
-  }
-  congrationPopupHanlder = () =>{
-    this.setState({
-      congrationPopup : !this.state.congrationPopup
-    });
-  }
-  vendorSignupPopupHanlder = () =>{
-    this.setState({
-      vendorSignupState : !this.state.vendorSignupState
-    });
-  }
-
-  loginPopupHanlder = () =>{
-    this.setState({
-      loginState : !this.state.loginState
-    });
-    console.log(this.state.loginState);
-  }
-  phoneNumberPopupHanlder = () =>{
-    this.setState({
-      phoneNumberState : !this.state.phoneNumberState
-    });
-  }
-
-  signupPopupHanlder = () =>{
-    this.setState({
-      signupState : !this.state.signupState,
-    });
-   
-  }
-
+  
     render() { 
       const animateHeader = this.props.animateHeader;
         return ( 
@@ -94,14 +49,8 @@ constructor(props) {
                     <div className="col-5 col-md-1 text-right">
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
                       <Link to="#" className="pxp-header-user pxp-signin-trigger forborder" 
-                        onClick={this.vendorSignupPopupHanlder} ><span className="far fa-user" /></Link>
-                      {this.state.vendorSignupState ? <VendorSignupPopup  
-                        vendorSignupState = {this.state.vendorSignupState}
-                       
-                      />
-                    : null
-                    }
-                      
+                        onClick={() => this.props.modelHanlder('loginModel')}
+                        ><span className="far fa-user" /></Link> 
                     </div>
                   </div>
                 </div>

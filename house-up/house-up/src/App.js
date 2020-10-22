@@ -7,10 +7,11 @@ import Index from "./pages";
 function App() {
   return (
     <React.Fragment>
+     
       <Route
         exact 
-        path={'/'}
-        component={Index}
+        path={'/index'}     
+        component={()=><Index  hideFooter={true}/> }
       />
         <Route
         exact 

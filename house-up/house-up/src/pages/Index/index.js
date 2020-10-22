@@ -51,9 +51,11 @@ class index extends Component {
 
       if(indexPageData && indexPageData.userStories && indexPageData.userStories.length){
         for(let i=0; i<indexPageData.userStories.length; i++){
-          let item = (<div style={{width: '35%'}}>
+          let item = (<div style={{width: '69px'}}>
             <div className="pxp-prop-card-dashboard" style={{backgroundImage: `url(${ indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL ? indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL : "assets/images/dashboard/slider-4.png"})`}} />
               <span className="dashboard-user-name">{indexPageData.userStories[i].user.firstName}</span>
+              <span className="dashboard-user-name">{indexPageData.userStories[i].user.professionDesc}</span>
+
             </div>
        ); 
     items.push(item);
@@ -113,11 +115,6 @@ class index extends Component {
                                   <div className="sort-by-heading hhhsize">
                                   </div>
                                 </div>
-                                <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                                  <div className="sort-by-heading imgsize">
-                                    <p>SORT BY <img src="assets/images/icons/sort-by.png" alt="" /></p>
-                                  </div>
-                                </div>
                               </div>
                             </div>
                             {
@@ -158,7 +155,7 @@ class index extends Component {
                                     <div className="vendor-detail">
                                       { data && data.firstName ?  data.firstName : ''} {data && data.lastName ? data.lastName : ''}
                                       <p>
-                                        <span>{ data && data.keywordsDescribeYourBusiness && data.keywordsDescribeYourBusiness !== "null" ? data.keywordsDescribeYourBusiness : " " }</span>
+                                        <span>{ data && data.professionDesc && data.professionDesc !== "null" ? data.professionDesc : " " }</span>
                                         <i className="fa fa-star blue" />
                                         <i className="fa fa-star blue" />
                                         <i className="fa fa-star blue" />
@@ -169,7 +166,7 @@ class index extends Component {
                                     </div>
                                   </div>
                                   <div className="col-md-3 col-sm-3 col-4">
-                                    <div className="vendor-img" style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/dashboard/ic_profile_placeholder.png'})`}} />
+                                    <div className="vendor-img" style={{backgroundImage:`url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
                                   </div>
                                 </div>
                               </div>
@@ -181,38 +178,29 @@ class index extends Component {
                           <div className="dashboard-newsfeed-content">
                             <ul className="news-feed-user-ul">
                               <li>
-
                                 <span className={data && data.object && data.object.user && data.object.user.userTypeId ===  2 ? "news-feed-user-img" : "news-feed-user-imgs"} style={{backgroundImage: `url(${data && data.object && data.object.user && data.object.user.profilePictureUrl ? data.object.user.profilePictureUrl : "assets/images/dashboard/ic_profile_placeholder.png"} )`}} />
                                 <span style={{fontSize:'20px' , fontWeight:'bold', padding:'0px 7px 0px 10px' }} className="news-feed-user-name">{data && data.object && data.object.user && data.object.user.firstName} {data && data.object && data.object.user && data.object.user.lastName} . 
                                   <Link to=""> Follow</Link>
-                                  <h2 style={{fontSize:'20px'}}><i className="fa fa-map-marker-alt"></i> {data && data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.date} </h2>
+                                  <h2 style={{fontSize:'20px'}}>{data && data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.date} </h2>
                                 </span>  
                               </li>
-                              <li>
-                                {/* <div className="dashboard-newsfeed-header">{data && data.category==="Post" ? (data && data.object && data.object.postText) : (data.object && data.object.adTitle)}</div> */}
-                                <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
-                              </li>
+                              
                             </ul>
-                            <Link to="">
+                            
                               {data.category && data.category === "Post" ? 
+                              <>
+                              <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
                               <div className="dashboard-newsfeed-img" 
                               style={{
                                 backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/ic_post_placeholder.png") }  )` }}>
                               </div>
-                              :
-                              null
-                            }
-
-                            
-
-                            { data.category && data.category === "Property" ?
+                              </>
+                              :  data.category && data.category === "Property" ?
+                              <>
                               <div className="pxp-prop-card-featured" 
-                              style={{
+                                style={{
                                 backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL :  require("../../assets/images/ic_post_placeholder.png") } )`}}
-                              >
-                              <div className="for-rent">
-                              <h4> {data.object && data.object.adTitle ? data.object.adTitle : '' } </h4>
-                          </div>               
+                              >              
                            <div className="d-table w-100 ">
                               <div className="d-table-cell va-bottom featured-height">
                                   <div className="row">
@@ -227,8 +215,13 @@ class index extends Component {
                               </div>
                           </div>
                           </div>
+                          <div className="for-rent">
+                              {data.object && data.object.adTitle ? data.object.adTitle : '' }
+                          </div> 
+                              <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
+</>
                                : null }
-                              </Link>
+                              
                             <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
                             <div className="row">
                               <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
@@ -278,7 +271,7 @@ class index extends Component {
                         </div>
                         {indexPageData && indexPageData.vendors &&
                           indexPageData.vendors.map( (data , index) =>
-                          index>0 &&
+                          index>0 && index<7 ? 
                         <div key={index} className="suggested-vendors-list "> 
                           <div className="mb-md-3">
                             <div className="row">
@@ -290,7 +283,7 @@ class index extends Component {
                               <div className="col-md-7 col-nopadd">
                                 <div className="suggested-vendor-name">
                                   <p>{data && data.firstName ? data.firstName : ''} {data && data.lastName ? data.lastName : '' }</p>
-                                  <span>{data && data.keywordsDescribeYourBusiness && data.keywordsDescribeYourBusiness !== 'null' ? data.keywordsDescribeYourBusiness : '' }</span>
+                                  <span>{data && data.professionDesc && data.professionDesc !== 'null' ? data.professionDesc : '' }</span>
                                 </div>
                               </div>
                               <div className="col-md-3">
@@ -301,6 +294,7 @@ class index extends Component {
                             </div>
                           </div>                        
                         </div>
+                        : " "
                            ) 
                          }    
                       </div>
