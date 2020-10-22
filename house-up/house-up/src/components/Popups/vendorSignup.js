@@ -65,23 +65,28 @@ class vendorSignup extends Component {
                 zipCode:this.state.zipCode,
                 streetName:this.state.streetName
              };
-             this.props.onCreateVendor(userData);
+              this.props.onCreateVendor(userData);
+             this.props.congratulationHandler('congratulationModel');
          }
 
     render() { 
-        const {firstName,lastName,userName,email,password,confirmPassword,profession,businessDoc,businessName,websiteLink,aboutBusiness,qualification,businessStartDate,supportDoc,keyWords,country,province,city,streetName,unit,zipCode}=this.state;
+        const { firstName, lastName, userName, email, password, confirmPassword, profession, 
+            businessDoc, businessName, websiteLink, aboutBusiness, qualification, businessStartDate,
+            supportDoc, keyWords, country, province, city, streetName, unit,
+            zipCode }=this.state;
         return ( 
             <Modal 
-            show={this.props.vendorSignupState}
+            show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
             size="lg"
+            onHide={() => this.props.closeCodelHanlder('vendorSignupModel')}
             >
             
-            <Modal.Body onClick={this.props.vendorSignupPopupHandler} >
+            <Modal.Body onClick={() => this.props.closeCodelHanlder('vendorSignupModel')} >
                 <div className="row">
                     <div className="col-md-6">
-                <form className="mt-4">
+                <form className="mt-4" onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
@@ -90,6 +95,7 @@ class vendorSignup extends Component {
                             name="firstName"
                             value={firstName}
                             onChange={this.onChange}
+                            required
                          />
                          </div>
                     <div className="form-group">
@@ -100,6 +106,7 @@ class vendorSignup extends Component {
                             name="userName"
                             value={userName}
                             onChange={this.onChange}
+                            required
                          />
                     </div>
                     <div className="form-group">
@@ -111,13 +118,32 @@ class vendorSignup extends Component {
                             name="password"
                             value={password}
                             onChange={this.onChange}
+                            required
                          />
                     </div>
                     <div className="form-group">
-                        <select className="custom-select" name="profession"
+                        <select className="custom-select" onChange={this.onChange} name="profession"
                          value={profession} >
-                            <option >Lahore</option>
-                            <option value={1}>Karachi</option>
+                            <option value={1} >Bathroom Renovation</option>
+                            <option value={2}>Carpet cleaners</option>
+                            <option value={3}>Driveway Sealing</option>
+                            <option value={4}>Drone Photography</option>
+                            <option value={7}>Hardwood/laminate Flooring</option>
+                            <option value={8}>Home Inspection</option>
+                            <option value={9}>Junk Removal</option>
+                            <option value={10}>Kitchen Carpentry</option>
+                            <option value={11}>Landscapers</option>
+                            <option value={12}>Lenders/Banks</option>
+                            <option value={13}>Movers</option>
+                            <option value={14}>Painters</option>
+                            <option value={15}>Pest Control</option>
+                            <option value={16}>Photography</option>
+                            <option value={17}>Real Estate Lawyers</option>
+                            <option value={18}>Roofers</option>
+                            <option value={19}>Stagers</option>
+                            <option value={20}>Virtual Tours </option>
+                            <option value={21}>Wet Basement</option>
+                            <option value={7}>Window Cleaners</option>
                         </select>
                     </div>
                     <div className="form-group">
@@ -127,27 +153,30 @@ class vendorSignup extends Component {
                             placeholder="Business Name"
                             name="businessName"
                             value={businessName} 
-                            onChange={this.onChange}     
+                            onChange={this.onChange}
+                            required     
                         />
                     </div>
                     <div className="form-group">
                         <input type="text" 
                             className="form-control" 
                             id="pxp-signin-pass" 
-                            placeholder="Qualification"
+                            placeholder="Website lnk (optional)"
                             name="websiteLink" 
                             value={websiteLink}
-                            onChange={this.onChange}     
+                            onChange={this.onChange}  
+                               
                         />
                     </div>
                     <div className="form-group">
                         <input type="text" 
                             className="form-control" 
                             id="pxp-signin-pass" 
-                            placeholder="Enter your password" 
+                            placeholder="Qualifications" 
                             name="qualification"
                             value={qualification}
-                            onChange={this.onChange}     
+                            onChange={this.onChange}
+                            required  
                         />
                     </div>
                     <div className="form-group">
@@ -164,9 +193,11 @@ class vendorSignup extends Component {
                     <div className="form-group">
                         <select className="custom-select"
                             name="country"
-                            value={country}    
+                            value={country}
+                            onChange={this.onChange}
+                            required
                         >
-                            <option >Pakistan</option>
+                            <option value={39} >Canada</option>
                             <option value={1}>USA</option>
                         </select>
                     </div>
@@ -176,6 +207,7 @@ class vendorSignup extends Component {
                             placeholder="street name & number"
                             name="streetName"
                             value={streetName}
+                            onChange={this.onChange}
                         />
                     </div>
                 </form>
@@ -190,6 +222,7 @@ class vendorSignup extends Component {
                             name="lasstName"
                             value={lastName}
                             onChange={this.onChange} 
+                            required
                          />
                     </div>
                     <div className="form-group">
@@ -200,6 +233,7 @@ class vendorSignup extends Component {
                             name="email"
                             value={email}
                             onChange={this.onChange}
+                            required
                          />
                         </div>
                         <div className="form-group">
@@ -210,6 +244,7 @@ class vendorSignup extends Component {
                                 name="confirmPassword"
                                 value={confirmPassword}
                                 onChange={this.onChange}
+                                required
                             />
                         </div>
                         <div className="form-group">
@@ -220,6 +255,7 @@ class vendorSignup extends Component {
                             name="BusinessDoc"
                             value={businessDoc}
                             onChange={this.onChange}
+                            required
                          />
                     </div>
                     <div className="form-group">
@@ -229,6 +265,7 @@ class vendorSignup extends Component {
                             name="aboutBusiness"
                             value={aboutBusiness}
                             onChange={this.onChange}
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -238,7 +275,8 @@ class vendorSignup extends Component {
                             placeholder="Business Start Date" 
                             name="businessStartDate"
                             value={businessStartDate}
-                            onChange={this.onChange}     
+                            onChange={this.onChange}
+                            required  
                         />
                     </div>
                     <div className="form-group">
@@ -248,7 +286,8 @@ class vendorSignup extends Component {
                             placeholder="KeyWord Describe Your Business" 
                             name="keyWords"
                             value={keyWords}
-                            onChange={this.onChange}     
+                            onChange={this.onChange}
+                            required  
                         />
                     </div>
                     <div className="form-group">
@@ -259,6 +298,7 @@ class vendorSignup extends Component {
                                     name="city"
                                     value={city}
                                     onChange={this.onChange}
+                                    required
                                 >
                                     <option >Pakistan</option>
                                     <option value={1}>USA</option>
@@ -270,6 +310,7 @@ class vendorSignup extends Component {
                                     name="province"
                                     value={province}
                                     onChange={this.onChange}
+                                    required
                                     >
                                     <option >Pakistan</option>
                                     <option value={1}>USA</option>
@@ -285,6 +326,7 @@ class vendorSignup extends Component {
                                     name="unit"
                                     value={unit}
                                     onChange={this.onChange}
+                                    required
                                 />
                             </div>
                             <div className="col-md-6">
@@ -294,6 +336,7 @@ class vendorSignup extends Component {
                                     name="zipCode"
                                     value={zipCode}
                                     onChange={this.onChange}
+                                    required
                                 />
                             </div>
                        </div>
@@ -302,8 +345,7 @@ class vendorSignup extends Component {
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            onSubmit={this.onSubmit}
-                            >Sign In
+                            >Sign up
                         </button>
                     </div>
                     

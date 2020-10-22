@@ -191,3 +191,46 @@ export const createVendor = (userData) => dispatch => {
     })      
     .finally(() => dispatch(clearPageLoading()))
 };
+
+
+// signupVendor - signupvendor from the web page
+export const generatePin = (data) => dispatch => {
+    dispatch(setPageLoading());
+    console.log('checking data: ', data);
+    axios
+    .post(
+        backendServerURL+'/generatePin', 
+        data
+    )
+    .then(res => {
+        dispatch(clearErrors())
+        console.log('checking response in generatePin',res);
+        
+    })
+    .catch(err => {
+        console.log("error: ", err);
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+    .finally(() => dispatch(clearPageLoading()))
+};
+
+// signupVendor - signupvendor from the web page
+export const verifyPin = (data) => dispatch => {
+    dispatch(setPageLoading());
+    console.log('checking data: ', data);
+
+    axios
+    .post(
+        backendServerURL+'/verifyPin', 
+        data
+    )
+    .then(res => {
+        dispatch(clearErrors())
+        console.log('checking response in verifyPin',res);
+    })
+    .catch(err => {
+        console.log("error: ", err);
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+    .finally(() => dispatch(clearPageLoading()))
+};

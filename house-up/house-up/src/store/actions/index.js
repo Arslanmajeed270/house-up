@@ -2,7 +2,9 @@ export {
     loginUser,
     logoutUser,
     setCurrentUser,
-    createVendor
+    createVendor,
+    verifyPin,
+    generatePin
 } from './authActions';
 
 

@@ -35,19 +35,24 @@ class userSignup extends Component {
                 password: this.state.password,
                 yourself:this.state.yourself
              };
+             this.props.congratulationHandler('congratulationModel');
              this.props.onCreateUser(userData);
+
          }
     render() {
       const {firstName, lastName, userName, email, password, confirmPassword,yourself} = this.state;
         return (
             <Modal 
-            show={this.props.userSignupState}
+            show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            onHide={() => this.props.closeCodelHanlder('userSignupModel')}
             >
+            <Modal.Header onClick={() => this.props.closeCodelHanlder('userSignupModel')}>
+            </Modal.Header>
             
             <Modal.Body>
-                <form className="mt-4">
+                <form className="mt-4" onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
@@ -56,6 +61,7 @@ class userSignup extends Component {
                             name="firstName"
                             value={firstName}
                             onChange={this.onChange}
+                            required
                          />
                          </div>
                     <div className="form-group">
@@ -67,6 +73,7 @@ class userSignup extends Component {
                             name="lastName"
                             value={lastName}
                             onChange={this.onChange}
+                            required
                          />
                     </div>
                     <div className="form-group">
@@ -78,6 +85,7 @@ class userSignup extends Component {
                             name="userName"
                             value={userName}
                             onChange={this.onChange}
+                            required
                          />
                     </div>
                     <div className="form-group">
@@ -89,6 +97,7 @@ class userSignup extends Component {
                             name="email"
                             value={email}
                             onChange={this.onChange}
+                            required
                          />
                     </div>
                     <div className="form-group">
@@ -99,6 +108,7 @@ class userSignup extends Component {
                             name="password"
                             value={password}
                             onChange={this.onChange}     
+                            required
                         />
                     </div>
                     <div className="form-group">
@@ -108,7 +118,8 @@ class userSignup extends Component {
                             placeholder="Confirm password" 
                             name="confirmPassword"
                             value={confirmPassword}
-                            onChange={this.onChange}     
+                            onChange={this.onChange}  
+                            required   
                         />
                     </div>
                     <div className="form-group">
@@ -126,9 +137,7 @@ class userSignup extends Component {
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            onClick={this.onSubmit}
-                            
-                            >Sign In</button>
+                            >Sign up</button>
                     </div>
                 </form>
             </Modal.Body>

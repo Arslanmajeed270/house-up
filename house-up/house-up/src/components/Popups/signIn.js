@@ -3,34 +3,19 @@ import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 class signIn extends Component {
-
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //       loginState : false,
-    //       signupSelectionState : false
-    //     };
-    //   }
-
-    // signupSelectionPopupHandler =()=>{
-    //     console.log('selection Clicked');
-    //     this.setState({
-    //       signupSelectionState:!this.state.signupSelectionState,
-    //       loginState:!this.state.loginState,
-    //     });
-    //     console.log('states',this.state.signupSelectionState,this.state.loginState)
-    //   }
  
     render() {
+        console.log("checking this.props.show: ", this.props.show);
         return ( 
             <Modal 
-            show={this.props.loginState}
+            show={this.props.show}
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                     ClassName="signUp-modal"
                     size="md"
+                    onHide={() => this.props.closeCodelHanlder('loginModel')}
                     >
-                    <Modal.Header closeButton onClick={this.props.loginPopupHandler} >
+                    <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('loginModel')} >
                     </Modal.Header>
                     <Modal.Body>
                     <Link>
@@ -52,7 +37,9 @@ class signIn extends Component {
                             </div>
                             <div className="text-center pxp-modal-small">
                                 New to HouseUP? 
-                                <Link to="#" className="pxp-modal-link pxp-signup-trigger"
+                                <Link to="#" 
+                                className="pxp-modal-link pxp-signup-trigger"
+                                onClick={() => this.props.signupSelectionHandler('signupSelectionModel') }
                                 >Create an account</Link>
                             </div>
                         </form>

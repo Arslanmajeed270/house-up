@@ -7,12 +7,14 @@ class congrationPopup extends Component {
     render() { 
         return ( 
             <Modal 
-            show={this.props.congratulationState}
+            show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
             size="md"
+            onHide={() => this.props.closeCodelHanlder('congratulationModel')}
             >
-            
+             <Modal.Header onClick={() => this.props.closeCodelHanlder('congratulationModel')}>
+            </Modal.Header>
             <Modal.Body onClick={this.props.congratulationPopupHandler}>
             <div className="form-group">
 
@@ -26,8 +28,7 @@ class congrationPopup extends Component {
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            onClick={this.onSubmit}
-                            
+                            onClick={() => this.props.closeCodelHanlder('congratulationModel')}
                             >Okay</button>
                     </div>
             </Modal.Body>

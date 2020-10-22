@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
-class phoneNumber extends Component {
+class phoneNumberVendor extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -19,7 +19,7 @@ class phoneNumber extends Component {
         });
       }
 
-    onSubmit = () => {
+      onSubmit = () => {
         this.props.phoneNumberHandler(this.state.number);
         let data = {
             msisdn:this.state.number,
@@ -27,7 +27,7 @@ class phoneNumber extends Component {
             type:"LOGIN_PIN_SMS"
         };
         this.props.onGeneratePin(data);
-        this.props.optUserHandler('optUserModel');
+        this.props.optUserVendorHandler('optUserModelVendor')
     }
     render() { 
         return ( 
@@ -36,14 +36,13 @@ class phoneNumber extends Component {
             aria-labelledby="contained-modal-title-vcenter"
             centered
             size="sm"
-            onHide={() => this.props.closeCodelHanlder('phoneNumberModel')}
+            onHide={() => this.props.closeCodelHanlder('phoneNumberVendorModel')}
             >
-            <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNumberModel')}>
+            <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNumberVendorModel')}>
             </Modal.Header>
             <Modal.Body >
                 <img src="assets/images/icons/logo.png" alt="" className="logo-signupModal" />
-                    
-                         <form onSubmit={this.onSubmit}>
+                <form onSubmit={this.onSubmit}>
                          <div className="form-group">
                          <input type="text" 
                             className="form-control"
@@ -63,18 +62,18 @@ class phoneNumber extends Component {
                         </button>
                          </div> 
                         </form> 
-             </Modal.Body>
+            </Modal.Body>
         </Modal>  
 
          );
     }
 }
-
+ 
 const mapDispatchToProps = dispatch => {
     return {
         onGeneratePin: (data) => dispatch(actions.generatePin(data))
     }
   };
    
-  export default connect(null, mapDispatchToProps)(phoneNumber);
+  export default connect(null, mapDispatchToProps)(phoneNumberVendor);
  

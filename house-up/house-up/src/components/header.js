@@ -1,64 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import PhoneNumber from './Popups/phoneNumber';
-import UserSignup from'./Popups/userSignup';
-import CongrationPopup from './Popups/congratulation';
-import SignIn from './Popups/signIn';
-import SignupSelection from './Popups/signupSelection';
-import VendorSignup from './Popups/vendorSignup';
 
 class header extends Component {
-
-constructor(props) {
-    super(props);
-    this.state = {
-      loginState : false,
-      signupSelectionState : false,
-      phoneNoState:false,
-      userSignupState:false,
-      congratulationState:false,
-      vendorSignupState:false
-    };
-  }
-
-  loginPopupHandler = () =>
-  {
-    console.log('clicked');
-    this.setState({
-      loginState : !this.state.loginState
-    });
-  }
-  signupSelectionPopupHandler =()=>{
-    console.log('selection Clicked');
-    this.setState({
-      signupSelectionState:!this.state.signupSelectionState,
-    });
-  }
-  phoneNoVerificationPopupHandler =()=>{
-    this.setState({
-      phoneNoState:!this.state.phoneNoState,
-    });
-  }
-  userSignupPopupHandler =()=>{
-    this.setState({
-      userSignupState:!this.state.userSignupState,
-    });
-  }
-  congratulationPopupHandler =()=>{
-    this.setState({
-      congratulationState:!this.state.congratulationState,
-    });
-  }
-
-  vendorSignupPopupHandler =() =>{
-    this.setState({
-      vendorSignupState:!this.state.vendorSignupState,
-    });
-  }
   
-  
-  
-
     render() { 
       const animateHeader = this.props.animateHeader;
         return ( 
@@ -105,14 +49,8 @@ constructor(props) {
                     <div className="col-5 col-md-1 text-right">
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
                       <Link to="#" className="pxp-header-user pxp-signin-trigger forborder" 
-                        onClick={this.userSignupPopupHandler}
+                        onClick={() => this.props.modelHanlder('loginModel')}
                         ><span className="far fa-user" /></Link> 
-                        {
-                          this.state.userSignupState ? <UserSignup 
-                          userSignupState ={this.state.userSignupState}
-                          userSignupPopupHandler = {this.userSignupPopupHandler}
-                          /> : null
-                        }
                     </div>
                   </div>
                 </div>
