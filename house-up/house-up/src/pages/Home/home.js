@@ -87,11 +87,11 @@ class home extends Component {
                     <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
                       <div className="owl-carousel pxp-props-carousel-right-stage">
                         <AliceCarousel  
-                        mouseTracking 
-                        responsive = {responsive}
-                        items={items}
-                        disableDotsControls={true}
-                        paddingLeft={120} />
+                          mouseTracking 
+                          responsive = {responsive}
+                          items={items}
+                          disableDotsControls={true}
+                          paddingLeft={120} />
                         <Link to="/properties" className="pxp-primary-cta text-uppercase mt-4 mt-md-5 pxp-animate">Browse All</Link>
                       </div>
                     </div>

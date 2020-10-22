@@ -1801,9 +1801,11 @@ h1.pxp-page-header {
 /**
  * 8.0 - Properties carousel
  */
-
+.alice-carousel__wrapper{
+    padding-left: 0px!important;
+}
 .pxp-props-carousel-right {
-    padding-left: calc((100% - 1140px) / 2 + 15px);
+    padding-left: calc((100% - 1140px) / 2 + 15px)!important;
     padding-right: 0;
 }
 .pxp-props-carousel-right.pxp-half-bg {
@@ -5541,10 +5543,10 @@ fieldset[disabled] .checkbox.custom-checkbox input:checked+span {
         padding-left: 15px;
         padding-right: 15px;
     }
-/*    .pxp-props-carousel-right {
+   /* .pxp-props-carousel-right {
         padding-left: 15px;
         padding-right: 15px;
-    }*/
+    } */
     .pxp-testim-1 {
         padding-left: 15px;
         padding-right: 15px;

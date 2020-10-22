@@ -5,8 +5,8 @@ import {
     SET_ERRORS, 
     SET_CURRENT_USER,
     CLEAR_CURRENT_USER,
-    CREATE_USER,
-    CREATE_VENDOR
+    OTP_AUTHENTICATE_SUCCESS,
+    OTP_AUTHENTICATE_FAIL
 } from './actionTypes';
 
 import {
@@ -225,6 +225,13 @@ export const verifyPin = (data) => dispatch => {
         data
     )
     .then(res => {
+        if(res==="Success"){
+            dispatch({ type: OTP_AUTHENTICATE_SUCCESS });
+        }
+        else {
+            dispatch({ type: OTP_AUTHENTICATE_FAIL });
+
+        }
         dispatch(clearErrors())
         console.log('checking response in verifyPin',res);
     })

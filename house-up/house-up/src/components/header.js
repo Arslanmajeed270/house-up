@@ -11,7 +11,7 @@ class header extends Component {
                 <div className="wrapper">
                   <div className="row align-items-center">
                     <div className="col-5 col-md-2">
-                      <Link to="/" className="pxp-logo text-decoration-none">
+                      <Link to="/index" className="pxp-logo text-decoration-none">
                         <img className="img" src="assets/images/logo.png" alt="logo" />
                       </Link>
                     </div>
@@ -49,7 +49,7 @@ class header extends Component {
                     <div className="col-5 col-md-1 text-right">
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
                       <Link to="#" className="pxp-header-user pxp-signin-trigger forborder" 
-                        onClick={() => this.props.modelHanlder('loginModel')}
+                        onClick={() => this.props.modelHanlder('phoneSignin')}
                         ><span className="far fa-user" /></Link> 
                     </div>
                   </div>

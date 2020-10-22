@@ -20,9 +20,10 @@ class phoneNumberVendor extends Component {
       }
 
       onSubmit = () => {
-        this.props.phoneNumberHandler(this.state.number);
+        let number = ('+' +1) + (this.state.number);
+        this.props.phoneNumberHandler(number);
         let data = {
-            msisdn:this.state.number,
+            msisdn:number,
             channel:"HouseUp",
             type:"LOGIN_PIN_SMS"
         };
@@ -41,11 +42,13 @@ class phoneNumberVendor extends Component {
             <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNumberVendorModel')}>
             </Modal.Header>
             <Modal.Body >
+                <div className="logo-modal">
                 <img src="assets/images/icons/logo.png" alt="" className="logo-signupModal" />
+                </div>
                 <form onSubmit={this.onSubmit}>
                          <div className="form-group">
                          <input type="text" 
-                            className="form-control"
+                            className="phone-number"
                             id="pxp-signin-email" 
                             placeholder="Phone Number"
                             onChange={this.onChange}
@@ -53,6 +56,7 @@ class phoneNumberVendor extends Component {
                             value={this.state.number} 
                             required
                          />
+                        <span className="country-code"><img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-41px'}}/> +1</span>
                         </div>
                          <div className="form-group">
                         <button

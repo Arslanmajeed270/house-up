@@ -44,7 +44,6 @@ code {
 
 }
 .logo-signupModal{
-  margin: 0px 10px 3px 55px;
   width: 100px;
 }
 .text-center{
@@ -63,12 +62,55 @@ code {
 .vendor-img{
   max-width: 100px;
   max-height: 100px;
-  margin: 10px 20px 11px 155px;
-
 }
 .user{
   font-size: 25px;
 }
 .user-description{
   font-size: 14px;
+}
+.pxp-prop-card-1-fig .pxp-cover{
+  width: 290px;
+}
+
+.country-code{
+  position: absolute !important;
+  top: 110px !important;
+  margin-left: 30px !important;
+  color: #000 !important;
+}
+.country-code-login-page
+{
+  position: absolute !important;
+  top: 203px !important;
+  margin-left: 30px !important;
+  color: #000 !important;
+}
+.phone-number{
+  display: block;
+    width: 100%;
+    padding: .5rem 3.4rem;
+    font-size: 1rem;
+    line-height: 1.25;
+    color: #495057;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.profile-pic{
+  border: 1px solid black;
+  border-radius: 50px;
+  height: 100px;
+  width: 100px;
+}
+.logo-modal{
+  text-align: -webkit-center;
+}
+
+.signin-popup{
+  width:400px!important;
 }

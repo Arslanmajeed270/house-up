@@ -11,6 +11,7 @@ class vendorSignup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            profilePic:'',
             firstName:'',
             lastName:'',
             userName:'',
@@ -43,6 +44,7 @@ class vendorSignup extends Component {
         console.log('checking click handler');
              e.preventDefault();
              const userData = {
+                profilePic : this.state.profilePic,
                 firstName: this.state.firstName,
                 lastName: this.state.lastName,
                 userName:this.state.userName,
@@ -70,7 +72,7 @@ class vendorSignup extends Component {
          }
 
     render() { 
-        const { firstName, lastName, userName, email, password, confirmPassword, profession, 
+        const {profilePic, firstName, lastName, userName, email, password, confirmPassword, profession, 
             businessDoc, businessName, websiteLink, aboutBusiness, qualification, businessStartDate,
             supportDoc, keyWords, country, province, city, streetName, unit,
             zipCode }=this.state;
@@ -82,9 +84,14 @@ class vendorSignup extends Component {
             size="lg"
             onHide={() => this.props.closeCodelHanlder('vendorSignupModel')}
             >
-            
-            <Modal.Body onClick={() => this.props.closeCodelHanlder('vendorSignupModel')} >
+            <Modal.Header onClick={() => this.props.closeCodelHanlder('userSignupModel')}>
+            </Modal.Header>
+            <Modal.Body >
+            <div className="form-group" className="logo-modal">
+                        <input type="file" className="profile-pic" name="profilePic" vlaue={profilePic} onChange={this.onChange} />
+                    </div>
                 <div className="row">
+                   
                     <div className="col-md-6">
                 <form className="mt-4" onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -219,7 +226,7 @@ class vendorSignup extends Component {
                             className="form-control"
                             id="pxp-signin-email" 
                             placeholder="lastName"
-                            name="lasstName"
+                            name="lastName"
                             value={lastName}
                             onChange={this.onChange} 
                             required
@@ -252,7 +259,7 @@ class vendorSignup extends Component {
                             className="form-control"
                             id="pxp-signin-email" 
                             placeholder="Business Support Document" 
-                            name="BusinessDoc"
+                            name="businessDoc"
                             value={businessDoc}
                             onChange={this.onChange}
                             required

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
@@ -9,13 +8,13 @@ class userSignup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            profilePic:'',
             firstName:'',
             lastName:'',
             userName:'',
             email: '',
             confirmPassword:'',
             password: '',
-            yourself:''
         };
     }
     onChange = e => {
@@ -27,20 +26,20 @@ class userSignup extends Component {
         console.log('checking click handler');
              e.preventDefault();
              const userData = {
+                profilePic:this.state.profilePic,
                 firstName:this.state.firstName,
                 lastName:this.state.lastName,
                 userName:this.state.userName,
                 email: this.state.email,
                 confirmPassword:this.state.confirmPassword,
                 password: this.state.password,
-                yourself:this.state.yourself
              };
              this.props.congratulationHandler('congratulationModel');
              this.props.onCreateUser(userData);
 
          }
     render() {
-      const {firstName, lastName, userName, email, password, confirmPassword,yourself} = this.state;
+      const {profilePic, firstName, lastName, userName, email, password, confirmPassword} = this.state;
         return (
             <Modal 
             show={this.props.show}
@@ -52,6 +51,10 @@ class userSignup extends Component {
             </Modal.Header>
             
             <Modal.Body>
+                <div className="form-group" style={{textAlign:'-webkit-center'}} >
+                    <input type="file" className="profile-pic" name="profilePic" vlaue={profilePic} onChange={this.onChange} />
+                    <img src="assets/images/icons/ic_calendar.svg" class="calendar-icon" alt=""/>
+                </div>
                 <form className="mt-4" onSubmit={this.onSubmit}>
                     <div className="form-group">
                         <input type="text" 
@@ -121,17 +124,6 @@ class userSignup extends Component {
                             onChange={this.onChange}  
                             required   
                         />
-                    </div>
-                    <div className="form-group">
-                        <textarea typeof="text" 
-                            className="form-control" 
-                            id="pxp-signin-pass" 
-                            placeholder="Describe Yourself" 
-                            name="yourself"
-                            value={yourself}
-                            onChange={this.onChange}     
-                        />
-
                     </div>
                     <div className="form-group">
                         <button

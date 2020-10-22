@@ -4,16 +4,38 @@ import OtpInput from 'react-otp-input';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import { verifyPin } from '../../store/actions';
+import * as actionTypes from '../../store/actions/actionTypes';
+import * as action from '../../store/actions/authActions';
 
 class OptUser extends Component {
     constructor(props){
         super(props);
         this.state = {
-            otp: ""
+            otp: "",
+            otpAutheticate: false
         }
     }
+    
+  static getDerivedStateFromProps(props, state) {
+    const auth = props.auth;
+    let stateChanged = false;
+    let changedState = {};
 
+    if(auth && JSON.stringify(state.otpAutheticate) !== JSON.stringify(auth.otpAutheticate)){
+      changedState.otpAutheticate = auth.otpAutheticate;  
+      stateChanged = true;
+      if( changedState.otpAutheticate === true ){
+          this.props.onFalseOtpAutheticate();
+        this.props.userSignupHandler('userSignupModel');
+      }
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+  }
     handleChange = otp => {
         this.setState({ otp });
         if(otp.length === 4){
@@ -21,11 +43,9 @@ class OptUser extends Component {
                 msisdn:this.props.phNumber,
                 channel:"HouseUp",
                 pin: otp};
-            this.props.onVerifyPin(data)
-            this.props.userSignupHandler('userSignupModel');
+            this.props.onVerifyPin(data);
         }
     }
-
     render() { 
         console.log('checking value of otp: ', this.state.otp);
         let phoneNumber = '';
@@ -64,15 +84,21 @@ class OptUser extends Component {
             
             </Modal.Body>
         </Modal>             
-
          );
     }
 }
- 
+const mapStateToProps = state => {
+  return {
+    auth: state.page
+  }
+};
+
 const mapDispatchToProps = dispatch => {
-    return {
-        onVerifyPin: (data) => dispatch(actions.verifyPin(data))
-    }
-  };
+  console.log('mapDispatchToProps in HomePage ' );
+  return {
+      onFalseOtpAutheticate: () => dispatch({type: actionTypes.OTP_AUTHENTICATE_FAIL }),
+      onVerifyPin : (data)=>dispatch(action.verifyPin(data))
+  }
+};
    
-  export default connect(null, mapDispatchToProps)(OptUser);
+export default connect(null, mapDispatchToProps)(OptUser);

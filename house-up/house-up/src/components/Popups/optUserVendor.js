@@ -37,8 +37,7 @@ class OptUserVendor extends Component {
             <Modal 
             show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
-            centered
-            size="md"
+            centered 
             onHide={() => this.props.closeCodelHanlder('optUserModelVendor')}
             >
             <Modal.Header onClick={() => this.props.closeCodelHanlder('optUserModelVendor')}>
