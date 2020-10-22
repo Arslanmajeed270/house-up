@@ -10,17 +10,18 @@ class congrationPopup extends Component {
                 show={this.props.show}
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                size="md"
+                // size="md"
+                dialogClassName="modal-width"
                 onHide={() => this.props.closeCodelHanlder('congratulationModel')}
             >
-                <Modal.Header onClick={() => this.props.closeCodelHanlder('congratulationModel')}>
-                </Modal.Header>
+                
                 <Modal.Body onClick={this.props.congratulationPopupHandler}>
                     <div className="form-group">
-                        <div class="text-center" style={{fontSize: '30px',fontWeight: '500',padding: '20px'}}>CONGRATULATIONS!</div>
+                        <div class="text-center" style={{fontSize: '25px',color:'#1082FF',fontWeight: '500',padding: '12px'}}>CONGRATULATIONS!</div>
                     </div>
                     <div className="form-group">
-                        <div class="text-center" style={{fontSize: '30px'}}>You are Successfully Registered.</div> 
+                        <div class="text-center" style={{fontSize: '20px'}}>Your account has been </div>
+                        <div class="text-center" style={{fontSize: '20px'}}> successfully created.</div> 
                     </div>
                     <div className="form-group">
                         <button

@@ -36,14 +36,15 @@ class phonenumberForgotPass extends Component {
             show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            size="sm"
+            // size="sm"
+            dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('phoneNoForgotPass')}
             >
             <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNoForgotPass')}>
             </Modal.Header>
             <Modal.Body >
                 <div className="logo-modal">
-                <img src="assets/images/icons/logo.png" alt="" className="logo-signupModal" />
+                <img src="assets/images/icons/logo.png" alt=""  />
                 </div>
                          <form onSubmit={this.onSubmit}>
                          <div className="form-group">
@@ -56,7 +57,7 @@ class phonenumberForgotPass extends Component {
                             value={this.state.number} 
                             required
                          />
-                        <span className="country-code"><img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-41px'}}/> +1</span>
+                        <span className="country-code-forgotPass"><img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-41px'}}/> +1</span>
                         </div>
                          <div className="form-group">
                         <button

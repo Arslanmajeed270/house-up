@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
@@ -36,7 +37,8 @@ class phoneNumber extends Component {
             show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            size="sm"
+            // size="sm"
+            dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('phoneNumberModel')}
             >
             <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNumberModel')}>
@@ -63,8 +65,13 @@ class phoneNumber extends Component {
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            >Sign In
+                            >NEXT
                         </button>
+                        <div style={{textAlign:'center',paddingTop:'10px'}}>
+                        <Link to="#" 
+                            className="pxp-modal-link pxp-signup-trigger text-center" style={{fontWeight:"bold"}}
+                            >Already have an account</Link>
+                         </div>
                          </div> 
                         </form> 
              </Modal.Body>

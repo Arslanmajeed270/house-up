@@ -36,16 +36,17 @@ class forgotPass extends Component {
             show={this.props.show}
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
-                    size="md"
+                    // size="md"
+                    dialogClassName="modal-width"
                     onHide={()=>this.props.closeCodelHanlder('forgotPass')}
                     >
-                    <Modal.Header closeButton onClick={()=>this.props.closeCodelHanlder('forgotPass')}>
-                    </Modal.Header>
                     <Modal.Body>
                         <Link>
                             <form onSubmit={this.onSubmit}>
-                            <div className="form-group text-center">
+                            <div className="form-group text-center" style={{fontSize: '18px',marginBottom:'0px', fontWeight:'bold',color: 'black'}}>
                                 Please Set Your New
+                            </div>
+                            <div className="form-group text-center" style={{fontSize: '18px',color:'black',fontWeight:'bold'}} >
                                 Password And Submit
                                 </div>
                                 <div className="form-group">

@@ -10,7 +10,8 @@ class vendorCongrats extends Component {
                 show={this.props.show}
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
-                size="md"
+                // size="md"
+                dialogClassName="modal-width"
                 onHide={() => this.props.closeCodelHanlder('vendorCongrats')}
             >
                 <Modal.Header onClick={() => this.props.closeCodelHanlder('vendorCongrats')}>

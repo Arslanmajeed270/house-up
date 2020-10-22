@@ -36,7 +36,8 @@ class phoneNumberVendor extends Component {
             show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            size="sm"
+            // size="sm"
+            dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('phoneNumberVendorModel')}
             >
             <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNumberVendorModel')}>

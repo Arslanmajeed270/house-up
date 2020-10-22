@@ -11,7 +11,8 @@ class emailSignin extends Component {
             show={this.props.show}
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
-                    size="md"
+                    // size="md"
+                    dialogClassName="modal-width"
                     onHide={() => this.props.closeCodelHanlder('emailSignin')}
                     >
                     <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('emailSignin')} >

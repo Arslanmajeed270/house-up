@@ -10,11 +10,13 @@ class signupSelection extends Component {
                     show={this.props.show}
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
+                    dialogClassName="modal-width"
                     onHide={() => this.props.closeCodelHanlder('signupSelection')}
                     >
                     <Modal.Header closeButton  onClick={() => this.props.closeCodelHanlder("signupSelection")} >
                     </Modal.Header>
                     <Modal.Body >
+                        
                     <Link >
                     <div className="signupCards">
                         <div className="dashboard-newsfeed-content"
@@ -25,7 +27,8 @@ class signupSelection extends Component {
                                     <img className="vendor-img" src="assets/images/icons/ic_user_account.png" alt=""  />
                                 </div>
                                 <div class="text-center user">Users</div>
-                                <div class="text-center user-description">List home for sale, rental,browse vendors,buy&sell</div>                              
+                                <div class="text-center user-description">List home for sale, rental</div>
+                                <div class="text-center user-description"> browse Professionals,buy&sell</div>                              
                             </Link>
                         </div>
                     </div>
@@ -40,7 +43,8 @@ class signupSelection extends Component {
                                 <img className="vendor-img" src="assets/images//icons/ic_business_account.png" alt="" />
                                 </div>
                                 <div class="text-center user ">Professionals</div>
-                                <div class="text-center user-description ">Promote your business, find customers, network, post product & services</div>
+                                <div class="text-center user-description ">Promote your business, find customers, </div> 
+                                <div class="text-center user-description">network, post product & services</div>
                             </Link>
                         </div>
                     </div>

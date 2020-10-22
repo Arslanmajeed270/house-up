@@ -10,6 +10,7 @@ class workPopup extends Component {
             show={this.props.workModalState}
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            dialogClassName="modal-width"
         >
             <Modal.Header closeButton>
             </Modal.Header>

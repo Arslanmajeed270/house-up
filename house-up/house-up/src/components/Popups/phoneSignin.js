@@ -11,15 +11,15 @@ class phoneSignIn extends Component {
             show={this.props.show}
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
-                    size="md"
+                    // size="md"
+                    dialogClassName="modal-width"
                     onHide={() => this.props.closeCodelHanlder('phoneSignin')}
                     >
-                    <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneSignin')} >
-                    </Modal.Header>
+                    
                     <Modal.Body>
                         <Link>
                         <div className="logo-modal">
-                            <img src="assets/images/icons/logo.png" alt="" style={{width: '143px'}} />
+                            <img src="assets/images/icons/logo.png" alt="" />
                             </div>
                             <form onSubmit={this.onSubmit}>
                             <div className="form-group">
@@ -44,7 +44,7 @@ class phoneSignIn extends Component {
                                     <div className="form-group">
                                        <Link to="#" className="pxp-agent-contact-modal-btn">Sign In</Link>
                                     </div>
-                                    <div className="form-group ">
+                                    <div className="form-group " style={{textAlign:'right'}}>
                                         <Link to="#" className="pxp-modal-link" onClick={() => this.props.phoneNoForgotHandler('phoneNoForgotPass')}>Forgot password</Link>
                                     </div>
                                     <div className="text-center pxp-modal-small"> 

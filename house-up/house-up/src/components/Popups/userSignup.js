@@ -45,6 +45,7 @@ class userSignup extends Component {
             show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('userSignupModel')}
             >
             <Modal.Header onClick={() => this.props.closeCodelHanlder('userSignupModel')}>
@@ -53,7 +54,6 @@ class userSignup extends Component {
             <Modal.Body>
                 <div className="form-group" style={{textAlign:'-webkit-center'}} >
                     <input type="file" className="profile-pic" name="profilePic" vlaue={profilePic} onChange={this.onChange} />
-                    <img src="assets/images/icons/ic_calendar.svg" class="calendar-icon" alt=""/>
                 </div>
                 <form className="mt-4" onSubmit={this.onSubmit}>
                     <div className="form-group">
@@ -129,7 +129,7 @@ class userSignup extends Component {
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            >Sign up</button>
+                            >Submit</button>
                     </div>
                 </form>
             </Modal.Body>

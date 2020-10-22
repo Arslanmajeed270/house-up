@@ -40,7 +40,7 @@ code {
   padding: 15px 15px 0px 15px;
 }
 .modal-body {
-  padding: 0px 40px 40px 40px;
+  padding: 15px;
 
 }
 .logo-signupModal{
@@ -51,20 +51,21 @@ code {
 }
   
 .signupCards {
-
-  height: 200px;
- border-radius: 5px;
+  height: 165px;
+  border-radius: 5px;
   background: #fff;
   border: 1px solid #EDEDF2;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
+  padding: 10px;
 
 }
 .vendor-img{
-  max-width: 100px;
-  max-height: 100px;
+  max-width: 70px;
+  max-height: 70px;
 }
 .user{
-  font-size: 25px;
+  font-size: 20px;
+  font-weight: bold;
 }
 .user-description{
   font-size: 14px;
@@ -75,14 +76,14 @@ code {
 
 .country-code{
   position: absolute !important;
-  top: 110px !important;
+  top: 122px !important;
   margin-left: 30px !important;
   color: #000 !important;
 }
 .country-code-login-page
 {
   position: absolute !important;
-  top: 203px !important;
+  top: 126px !important;
   margin-left: 30px !important;
   color: #000 !important;
 }
@@ -113,4 +114,128 @@ code {
 
 .signin-popup{
   width:400px!important;
+}
+
+.modal-width{
+  width: 385px;
+}
+.country-code-forgotPass{
+  position: absolute !important;
+  top: 86px !important;
+  margin-left: 30px !important;
+  color: #000 !important;
+}
+.drop-down{
+  height:46px;
+}
+  .input-file,.input-file input[type="file"] ,.input-file input[type="file"]  + label , .input-file,.input-file input[type="text"] ,.input-file input[type="text"]  + label { 
+  position: relative;
+}
+.input-file {
+  border: 1px solid #D9D9D9;
+}
+.input-file input[type="file"] , .input-file input[type="date"] {
+  font-size: 0;
+    border: 0;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+}
+.input-file input[type="file"] + label,.input-file input[type="date"] + label {
+  border: none;
+  color: #878f97;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  padding: 10px 10px 8px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+}
+.input-file .fa{
+  text-align: right;
+  float: right;
+  position: relative;
+  top: 2px;
+  font-size: 20px;
+}
+
+
+
+
+
+.input-file input[type="file"] + label.btn-2:before , .input-file input[type="date"] + label.btn-2:before {
+  color: #fff;
+  content: "\f382";
+  font-family: "Font Awesome 5 Pro";
+  font-size: 100%;
+  right: 20%;
+  position: absolute;
+  top: 0px;
+  transition: all 0.3s;
+}
+.logo-modal .image-upload-container{
+  display: grid;
+  grid-template-areas: 'img-u-one img-u-two img-u-three img-u-four img-u-five img-u-six';
+}
+.logo-modal .center {
+  display:inline;
+  margin: 3px;
+}
+
+.logo-modal .form-input {
+  width:100px;
+  padding:3px;
+  background:#fff;
+  border:2px dashed dodgerblue;
+}
+.logo-modal .form-input input {
+  display:none;
+}
+.logo-modal .form-input label {
+  display:block;
+  width:100px;
+  height: auto;
+  max-height: 100px;
+  background:#333;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.logo-modal .form-input img {
+  width:100px;
+  height: 100px;
+  margin: 2px;
+  opacity: .4;
+}
+
+.logo-modal .imgRemove{
+  position: relative;
+  bottom: 114px;
+  left: 68%;
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  outline: none;
+}
+.logo-modal .imgRemove::after{
+  content: ' \21BA';
+  color: #fff;
+  font-weight: 900;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logo-modal .small{
+  color: #fff;
+}
+
+.logo-modal .image-upload-one{
+  grid-area: img-u-one;
+  display: flex;
+  justify-content: center;
 }
