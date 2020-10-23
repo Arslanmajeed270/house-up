@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {Modal} from 'react-bootstrap';
-
+import cloneDeep from 'lodash/cloneDeep';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/authActions';
+import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 
 class vendorSignup extends Component {
@@ -11,71 +12,165 @@ class vendorSignup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            profilePic:'',
+            profileImage:'',
             firstName:'',
             lastName:'',
             userName:'',
-            email: '',
+            emailAddress: '',
             confirmPassword:'',
             password: '',
-            profession:'',
-            businessDoc : '',
-            businessName:'',
-            websiteLink:'',
-            aboutBusiness:'',
-            qualification:'',
-            businessStartDate:'',
-            supportDoc:'',
-            keyWords:'',
-            country:'',
-            province:'',
-            city:'',
+            professionId:'',
+            businessSupportingDocument : '',
+            businessRegistrationDocument:'',
+            keywordDescriptYourBusiness:'',
+            countryId:'',
+            provinceId:'',
+            websiteLink: '',
+            cityId:'',
             unit:'',
+            businessName: '',
+            qualification: '',
             zipCode:'',
-            streetName:'',
+            streetAddress:'',
+            aboutBusiness: '',
+            businessStartDate: '',
+            registerVendor: false,
+            countries: [],
+            professionList: [],
+            states: [],
+            cities: []
         };
     }
+
+
+    static getDerivedStateFromProps(props, state) {
+        const auth = props.auth;
+        const page = props.page;
+        let stateChanged = false;
+        let changedState = {};
+
+        if( auth && JSON.stringify(state.registerVendor) !== JSON.stringify(auth.registerVendor) ){
+          changedState.registerVendor = auth.registerVendor;  
+          if( changedState.registerVendor === true ){
+            props.onFalseRegisterVendor();
+            props.congratulationHandler('congratulationModel');
+          }
+          stateChanged = true;
+        }
+
+        if( page && page.countries && JSON.stringify(state.countries) !== JSON.stringify(page.countries) ){
+            changedState.countries = page.countries;  
+            stateChanged = true;
+        }
+        console.log('checking page: ', page);
+        if( page && page.professionList && JSON.stringify(state.professionList) !== JSON.stringify(page.professionList) ){
+            changedState.professionList = page.professionList;  
+            console.log('checking changedState.professionList: ', changedState.professionList);
+            stateChanged = true;
+        }
+        
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+      }
+
+      componentDidMount(){
+          this.props.onGetCountries();
+          this.props.onGetProfessionDetailAPI();
+      }
+
     onChange = e => {
-        this.setState({
-          [e.target.name]: e.target.value
-        });
+        if(e.target.name === 'profileprofileImagePic'){
+            this.setState({ profileImage: e.target.files[0] });
+        }
+        else if(e.target.name === 'countryId'){
+            let index = 0;
+            let states = [];
+            if(e.target.value !== "" ){
+                index =  this.state.countries && this.state.countries.findIndex( x => `${x.id}` === e.target.value );
+                states = cloneDeep(this.state.countries[index]);
+            }
+            this.setState({ 
+                [e.target.name]: e.target.value ,
+                states: states.states
+            });
+        }
+        else if(e.target.name === 'provinceId'){
+            let ind = 0;
+            let cities = [];
+            if(e.target.value !== "" ){
+                ind =  this.state.states && this.state.states.findIndex( x => `${x.id}` === e.target.value );
+                cities = cloneDeep(this.state.states[ind]);
+            }
+            this.setState({ 
+                [e.target.name]: e.target.value,
+                cities: cities.cities
+            });
+        }
+        else{
+            this.setState({[e.target.name]: e.target.value});
+    
+        }
       }
       onSubmit = e => {
+        e.preventDefault();    
         console.log('checking click handler');
-             e.preventDefault();
+        const {
+            profileImage, firstName, lastName, userName, emailAddress, confirmPassword,
+            password, professionId, businessSupportingDocument, businessRegistrationDocument,
+            keywordDescriptYourBusiness, countryId, provinceId, cityId, zipCode,streetAddress,
+            businessName, websiteLink, qualification, aboutBusiness, businessStartDate
+        } = this.state;
+
              const userData = {
-                profilePic : this.state.profilePic,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                userName:this.state.userName,
-                email: this.state.email,
-                confirmPassword:this.state.confirmPassword,
-                password: this.state.password,
-                profession:this.state.profession,
-                businessDoc : this.state.businessDoc,
-                businessName:this.state.businessName,
-                websiteLink:this.state.websiteLink,
-                aboutBusiness:this.state.aboutBusiness,
-                qualification:this.state.qualification,
-                businessStartDate:this.state.businessStartDate,
-                supportDoc:this.state.supportDoc,
-                keyWords:this.state.keyWords,
-                country:this.state.country,
-                province:this.state.province,
-                city:this.state.city,
-                unit:this.state.unit,
-                zipCode:this.state.zipCode,
-                streetName:this.state.streetName
+                profileImage: profileImage,
+                firstName: firstName,
+                lastName: lastName,
+                userName: userName,
+                businessName: businessName,
+                emailAddress: emailAddress,
+                confirmPassword: confirmPassword,
+                password: password,
+                professionId: professionId, 
+                businessSupportingDocument : businessSupportingDocument,
+                businessRegistrationDocument: businessRegistrationDocument,
+                keywordDescriptYourBusiness: keywordDescriptYourBusiness,
+                countryId: countryId,
+                provinceId: provinceId,
+                cityId: cityId,
+                zipCode: zipCode,
+                streetAddress: streetAddress,
+                websiteLink: websiteLink,
+                qualification: qualification,
+                aboutBusiness: aboutBusiness,
+                businessStartDate: businessStartDate,
+                currencyId: 1,
+                userTypeId: 2,
+                aboutYourSelf: "",
+                phoneNumber: this.props.phNumber,
+                streetAddress1: "",
+                address: "",
+                stateId: "866",
+                houseAppartmentSuitNumber: "",
+                postalCode: "",
+                channel: "",
+
+
              };
+             console.log('i am here: ',userData);
               this.props.onCreateVendor(userData);
-             this.props.congratulationHandler('congratulationModel');
          }
 
     render() { 
-        const {profilePic, firstName, lastName, userName, email, password, confirmPassword, profession, 
-            businessDoc, businessName, websiteLink, aboutBusiness, qualification, businessStartDate,
-            supportDoc, keyWords, country, province, city, streetName, unit,
-            zipCode }=this.state;
+        const {
+            profileImage, firstName, lastName, userName, emailAddress, confirmPassword,
+            password, professionId, businessSupportingDocument, businessRegistrationDocument,
+            keywordDescriptYourBusiness, countryId, provinceId, cityId, zipCode,streetAddress,
+            businessName, websiteLink, qualification, aboutBusiness,businessStartDate,
+            countries, professionList,  states, cities
+        } = this.state;
+        console.log("checking this.state: ", this.state);
         return ( 
             <Modal 
             show={this.props.show}
@@ -88,15 +183,14 @@ class vendorSignup extends Component {
             <Modal.Header onClick={() => this.props.closeCodelHanlder('userSignupModel')}>
             </Modal.Header>
             <Modal.Body >
-
-            <div className="form-group logo-modal">
-            <input type="file" className="profile-pic" name="profilePic" vlaue={profilePic} onChange={this.onChange} />
-            </div>
-
+            <form className="mt-4" onSubmit={this.onSubmit}>
+                <div className="form-group logo-modal" >
+                    <input type="file" className="profile-pic" name="profileImage" />
+                </div>
                 <div className="row">
-                   
-                    <div className="col-md-6">
-                <form className="mt-4" onSubmit={this.onSubmit}>
+            
+            <div className="col-md-6">
+                
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
@@ -132,30 +226,17 @@ class vendorSignup extends Component {
                          />
                     </div>
                     <div className="form-group">
-                        <select className="custom-select drop-down" onChange={this.onChange} name="profession"
-                         value={profession} >
-                            <option value={1} >Bathroom Renovation</option>
-                            <option value={2}>Carpet cleaners</option>
-                            <option value={3}>Driveway Sealing</option>
-                            <option value={4}>Drone Photography</option>
-                            <option value={7}>Hardwood/laminate Flooring</option>
-                            <option value={8}>Home Inspection</option>
-                            <option value={9}>Junk Removal</option>
-                            <option value={10}>Kitchen Carpentry</option>
-                            <option value={11}>Landscapers</option>
-                            <option value={12}>Lenders/Banks</option>
-                            <option value={13}>Movers</option>
-                            <option value={14}>Painters</option>
-                            <option value={15}>Pest Control</option>
-                            <option value={16}>Photography</option>
-                            <option value={17}>Real Estate Lawyers</option>
-                            <option value={18}>Roofers</option>
-                            <option value={19}>Stagers</option>
-                            <option value={20}>Virtual Tours </option>
-                            <option value={21}>Wet Basement</option>
-                            <option value={7}>Window Cleaners</option>
+                        <select className="custom-select drop-down" onChange={this.onChange} name="professionId"
+                         value={professionId} required >
+                             <option value=""> Please select profession </option>
+                             {
+                                 professionList && professionList.length ? professionList.map( ( profession, idx ) => (
+                                     <option key={idx} value={profession.professionId} > { profession.professionDesc }</option>
+                                 ) )
+                                 : ""
+                             }
                         </select>
-                    </div>
+                    </div> 
                     <div className="form-group">
                         <input type="text" 
                             className="form-control" 
@@ -194,37 +275,38 @@ class vendorSignup extends Component {
                             className="form-control" 
                             id="support-file" 
                             placeholder="Supporting Documents (Optional)"
-                            name="supportDoc"
-                            value={supportDoc} 
-                            onChange={this.onChange}     
+                            name="businessSupportingDocument"
                         />
                         <label for="support-file" className="btn-2">Support document (optionsl) <i className="fa fa-cloud-upload"></i></label>
 
                     </div>
                     <div className="form-group">
                         <select className="custom-select drop-down"
-                            name="country"
-                            value={country}
+                            name="countryId"
+                            value={countryId}
                             onChange={this.onChange}
                             required
                         >
-                            <option value={39} >Canada</option>
-                            <option value={1}>USA</option>
+                            <option value=""> Please select country </option>
+                            {
+                                 countries && countries.length ? countries.map( ( country, idx ) => (
+                                     <option key={idx} value={country.id} > { country.name }</option>
+                                 ) )
+                                 : ""
+                             }
                         </select>
                     </div>
                     <div className="form-group">
                         <textarea 
                             typeof="text" className="form-control" 
                             placeholder="street name & number"
-                            name="streetName"
-                            value={streetName}
+                            name="streetAddress"
+                            value={streetAddress}
                             onChange={this.onChange}
                         />
                     </div>
-                </form>
             </div>
             <div className="col-md-6">
-                <form className="mt-4">
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
@@ -241,8 +323,8 @@ class vendorSignup extends Component {
                             className="form-control"
                             id="pxp-signin-email" 
                             placeholder="Email" 
-                            name="email"
-                            value={email}
+                            name="emailAddress"
+                            value={emailAddress}
                             onChange={this.onChange}
                             required
                          />
@@ -259,19 +341,13 @@ class vendorSignup extends Component {
                             />
                         </div>
                         <div className="form-group input-file">
-                        <input type="file" 
-                               className="form-control"
-                               id="file" 
-                               placeholder="Business Support Document" 
-                               name="businessDoc"
-                               value={businessDoc}
-                               onChange={this.onChange}
-                               required
-                        /> 
-                        <label for="file" className="btn-2">Business registration document <i className="fa fa-cloud-upload"></i></label>
-
-
-
+                         <input type="file" 
+                            className="form-control"
+                            id="pxp-signin-email" 
+                            placeholder="Business regigration Document" 
+                            name="businessRegistrationDocument"
+                         />
+                         <label for="file" className="btn-2">Business registration document <i className="fa fa-cloud-upload"></i></label>
                     </div>
                     <div className="form-group">
                         <textarea typeof="text"
@@ -301,8 +377,8 @@ class vendorSignup extends Component {
                             className="form-control" 
                             id="pxp-signin-pass" 
                             placeholder="KeyWord Describe Your Business" 
-                            name="keyWords"
-                            value={keyWords}
+                            name="keywordDescriptYourBusiness"
+                            value={keywordDescriptYourBusiness}
                             onChange={this.onChange}
                             required  
                         />
@@ -312,25 +388,35 @@ class vendorSignup extends Component {
                             <div className="col-md-6">
                                 <select className="custom-select drop-down"
                                     placeholder="City"
-                                    name="city"
-                                    value={city}
+                                    name="provinceId"
+                                    value={provinceId}
                                     onChange={this.onChange}
                                     required
                                 >
-                                    <option >Pakistan</option>
-                                    <option value={1}>USA</option>
+                                    <option value=""> Province / state </option>
+                             {
+                                 states && states.length ? states.map( ( state, idx ) => (
+                                     <option key={idx} value={state.id} > { state.name }</option>
+                                 ) )
+                                 : ""
+                             }
                                 </select>
                             </div>
                             <div className="col-md-6">
                                 <select className="custom-select"
                                     placeholder="Prov/State"
-                                    name="province"
-                                    value={province}
+                                    name="cityId"
+                                    value={cityId}
                                     onChange={this.onChange}
                                     required
                                     >
-                                    <option >Pakistan</option>
-                                    <option value={1}>USA</option>
+                                      <option value=""> City </option>
+                                    {
+                                        cities && cities.length ? cities.map( ( city, idx ) => (
+                                            <option key={idx} value={city.id} > { city.name }</option>
+                                        ) )
+                                        : ""
+                                    }     
                                 </select>            
                             </div>
                         </div>
@@ -341,9 +427,6 @@ class vendorSignup extends Component {
                                 <input className="form-control"
                                     placeholder="Unit Or Other"
                                     name="unit"
-                                    value={unit}
-                                    onChange={this.onChange}
-                                    required
                                 />
                             </div>
                             <div className="col-md-6">
@@ -364,27 +447,31 @@ class vendorSignup extends Component {
                             type="submit"
                             >Sign up
                         </button>
-                    </div>
-                    
-                </form>
-               
+                    </div>               
                     </div>
             
              </div>
+             </form>
+
             </Modal.Body>
         </Modal>             
        
          );
     }
 }
+
 const mapStateToProps = state => {
     return {
       auth: state.auth,
+      page: state.page,
     }
   };
   
   const mapDispatchToProps = dispatch => {
     return {
+        onFalseRegisterVendor: () => dispatch({type: actionTypes.REGISTER_VENDOR_FAIL }),
+        onGetCountries: () => dispatch(actions.GetCountries()),
+        onGetProfessionDetailAPI: () => dispatch(actions.GetProfessionDetailAPI()),
         onCreateVendor: (userData) => dispatch(actions.createVendor(userData))
     }
   };

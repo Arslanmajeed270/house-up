@@ -6,7 +6,11 @@ import {
     SET_CURRENT_USER,
     CLEAR_CURRENT_USER,
     OTP_AUTHENTICATE_SUCCESS,
-    OTP_AUTHENTICATE_FAIL
+    OTP_AUTHENTICATE_FAIL,
+    REGISTER_VENDOR_SUCCESS,
+	REGISTER_VENDOR_FAIL,
+	REGISTER_USER_SUCCESS,
+	REGISTER_USER_FAIL
 } from './actionTypes';
 
 import {
@@ -129,23 +133,13 @@ export const createUser = (userData) => dispatch => {
         userData
     )
     .then(res => {   
-        // const {token} = res.data;
-        // localStorage.setItem('jwtToken', token);
-        // setAuthToken(token);
-        // const decoded = jwt_decode(token);
-        // dispatch(setCurrentUser(decoded));
-
-        // dispatch(clearErrors())
-        // history.push(`/dashboard`)
-        // console.log("res from backend while login",res);
-        // if(res.data &&  res.data.data && res.data.data.user ){
-        //     localStorage.setItem('jwtToken', res.data.data.user) ;
-        //     dispatch(setCurrentUser(res.data.data.user));
-        // }
-
-        // dispatch(clearErrors())
-        // history.push(`/`)
         console.log('res from backend after signup',res);
+        if(res && res.data && res.data.resultCode === "200" ){
+            dispatch({ type: REGISTER_USER_SUCCESS });
+        }
+        else {
+            dispatch({ type: REGISTER_USER_FAIL });
+        }
         
     })
     .catch(err => {
@@ -159,30 +153,20 @@ export const createUser = (userData) => dispatch => {
 // signupVendor - signupvendor from the web page
 export const createVendor = (userData) => dispatch => {
     dispatch(setPageLoading());
-
+    console.log('checking userData: ', userData);
     axios
     .post(
         backendServerURL+'/registerUser', 
         userData
     )
     .then(res => {
-        // const {token} = res.data;
-        // localStorage.setItem('jwtToken', token);
-        // setAuthToken(token);
-        // const decoded = jwt_decode(token);
-        // dispatch(setCurrentUser(decoded));
-
-        // dispatch(clearErrors())
-        // history.push(`/dashboard`)
-        // console.log("res from backend while login",res);
-        // if(res.data &&  res.data.data && res.data.data.user ){
-        //     localStorage.setItem('jwtToken', res.data.data.user) ;
-        //     dispatch(setCurrentUser(res.data.data.user));
-        // }
-
-        // dispatch(clearErrors())
-        // history.push(`/`)
         console.log('res from backend after signup',res);
+        if(res && res.data && res.data.resultCode === "200" ){
+            dispatch({ type: REGISTER_VENDOR_SUCCESS });
+        }
+        else {
+            dispatch({ type: REGISTER_VENDOR_FAIL });
+        }
         
     })
     .catch(err => {
@@ -225,15 +209,14 @@ export const verifyPin = (data) => dispatch => {
         data
     )
     .then(res => {
-        if(res==="Success"){
+        console.log("checking res: ", res);
+        if(res && res.data && res.data.resultCode === "200" ){
             dispatch({ type: OTP_AUTHENTICATE_SUCCESS });
         }
         else {
             dispatch({ type: OTP_AUTHENTICATE_FAIL });
-
         }
         dispatch(clearErrors())
-        console.log('checking response in verifyPin',res);
     })
     .catch(err => {
         console.log("error: ", err);

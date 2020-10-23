@@ -10,10 +10,9 @@ class signupSelection extends Component {
                     show={this.props.show}
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
-                    dialogClassName="modal-width"
-                    onHide={() => this.props.closeCodelHanlder('signupSelection')}
+                    onHide={() => this.props.closeCodelHanlder('signupSelectionModel')}
                     >
-                    <Modal.Header closeButton  onClick={() => this.props.closeCodelHanlder("signupSelection")} >
+                    <Modal.Header closeButton  onClick={() => this.props.closeCodelHanlder("signupSelectionModel")} >
                     </Modal.Header>
                     <Modal.Body >
                         
