@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
@@ -20,9 +21,10 @@ class phoneNumber extends Component {
       }
 
     onSubmit = () => {
-        this.props.phoneNumberHandler(this.state.number);
+        let number = ('+' +1) + (this.state.number);
+        this.props.phoneNumberHandler(number);
         let data = {
-            msisdn:this.state.number,
+            msisdn:number,
             channel:"HouseUp",
             type:"LOGIN_PIN_SMS"
         };
@@ -35,18 +37,20 @@ class phoneNumber extends Component {
             show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            size="sm"
+            // size="sm"
+            dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('phoneNumberModel')}
             >
             <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNumberModel')}>
             </Modal.Header>
             <Modal.Body >
+                <div className="logo-modal">
                 <img src="assets/images/icons/logo.png" alt="" className="logo-signupModal" />
-                    
+                </div>
                          <form onSubmit={this.onSubmit}>
                          <div className="form-group">
                          <input type="text" 
-                            className="form-control"
+                            className="phone-number"
                             id="pxp-signin-email" 
                             placeholder="Phone Number"
                             onChange={this.onChange}
@@ -54,13 +58,20 @@ class phoneNumber extends Component {
                             value={this.state.number} 
                             required
                          />
+                        <span className="country-code">
+                            <img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-41px'}}/> +1</span>
                         </div>
                          <div className="form-group">
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            >Sign In
+                            >NEXT
                         </button>
+                        <div style={{textAlign:'center',paddingTop:'10px'}}>
+                        <Link to="#" 
+                            className="pxp-modal-link pxp-signup-trigger text-center" style={{fontWeight:"bold"}}
+                            >Already have an account</Link>
+                         </div>
                          </div> 
                         </form> 
              </Modal.Body>

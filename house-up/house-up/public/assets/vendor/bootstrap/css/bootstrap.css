@@ -372,8 +372,8 @@ progress {
 }
 
 ::-webkit-file-upload-button {
-  font: inherit;
-  -webkit-appearance: button;
+ 
+  display: none;
 }
 
 output {

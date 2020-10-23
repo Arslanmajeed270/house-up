@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import OtpInput from 'react-otp-input';
+import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
@@ -37,8 +38,8 @@ class OptUserVendor extends Component {
             <Modal 
             show={this.props.show}
             aria-labelledby="contained-modal-title-vcenter"
-            centered
-            size="md"
+            centered 
+            dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('optUserModelVendor')}
             >
             <Modal.Header onClick={() => this.props.closeCodelHanlder('optUserModelVendor')}>
@@ -47,19 +48,23 @@ class OptUserVendor extends Component {
             <Modal.Body >
             <div className="form-group">
 
-            <div class="text-center" style={{fontSize: '30px',fontWeight: '500',padding: '20px'}}>We sent you a code to verify your phone number</div>
+            <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>We sent you a code to </div>
+            <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>verify your phone number</div>
             </div>
             <div className="form-group">
-                <div class="text-center" style={{fontSize: '30px'}}>sent to {phoneNumber}</div> 
-                <div style={{marginLeft: "26%"}}>  
+                <div class="text-center" style={{fontSize: '20px',marginBottom:'15px',color:'#CACACC'}}>sent to {phoneNumber} </div> 
+                <div style={{marginLeft: "14%",marginBottom:'15px'}}>  
                 <OtpInput
                 value={this.state.otp}
                 onChange={this.handleChange}
                 numInputs={4}
-                separator={<span>&nbsp; &nbsp; </span>}
-                inputStyle={{width: "40px", height: "40px", borderRadius: "8px", border: "1px solid black"}}
+                separator={<span>&nbsp; &nbsp; &nbsp;</span>}
+                inputStyle={{width: "50px", height: "50px", borderRadius: "8px", border: "1px solid black"}}
                 />
             </div>
+            </div>
+            <div className="text-center" style={{marginBottom:'10px', color:'#CACACC'}}>
+              I didn't receeive a code! <Link to="#" >Resend</Link>
             </div>
             
             </Modal.Body>
