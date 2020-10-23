@@ -12,7 +12,9 @@ export {
     setPageLoading,
     clearPageLoading,
     clearErrors,
-    getIndexPageData
+    getIndexPageData,
+    GetCountries,
+    GetProfessionDetailAPI
 } from './pageActions';
 
 export {

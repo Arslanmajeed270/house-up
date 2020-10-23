@@ -83,6 +83,7 @@ class index extends Component {
             this.setState({ phoneNumberVendorModel: false, [model]: !this.state[model] });
         }
         else if(model === "userSignupModel"){
+            console.log('i am into userSignupModel if else');
             this.setState({ optUserModel: false, [model]: !this.state[model] });
         }
         else if(model === "vendorSignupModel"){
@@ -204,6 +205,7 @@ class index extends Component {
                     show={this.state.userSignupModel}
                     closeCodelHanlder={this.closeCodelHanlder}
                     congratulationHandler={this.modelHanlder}
+                    phNumber={this.state.phNumber}
                     />
                 }
                  {this.state.vendorSignupModel &&

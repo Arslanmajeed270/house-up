@@ -5,15 +5,38 @@ import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
+import * as action from '../../store/actions/authActions';
 
 class OptUserVendor extends Component {
     constructor(props){
         super(props);
         this.state = {
-            otp: ""
+            otp: "",
+            otpAuthenticate: false
         }
     }
+
+    static getDerivedStateFromProps(props, state) {
+        const otpAuthenticate = props.otpAuthenticate;
+        let stateChanged = false;
+        let changedState = {};
+      
+        if( state.otpAuthenticate !== otpAuthenticate){
+          changedState.otpAuthenticate = otpAuthenticate;  
+          if( changedState.otpAuthenticate === true ){
+            props.onFalseOtpAutheticate();
+            props.vendorSignupHandler('vendorSignupModel');
+
+          }
+          stateChanged = true;
+        }
+        
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+      }
 
     handleChange = otp => {
         this.setState({ otp });
@@ -23,7 +46,6 @@ class OptUserVendor extends Component {
                 channel:"HouseUp",
                 pin: otp};
             this.props.onVerifyPin(data)
-            this.props.vendorSignupHandler('vendorSignupModel');
         }
     }
 
@@ -73,11 +95,20 @@ class OptUserVendor extends Component {
          );
     }
 }
- 
-const mapDispatchToProps = dispatch => {
+
+const mapStateToProps = state => {
     return {
-        onVerifyPin: (data) => dispatch(actions.verifyPin(data))
+      otpAuthenticate: state.auth.otpAuthenticate
     }
   };
-   
-export default connect(null, mapDispatchToProps)(OptUserVendor);
+  
+  const mapDispatchToProps = dispatch => {
+    console.log('mapDispatchToProps in HomePage ' );
+    return {
+        onFalseOtpAutheticate: () => dispatch({type: actionTypes.OTP_AUTHENTICATE_FAIL }),
+        onVerifyPin : (data)=>dispatch(action.verifyPin(data))
+    }
+  };
+     
+  export default connect(mapStateToProps, mapDispatchToProps)(OptUserVendor);
+

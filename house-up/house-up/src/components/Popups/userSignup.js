@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
+import * as actionTypes from '../../store/actions/actionTypes';
+
 
 class userSignup extends Component {
     constructor(props) {
@@ -15,31 +17,72 @@ class userSignup extends Component {
             email: '',
             confirmPassword:'',
             password: '',
+            regiserUser: false
         };
     }
+
+    static getDerivedStateFromProps(props, state) {
+        const auth = props.auth;
+        let stateChanged = false;
+        let changedState = {};
+
+        console.log("checkig auth.regiserUser: ", auth);
+        console.log("checkig state.regiserUser: ", state.regiserUser);
+      
+        if( auth && JSON.stringify(state.regiserUser) !== JSON.stringify(auth.regiserUser) ){
+          changedState.regiserUser = auth.regiserUser;  
+        console.log("checkig changedState.regiserUser: ", changedState.regiserUser);
+          if( changedState.regiserUser === true ){
+            props.onFalseRegisterUser();
+            props.congratulationHandler('congratulationModel');
+          }
+          stateChanged = true;
+        }
+        
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+      }
+
     onChange = e => {
-        this.setState({
-          [e.target.name]: e.target.value
-        });
+
+        if(e.target.name === 'profilePic'){
+            this.setState({ profilePic: e.target.files[0] });
+        }
+        else{
+            this.setState({[e.target.name]: e.target.value});
+    
+        }
       }
       onSubmit = e => {
-        console.log('checking click handler');
+            console.log("checking this.state: ", this.state );
              e.preventDefault();
+             if(this.state.password !== this.state.confirmPassword){
+                 return "Wrong credentials!";
+             }
+             console.log("checking phoneNumber: ", this.props.phNumber);
              const userData = {
-                profilePic:this.state.profilePic,
+                profileImage:this.state.profilePic,
                 firstName:this.state.firstName,
                 lastName:this.state.lastName,
                 userName:this.state.userName,
-                email: this.state.email,
+                emailAddress: this.state.email,
                 confirmPassword:this.state.confirmPassword,
                 password: this.state.password,
+                currencyId: 1,
+                userTypeId: 1,
+                aboutYourSelf: "",
+                phoneNumber: this.props.phNumber,
+                address: ""
              };
-             this.props.congratulationHandler('congratulationModel');
              this.props.onCreateUser(userData);
 
          }
     render() {
-      const {profilePic, firstName, lastName, userName, email, password, confirmPassword} = this.state;
+      const { profilePic, firstName, lastName, 
+        userName, email, password, 
+        confirmPassword } = this.state;
         return (
             <Modal 
             show={this.props.show}
@@ -52,14 +95,15 @@ class userSignup extends Component {
             </Modal.Header>
             
             <Modal.Body>
-                <div className="form-group" style={{textAlign:'-webkit-center'}} >
-                    <input type="file" className="profile-pic" name="profilePic" vlaue={profilePic} onChange={this.onChange} />
-                </div>
                 <form className="mt-4" onSubmit={this.onSubmit}>
+                    <div className="form-group" style={{textAlign:'-webkit-center'}} >
+                        <input type="file" className="profile-pic" name="profilePic" value={profilePic} onChange={this.onChange} />
+                        <img src="assets/images/icons/ic_calendar.svg" class="calendar-icon" alt=""/>
+                    </div>
                     <div className="form-group">
-                        <input type="text" 
+                        <input type="text"
                             className="form-control"
-                            id="pxp-signin-email" 
+                            id={firstName} 
                             placeholder="First Name" 
                             name="firstName"
                             value={firstName}
@@ -71,7 +115,7 @@ class userSignup extends Component {
 
                          <input type="text" 
                             className="form-control"
-                            id="pxp-signin-email" 
+                            id={lastName}
                             placeholder="Last Name" 
                             name="lastName"
                             value={lastName}
@@ -80,10 +124,9 @@ class userSignup extends Component {
                          />
                     </div>
                     <div className="form-group">
-
                          <input type="text" 
                             className="form-control"
-                            id="pxp-signin-email" 
+                            id={userName}
                             placeholder="Create UserName" 
                             name="userName"
                             value={userName}
@@ -95,7 +138,7 @@ class userSignup extends Component {
 
                          <input type="text" 
                             className="form-control"
-                            id="pxp-signin-email" 
+                            id={email} 
                             placeholder="Enter Your Email" 
                             name="email"
                             value={email}
@@ -106,7 +149,7 @@ class userSignup extends Component {
                     <div className="form-group">
                         <input type="password" 
                             className="form-control" 
-                            id="pxp-signin-pass" 
+                            id={password} 
                             placeholder="Enter your password" 
                             name="password"
                             value={password}
@@ -117,7 +160,7 @@ class userSignup extends Component {
                     <div className="form-group">
                         <input type="password" 
                             className="form-control" 
-                            id="pxp-signin-pass" 
+                            id={confirmPassword} 
                             placeholder="Confirm password" 
                             name="confirmPassword"
                             value={confirmPassword}
@@ -145,6 +188,7 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
+        onFalseRegisterUser: () => dispatch({type: actionTypes.REGISTER_USER_FAIL }),
         onCreateUser: (userData) => dispatch(actions.createUser(userData)),
         
     }

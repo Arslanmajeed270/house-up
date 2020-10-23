@@ -5,7 +5,6 @@ import { Link } from'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
-import { verifyPin } from '../../store/actions';
 import * as actionTypes from '../../store/actions/actionTypes';
 import * as action from '../../store/actions/authActions';
 
@@ -14,23 +13,24 @@ class OptUser extends Component {
         super(props);
         this.state = {
             otp: "",
-            otpAutheticate: false
+            otpAuthenticate: false
         }
     }
-    
+
   static getDerivedStateFromProps(props, state) {
-    const auth = props.auth;
+    const otpAuthenticate = props.otpAuthenticate;
     let stateChanged = false;
     let changedState = {};
-
-    if(auth && JSON.stringify(state.otpAutheticate) !== JSON.stringify(auth.otpAutheticate)){
-      changedState.otpAutheticate = auth.otpAutheticate;  
-      stateChanged = true;
-      if( changedState.otpAutheticate === true ){
-          this.props.onFalseOtpAutheticate();
+  
+    if( state.otpAuthenticate !== otpAuthenticate){
+      changedState.otpAuthenticate = otpAuthenticate;  
+      if( changedState.otpAuthenticate === true ){
+        props.onFalseOtpAutheticate();
+        props.userSignupHandler('userSignupModel');
       }
+      stateChanged = true;
     }
-
+    
     if(stateChanged){
       return changedState;
     }
@@ -92,7 +92,7 @@ class OptUser extends Component {
 }
 const mapStateToProps = state => {
   return {
-    auth: state.page
+    otpAuthenticate: state.auth.otpAuthenticate
   }
 };
 
@@ -104,4 +104,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
    
-export default connect(null, mapDispatchToProps)(OptUser);
+export default connect(mapStateToProps, mapDispatchToProps)(OptUser);

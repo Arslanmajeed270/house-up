@@ -1,12 +1,16 @@
 import {
 	PAGE_LOADING,
 	PAGE_LOADED,
-	SET_INDEX_DATA
+	SET_INDEX_DATA,
+	GET_COUNTRIES,
+	GET_PROFESSIONS
 } from '../actions/actionTypes';
 
 const initialState = {
 	loading: false,
-	indexPageData :{}
+	indexPageData :{},
+	countries: [],
+	professionList: []
 };
 
 export default function (state = initialState, action) {
@@ -26,6 +30,14 @@ export default function (state = initialState, action) {
 			return {
 				indexPageData : action.payload
 			};
+		case GET_COUNTRIES:
+			return {
+				countries : action.payload
+		};
+		case GET_PROFESSIONS:
+			return {
+				professionList : action.payload
+		};
 	default:
 			return state;
 	}
