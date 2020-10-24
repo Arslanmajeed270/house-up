@@ -185,12 +185,14 @@ class vendorSignup extends Component {
             <Modal.Body >
             <form className="mt-4" onSubmit={this.onSubmit}>
                 <div className="form-group logo-modal" >
-                    <input type="file" className="profile-pic" name="profileImage" />
+                    <input type="file" className="profile-pic" name="profileImage" id="profilePic" style={{display:'none'}}/>
+                    <label for="profilePic" className="profile-pic-professional">
+                              <img src={require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}}/>
+                    </label>
                 </div>
-                <div className="row">
+                <div className="row" style={{padding:'0px 15px'}}>
             
-            <div className="col-md-6">
-                
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
@@ -202,7 +204,41 @@ class vendorSignup extends Component {
                             required
                          />
                          </div>
-                    <div className="form-group">
+                         </div>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+
+                         <div className="form-group">
+                        <input type="text" 
+                            className="form-control"
+                            id="pxp-signin-email" 
+                            placeholder="lastName"
+                            name="lastName"
+                            value={lastName}
+                            onChange={this.onChange} 
+                            required
+                         />
+                        </div>
+                    </div>
+                    </div>
+                    
+                    
+                    <div className="row" style={{padding:'0px 15px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                        <div className="form-group">
+                         <input type="text" 
+                            className="form-control"
+                            id="pxp-signin-email" 
+                            placeholder="Email" 
+                            name="emailAddress"
+                            value={emailAddress}
+                            onChange={this.onChange}
+                            required
+                         />
+                        </div>
+                    </div>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+
+                         <div className="form-group">
                          <input type="text" 
                             className="form-control"
                             id="pxp-signin-email" 
@@ -213,18 +249,12 @@ class vendorSignup extends Component {
                             required
                          />
                     </div>
-                    <div className="form-group">
-
-                         <input type="password" 
-                            className="form-control"
-                            id="pxp-signin-email" 
-                            placeholder="Password" 
-                            name="password"
-                            value={password}
-                            onChange={this.onChange}
-                            required
-                         />
                     </div>
+                    </div>
+           
+           
+                    <div className="row" style={{padding:'0px 15px'}}>
+                        <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
                     <div className="form-group">
                         <select className="custom-select drop-down" onChange={this.onChange} name="professionId"
                          value={professionId} required >
@@ -237,6 +267,28 @@ class vendorSignup extends Component {
                              }
                         </select>
                     </div> 
+                    </div>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+
+                    <div className="form-group input-file">
+                         <input type="file" 
+                            className="form-control"
+                            id="file" 
+                            placeholder="Business regigration Document" 
+                            name="businessRegistrationDocument"
+                         />
+                         <label for="file" className="btn-2">Business registration document
+                         <div style={{textAlign:'right',float:'right'}} >
+                              <img src={require("../../assets/images/icons/ic_upload.svg")} alt="" />
+                         </div>
+                         </label>
+                    </div>
+                    </div>
+                    </div>
+            
+                    <div className="row" style={{padding:'0px 15px'}}>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+
                     <div className="form-group">
                         <input type="text" 
                             className="form-control" 
@@ -248,6 +300,9 @@ class vendorSignup extends Component {
                             required     
                         />
                     </div>
+                    </div>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+
                     <div className="form-group">
                         <input type="text" 
                             className="form-control" 
@@ -259,6 +314,12 @@ class vendorSignup extends Component {
                                
                         />
                     </div>
+                    </div>
+                    </div>
+            
+                    <div className="row" style={{padding:'0px 15px'}}>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+
                     <div className="form-group">
                         <input type="text" 
                             className="form-control" 
@@ -270,96 +331,9 @@ class vendorSignup extends Component {
                             required  
                         />
                     </div>
-                    <div className="form-group input-file">
-                        <input type="file" 
-                            className="form-control" 
-                            id="support-file" 
-                            placeholder="Supporting Documents (Optional)"
-                            name="businessSupportingDocument"
-                        />
-                        <label for="support-file" className="btn-2">Support document (optionsl) <i className="fa fa-cloud-upload"></i></label>
+                    </div>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
 
-                    </div>
-                    <div className="form-group">
-                        <select className="custom-select drop-down"
-                            name="countryId"
-                            value={countryId}
-                            onChange={this.onChange}
-                            required
-                        >
-                            <option value=""> Please select country </option>
-                            {
-                                 countries && countries.length ? countries.map( ( country, idx ) => (
-                                     <option key={idx} value={country.id} > { country.name }</option>
-                                 ) )
-                                 : ""
-                             }
-                        </select>
-                    </div>
-                    <div className="form-group">
-                        <textarea 
-                            typeof="text" className="form-control" 
-                            placeholder="street name & number"
-                            name="streetAddress"
-                            value={streetAddress}
-                            onChange={this.onChange}
-                        />
-                    </div>
-            </div>
-            <div className="col-md-6">
-                    <div className="form-group">
-                        <input type="text" 
-                            className="form-control"
-                            id="pxp-signin-email" 
-                            placeholder="lastName"
-                            name="lastName"
-                            value={lastName}
-                            onChange={this.onChange} 
-                            required
-                         />
-                    </div>
-                    <div className="form-group">
-                         <input type="text" 
-                            className="form-control"
-                            id="pxp-signin-email" 
-                            placeholder="Email" 
-                            name="emailAddress"
-                            value={emailAddress}
-                            onChange={this.onChange}
-                            required
-                         />
-                        </div>
-                        <div className="form-group">
-                            <input type="password" 
-                                className="form-control"
-                                id="pxp-signin-email" 
-                                placeholder="Confirm Password" 
-                                name="confirmPassword"
-                                value={confirmPassword}
-                                onChange={this.onChange}
-                                required
-                            />
-                        </div>
-                        <div className="form-group input-file">
-                         <input type="file" 
-                            className="form-control"
-                            id="pxp-signin-email" 
-                            placeholder="Business regigration Document" 
-                            name="businessRegistrationDocument"
-                         />
-                         <label for="file" className="btn-2">Business registration document <i className="fa fa-cloud-upload"></i></label>
-                    </div>
-                    <div className="form-group">
-                        <textarea typeof="text"
-                            className="form-control" 
-                            placeholder="About Business" 
-                            name="aboutBusiness"
-                            value={aboutBusiness}
-                            onChange={this.onChange}
-                            required
-                        />
-
-                    </div>
                     <div className="form-group">
                         <input type="date"
                             className="form-control" 
@@ -370,6 +344,26 @@ class vendorSignup extends Component {
                             onChange={this.onChange}
                             required  
                         />
+                         {/* <label for="calender" className="btn-2">Business Started 
+                         <img src={require("../../assets/images/icons/ic_calendar.svg")} alt="" /></label> */}
+
+
+                    </div>
+                    </div>
+                    </div>
+                    <div className="row" style={{padding:'0px 15px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+
+                    <div className="form-group input-file">
+                        <input type="file" 
+                            className="form-control" 
+                            id="support-file" 
+                            placeholder="Supporting Documents (Optional)"
+                            name="businessSupportingDocument"
+                        />
+                        <label for="support-file" className="btn-2">Support document (optionsl) <div style={{textAlign:'right',float:'right'}} >
+                              <img src={require("../../assets/images/icons/ic_upload.svg")} alt="" />
+                         </div></label>
 
                     </div>
                     <div className="form-group">
@@ -383,10 +377,28 @@ class vendorSignup extends Component {
                             required  
                         />
                     </div>
+                    </div>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
                     <div className="form-group">
-                        <div className="row">
+                        <textarea typeof="text" style={{height:'111px'}}
+                            className="form-control" 
+                            placeholder="About Business" 
+                            name="aboutBusiness"
+                            value={aboutBusiness}
+                            onChange={this.onChange}
+                            required
+                        />
+
+                    </div>
+                    </div>
+                    </div>
+
+                    <div className="row" style={{padding:'0px 15px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="row">
                             <div className="col-md-6">
-                                <select className="custom-select drop-down"
+                                <div className="form-group"> 
+                                <select className="custom-select"
                                     placeholder="City"
                                     name="provinceId"
                                     value={provinceId}
@@ -402,7 +414,9 @@ class vendorSignup extends Component {
                              }
                                 </select>
                             </div>
+                            </div>
                             <div className="col-md-6">
+                            <div className="form-group"> 
                                 <select className="custom-select"
                                     placeholder="Prov/State"
                                     name="cityId"
@@ -419,10 +433,9 @@ class vendorSignup extends Component {
                                     }     
                                 </select>            
                             </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="form-group">
-                        <div className="row">
+                    <div className="row">
                             <div className="col-md-6">
                                 <input className="form-control"
                                     placeholder="Unit Or Other"
@@ -440,7 +453,55 @@ class vendorSignup extends Component {
                                 />
                             </div>
                        </div>
-                   </div>
+                       </div>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                       <div className="form-group">
+                        <textarea 
+                            typeof="text" className="form-control" style={{height:'97px'}}
+                            placeholder="street name & number"
+                            name="streetAddress"
+                            value={streetAddress}
+                            onChange={this.onChange}
+                        />
+                    </div>
+                    </div>
+                    </div>
+
+                <div className="row" style={{padding:'0px 15px'}}>
+                <div className="col-md-6" style={{padding:'0px',paddingRight:'7px'}}>
+                    <div className="form-group">
+                        <input type="password" 
+                            className="form-control"
+                            id="pxp-signin-email" 
+                            placeholder="Password" 
+                            name="password"
+                            value={password}
+                            onChange={this.onChange}
+                            required
+                        />
+                    </div>
+                </div>
+                <div className="col-md-6" style={{padding:'0px'}}>
+                    <div className="form-group">
+                        <input type="password" 
+                            className="form-control"
+                            id="pxp-signin-email" 
+                            placeholder="Confirm Password" 
+                            name="confirmPassword"
+                            value={confirmPassword}
+                            onChange={this.onChange}
+                            required
+                        />
+                    </div>
+                    
+                </div>
+                </div>
+
+                    
+                    
+                    
+                    
+
                     <div className="form-group">
                         <button
                             className="pxp-agent-contact-modal-btn"
@@ -448,9 +509,7 @@ class vendorSignup extends Component {
                             >Sign up
                         </button>
                     </div>               
-                    </div>
             
-             </div>
              </form>
 
             </Modal.Body>

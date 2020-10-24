@@ -20,7 +20,7 @@ class emailSignin extends Component {
                     <Modal.Body>
                         <Link>
                         <div className="logo-modal" >
-                            <img src="assets/images/icons/logo.png" alt="" />
+                            <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" />
                             </div>
                             <form onSubmit={this.onSubmit}>
                             <div className="form-group">
@@ -30,7 +30,7 @@ class emailSignin extends Component {
                                     <input type="text" 
                                         className="form-control"
                                         id="pxp-signin-email" 
-                                        placeholder="email"
+                                        placeholder="Enter Your Email"
                                         onChange={this.onChange}
                                         // name="number"
                                         // value={this.state.number} 
@@ -44,7 +44,7 @@ class emailSignin extends Component {
                                     <div className="form-group">
                                        <Link to="#" className="pxp-agent-contact-modal-btn">Sign In</Link>
                                     </div>
-                                    <div className="form-group ">
+                                    <div className="form-group " style={{textAlign:'right'}}>
                                         <Link to="#" className="pxp-modal-link" onClick={() => this.props.phoneNoForgotHandler('phoneNoForgotPass')}>Forgot password</Link>
                                     </div>
                                     <div className="text-center pxp-modal-small"> 

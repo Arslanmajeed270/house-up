@@ -1,13 +1,42 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Form1 from './Add Property/form1';
+import Form2 from './Add Property/form2';
+import Form3 from './Add Property/form3';
 
-
-class addNewProp extends Component {
-    state = {  }
-    render() { 
-        return ( 
+class addProperty extends Component {
+  constructor(props){
+    super(props);
+    this.state={
+        formShow: 0
+    };
+}
+formShowHandler = (num) =>{
+    console.log("checking number: ", num);
+    this.setState({
+        formShow: num
+    });
+}
+render() { 
+    console.log("checking number in render: ", this.state.formShow);
+    return ( 
             <React.Fragment>
-                <div>
+              
+                {this.state.formShow === 0 && 
+                <Form1  formShowHandler={(num) => this.formShowHandler(num)} />
+                }
+                {this.state.formShow === 1 && 
+                <Form2 formShowHandler={(num) => this.formShowHandler(num)}/>
+                }
+                {this.state.formShow === 2 && 
+                <Form3 formShowHandler={(num) => this.formShowHandler(num)}/>
+                }
+            </React.Fragment>
+         );
+    }
+}
+export default addProperty;
+                {/* <div>
                 <div className="pxp-submit-property pxp-content-wrapper mt-100">
                   <div className="container">
                     <div className="row">
@@ -209,9 +238,9 @@ class addNewProp extends Component {
                   </div>
                 </div>
               </div>
-            </React.Fragment>
-         );
-    }
-}
+            */}
+//             </React.Fragment>
+//          );
+//     }
+// }
  
-export default addNewProp;

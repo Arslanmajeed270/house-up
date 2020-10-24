@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter as Router , Route,  withRouter} from 'react-router-dom';
 
 import About from './About/about';
-import AddNewProp from './Properties/addNewProp';
+import AddProperty from './Properties/addProperty';
 import SingleVendor from './User/singleVendor';
 import Blogs from './Blogs/blogs';
 import Comments from './Comments/comments';
@@ -46,7 +46,7 @@ class Routes extends React.Component {
 				<Route      
 					exact 
 					path={"/add-property"} 
-					component={AddNewProp}
+					component={AddProperty}
 				/>
 				<Route      
 					exact 

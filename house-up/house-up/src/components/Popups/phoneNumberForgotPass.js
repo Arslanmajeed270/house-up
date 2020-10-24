@@ -44,20 +44,21 @@ class phonenumberForgotPass extends Component {
             </Modal.Header>
             <Modal.Body >
                 <div className="logo-modal">
-                <img src="assets/images/icons/logo.png" alt=""  />
+                <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" style={{marginBottom:'20px'}} />
                 </div>
                          <form onSubmit={this.onSubmit}>
                          <div className="form-group">
-                         <input type="text" 
+                         <input type="text" style={{paddingLeft:'59px'}}
                             className="phone-number"
                             id="pxp-signin-email" 
-                            placeholder="Phone Number"
+                            placeholder="416 123-4567"
                             onChange={this.onChange}
                             name="number"
                             value={this.state.number} 
                             required
                          />
-                        <span className="country-code-forgotPass"><img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-41px'}}/> +1</span>
+                        <span className="country-code-forgotPass"><img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-82px'}}/></span>
+                        <span className="country-code-forgot-page"> +1</span>
                         </div>
                          <div className="form-group">
                         <button

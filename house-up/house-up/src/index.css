@@ -31,10 +31,7 @@ code {
   font-size: 30px;
   padding: 5px 15px;
 }
-/* .modal.show .modal-dialog
-{
-  max-width: 500px;
-} */
+
 .modal-header {
   border-bottom: none;
   padding: 15px 15px 0px 15px;
@@ -76,16 +73,37 @@ code {
 
 .country-code{
   position: absolute !important;
-  top: 122px !important;
+  top: 118px !important;
   margin-left: 30px !important;
   color: #000 !important;
 }
-.country-code-login-page
+.country-image-login-page
 {
   position: absolute !important;
-  top: 126px !important;
+  top: 135px !important;
   margin-left: 30px !important;
   color: #000 !important;
+}
+.country-code-login-page{
+  position: absolute !important;
+  top: 157px !important;
+  margin-left: 30px !important;
+  color: #000 !important;
+  padding-left: 10px;
+}
+.country-code-forgot-page{
+  position: absolute !important;
+  top: 137px !important;
+  margin-left: 30px !important;
+  color: #000 !important;
+  padding-left: 10px;
+}
+.country-code-user-page{
+  position: absolute !important;
+  top: 140px !important;
+  margin-left: 30px !important;
+  color: #000 !important;
+  padding-left: 10px;
 }
 .phone-number{
   display: block;
@@ -121,7 +139,7 @@ code {
 }
 .country-code-forgotPass{
   position: absolute !important;
-  top: 86px !important;
+  top: 94px !important;
   margin-left: 30px !important;
   color: #000 !important;
 }
@@ -164,8 +182,19 @@ code {
   font-size: 20px;
 }
 
+.profile-pic-professional{
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 7px;
+}
 
-
+.profile-pic-user{
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+  border-radius: 50px;
+}
 
 
 .input-file input[type="file"] + label.btn-2:before , .input-file input[type="date"] + label.btn-2:before {
@@ -238,4 +267,68 @@ code {
   grid-area: img-u-one;
   display: flex;
   justify-content: center;
+}
+
+.add-property-conatiner{
+  margin-top: 70px;
+  padding: 70px;
+}
+
+.input-feilds-property{
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid #CCCCCC;
+}
+.input-feilds-address{
+  width: 94%;
+  padding: 5px 10px;
+  border: 1px solid #CCCCCC;
+}
+.titles-property{
+  margin: 10px 0px;
+}
+.border-property{
+  border-bottom: 1px solid #DCE0E0;
+    padding-bottom: 40px;
+}
+.btn-div{
+  text-align: right;
+}
+.btn-div-prev{
+  text-align: left;
+}
+.btn-property{
+  width: 30%;
+}
+.multiply{
+  background-color: #F7F7F7;
+  padding: 6px 15px;
+    border-top: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
+}
+.multiply-input{
+  width: 45%;
+  padding: 5px 10px;
+  border: 1px solid #CCCCCC;
+}
+.more-options{
+  margin: 16px 0px;
+    color: blue;
+    text-decoration: underline;
+}
+.drop-zone{
+  height: 250px;
+  border: 1px dashed blue;
+  background-color: white;
+  overflow: scroll;
+}
+.drop-zone-inner{
+  background-color: white;
+  border: 0px;
+  height: 100px;
+  text-align: center;
+  padding: 40px;
+}
+.tabs{
+  color: black;
 }
