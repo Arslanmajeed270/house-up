@@ -23,7 +23,7 @@ class signupSelection extends Component {
                         >
                             <Link to="#">
                                 <div className="logo-modal">
-                                    <img className="vendor-img" src="assets/images/icons/ic_user_account.png" alt=""  />
+                                    <img className="vendor-img" src={require("../../assets/images/icons/ic_user_account.svg")} alt=""  />
                                 </div>
                                 <div class="text-center user">Users</div>
                                 <div class="text-center user-description">List home for sale, rental</div>
@@ -39,7 +39,7 @@ class signupSelection extends Component {
                         >
                             <Link to="#">
                             <div className="logo-modal">
-                                <img className="vendor-img" src="assets/images//icons/ic_business_account.png" alt="" />
+                                <img className="vendor-img" src={require("../../assets/images/icons/ic_business_account.svg")} alt="" />
                                 </div>
                                 <div class="text-center user ">Professionals</div>
                                 <div class="text-center user-description ">Promote your business, find customers, </div> 

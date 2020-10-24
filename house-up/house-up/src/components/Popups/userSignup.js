@@ -99,8 +99,8 @@ class userSignup extends Component {
             <Modal.Body>
                 <form className="mt-4" onSubmit={this.onSubmit}>
                     <div className="form-group" style={{textAlign:'-webkit-center'}} >
-                        <input type="file" className="profile-pic" name="profilePic" value={profilePic} onChange={this.onChange} />
-                        <img src="assets/images/icons/ic_calendar.svg" class="calendar-icon" alt=""/>
+                        <input type="file" className="profile-pic" id="profilePic" name="profilePic" value={profilePic} onChange={this.onChange} style={{display:'none'}}/>
+                        <label for="profilePic" className="profile-pic-user"><img src={require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} /></label>
                     </div>
                     <div className="form-group">
                         <input type="text"

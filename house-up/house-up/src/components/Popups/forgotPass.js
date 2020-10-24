@@ -41,7 +41,7 @@ class forgotPass extends Component {
                     onHide={()=>this.props.closeCodelHanlder('forgotPass')}
                     >
                     <Modal.Body>
-                        <Link>
+                        <Link to="#">
                             <form onSubmit={this.onSubmit}>
                             <div className="form-group text-center" style={{fontSize: '18px',marginBottom:'0px', fontWeight:'bold',color: 'black'}}>
                                 Please Set Your New

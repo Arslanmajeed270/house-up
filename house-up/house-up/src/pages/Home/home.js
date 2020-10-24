@@ -317,7 +317,7 @@ class home extends Component {
 const responsive = {
   0: { items: 1 },
   568: { items: 2 },
-  1024: { items: 3.7 },
+  1024: { items: 2.7 },
 };
  
  const items = [
