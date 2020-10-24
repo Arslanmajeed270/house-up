@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
 import * as actionTypes from '../../store/actions/actionTypes';
 
+import { checkPawwordPattern } from '../../utils/regex';
+
 
 class userSignup extends Component {
     constructor(props) {
