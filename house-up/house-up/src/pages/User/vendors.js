@@ -31,13 +31,13 @@ class vendor extends Component {
   }
 
   componentDidMount() {
-    console.log('vendors componenet did mount');
+    console.log('professionals componenet did mount');
     this.props.onGetVendorsData();
   }
 
     render() { 
       const { vendorsData } = this.state;
-      console.log('checking vendorsData in vendors: ', vendorsData);
+      console.log('checking vendorsData in professionals: ', vendorsData);
 
         return ( 
             <React.Fragment>
@@ -46,7 +46,7 @@ class vendor extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-sm-12 col-md-7">
-                        <h1 className="pxp-page-header">Our Vendors</h1>
+                        <h1 className="pxp-page-header">Our Professionals</h1>
                         <p className="pxp-text-light">Pairing the industry's top technology with unsurpassed local expertise.</p>
                       </div>
                     </div>

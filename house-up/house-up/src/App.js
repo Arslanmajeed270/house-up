@@ -83,7 +83,7 @@ function App() {
       />  
       <Route
         exact 
-        path={'/vendors'}
+        path={'/professionals'}
         component={Index}
       />
     </React.Fragment>

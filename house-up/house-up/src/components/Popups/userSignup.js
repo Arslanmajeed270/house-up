@@ -12,11 +12,11 @@ class userSignup extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            profilePic:'',
+            profileImage:'',
             firstName:'',
             lastName:'',
             userName:'',
-            email: '',
+            emailAddress: '',
             confirmPassword:'',
             password: '',
             regiserUser: false
@@ -49,8 +49,8 @@ class userSignup extends Component {
 
     onChange = e => {
 
-        if(e.target.name === 'profilePic'){
-            this.setState({ profilePic: e.target.files[0] });
+        if(e.target.name === 'profileImage'){
+            this.setState({ profileImage: e.target.files[0] });
         }
         else{
             this.setState({[e.target.name]: e.target.value});

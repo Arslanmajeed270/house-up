@@ -28,7 +28,7 @@ class header extends Component {
                             <Link to="/add-property">Sell</Link>
                           </li>
                           <li className="list-inline-item">
-                            <Link to="/vendors">Vendors</Link>
+                            <Link to="/professionals">Professionals</Link>
                           </li>
                           <li className="list-inline-item">
                             <Link to="/blogs">Resources</Link>
