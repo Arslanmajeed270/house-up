@@ -12,6 +12,7 @@
         "@testing-library/user-event": "^7.2.1",
         "axios": "^0.20.0",
         "bootstrap": "^4.5.3",
+        "fuctbase64": "^1.4.0",
         "google-map-react": "^2.1.8",
         "google-maps-react": "^2.0.6",
         "jwt-decode": "^3.0.0",

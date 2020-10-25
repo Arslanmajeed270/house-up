@@ -6,37 +6,54 @@ import { Link } from 'react-router-dom';
 // importing actions
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
-import * as action from '../../store/actions/authActions';
+import * as actions from '../../store/actions/authActions';
+
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 
 class OptUserVendor extends Component {
     constructor(props){
         super(props);
         this.state = {
-            otp: "",
-            otpAuthenticate: false
+          errors: {},
+          loading : false,
+          otp: "",
+          otpAuthenticate: false
         }
     }
 
     static getDerivedStateFromProps(props, state) {
-        const otpAuthenticate = props.otpAuthenticate;
-        let stateChanged = false;
-        let changedState = {};
-      
-        if( state.otpAuthenticate !== otpAuthenticate){
-          changedState.otpAuthenticate = otpAuthenticate;  
-          if( changedState.otpAuthenticate === true ){
-            props.onFalseOtpAutheticate();
-            props.vendorSignupHandler('vendorSignupModel');
+      let errors = props.errors;
+      let page = props.page;
+      const otpAuthenticate = props.otpAuthenticate;
+      let stateChanged = false;
+      let changedState = {};
+    
+      if( state.otpAuthenticate !== otpAuthenticate){
+        changedState.otpAuthenticate = otpAuthenticate;  
+        if( changedState.otpAuthenticate === true ){
+          props.onFalseOtpAutheticate();
+          props.vendorSignupHandler('vendorSignupModel');
 
-          }
-          stateChanged = true;
         }
-        
-        if(stateChanged){
-          return changedState;
-        }
-        return null;
+        stateChanged = true;
       }
+
+      if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+        changedState.errors = errors;
+        stateChanged = true;
+      }
+      
+      if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+          changedState.loading = page.loading;
+          stateChanged = true;            
+      }
+      
+      if(stateChanged){
+        return changedState;
+      }
+      return null;
+    }
 
     handleChange = otp => {
         this.setState({ otp });
@@ -49,7 +66,26 @@ class OptUserVendor extends Component {
         }
     }
 
+
+    resendPin = (num) => {
+      const data = {
+        msisdn:num,
+        channel:"HouseUp",
+        type:"LOGIN_PIN_SMS"
+      };
+      this.props.onGeneratePin(data);
+    }
+
     render() { 
+      const { errors , loading } = this.state;
+      let pageContent = '';
+
+      if(loading){
+        pageContent = <Spinner />
+      }
+      else{
+        pageContent = "";
+      }
         console.log('checking value of otp: ', this.state.otp);
         let phoneNumber = '';
         if(this.props.phNumber)
@@ -69,7 +105,11 @@ class OptUserVendor extends Component {
             
             <Modal.Body >
             <div className="form-group">
-
+            {errors && errors.message &&
+                <Alert variant='danger'>
+                <strong>Error!</strong> { errors.message }
+                </Alert>
+            }
             <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>We sent you a code to </div>
             <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>verify your phone number</div>
             </div>
@@ -80,14 +120,17 @@ class OptUserVendor extends Component {
                 value={this.state.otp}
                 onChange={this.handleChange}
                 numInputs={4}
+                hasErrored={errors && errors.message ? true : false}
+                errorStyle={{border: "1px solid #721c24"}}
                 separator={<span>&nbsp; &nbsp; &nbsp;</span>}
                 inputStyle={{width: "50px", height: "50px", borderRadius: "8px", border: "1px solid black"}}
                 />
             </div>
             </div>
             <div className="text-center" style={{marginBottom:'10px', color:'#CACACC'}}>
-              I didn't receeive a code! <Link to="#" >Resend</Link>
+              I didn't receeive a code! <Link to="#" onClick={() => this.props.resendPin(phoneNumber)} >Resend</Link>
             </div>
+            { pageContent }
             
             </Modal.Body>
         </Modal>             
@@ -98,6 +141,8 @@ class OptUserVendor extends Component {
 
 const mapStateToProps = state => {
     return {
+      page: state.page,
+      errors: state.errors,
       otpAuthenticate: state.auth.otpAuthenticate
     }
   };
@@ -106,7 +151,9 @@ const mapStateToProps = state => {
     console.log('mapDispatchToProps in HomePage ' );
     return {
         onFalseOtpAutheticate: () => dispatch({type: actionTypes.OTP_AUTHENTICATE_FAIL }),
-        onVerifyPin : (data)=>dispatch(action.verifyPin(data))
+        onVerifyPin : (data)=>dispatch(actions.verifyPin(data)),
+        onGeneratePin: (data) => dispatch(actions.generatePin(data))
+
     }
   };
      

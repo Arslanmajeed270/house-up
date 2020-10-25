@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
+import fileUpload from 'fuctbase64';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
@@ -7,12 +8,17 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import { checkPawwordPattern } from '../../utils/regex';
 
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 
 class userSignup extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            errors: {},
+            loading : false,
             profileImage:'',
+            imagePreview: null,
             firstName:'',
             lastName:'',
             userName:'',
@@ -24,6 +30,8 @@ class userSignup extends Component {
     }
 
     static getDerivedStateFromProps(props, state) {
+        let errors = props.errors;
+        let page = props.page; 
         const auth = props.auth;
         let stateChanged = false;
         let changedState = {};
@@ -40,6 +48,16 @@ class userSignup extends Component {
           }
           stateChanged = true;
         }
+
+        if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+            changedState.errors = errors;
+            stateChanged = true;
+          }
+          
+        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+            changedState.loading = page.loading;
+            stateChanged = true;            
+        }
         
         if(stateChanged){
           return changedState;
@@ -50,22 +68,34 @@ class userSignup extends Component {
     onChange = e => {
 
         if(e.target.name === 'profileImage'){
-            this.setState({ profileImage: e.target.files[0] });
+            let imagePreview = URL.createObjectURL(e.target.files[0]);
+            fileUpload(e)
+            .then((data) => {
+                console.log("base64 :",data.base64);
+                this.setState({
+                    imagePreview: imagePreview,
+                    profileImage: data.base64
+                })
+            })
         }
         else{
             this.setState({[e.target.name]: e.target.value});
-    
         }
       }
       onSubmit = e => {
             console.log("checking this.state: ", this.state );
              e.preventDefault();
              if(this.state.password !== this.state.confirmPassword){
-                 return "Wrong credentials!";
+                 this.props.onErrorSet("Password not matched!");
+                 return;
              }
+             if(!checkPawwordPattern(this.state.password)){
+                this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
+                return;
+            }
              console.log("checking phoneNumber: ", this.props.phNumber);
              const userData = {
-                profileImage:this.state.profilePic,
+                profileImage:this.state.profileImage,
                 firstName:this.state.firstName,
                 lastName:this.state.lastName,
                 userName:this.state.userName,
@@ -82,9 +112,17 @@ class userSignup extends Component {
 
          }
     render() {
-      const { profilePic, firstName, lastName, 
+      const { errors , loading, imagePreview, firstName, lastName, 
         userName, email, password, 
         confirmPassword } = this.state;
+        let pageContent = '';
+
+        if(loading){
+          pageContent = <Spinner />
+        }
+        else{
+          pageContent = "";
+        }
         return (
             <Modal 
             show={this.props.show}
@@ -98,9 +136,23 @@ class userSignup extends Component {
             
             <Modal.Body>
                 <form className="mt-4" onSubmit={this.onSubmit}>
+                {errors && errors.message &&
+                    <Alert variant='danger'>
+                    <strong>Error!</strong> { errors.message }
+                    </Alert>
+                }
                     <div className="form-group" style={{textAlign:'-webkit-center'}} >
-                        <input type="file" className="profile-pic" id="profilePic" name="profilePic" value={profilePic} onChange={this.onChange} style={{display:'none'}}/>
-                        <label for="profilePic" className="profile-pic-user"><img src={require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} /></label>
+                        <input 
+                        type="file" 
+                        accept="image/*"
+                        className="profile-pic" 
+                        id="profileImage" 
+                        name="profileImage" 
+                        onChange={this.onChange} 
+                        style={{display:'none'}} 
+                        />
+                        <label for="profileImage" className="profile-pic-user">
+                            <img id="imagePreview" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} /></label>
                     </div>
                     <div className="form-group">
                         <input type="text"
@@ -150,7 +202,7 @@ class userSignup extends Component {
                     </div>
                     <div className="form-group">
                         <input type="password" 
-                            className="form-control" 
+                           className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
                             id={password} 
                             placeholder="Enter your password" 
                             name="password"
@@ -161,7 +213,7 @@ class userSignup extends Component {
                     </div>
                     <div className="form-group">
                         <input type="password" 
-                            className="form-control" 
+                            className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
                             id={confirmPassword} 
                             placeholder="Confirm password" 
                             name="confirmPassword"
@@ -176,6 +228,8 @@ class userSignup extends Component {
                             type="submit"
                             >Submit</button>
                     </div>
+                { pageContent }
+
                 </form>
             </Modal.Body>
         </Modal>             
@@ -184,7 +238,9 @@ class userSignup extends Component {
 }
 const mapStateToProps = state => {
     return {
-      auth: state.auth,
+        page: state.page,
+        errors: state.errors,
+        auth: state.auth,
     }
   };
   
@@ -192,10 +248,8 @@ const mapStateToProps = state => {
     return {
         onFalseRegisterUser: () => dispatch({type: actionTypes.REGISTER_USER_FAIL }),
         onCreateUser: (userData) => dispatch(actions.createUser(userData)),
-        
+        onErrorSet: (msg) =>  dispatch({type: actionTypes.SET_ERRORS, payload: { message: msg }})
     }
   };
   
   export default connect(mapStateToProps,mapDispatchToProps)(userSignup);
-
-

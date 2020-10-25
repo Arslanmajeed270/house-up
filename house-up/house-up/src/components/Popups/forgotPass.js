@@ -20,10 +20,10 @@ class forgotPass extends Component {
       onSubmit = e => {
         console.log('checking click handler');
              e.preventDefault();
-             const userData = {
-                confirmPassword:this.state.confirmPassword,
-                password: this.state.password,
-             };
+            //  const userData = {
+            //     confirmPassword:this.state.confirmPassword,
+            //     password: this.state.password,
+            //  };
              this.props.forgotPassCongratsHandler('forgotPassCongrats');
             //  this.props.onCreateUser(userData);
 

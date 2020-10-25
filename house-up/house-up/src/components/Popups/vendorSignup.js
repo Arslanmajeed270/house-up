@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import {Modal} from 'react-bootstrap';
 import cloneDeep from 'lodash/cloneDeep';
+import fileUpload from 'fuctbase64';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 
+import { checkPawwordPattern } from '../../utils/regex';
+
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 
 class vendorSignup extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
+            errors: {},
+            loading : false,
             profileImage:'',
+            imagePreview: null,
             firstName:'',
             lastName:'',
             userName:'',
@@ -38,14 +46,17 @@ class vendorSignup extends Component {
             countries: [],
             professionList: [],
             states: [],
-            cities: []
+            cities: [],
+            imagePreviewForSupport: [],
+            imagePreviewForRegister: []
         };
     }
 
 
     static getDerivedStateFromProps(props, state) {
-        const auth = props.auth;
+        const errors = props.errors;
         const page = props.page;
+        const auth = props.auth;
         let stateChanged = false;
         let changedState = {};
 
@@ -71,6 +82,16 @@ class vendorSignup extends Component {
             console.log('checking changedState.professionList: ', changedState.professionList);
             stateChanged = true;
         }
+
+        if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+            changedState.errors = errors;
+            stateChanged = true;
+          }
+          
+        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+            changedState.loading = page.loading;
+            stateChanged = true;            
+        }
         
         if(stateChanged){
           return changedState;
@@ -84,8 +105,38 @@ class vendorSignup extends Component {
       }
 
     onChange = e => {
-        if(e.target.name === 'profileprofileImagePic'){
-            this.setState({ profileImage: e.target.files[0] });
+        if(e.target.name === 'profileImage'){
+            let imagePreview = URL.createObjectURL(e.target.files[0]);
+            fileUpload(e)
+            .then((data) => {
+                console.log("base64 :",data.base64);
+                this.setState({
+                    imagePreview: imagePreview,
+                    profileImage: data.base64
+                })
+            })
+        }
+        else if(e.target.name === 'businessSupportingDocument'){
+            let imagePreviewForSupport = e.target.files[0];
+            fileUpload(e)
+            .then((data) => {
+                console.log("base64 :",data.base64);
+                this.setState({
+                    imagePreviewForSupport: imagePreviewForSupport,
+                    businessSupportingDocument: data.base64
+                })
+            })
+        }
+        else if(e.target.name === 'businessRegistrationDocument'){
+            let imagePreviewForRegister = e.target.files[0];
+            fileUpload(e)
+            .then((data) => {
+                console.log("base64 :",data.base64);
+                this.setState({
+                    imagePreviewForRegister: imagePreviewForRegister,
+                    businessRegistrationDocument: data.base64
+                })
+            })
         }
         else if(e.target.name === 'countryId'){
             let index = 0;
@@ -126,6 +177,15 @@ class vendorSignup extends Component {
             businessName, websiteLink, qualification, aboutBusiness, businessStartDate
         } = this.state;
 
+        if(this.state.password !== this.state.confirmPassword){
+            this.props.onErrorSet("Password not matched!");
+            return;
+        }
+        if(!checkPawwordPattern(this.state.password)){
+           this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
+           return;
+       }
+
              const userData = {
                 profileImage: profileImage,
                 firstName: firstName,
@@ -154,7 +214,7 @@ class vendorSignup extends Component {
                 phoneNumber: this.props.phNumber,
                 streetAddress1: "",
                 address: "",
-                stateId: "866",
+                stateId: provinceId,
                 houseAppartmentSuitNumber: "",
                 postalCode: "",
                 channel: "",
@@ -167,13 +227,21 @@ class vendorSignup extends Component {
 
     render() { 
         const {
-            profileImage, firstName, lastName, userName, emailAddress, confirmPassword,
-            password, professionId, businessSupportingDocument, businessRegistrationDocument,
-            keywordDescriptYourBusiness, countryId, provinceId, cityId, zipCode,streetAddress,
-            businessName, websiteLink, qualification, aboutBusiness,businessStartDate,
-            countries, professionList,  states, cities
+            errors , loading, imagePreview, firstName, lastName, userName, emailAddress, confirmPassword,
+            password, professionId, keywordDescriptYourBusiness, provinceId, cityId, zipCode,
+            streetAddress, businessName, websiteLink, qualification, aboutBusiness,businessStartDate,
+             professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport
         } = this.state;
         console.log("checking this.state: ", this.state);
+
+        let pageContent = '';
+
+        if(loading){
+          pageContent = <Spinner />
+        }
+        else{
+          pageContent = "";
+        }
         return ( 
             <Modal 
             show={this.props.show}
@@ -187,10 +255,25 @@ class vendorSignup extends Component {
             </Modal.Header>
             <Modal.Body >
             <form className="mt-4" onSubmit={this.onSubmit}>
+
+            {errors && errors.message &&
+                <Alert variant='danger'>
+                <strong>Error!</strong> { errors.message }
+                </Alert>
+            }
+
                 <div className="form-group logo-modal" >
-                    <input type="file" className="profile-pic" name="profileImage" id="profilePic" style={{display:'none'}}/>
-                    <label for="profilePic" className="profile-pic-professional">
-                              <img src={require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}}/>
+                    <input 
+                    type="file"
+                    accept="image/*" 
+                    className="profile-pic" 
+                    id="profileImage" 
+                    name="profileImage" 
+                    onChange={this.onChange} 
+                    style={{display:'none'}}
+                    />
+                    <label for="profileImage" className="profile-pic-professional">
+                        <img id="imagePreview" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}}/>
                     </label>
                 </div>
                 <div className="row" style={{padding:'0px 15px'}}>
@@ -277,10 +360,12 @@ class vendorSignup extends Component {
                          <input type="file" 
                             className="form-control"
                             id="file" 
+                            accept="image/*"
                             placeholder="Business regigration Document" 
+                            onChange={this.onChange} 
                             name="businessRegistrationDocument"
                          />
-                         <label for="file" className="btn-2">Business registration document
+                         <label for="file" className="btn-2"> { imagePreviewForRegister && imagePreviewForRegister.name  ? imagePreviewForRegister.name : 'Business registration document'}
                          <div style={{textAlign:'right',float:'right'}} >
                               <img src={require("../../assets/images/icons/ic_upload.svg")} alt="" />
                          </div>
@@ -290,7 +375,7 @@ class vendorSignup extends Component {
                     </div>
             
                     <div className="row" style={{padding:'0px 15px'}}>
-            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
 
                     <div className="form-group">
                         <input type="text" 
@@ -360,11 +445,13 @@ class vendorSignup extends Component {
                     <div className="form-group input-file">
                         <input type="file" 
                             className="form-control" 
+                            accept="image/*"
                             id="support-file" 
+                            onChange={this.onChange} 
                             placeholder="Supporting Documents (Optional)"
                             name="businessSupportingDocument"
                         />
-                        <label for="support-file" className="btn-2">Support document (optionsl) <div style={{textAlign:'right',float:'right'}} >
+                        <label for="support-file" className="btn-2"> { imagePreviewForSupport && imagePreviewForSupport.name  ? imagePreviewForSupport.name : 'Support document (optional)'} <div style={{textAlign:'right',float:'right'}} >
                               <img src={require("../../assets/images/icons/ic_upload.svg")} alt="" />
                          </div></label>
 
@@ -472,7 +559,7 @@ class vendorSignup extends Component {
                 <div className="col-md-6" style={{padding:'0px',paddingRight:'7px'}}>
                     <div className="form-group">
                         <input type="password" 
-                            className="form-control"
+                            className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
                             id="pxp-signin-email" 
                             placeholder="Password" 
                             name="password"
@@ -485,7 +572,7 @@ class vendorSignup extends Component {
                 <div className="col-md-6" style={{padding:'0px'}}>
                     <div className="form-group">
                         <input type="password" 
-                            className="form-control"
+                            className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
                             id="pxp-signin-email" 
                             placeholder="Confirm Password" 
                             name="confirmPassword"
@@ -510,7 +597,7 @@ class vendorSignup extends Component {
                             >Sign up
                         </button>
                     </div>               
-            
+                    { pageContent }
              </form>
 
             </Modal.Body>
@@ -522,8 +609,9 @@ class vendorSignup extends Component {
 
 const mapStateToProps = state => {
     return {
-      auth: state.auth,
-      page: state.page,
+        page: state.page,
+        errors: state.errors,
+        auth: state.auth,
     }
   };
   
@@ -532,7 +620,8 @@ const mapStateToProps = state => {
         onFalseRegisterVendor: () => dispatch({type: actionTypes.REGISTER_VENDOR_FAIL }),
         onGetCountries: () => dispatch(actions.GetCountries()),
         onGetProfessionDetailAPI: () => dispatch(actions.GetProfessionDetailAPI()),
-        onCreateVendor: (userData) => dispatch(actions.createVendor(userData))
+        onCreateVendor: (userData) => dispatch(actions.createVendor(userData)),
+        onErrorSet: (msg) =>  dispatch({type: actionTypes.SET_ERRORS, payload: { message: msg }})
     }
   };
   

@@ -84,9 +84,12 @@ export const GetCountries = () => dispatch => {
 					type: GET_COUNTRIES,
 					payload: res && res.data && res.data.data  && res.data.data.countries ? res.data.data.countries : []
 				}
-			);   
+				);   
+				dispatch(clearErrors());
 		}
-        dispatch(clearErrors());
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
@@ -113,9 +116,13 @@ export const GetProfessionDetailAPI = () => dispatch => {
 					type: GET_PROFESSIONS,
 					payload: res && res.data && res.data.data  && res.data.data.professionList ? res.data.data.professionList : []
 				}
-			);   
+			);
+			   
+			dispatch(clearErrors());
 		}
-        dispatch(clearErrors());
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
