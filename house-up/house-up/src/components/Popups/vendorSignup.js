@@ -61,6 +61,9 @@ class vendorSignup extends Component {
         if( page && page.countries && JSON.stringify(state.countries) !== JSON.stringify(page.countries) ){
             changedState.countries = page.countries;  
             stateChanged = true;
+            let states = [];
+            states = cloneDeep(changedState.countries[0]);
+            changedState.states = states.states;
         }
         console.log('checking page: ', page);
         if( page && page.professionList && JSON.stringify(state.professionList) !== JSON.stringify(page.professionList) ){
@@ -403,7 +406,6 @@ class vendorSignup extends Component {
                                     name="provinceId"
                                     value={provinceId}
                                     onChange={this.onChange}
-                                    required
                                 >
                                     <option value=""> Province / state </option>
                              {
@@ -422,7 +424,6 @@ class vendorSignup extends Component {
                                     name="cityId"
                                     value={cityId}
                                     onChange={this.onChange}
-                                    required
                                     >
                                       <option value=""> City </option>
                                     {

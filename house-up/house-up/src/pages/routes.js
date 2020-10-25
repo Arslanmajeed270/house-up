@@ -65,7 +65,7 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/coming-soon"} 
+					path={"/comming-soon"} 
 					component={ComingSoon}
 				/>
 				<Route      
