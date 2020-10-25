@@ -3,24 +3,27 @@ import { Link } from 'react-router-dom';
 
 import AliceCarousel from 'react-alice-carousel';
 
-
 import "react-alice-carousel/lib/alice-carousel.css";
-
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 
 class index extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      errors: {},
+      loading : false,
       indexPageData : {}
     };
   }
   static getDerivedStateFromProps(props, state) {
   
-    let page = props.page;
+    const errors = props.errors;
+    const page = props.page;
 
     let stateChanged = false;
     let changedState = {};
@@ -28,6 +31,17 @@ class index extends Component {
     if(page && JSON.stringify(state.indexPageData) !== JSON.stringify(page.indexPageData)){
       changedState.indexPageData = page.indexPageData;  
       stateChanged = true;
+    }
+
+
+    if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+      changedState.errors= errors;
+      stateChanged = true;
+    }
+
+    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+        changedState.loading = page.loading;
+        stateChanged = true;            
     }
 
     if(stateChanged){
@@ -43,9 +57,16 @@ class index extends Component {
   }
 
     render() { 
-      const { indexPageData } = this.state;
+      const { errors, loading, indexPageData } = this.state;
       console.log('checking indexPageData in IndexPage: ', indexPageData);
-      
+      let pageContent = '';
+
+      if(loading){
+        pageContent = <Spinner />
+      }
+      else{
+        pageContent = "";
+      }
       
       const items =[];
 
@@ -88,6 +109,11 @@ class index extends Component {
             <React.Fragment>
               <main>
                 <div className="container">
+                {errors && errors.message &&
+                  <Alert variant='danger'>
+                    <strong>Error!</strong> { errors.message }
+                  </Alert>
+                }                
                   <div className="row">
                    <div className="col-lg-7 col-md-12">
                       <div className="newsfeed">
@@ -118,8 +144,8 @@ class index extends Component {
                               </div>
                             </div>
                             {
-                            indexPageData && indexPageData.postNdPropertiesList &&
-                            indexPageData.postNdPropertiesList.map((data, index) =>
+                            indexPageData && indexPageData.vendorPostPropertiesList &&
+                            indexPageData.vendorPostPropertiesList.map((data, index) =>
                             <React.Fragment key={index}>
                             {index === 2 && 
                             <div className="explore-our-neighbours">
@@ -146,7 +172,7 @@ class index extends Component {
                         
                             } 
                             {index === 9 && 
-                            indexPageData && indexPageData.vendors && indexPageData.vendors.map((data, index)=>
+                            indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors.map((data, index)=>
                             index<3 &&
                             <Link key={index} to={`/single-vendor-${data && data.userId && data.userId}`}>
                               <div className="vendor-box">
@@ -245,12 +271,12 @@ class index extends Component {
                         <div className="main-user">
                           <div className="row">
                             <div className="col-md-3">
-                              <div className="min-user-img" style={{backgroundImage: `url(${indexPageData && indexPageData.vendors ? indexPageData.vendors[0].profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
+                              <div className="min-user-img" style={{ backgroundImage: `url(${ indexPageData && indexPageData.vendors && indexPageData.vendors.length ? indexPageData.vendors[0].profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
                             </div>
                             <div className="col-md-9  col-nopadd">
                               <div className="main-user-content">
-                                <p>{indexPageData && indexPageData.vendors && indexPageData.vendors[0].firstName} {indexPageData && indexPageData.vendors && indexPageData.vendors[0].lastName}</p>
-                                <span>@{indexPageData && indexPageData.vendors && indexPageData.vendors[0].userName}</span>
+                                <p>{indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].firstName ? indexPageData.vendors[0].firstName : ""} {indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].lastName ? indexPageData.vendors[0].lastName : ""}</p>
+                                <span>{ indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].userName ? `@ ${indexPageData.vendors[0].userName}` : "" }</span>
                               </div>
                             </div>
                           </div>
@@ -264,7 +290,7 @@ class index extends Component {
                             </div>
                             <div className="col-md-4">
                               <div className="suggested-span text-right">
-                                <Link to="/vendors">See ALL</Link>
+                                <Link to="/professionals">See ALL</Link>
                               </div>
                             </div>
                           </div>
@@ -302,6 +328,7 @@ class index extends Component {
                   </div>
                 </div>
               </main>
+                {/* { pageContent } */}
             </React.Fragment>
          );
     }
@@ -326,7 +353,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  console.log('mapDispatchToProps in IndexPage ' );
   return {
     onGetIndexPageData: () => dispatch(actions.getIndexPageData())
   }

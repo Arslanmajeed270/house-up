@@ -112,7 +112,7 @@ class home extends Component {
                         </div>
                         <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
                       </Link>
-                      <Link to='/vendors'  className="pxp-services-item">
+                      <Link to='/professionals'  className="pxp-services-item">
                         <div className="pxp-services-item-fig">
                           <img src="assets/images/service-icon-2.svg" alt="..." />
                         </div>
@@ -234,7 +234,7 @@ class home extends Component {
                   </div>
                 </div>
                 {/* <div className="container mt-100">
-                  <h2 className="pxp-section-h2">Our Featured Vendors</h2>
+                  <h2 className="pxp-section-h2">Our Featured Professionals</h2>
                   <p className="pxp-text-light">We will help you sell your home</p>
                   <div className="row mt-4 mt-md-5">
                     {homePageData && homePageData.vendors ? 
@@ -257,7 +257,7 @@ class home extends Component {
                       )
                       : ""           
                       }
-                  <Link to='/vendors'  className="pxp-primary-cta text-uppercase mt-1 mt-md-4 pxp-animate">See All Vendors</Link>
+                  <Link to='/professionals'  className="pxp-primary-cta text-uppercase mt-1 mt-md-4 pxp-animate">See All Professionals</Link>
                 </div>
                 <div className="container mt-100">
                   <h2 className="pxp-section-h2 text-center">Membership Plans</h2>

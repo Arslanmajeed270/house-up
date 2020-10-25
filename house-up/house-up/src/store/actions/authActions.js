@@ -140,7 +140,7 @@ export const createUser = (userData) => dispatch => {
         else {
             dispatch({ type: REGISTER_USER_FAIL });
         }
-        
+        dispatch(clearErrors());  
     })
     .catch(err => {
         console.log("error: ", err);
@@ -167,7 +167,7 @@ export const createVendor = (userData) => dispatch => {
         else {
             dispatch({ type: REGISTER_VENDOR_FAIL });
         }
-        
+        dispatch(clearErrors());  
     })
     .catch(err => {
         console.log("error: ", err);
@@ -189,7 +189,6 @@ export const generatePin = (data) => dispatch => {
     .then(res => {
         dispatch(clearErrors())
         console.log('checking response in generatePin',res);
-        
     })
     .catch(err => {
         console.log("error: ", err);
@@ -211,12 +210,16 @@ export const verifyPin = (data) => dispatch => {
     .then(res => {
         console.log("checking res: ", res);
         if(res && res.data && res.data.resultCode === "200" ){
+            console.log("i am into if");
             dispatch({ type: OTP_AUTHENTICATE_SUCCESS });
+            dispatch(clearErrors());
         }
         else {
+            console.log("checking i am into else");
             dispatch({ type: OTP_AUTHENTICATE_FAIL });
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+
         }
-        dispatch(clearErrors())
     })
     .catch(err => {
         console.log("error: ", err);

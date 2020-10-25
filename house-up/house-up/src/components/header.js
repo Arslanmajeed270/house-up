@@ -12,7 +12,15 @@ class header extends Component {
                   <div className="row align-items-center">
                     <div className="col-5 col-md-2">
                       <Link to="/index" className="pxp-logo text-decoration-none">
-                        <img className="img" src="assets/images/logo.png" alt="logo" />
+                        {animateHeader ? 
+                        <>
+                        <img class="img black-logo" src="assets/images/ic_logo_black.svg" />
+                        <img class="img white-logo" src="assets/images/ic_logo_white.svg" />
+                        </>
+                        :
+                        {/* <img className="img" src="assets/images/logo.png" alt="logo" /> */}
+                        }
+                        
                       </Link>
                     </div>
                     <div className="col-2 col-md-9">
@@ -28,7 +36,7 @@ class header extends Component {
                             <Link to="/add-property">Sell</Link>
                           </li>
                           <li className="list-inline-item">
-                            <Link to="/vendors">Vendors</Link>
+                            <Link to="/professionals">Professionals</Link>
                           </li>
                           <li className="list-inline-item">
                             <Link to="/blogs">Resources</Link>

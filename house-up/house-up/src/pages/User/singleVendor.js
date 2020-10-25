@@ -57,8 +57,8 @@ class singleVendor extends Component {
 
     render() { 
       const { singleVendorData } = this.state;
-      console.log('SINGLE VENDORS');
-      console.log('checking singleVendorsData in vendors: ', singleVendorData);
+      console.log('SINGLE professionals');
+      console.log('checking singleVendorsData in professionals: ', singleVendorData);
       
         return ( 
             <React.Fragment>

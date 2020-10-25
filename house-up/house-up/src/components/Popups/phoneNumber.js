@@ -6,18 +6,48 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
+
 class phoneNumber extends Component {
     constructor(props){
         super(props);
         this.state = {
+            errors: {},
+            loading : false,
             number: ''
         }
     }
 
+    static getDerivedStateFromProps(props, state) {
+  
+        let errors = props.errors;
+        let page = props.page;      
+      
+        let stateChanged = false;
+        let changedState = {};
+      
+        if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+            changedState.errors= errors;
+            stateChanged = true;
+        }
+        
+        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+            changedState.loading = page.loading;
+            stateChanged = true;            
+        }
+        
+        if(stateChanged){
+            return changedState;
+        }
+    }
     onChange = e => {
-        this.setState({
-          [e.target.name]: e.target.value
-        });
+        if(e.target.value >= 0 ){
+            this.setState({
+                [e.target.name]: e.target.value
+              });
+        }
+        
       }
 
     onSubmit = () => {
@@ -32,6 +62,17 @@ class phoneNumber extends Component {
         this.props.optUserHandler('optUserModel');
     }
     render() { 
+      const {errors , loading} = this.state;
+
+      let pageContent = '';
+
+      if(loading){
+        pageContent = <Spinner />
+      }
+      else{
+        pageContent = "";
+      }
+
         return ( 
             <Modal 
             show={this.props.show}
@@ -44,6 +85,11 @@ class phoneNumber extends Component {
             <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('phoneNumberModel')}>
             </Modal.Header>
             <Modal.Body >
+                {errors && errors.message &&
+                <Alert variant='danger'>
+                <strong>Error!</strong> { errors.message }
+                </Alert>
+                }
                 <div className="logo-modal">
                 <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" className="logo-signupModal" style={{marginBottom:'20px'}}/>
                 </div>
@@ -55,7 +101,9 @@ class phoneNumber extends Component {
                             placeholder="416 123-4567"
                             onChange={this.onChange}
                             name="number"
-                            value={this.state.number} 
+                            value={this.state.number}
+                            minLength="9" 
+                            maxLength="10"
                             required
                          />
                         <span className="country-code">
@@ -71,10 +119,11 @@ class phoneNumber extends Component {
                         <div style={{textAlign:'center',paddingTop:'10px'}}>
                         <Link to="#" 
                             className="pxp-modal-link pxp-signup-trigger text-center" style={{fontWeight:"bold"}}
-                            >Already have an account</Link>
+                            onClick={() => this.props.alreadyHaveAccountHandler('alreadyHaveAccount')} >Already have an account</Link>
                          </div>
                          </div> 
-                        </form> 
+                        </form>
+                { pageContent }
              </Modal.Body>
         </Modal>  
 
@@ -82,11 +131,17 @@ class phoneNumber extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+      page: state.page
+    }
+};
+
 const mapDispatchToProps = dispatch => {
     return {
         onGeneratePin: (data) => dispatch(actions.generatePin(data))
     }
   };
    
-  export default connect(null, mapDispatchToProps)(phoneNumber);
+  export default connect(mapStateToProps, mapDispatchToProps)(phoneNumber);
  

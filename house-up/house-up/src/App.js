@@ -48,7 +48,7 @@ function App() {
       />
         <Route
         exact 
-        path={'/coming-soon'}
+        path={'/comming-soon'}
         component={Index}
       />
         <Route
@@ -83,7 +83,7 @@ function App() {
       />  
       <Route
         exact 
-        path={'/vendors'}
+        path={'/professionals'}
         component={Index}
       />
     </React.Fragment>

@@ -35,11 +35,17 @@ export const clearErrors = () => {
 
 //INDEX  - Get indexPage data from backend
 export const getIndexPageData = () => dispatch => {
+	dispatch(setPageLoading());
     axios
     .post(
 		backendServerURL+'/home',
 		{
-			"userTypeId": 1
+			"channel":"ios",
+			"lat":43.787083,
+			"lng":-79.497369,
+			"city": "Vaughan",
+			"limit":10,
+			"offset":0
 		}
     )
     .then(res => {
@@ -49,18 +55,21 @@ export const getIndexPageData = () => dispatch => {
 				type: SET_INDEX_DATA,
 				payload: res.data && res.data.data  ? res.data.data : {}
 			}
-		);        
+		);
+        dispatch(clearErrors());
     })
     .catch(err => {
 	  console.log('checking error on homepage')
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
-    })      
+	})
+	.finally(() => dispatch(clearPageLoading()))
 };
 
 
 // Vendor Signup page  - Get Countries data from backend
 export const GetCountries = () => dispatch => {
-    axios
+	dispatch(setPageLoading());
+	axios
     .post(
 		backendServerURL+'/GetCountries',
 		{
@@ -76,16 +85,19 @@ export const GetCountries = () => dispatch => {
 					payload: res && res.data && res.data.data  && res.data.data.countries ? res.data.data.countries : []
 				}
 			);   
-		}     
+		}
+        dispatch(clearErrors());
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
-    })      
+	})
+	.finally(() => dispatch(clearPageLoading()))
 };
 
 // Vendor Signup page  - Get Professions data from backend
 export const GetProfessionDetailAPI = () => dispatch => {
-    axios
+	dispatch(setPageLoading());
+	axios
     .post(
 		backendServerURL+'/GetProfessionDetailAPI',
 		{
@@ -102,9 +114,12 @@ export const GetProfessionDetailAPI = () => dispatch => {
 					payload: res && res.data && res.data.data  && res.data.data.professionList ? res.data.data.professionList : []
 				}
 			);   
-		}     
+		}
+        dispatch(clearErrors());
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
-    })      
+	})
+	.finally(() => dispatch(clearPageLoading()))
+	      
 };

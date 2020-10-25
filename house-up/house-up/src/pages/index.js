@@ -101,6 +101,13 @@ class index extends Component {
                 [model]: !this.state[model] 
             });
         }
+        else if(model === "alreadyHaveAccount"){
+            this.setState({ 
+                phoneNumberModel: false,
+                phoneNumberVendorModel: false,
+                emailSignin: true
+            });
+        }
     }
 
     phoneNumberHandler = (num) => {
@@ -172,6 +179,7 @@ class index extends Component {
                     show={this.state.phoneNumberModel}
                     closeCodelHanlder={this.closeCodelHanlder}
                     optUserHandler={this.modelHanlder}
+                    alreadyHaveAccountHandler={this.modelHanlder}
                     phoneNumberHandler={this.phoneNumberHandler}
                     />
                 }
@@ -180,6 +188,7 @@ class index extends Component {
                     show={this.state.phoneNumberVendorModel}
                     closeCodelHanlder={this.closeCodelHanlder}
                     optUserVendorHandler={this.modelHanlder}
+                    alreadyHaveAccountHandler={this.modelHanlder}
                     phoneNumberHandler={this.phoneNumberHandler}
                     />
                 }

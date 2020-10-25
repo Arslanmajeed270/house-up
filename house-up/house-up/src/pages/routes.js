@@ -12,7 +12,7 @@ import Privacy from './Privacy/privacy';
 import Properties from './Properties/properties';
 import SinglePost from './Properties/singlePost';
 import SingleProp from './Properties/singleProp';
-import Vendors from './User/vendors';
+import Professionals from './User/vendors';
 import ComingSoon from './CommingSoom/comingSoon';
 import Index from './Index/index';
 
@@ -65,7 +65,7 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/coming-soon"} 
+					path={"/comming-soon"} 
 					component={ComingSoon}
 				/>
 				<Route      
@@ -100,8 +100,8 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/vendors"} 
-					component={Vendors}
+					path={"/professionals"} 
+					component={Professionals}
 				/>
 			</Router>
 		);
