@@ -292,12 +292,12 @@ class from2 extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="btn-div-prev">
-                                <button type="submit" class="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(0)}>Prevsious</button>
+                                <button type="submit" className="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(0)}>Prevsious</button>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="btn-div">
-                                <button type="submit" class="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(2)}>NEXT</button>
+                                <button type="submit" className="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(2)}>NEXT</button>
                             </div>
                         </div>
                     </div>

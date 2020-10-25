@@ -15,7 +15,8 @@ import SingleProp from './Properties/singleProp';
 import Professionals from './User/vendors';
 import ComingSoon from './CommingSoom/comingSoon';
 import Index from './Index/index';
-
+import AddProduct from './wizards/addProduct';
+import AddCoupon from './wizards/addCoupon';
 
 class Routes extends React.Component {
 
@@ -47,6 +48,16 @@ class Routes extends React.Component {
 					exact 
 					path={"/add-property"} 
 					component={AddProperty}
+				/>
+				<Route      
+					exact 
+					path={"/add-product"} 
+					component={AddProduct}
+				/>
+				<Route      
+					exact 
+					path={"/add-coupon"} 
+					component={AddCoupon}
 				/>
 				<Route      
 					exact 

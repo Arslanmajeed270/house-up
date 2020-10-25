@@ -73,7 +73,7 @@ class form1 extends Component {
                     <div className="col-md-6" />
                     <div className="col-md-6">
                             <div className="btn-div">
-                                <button type="submit" class="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(1)}>NEXT</button>
+                                <button type="submit" className="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(1)}>NEXT</button>
                             </div>
                         </div>
                     </div>

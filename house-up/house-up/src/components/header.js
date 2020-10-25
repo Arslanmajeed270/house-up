@@ -18,7 +18,7 @@ class header extends Component {
                         <img class="img white-logo" src="assets/images/ic_logo_white.svg" />
                         </>
                         :
-                        {/* <img className="img" src="assets/images/logo.png" alt="logo" /> */}
+                        <img className="img" src="assets/images/logo.png" alt="logo" /> 
                         }
                         
                       </Link>
