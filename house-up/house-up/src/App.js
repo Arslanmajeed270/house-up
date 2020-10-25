@@ -31,9 +31,19 @@ function App() {
         path={'/about'}
         component={Index}
       />
-        <Route
+      <Route
         exact 
         path={'/add-property'}
+        component={Index}
+      />
+      <Route
+        exact 
+        path={'/add-product'}
+        component={Index}
+      />
+      <Route
+        exact 
+        path={'/add-coupon'}
         component={Index}
       />
         <Route

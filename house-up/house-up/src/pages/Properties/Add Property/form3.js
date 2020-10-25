@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import {Nav} from 'react-bootstrap';
+import GoogleMapReact from 'google-map-react';
+
+
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class form3 extends Component {
     constructor() {
@@ -12,6 +17,14 @@ class form3 extends Component {
           files: []
         };
       }
+
+      static defaultProps = {
+        center: {
+          lat: 59.95,
+          lng: 30.33
+        },
+        zoom: 11
+      };
 
     render() { 
         const files = this.state.files.map(file => (
@@ -44,6 +57,19 @@ class form3 extends Component {
                             <input type="text" placeholder="Enter an address"  className="input-feilds-address" />
                             <button className="btn btn-primary" style={{marginTop: '-3px'}}>Search</button>
                         </div>
+                        <div className="col-md-12" style={{ height: '300px', width: '100%' }}>
+                            <GoogleMapReact
+                            bootstrapURLKeys={{ key: 'AIzaSyDgNUDOEaiSvycDmddKCtls6ZLxJOF_Jmg' }}
+                            defaultCenter={this.props.center}
+                            defaultZoom={this.props.zoom}
+                            >
+                            <AnyReactComponent
+                                lat={59.955413}
+                                lng={30.337844}
+                                text="My Marker"
+                            />
+                            </GoogleMapReact>
+                        </div>
                     </div>
                     <div className="row border-property">
                         <div className="col-md-7">
@@ -70,10 +96,10 @@ class form3 extends Component {
                     <div className="row border-property">
                         <h1 className="col-md-6 titles-property">Property photos</h1>
                         <div className="col-md-6" style={{textAlign:'right'}}>
-                            <label className="btn btn-lg btn-primary" for="pictures" style={{marginTop:'15px'}}>Upload images</label>
+                            <label className="btn btn-lg btn-primary" htmlFor="pictures" style={{marginTop:'15px'}}>Upload images</label>
                         </div>
                         <h6 className="col-md-12 text-danger titles-property">WARNING: Any images with HouseUp.ca watermarks are a violation of copyright. If these images are uploaded your listing will be removed and your account may be suspended.</h6>
-                    <div className="col-12" s>
+                    <div className="col-12">
 
                         <Dropzone onDrop={this.onDrop} className="drop-zone" > 
                             {({getRootProps, getInputProps}) => (
@@ -98,12 +124,12 @@ class form3 extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="btn-div-prev">
-                                <button type="submit" class="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(1)}>Prevsious</button>
+                                <button type="submit" className="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(1)}>Prevsious</button>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="btn-div">
-                                <button type="submit" class="btn btn-lg btn-primary btn-property" >Post Property</button>
+                                <button type="submit" className="btn btn-lg btn-primary btn-property" >Post Property</button>
                             </div>
                         </div>
                     </div>

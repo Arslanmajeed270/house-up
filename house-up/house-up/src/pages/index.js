@@ -48,7 +48,6 @@ class index extends Component {
             [model]: false
         });
     }
-    // loginModelHanlder = (prop) => (event) => {
     modelHanlder = (model) => {
         console.log("checking model: ", model);
         if (model === "phoneSignin" ) {

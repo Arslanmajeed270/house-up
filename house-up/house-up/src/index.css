@@ -273,16 +273,24 @@ body {
 
 .add-property-conatiner{
   margin-top: 70px;
-  padding: 70px;
+    padding: 70px 180px;
 }
 
 .input-feilds-property{
   width: 100%;
   padding: 5px 10px;
+  height: 34px;
   border: 1px solid #CCCCCC;
 }
+.text-feilds-property{
+  width: 100%;
+  padding: 5px 10px;
+  height: 150px;
+  border: 1px solid #CCCCCC;
+
+}
 .input-feilds-address{
-  width: 94%;
+  width: 92%;
   padding: 5px 10px;
   border: 1px solid #CCCCCC;
 }
@@ -290,7 +298,7 @@ body {
   margin: 10px 0px;
 }
 .border-property{
-  border-bottom: 1px solid #DCE0E0;
+  /* border-bottom: 1px solid #DCE0E0; */
     padding-bottom: 40px;
 }
 .btn-div{
@@ -304,12 +312,12 @@ body {
 }
 .multiply{
   background-color: #F7F7F7;
-  padding: 6px 15px;
+  padding: 7px 15px;
     border-top: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
 }
 .multiply-input{
-  width: 45%;
+  width: 43%;
   padding: 5px 10px;
   border: 1px solid #CCCCCC;
 }
@@ -337,4 +345,49 @@ body {
 
 .customError {
   border: 1px solid #721c24;
+}
+.dollar-sign{
+  background-color: #F7F7F7;
+  padding: 7px 15px;
+  border: 1px solid #CCCCCC;
+  border-right: 0px;
+}
+.input-feilds-price{
+  width: 90%;
+  padding: 5px 10px;
+  border: 1px solid #CCCCCC;
+}
+.border-product{
+  border-bottom: 1px solid #DCE0E0;
+}
+.text-editor{
+  height:300px;
+}
+.table-heading{
+  background-color: #001F3F;
+  color: white;
+  padding: 5px 20px;
+  border: 1px solid white;
+}
+.table-remove{
+  padding: 5px 15px;
+    border: 1px solid #CCCCCC;
+    text-align: center;
+    cursor: pointer;
+}
+.percentage-sign{
+  background-color: #F7F7F7;
+  padding: 7px 15px;
+  border: 1px solid #CCCCCC;
+  /* border-right: 0px; */
+  border-left: 0px;
+}
+
+.input-feilds-discount {
+    width: 86%;
+    padding: 5px 10px;
+    border: 1px solid #CCCCCC;
+}
+.padding{
+  padding: 0px 7px;
 }
