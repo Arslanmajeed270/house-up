@@ -328,7 +328,7 @@ class index extends Component {
                   </div>
                 </div>
               </main>
-                {/* { pageContent } */}
+                { pageContent }
             </React.Fragment>
          );
     }

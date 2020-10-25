@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Form1 from './Add Property/form1';
 import Form2 from './Add Property/form2';
 import Form3 from './Add Property/form3';

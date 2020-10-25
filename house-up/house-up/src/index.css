@@ -334,3 +334,7 @@ body {
 .tabs{
   color: black;
 }
+
+.customError {
+  border: 1px solid #721c24;
+}

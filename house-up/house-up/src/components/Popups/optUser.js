@@ -32,7 +32,7 @@ class OptUser extends Component {
 
     console.log('checking otpAuthenticate: ', otpAuthenticate);
 
-    if(  otpAuthenticate || otpAuthenticate === false && state.otpAuthenticate !== otpAuthenticate){
+    if(  (otpAuthenticate || otpAuthenticate === false) && state.otpAuthenticate !== otpAuthenticate){
       changedState.otpAuthenticate = otpAuthenticate;  
       if( changedState.otpAuthenticate === true ){
         props.onFalseOtpAutheticate();
@@ -77,7 +77,7 @@ class OptUser extends Component {
       this.props.onGeneratePin(data);
     }
     render() { 
-      const {errors , loading} = this.state;
+      const { errors , loading } = this.state;
         console.log('checking value of otp: ', this.state.otp);
         let pageContent = '';
 

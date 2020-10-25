@@ -136,11 +136,12 @@ export const createUser = (userData) => dispatch => {
         console.log('res from backend after signup',res);
         if(res && res.data && res.data.resultCode === "200" ){
             dispatch({ type: REGISTER_USER_SUCCESS });
+            dispatch(clearErrors());  
         }
         else {
             dispatch({ type: REGISTER_USER_FAIL });
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
         }
-        dispatch(clearErrors());  
     })
     .catch(err => {
         console.log("error: ", err);
@@ -163,11 +164,12 @@ export const createVendor = (userData) => dispatch => {
         console.log('res from backend after signup',res);
         if(res && res.data && res.data.resultCode === "200" ){
             dispatch({ type: REGISTER_VENDOR_SUCCESS });
+            dispatch(clearErrors());  
         }
         else {
             dispatch({ type: REGISTER_VENDOR_FAIL });
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
         }
-        dispatch(clearErrors());  
     })
     .catch(err => {
         console.log("error: ", err);
