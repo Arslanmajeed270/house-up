@@ -25,9 +25,23 @@ class userSignup extends Component {
             emailAddress: '',
             confirmPassword:'',
             password: '',
-            regiserUser: false
+            regiserUser: false,
+            viewPass: false,
+            viewConfirmPass : false
         };
     }
+
+    viewPassword = () => {
+        this.setState({ 
+          viewPass : !this.state.viewPass
+        });
+    }
+    viewConfirmPassword = () => {
+      this.setState({ 
+        viewConfirmPass: !this.state.viewConfirmPass 
+      });
+  }
+    
 
     static getDerivedStateFromProps(props, state) {
         let errors = props.errors;
@@ -66,7 +80,6 @@ class userSignup extends Component {
       }
 
     onChange = e => {
-
         if(e.target.name === 'profileImage'){
             let imagePreview = URL.createObjectURL(e.target.files[0]);
             fileUpload(e)
@@ -112,7 +125,7 @@ class userSignup extends Component {
 
          }
     render() {
-      const { errors , loading, imagePreview, firstName, lastName, 
+      const { viewPass,viewConfirmPass, errors , loading, imagePreview, firstName, lastName, 
         userName, email, password, 
         confirmPassword } = this.state;
         let pageContent = '';
@@ -166,7 +179,6 @@ class userSignup extends Component {
                          />
                          </div>
                     <div className="form-group">
-
                          <input type="text" 
                             className="form-control"
                             id={lastName}
@@ -201,7 +213,7 @@ class userSignup extends Component {
                          />
                     </div>
                     <div className="form-group">
-                        <input type="password" 
+                        <input type={ viewPass ? "text" : "password" } 
                            className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
                             id={password} 
                             placeholder="Enter your password" 
@@ -210,9 +222,10 @@ class userSignup extends Component {
                             onChange={this.onChange}     
                             required
                         />
+                                    <span className="pass-userSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
                     </div>
                     <div className="form-group">
-                        <input type="password" 
+                        <input type={ viewConfirmPass ? "text" : "password" } 
                             className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
                             id={confirmPassword} 
                             placeholder="Confirm password" 
@@ -221,6 +234,7 @@ class userSignup extends Component {
                             onChange={this.onChange}  
                             required   
                         />
+                                    <span className="confirmPass-userSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
                     </div>
                     <div className="form-group">
                         <button

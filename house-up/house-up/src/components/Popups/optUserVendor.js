@@ -128,7 +128,7 @@ class OptUserVendor extends Component {
             </div>
             </div>
             <div className="text-center" style={{marginBottom:'10px', color:'#CACACC'}}>
-              I didn't receeive a code! <Link to="#" onClick={() => this.props.resendPin(phoneNumber)} >Resend</Link>
+              I didn't receeive a code! <Link to="#" onClick={() => this.resendPin(phoneNumber)} >Resend</Link>
             </div>
             { pageContent }
             

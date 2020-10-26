@@ -10,6 +10,7 @@ import * as actions from '../../store/actions/index';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
+import authReducer from '../../store/reducers/authReducer';
 
 class index extends Component {
   constructor(props) {
@@ -17,11 +18,22 @@ class index extends Component {
     this.state = {
       errors: {},
       loading : false,
-      indexPageData : {}
+      indexPageData : {},
+      isLike:false,
+      userDetail:{},
+      followMessage:''
     };
   }
+
+  addLike = () => {
+    this.setState({ isLike : !this.state.isLike });
+  }
+
+ 
+
   static getDerivedStateFromProps(props, state) {
-  
+
+    const auth = props.auth;
     const errors = props.errors;
     const page = props.page;
 
@@ -30,6 +42,15 @@ class index extends Component {
 
     if(page && JSON.stringify(state.indexPageData) !== JSON.stringify(page.indexPageData)){
       changedState.indexPageData = page.indexPageData;  
+      stateChanged = true;
+    }
+    if(page && JSON.stringify(state.followMessage) !== JSON.stringify(page.followMessage)){
+      changedState.followMessage = page.followMessage;  
+      stateChanged = true;
+    }
+
+    if(auth && JSON.stringify(state.userDetail) !== JSON.stringify(auth.userDetail)){
+      changedState.userDetail = auth.userDetail;  
       stateChanged = true;
     }
 
@@ -51,14 +72,69 @@ class index extends Component {
 
   }
 
+  followUnfollwProfessionals = ( id ) =>{
+    console.log('vendors Id :', id);
+    this.setState({ followProfessional : !this.state.followProfessional});
+    let data={ 
+      category:"Vendor",
+      userId:this.state.userDetail.userId,
+      action:"Follow",
+      followUnfollowId:"1",
+      vendorId:id
+    };
+
+    const unFollowData = {
+      category:"Vendor",
+      userId:this.state.userDetail.userId,
+      action:"Unfollow",
+      followUnfollowId:"2",
+      vendorId:id
+    };
+    console.log(data);
+    console.log(unFollowData);
+
+
+    {
+      this.state.followMessage === 'success' ?
+      this.props.onFollowUnfollowProfessionals(data) 
+      :
+      this.props.onFollowUnfollowProfessionals(unFollowData) 
+    }
+  }
+
   componentDidMount() {
     console.log('indexPage componenet did mount');
     this.props.onGetIndexPageData();
+    
+
   }
 
+  // checkLikes = (posts) =>{
+
+  //   {
+  //     posts && posts[0] && posts[0].postLikes && posts[0].postLikes.length ? 
+  //     (for(const i=0 ; i<posts[0].postLikes.length ; i++)
+  //     {
+  //      { posts[0].postLikes[i].userId == this.state.userDetail.userid ? this.state.isLike = true: '' }
+  //     }
+  //     )
+  //     : null
+  //   }
+  // }
+  
+
+
     render() { 
-      const { errors, loading, indexPageData } = this.state;
+      const { errors, loading, indexPageData , isLike , userDetail , followMessage } = this.state;
       console.log('checking indexPageData in IndexPage: ', indexPageData);
+      console.log('checking logged in User Data ',userDetail);
+
+      let userId = this.state.userDetail.userId;
+      let postArray = indexPageData.posts
+      // console.log('logged in user Id',likesArray[0]);
+
+      // this.checkLikes(postArray);
+      
       let pageContent = '';
 
       if(loading){
@@ -220,6 +296,14 @@ class index extends Component {
                               style={{
                                 backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/ic_post_placeholder.png") }  )` }}>
                               </div>
+                              <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
+                            <div className="row">
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
+                                  <span onClick={this.addLike}><i className= {isLike ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                  <i className="far fa-comment-alt post-navbar-items" />
+                                  <i className="far fa-share-square post-navbar-items" />
+                              </div>
+                            </div>
                               </>
                               :  data.category && data.category === "Property" ?
                               <>
@@ -245,17 +329,25 @@ class index extends Component {
                               {data.object && data.object.adTitle ? data.object.adTitle : '' }
                           </div> 
                               <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
-</>
-                               : null }
-                              
-                            <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
+                              <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
                             <div className="row">
                               <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
-                                  <i className="far fa-heart post-navbar-items" />
+                                  <span onClick={this.addLike}><i className= {isLike ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                   <i className="far fa-comment-alt post-navbar-items" />
                                   <i className="far fa-share-square post-navbar-items" />
                               </div>
                             </div>
+                            </>   
+                               : null }
+                              
+                            {/* <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
+                            <div className="row">
+                              <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
+                                  <span onClick={this.addLike}><i className= {isLike ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                  <i className="far fa-comment-alt post-navbar-items" />
+                                  <i className="far fa-share-square post-navbar-items" />
+                              </div>
+                            </div> */}
                           </div>
                         </div> 
                             </React.Fragment>
@@ -297,7 +389,7 @@ class index extends Component {
                         </div>
                         {indexPageData && indexPageData.vendors &&
                           indexPageData.vendors.map( (data , index) =>
-                          index>0 && index<7 ? 
+                          // index>0 && index<7 ? 
                         <div key={index} className="suggested-vendors-list "> 
                           <div className="mb-md-3">
                             <div className="row">
@@ -314,13 +406,13 @@ class index extends Component {
                               </div>
                               <div className="col-md-3">
                                 <div className="suggested-vendor-follow text-right">
-                                  <Link to="">Follow</Link>
+                                  <Link to="#" onClick={()=>this.followUnfollwProfessionals(`${data && data.userId && data.userId}`)} >Follow</Link>
                                 </div>
                               </div>
                             </div>
                           </div>                        
                         </div>
-                        : " "
+                        // : " "
                            ) 
                          }    
                       </div>
@@ -348,13 +440,15 @@ const locationResponcive  = {
  
 const mapStateToProps = state => {
   return {
-    page: state.page
+    page: state.page,
+    auth: state.auth
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetIndexPageData: () => dispatch(actions.getIndexPageData())
+    onGetIndexPageData: () => dispatch(actions.getIndexPageData()),
+    onFollowUnfollowProfessionals : (data) => dispatch(actions.followProfessionals(data))
   }
 };
  

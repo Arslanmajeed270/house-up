@@ -48,10 +48,22 @@ class vendorSignup extends Component {
             states: [],
             cities: [],
             imagePreviewForSupport: [],
-            imagePreviewForRegister: []
+            imagePreviewForRegister: [],
+            viewPass: false,
+            viewConfirmPass: false
         };
     }
 
+    viewPassword = () => {
+        this.setState({ 
+          viewPass : !this.state.viewPass
+        });
+    }
+    viewConfirmPassword = () => {
+      this.setState({ 
+        viewConfirmPass: !this.state.viewConfirmPass 
+      });
+  }
 
     static getDerivedStateFromProps(props, state) {
         const errors = props.errors;
@@ -227,7 +239,7 @@ class vendorSignup extends Component {
 
     render() { 
         const {
-            errors , loading, imagePreview, firstName, lastName, userName, emailAddress, confirmPassword,
+            viewPass , viewConfirmPass, errors , loading, imagePreview, firstName, lastName, userName, emailAddress, confirmPassword,
             password, professionId, keywordDescriptYourBusiness, provinceId, cityId, zipCode,
             streetAddress, businessName, websiteLink, qualification, aboutBusiness,businessStartDate,
              professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport
@@ -273,7 +285,7 @@ class vendorSignup extends Component {
                     style={{display:'none'}}
                     />
                     <label for="profileImage" className="profile-pic-professional">
-                        <img id="imagePreview" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}}/>
+                        <img id="imagePreviewVendor" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}}/>
                     </label>
                 </div>
                 <div className="row" style={{padding:'0px 15px'}}>
@@ -556,40 +568,35 @@ class vendorSignup extends Component {
                     </div>
 
                 <div className="row" style={{padding:'0px 15px'}}>
-                <div className="col-md-6" style={{padding:'0px',paddingRight:'7px'}}>
-                    <div className="form-group">
-                        <input type="password" 
-                            className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
-                            id="pxp-signin-email" 
-                            placeholder="Password" 
-                            name="password"
-                            value={password}
-                            onChange={this.onChange}
-                            required
-                        />
+                    <div className="col-md-6" style={{padding:'0px',paddingRight:'7px'}}>
+                        <div className="form-group">
+                            <input type={ viewPass ? "text" : "password" } 
+                                className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
+                                id="pxp-signin-email" 
+                                placeholder="Password" 
+                                name="password"
+                                value={password}
+                                onChange={this.onChange}
+                                required
+                            />
+                            <span className="pass-vendorSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                        </div>
+                    </div>
+                    <div className="col-md-6" style={{padding:'0px', paddingRight:'7px'}}>
+                        <div className="form-group">
+                            <input type={ viewConfirmPass ? "text" : "password" } 
+                                className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
+                                id="pxp-signin-email" 
+                                placeholder="Confirm Password" 
+                                name="confirmPassword"
+                                value={confirmPassword}
+                                onChange={this.onChange}
+                                required
+                            />
+                            <span className="pass-vendorSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                        </div>
                     </div>
                 </div>
-                <div className="col-md-6" style={{padding:'0px'}}>
-                    <div className="form-group">
-                        <input type="password" 
-                            className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
-                            id="pxp-signin-email" 
-                            placeholder="Confirm Password" 
-                            name="confirmPassword"
-                            value={confirmPassword}
-                            onChange={this.onChange}
-                            required
-                        />
-                    </div>
-                    
-                </div>
-                </div>
-
-                    
-                    
-                    
-                    
-
                     <div className="form-group">
                         <button
                             className="pxp-agent-contact-modal-btn"

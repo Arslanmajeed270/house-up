@@ -8,7 +8,8 @@ import {
 	SET_INDEX_DATA,
 	SET_ERRORS,
 	GET_COUNTRIES,
-	GET_PROFESSIONS
+	GET_PROFESSIONS,
+	FOLLOW_PROFESSIONAL
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -64,6 +65,7 @@ export const getIndexPageData = () => dispatch => {
 	})
 	.finally(() => dispatch(clearPageLoading()))
 };
+
 
 
 // Vendor Signup page  - Get Countries data from backend
@@ -123,6 +125,55 @@ export const GetProfessionDetailAPI = () => dispatch => {
 		else{
             dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
 		}
+    })
+    .catch(err => {
+		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})
+	.finally(() => dispatch(clearPageLoading()))
+	      
+};
+
+
+// Add Like to the post and property
+export const AddLike = (data) => dispatch => {
+	dispatch(setPageLoading());
+	axios
+    .post( backendServerURL+'/addComment' , data )
+    .then(res => {
+		console.log('checking GetProfessionDetailAPI page data' , res);
+		// console.log('checking res && res.data && res.data.data  && res.data.data.professionList' , res && res.data && res.data.data  && res.data.data.professionList);
+		// if( res && res.data && res.data.resultCode === "200"){
+		// 	dispatch(
+		// 		{
+		// 			type: GET_PROFESSIONS,
+		// 			payload: res && res.data && res.data.data  && res.data.data.professionList ? res.data.data.professionList : []
+		// 		}
+		// 	);
+			   
+		// 	dispatch(clearErrors());
+		// }
+		// else{
+        //     dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		// }
+    })
+    .catch(err => {
+		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})
+	.finally(() => dispatch(clearPageLoading()))
+	      
+};
+
+// Follow and Unfollow Professionals
+export const followProfessionals = (data) => dispatch => {
+	dispatch(setPageLoading());
+	axios
+    .post( backendServerURL+'/followUnfollowUser' , data )
+    .then(res => {
+		console.log('checking follow data' , res);
+		dispatch({
+			type: FOLLOW_PROFESSIONAL,
+			payload: data && data.message ? data.message : ''
+		});
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})

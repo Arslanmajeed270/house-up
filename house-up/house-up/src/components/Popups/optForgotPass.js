@@ -5,15 +5,57 @@ import {Link} from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
+import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/index';
 
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 class optForgotPass extends Component {
     constructor(props){
         super(props);
         this.state = {
-            otp: ""
+          errors: {},
+          loading : false,
+          otp: "",
+          otpAuthenticate: false
         }
     }
+
+    static getDerivedStateFromProps(props, state) {
+        const otpAuthenticate = props.otpAuthenticate;
+        let errors = props.errors;
+        let page = props.page; 
+    
+        let stateChanged = false;
+        let changedState = {};
+    
+        console.log('checking otpAuthenticate: ', otpAuthenticate);
+    
+        if(  (otpAuthenticate || otpAuthenticate === false) && state.otpAuthenticate !== otpAuthenticate){
+          changedState.otpAuthenticate = otpAuthenticate;  
+          if( changedState.otpAuthenticate === true ){
+            props.onFalseOtpAutheticate();
+            props.forgotPassHandler('forgotPass');
+          }
+          stateChanged = true;
+        }
+    
+    
+        if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+          changedState.errors = errors;
+          stateChanged = true;
+        }
+        
+        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+            changedState.loading = page.loading;
+            stateChanged = true;            
+        }
+        
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+      }
 
     handleChange = otp => {
         this.setState({ otp });
@@ -23,12 +65,28 @@ class optForgotPass extends Component {
                 channel:"HouseUp",
                 pin: otp};
             this.props.onVerifyPin(data);
-            this.props.forgotPassHandler('forgotPass');
         }
     }
+    resendPin = (num) => {
+        const data = {
+          msisdn:num,
+          channel:"HouseUp",
+          type:"LOGIN_PIN_SMS"
+        };
+        this.props.onGeneratePin(data);
+      }
 
     render() { 
+        const { errors , loading } = this.state;
         console.log('checking value of otp: ', this.state.otp);
+        let pageContent = '';
+
+        if(loading){
+          pageContent = <Spinner />
+        }
+        else{
+          pageContent = "";
+        }
         let phoneNumber = '';
         if(this.props.phNumber)
         {
@@ -48,6 +106,11 @@ class optForgotPass extends Component {
             
             <Modal.Body >
             <div className="form-group">
+            {errors && errors.message &&
+                <Alert variant='danger'>
+                <strong>Error!</strong> { errors.message }
+                </Alert>
+            }
 
             <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>We sent you a code to </div>
             <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>verify your phone number</div>
@@ -65,7 +128,7 @@ class optForgotPass extends Component {
             </div>
             </div>
             <div className="text-center" style={{marginBottom:'10px', color:'#CACACC'}}>
-              I didn't receeive a code! <Link to="#" >Resend</Link>
+              I didn't receeive a code! <Link to="#" onClick={() => this.resendPin(phoneNumber)} >Resend</Link>
             </div>
             </Modal.Body>
         </Modal>             
@@ -73,11 +136,23 @@ class optForgotPass extends Component {
          );
     }
 }
+const mapStateToProps = state => {
+    return {
+      page: state.page,
+      otpAuthenticate: state.auth.otpAuthenticate,
+      errors: state.errors
+  
+    }
+  };
+  
  
 const mapDispatchToProps = dispatch => {
-    return {
-        onVerifyPin: (data) => dispatch(actions.verifyPin(data))
+  console.log('mapDispatchToProps in HomePage ' );
+  return {
+        onFalseOtpAutheticate: () => dispatch({type: actionTypes.OTP_AUTHENTICATE_FAIL }),
+        onVerifyPin : (data)=>dispatch(actions.verifyPin(data)),
+        onGeneratePin: (data) => dispatch(actions.generatePin(data))
     }
   };
    
-  export default connect(null, mapDispatchToProps)(optForgotPass);
+  export default connect(mapStateToProps, mapDispatchToProps)(optForgotPass);

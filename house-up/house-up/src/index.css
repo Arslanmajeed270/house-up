@@ -88,7 +88,7 @@ body {
 }
 .country-code-login-page{
   position: absolute !important;
-  top: 157px !important;
+  top: 159px !important;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
@@ -187,7 +187,6 @@ body {
 .profile-pic-professional{
   height: 100px;
   width: 100px;
-  border: 1px solid black;
   border-radius: 7px;
 }
 
@@ -390,4 +389,90 @@ body {
 }
 .padding{
   padding: 0px 7px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url('./assets/images/icons/ic_calendar.svg') no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+}
+#imagePreview{
+  height: 100px;
+  width: 100px;
+  vertical-align: sub;
+  border-radius: 50px;
+  max-width: 100%;
+}
+#imagePreviewVendor{
+  height: 100px;
+  width: 100px;
+  vertical-align: sub;
+  border-radius: 50px;
+  max-width: 100%;
+}
+.fas{
+  color: red;
+}
+.alice-carousel__stage-item{
+  width: 309.833px !important;
+  margin-right: 30px !important;
+}
+.pxp-prop-card-1-fig .pxp-cover{
+  width: 280px !important;
+}
+.alice-carousel__prev-btn-item.__inactive{
+  opacity: 0 !important;
+}
+.alice-carousel__next-btn-item.__inactive {
+  opacity: 0 !important;
+}
+.alice-carousel__next-btn-item{
+  background-image: url('./assets/images/right-arrow.svg') ;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-position-y: center;
+  background-position-x: center;
+}
+.alice-carousel__prev-btn-item{
+  background-image: url('./assets/images/left-arrow.svg');
+  background-repeat: no-repeat;
+  background-size: 50px;
+  background-position-y: center;
+  background-position-x: center;
+}
+[data-area="<"],[data-area=">"] {
+  display: none;
+}
+.viewPassword-login{
+  position: absolute;
+  right: 25px;
+  bottom: 183px;
+}
+.password-forgotPass{
+  position: absolute;
+  right: 25px;
+  bottom: 167px;
+}
+.confirmPass-forgotPass{
+  position: absolute;
+    right: 25px;
+    bottom: 107px;
+}
+.confirmPass-userSignup{
+  position: absolute;
+  right: 25px;
+  bottom: 105px;
+}
+.pass-userSignup{
+  position: absolute;
+  right: 25px;
+  bottom: 167px;
+}
+.pass-vendorSignup{
+  position: absolute;
+    right: 20px;
+    bottom: 27px;
 }

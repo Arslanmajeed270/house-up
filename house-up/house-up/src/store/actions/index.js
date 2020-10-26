@@ -4,7 +4,9 @@ export {
     setCurrentUser,
     createVendor,
     verifyPin,
-    generatePin
+    generatePin,
+    getUserDeatils,
+    resetUserPassword
 } from './authActions';
 
 
@@ -14,7 +16,9 @@ export {
     clearErrors,
     getIndexPageData,
     GetCountries,
-    GetProfessionDetailAPI
+    GetProfessionDetailAPI,
+    AddLike,
+    followProfessionals
 } from './pageActions';
 
 export {

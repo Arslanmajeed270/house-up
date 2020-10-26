@@ -14,8 +14,8 @@ class header extends Component {
                       <Link to="/index" className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>
-                        <img class="img black-logo" src="assets/images/ic_logo_black.svg" alt="logo" />
-                        <img class="img white-logo" src="assets/images/ic_logo_white.svg" alt="logo"/>
+                        <img className="img black-logo" src="assets/images/ic_logo_black.svg" alt="logo" />
+                        <img className="img white-logo" src="assets/images/ic_logo_white.svg" alt="logo"/>
                         </>
                         :
                         <img className="img" src="assets/images/logo.png" alt="logo" /> 
