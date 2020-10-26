@@ -12,22 +12,22 @@ class forgotPassCongrats extends Component {
                 centered
                 // size="md"
                 dialogClassName="modal-width"
-                onHide={() => this.props.closeCodelHanlder('forgotPassCongrats')}
+                onHide={() => this.props.closeCodelHanlder('congratulationModel')}
             >
-                <Modal.Header onClick={() => this.props.closeCodelHanlder('forgotPassCongrats')}>
-                </Modal.Header>
-                <Modal.Body >
+                
+                <Modal.Body onClick={this.props.congratulationPopupHandler}>
                     <div className="form-group">
-                        <div class="text-center" style={{fontSize: '30px',fontWeight: '500',padding: '20px'}}>CONGRATULATIONS!</div>
+                        <div class="text-center" style={{fontSize: '25px',color:'#1082FF',fontWeight: '500',padding: '12px'}}>CONGRATULATIONS!</div>
                     </div>
                     <div className="form-group">
-                        <div class="text-center" style={{fontSize: '30px'}}>Your Password is Successfully Changed.</div> 
+                        <div class="text-center" style={{fontSize: '20px'}}>Your Password has been </div>
+                        <div class="text-center" style={{fontSize: '20px'}}> successfully changed.</div>
                     </div>
                     <div className="form-group">
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            onClick={() => this.props.closeCodelHanlder('forgotPassCongrats')}
+                            onClick={() => this.props.closeCodelHanlder('congratulationModel')}
                             >Okay</button>
                     </div>
                 </Modal.Body>

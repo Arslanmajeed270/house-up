@@ -47,7 +47,6 @@ class phoneNumberVendor extends Component {
                 [e.target.name]: e.target.value
               });
         }
-        
       }
 
     onSubmit = () => {

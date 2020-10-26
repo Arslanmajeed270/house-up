@@ -6,7 +6,9 @@ import {
 	REGISTER_VENDOR_SUCCESS,
 	REGISTER_VENDOR_FAIL,
 	REGISTER_USER_SUCCESS,
-	REGISTER_USER_FAIL
+	REGISTER_USER_FAIL,
+	SET_USER_DETAIL,
+	LOGIN_USER
  } from '../actions/actionTypes';
 
 const initialState = {
@@ -14,7 +16,8 @@ const initialState = {
 	user: {},
 	otpAuthenticate:false,
 	regiserUser: false,
-	registerVendor: false
+	registerVendor: false,
+	userDetail : {}
 };
 
 export default function(state = initialState, action) {
@@ -52,6 +55,10 @@ export default function(state = initialState, action) {
 		case REGISTER_USER_FAIL:
 			return {
 				regiserUser:false
+			}
+		case LOGIN_USER:
+			return{
+				userDetail: action.payload
 			}	
 		default:
 			return state;

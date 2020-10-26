@@ -158,6 +158,7 @@ class index extends Component {
                         show={this.state.forgotPass}
                         closeCodelHanlder={this.closeCodelHanlder}
                         forgotPassCongratsHandler = {this.modelHanlder}
+                        phNumber={this.state.phNumber}
                     />
                 }
                  {this.state.forgotPassCongrats &&

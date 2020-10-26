@@ -3,14 +3,18 @@ import {
 	PAGE_LOADED,
 	SET_INDEX_DATA,
 	GET_COUNTRIES,
-	GET_PROFESSIONS
+	GET_PROFESSIONS,
+	ADD_LIKE,
+	FOLLOW_PROFESSIONAL
 } from '../actions/actionTypes';
 
 const initialState = {
 	loading: false,
+	isLike : false,
 	indexPageData :{},
 	countries: [],
-	professionList: []
+	professionList: [],
+	followMessage: ''
 };
 
 export default function (state = initialState, action) {
@@ -38,6 +42,14 @@ export default function (state = initialState, action) {
 			return {
 				professionList : action.payload
 		};
+		case ADD_LIKE:
+			return{
+
+			}
+		case FOLLOW_PROFESSIONAL:
+			return{
+				followMessage : action.payload
+			}	
 	default:
 			return state;
 	}

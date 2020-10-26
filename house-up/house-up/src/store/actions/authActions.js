@@ -10,7 +10,9 @@ import {
     REGISTER_VENDOR_SUCCESS,
 	REGISTER_VENDOR_FAIL,
 	REGISTER_USER_SUCCESS,
-	REGISTER_USER_FAIL
+    REGISTER_USER_FAIL,
+    SET_USER_DETAIL,
+    LOGIN_USER
 } from './actionTypes';
 
 import {
@@ -44,11 +46,15 @@ export const loginUser = (userData, history) => dispatch => {
         console.log("res from backend while login",res);
         if(res.data &&  res.data.data && res.data.data.user ){
             localStorage.setItem('jwtToken', res.data.data.user) ;
-            dispatch(setCurrentUser(res.data.data.user));
+            dispatch({
+                type: LOGIN_USER,
+                // setCurrentUser(res.data.data.user)
+                payload : res && res.data && res.data.data && res.data.data.user ? res.data.data.user : {}
+            });
         }
 
         dispatch(clearErrors())
-        history.push(`/`)
+        history.push(`/index`)
         
     })
     .catch(err => {
@@ -103,19 +109,16 @@ export const sendPasswordRecoveryLink = (userData, history) => dispatch => {
 };
  
 
-export const resetUserPassword = (inputData, verificationToken, history) => dispatch =>{
+export const resetUserPassword = (userData) => dispatch =>{
     dispatch(setPageLoading());
  
     axios
     .post(
-        backendServerURL+'/api/users/reset-user-password', 
-        {
-            token: verificationToken,
-            passwordData: inputData
-        }
-    )
+        backendServerURL+'/forgotPassword' , 
+        userData)
+     
     .then(res => {
-        history.push('/login?reset=true');
+        console.log('checking response of forgotpass',res);
     })
     .catch(err => dispatch({type: SET_ERRORS, payload: err.response.data}))
     .finally(() => dispatch(clearPageLoading()));
@@ -229,3 +232,32 @@ export const verifyPin = (data) => dispatch => {
     })      
     .finally(() => dispatch(clearPageLoading()))
 };
+
+// signupVendor - signupvendor from the web page
+export const getUserDeatils = (data) => dispatch => {
+    dispatch(setPageLoading());
+    console.log('checking data: ', data);
+    axios
+    .post(
+        backendServerURL+'/getUserDetails', 
+        data
+    )
+    .then(res => {
+        dispatch(clearErrors())
+        console.log('checking response in getUserDeatils',res);
+        if(res && res.data && res.data.resultCode === "200" ){
+        dispatch(
+			{
+				type: SET_USER_DETAIL,
+				payload: res.data && res.data.data  && res.data.data.user ? res.data.data.user : {}
+			}
+        );
+        }
+    })
+    .catch(err => {
+        console.log("error: ", err);
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+    .finally(() => dispatch(clearPageLoading()))
+};
+
