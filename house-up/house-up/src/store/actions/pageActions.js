@@ -9,7 +9,9 @@ import {
 	SET_ERRORS,
 	GET_COUNTRIES,
 	GET_PROFESSIONS,
-	FOLLOW_PROFESSIONAL
+	FOLLOW_PROFESSIONAL,
+	SHOW_POP_UP,
+	HIDE_POP_UP
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;

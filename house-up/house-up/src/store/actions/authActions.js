@@ -12,7 +12,9 @@ import {
 	REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
     SET_USER_DETAIL,
-    LOGIN_USER
+    LOGIN_USER,
+    SHOW_POP_UP,
+	HIDE_POP_UP
 } from './actionTypes';
 
 import {
@@ -34,27 +36,18 @@ export const loginUser = (userData, history) => dispatch => {
         userData
     )
     .then(res => {
-        
-        // const {token} = res.data;
-        // localStorage.setItem('jwtToken', token);
-        // setAuthToken(token);
-        // const decoded = jwt_decode(token);
-        // dispatch(setCurrentUser(decoded));
 
-        // dispatch(clearErrors())
-        // history.push(`/dashboard`)
         console.log("res from backend while login",res);
         if(res.data &&  res.data.data && res.data.data.user ){
-            localStorage.setItem('jwtToken', res.data.data.user) ;
-            dispatch({
-                type: LOGIN_USER,
-                // setCurrentUser(res.data.data.user)
-                payload : res && res.data && res.data.data && res.data.data.user ? res.data.data.user : {}
-            });
+            localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+            dispatch(setCurrentUser(res.data.data.user));
+            dispatch(clearErrors())
+            dispatch({ type: SHOW_POP_UP });
         }
-
-        dispatch(clearErrors())
-        history.push(`/index`)
+        else {
+            dispatch({ type: HIDE_POP_UP });
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+        }
         
     })
     .catch(err => {
@@ -82,32 +75,10 @@ export const clearCurrentUser = () => {
 
 // Log user out (Verified)
 export const logoutUser = () => dispatch => {
-    // console.log("History in logoutUser: ", history);
     localStorage.removeItem('jwtToken');
     setAuthToken(false);
     dispatch(clearCurrentUser());
-    // console.log("History is: ", history);
-    // history.push('/login');
 };
-
-
-
-export const sendPasswordRecoveryLink = (userData, history) => dispatch => {
-    dispatch(setPageLoading());
-    
-    axios
-    .post(
-        backendServerURL+'/api/users/recover-password-email', 
-        userData
-    )
-    .then(res => {
-        if(res.data.success){
-        }
-    })
-    .catch(err => dispatch({type: SET_ERRORS, payload: err.response.data}))
-    .finally(() => dispatch(clearPageLoading()));
-};
- 
 
 export const resetUserPassword = (userData) => dispatch =>{
     dispatch(setPageLoading());
@@ -115,16 +86,20 @@ export const resetUserPassword = (userData) => dispatch =>{
     axios
     .post(
         backendServerURL+'/forgotPassword' , 
-        userData)
-     
+        userData
+        )
     .then(res => {
-        console.log('checking response of forgotpass',res);
+        console.log("checking response in resetUserPassword: ", res);
+        if(res && res.data && res.data.resultCode === "200"){
+            dispatch(clearErrors());
+        }
+        else {
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+        }
     })
     .catch(err => dispatch({type: SET_ERRORS, payload: err.response.data}))
     .finally(() => dispatch(clearPageLoading()));
 };
-
-
 
 
 // signupUser - signupUser from the web page
@@ -223,7 +198,6 @@ export const verifyPin = (data) => dispatch => {
             console.log("checking i am into else");
             dispatch({ type: OTP_AUTHENTICATE_FAIL });
             dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
-
         }
     })
     .catch(err => {
@@ -260,4 +234,3 @@ export const getUserDeatils = (data) => dispatch => {
     })      
     .finally(() => dispatch(clearPageLoading()))
 };
-

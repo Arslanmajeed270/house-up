@@ -91,6 +91,7 @@ class index extends Component {
         else if(model === "congratulationModel"){
             this.setState({ 
                 userSignupModel: false,
+                vendorSignupModel: false,
                 [model]: !this.state[model] 
             });
         }
@@ -222,6 +223,8 @@ class index extends Component {
                     show={this.state.vendorSignupModel}
                     closeCodelHanlder={this.closeCodelHanlder}
                     congratulationHandler={this.modelHanlder}
+                    phNumber={this.state.phNumber}
+
                     />
                 }
                 {this.state.congratulationModel &&

@@ -4,15 +4,58 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
+import * as actionTypes from '../../store/actions/actionTypes';
+
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
+
 class phoneSignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            errors: {},
+            loading : false,
             msisdn: '',
             password: '',
-            viewPass: false
+            viewPass: false,
+            showPopUp: false
         };
     }
+
+    static getDerivedStateFromProps(props, state) {
+        const errors = props.errors;
+        const page = props.page; 
+        let stateChanged = false;
+        let changedState = {};
+
+        console.log("checkig state.regiserUser: ", state.regiserUser);
+      
+        if( page && JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp) ){
+          changedState.showPopUp = page.showPopUp;  
+        console.log("checkig changedState.showPopUp: ", changedState.showPopUp);
+          if( changedState.showPopUp === true ){
+            props.onHidePopUp();
+            this.props.closeCodelHanlder('phoneSignin')
+          }
+          stateChanged = true;
+        }
+
+        if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+            changedState.errors = errors;
+            stateChanged = true;
+          }
+          
+        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+            changedState.loading = page.loading;
+            stateChanged = true;            
+        }
+        
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+      }
+
     onChange = e => {
         this.setState({
           [e.target.name]: e.target.value
@@ -28,6 +71,10 @@ class phoneSignIn extends Component {
         let msisdn = ('+' +1) + (this.state.msisdn);
       
              e.preventDefault();
+             if(this.state.password.length < 6 ){
+                this.props.onErrorSet("Password length must be atleast 6 !");
+                return;
+            }
       
             const userData = {
                 msisdn:msisdn,
@@ -37,13 +84,20 @@ class phoneSignIn extends Component {
                 loginBy:"msisdn"
                };
                console.log(userData);
-      
              this.props.onLogin(userData, this.props.history);
          }
  
     render() {
-        const { viewPass, msisdn , password } = this.state;
+        const { errors , loading, viewPass, msisdn , password } = this.state;
         console.log("checking this.props.show: ", this.props.show);
+        let pageContent = '';
+
+        if(loading){
+          pageContent = <Spinner />
+        }
+        else{
+          pageContent = "";
+        }
         return ( 
             <Modal 
             show={this.props.show}
@@ -60,6 +114,11 @@ class phoneSignIn extends Component {
                             <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" />
                             </div>
                             <form >
+                            {errors && errors.message &&
+                                <Alert variant='danger'>
+                                <strong>Error!</strong> { errors.message }
+                                </Alert>
+                            }
                             <div className="form-group">
                                 <Link to="#"  style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.emailSigninHandler('emailSignin')}>Login with email</Link>
                             </div>
@@ -78,7 +137,7 @@ class phoneSignIn extends Component {
                                 </div>
                                 <div className="form-group">
                                     <input type={ viewPass ? "text" : "password" } name="password" value={password} onChange={this.onChange} className="form-control" id="pxp-signin-pass" placeholder="Enter your password" />
-                                    <span className="viewPassword-login" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="viewPassword-login" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                                 
                                 </div>
                                 <div className="form-group">
@@ -97,6 +156,7 @@ class phoneSignIn extends Component {
                                 </div> 
                             </form> 
                         </Link>
+                    { pageContent }
                     </Modal.Body>
                 </Modal> 
          );
@@ -105,13 +165,16 @@ class phoneSignIn extends Component {
  
 const mapStateToProps = state => {
     return {
-      auth: state.auth,
+        page: state.page,
+        errors: state.errors
     }
   };
   
   const mapDispatchToProps = dispatch => {
     return {
         onLogin: (email, history) => dispatch(actions.loginUser(email, history)),
+        onHidePopUp: () => dispatch({type: actionTypes.HIDE_POP_UP }),
+        onErrorSet: (msg) =>  dispatch({type: actionTypes.SET_ERRORS, payload: { message: msg }})
         
     }
   };

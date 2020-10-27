@@ -5,7 +5,8 @@ import {
 	GET_COUNTRIES,
 	GET_PROFESSIONS,
 	ADD_LIKE,
-	FOLLOW_PROFESSIONAL
+	SHOW_POP_UP,
+	HIDE_POP_UP
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
 	indexPageData :{},
 	countries: [],
 	professionList: [],
-	followMessage: ''
+	showPopUp:false
 };
 
 export default function (state = initialState, action) {
@@ -46,10 +47,14 @@ export default function (state = initialState, action) {
 			return{
 
 			}
-		case FOLLOW_PROFESSIONAL:
-			return{
-				followMessage : action.payload
-			}	
+		case SHOW_POP_UP:
+			return {
+				showPopUp: true
+			}
+		case HIDE_POP_UP:
+			return {
+				showPopUp:false
+			}
 	default:
 			return state;
 	}
