@@ -18,7 +18,8 @@ export const SET_NEW_PASSWORD = 'SET_NEW_PASSWORD';
 export const SET_USER_DETAIL = 'SET_USER_DETAIL';
 export const LOGIN_USER = 'LOGIN_USER';
 export const FOLLOW_PROFESSIONAL = 'FOLLOW_PROFESSIONAL';
-
+export const SHOW_POP_UP = 'SHOW_POP_UP';
+export const HIDE_POP_UP = 'HIDE_POP_UP';
 
 //PAGE ACTIONS
 export const PAGE_LOADING = 'PAGE_LOADING';

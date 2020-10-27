@@ -10,7 +10,6 @@ import * as actions from '../../store/actions/index';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
-import authReducer from '../../store/reducers/authReducer';
 
 class index extends Component {
   constructor(props) {
@@ -20,7 +19,7 @@ class index extends Component {
       loading : false,
       indexPageData : {},
       isLike:false,
-      userDetail:{},
+      user:{},
       followMessage:''
     };
   }
@@ -49,8 +48,8 @@ class index extends Component {
       stateChanged = true;
     }
 
-    if(auth && JSON.stringify(state.userDetail) !== JSON.stringify(auth.userDetail)){
-      changedState.userDetail = auth.userDetail;  
+    if(auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
+      changedState.user = auth.user;  
       stateChanged = true;
     }
 
@@ -77,7 +76,7 @@ class index extends Component {
     this.setState({ followProfessional : !this.state.followProfessional});
     let data={ 
       category:"Vendor",
-      userId:this.state.userDetail.userId,
+      userId:this.state.user.userId,
       action:"Follow",
       followUnfollowId:"1",
       vendorId:id
@@ -85,7 +84,7 @@ class index extends Component {
 
     const unFollowData = {
       category:"Vendor",
-      userId:this.state.userDetail.userId,
+      userId:this.state.user.userId,
       action:"Unfollow",
       followUnfollowId:"2",
       vendorId:id
@@ -115,7 +114,7 @@ class index extends Component {
   //     posts && posts[0] && posts[0].postLikes && posts[0].postLikes.length ? 
   //     (for(const i=0 ; i<posts[0].postLikes.length ; i++)
   //     {
-  //      { posts[0].postLikes[i].userId == this.state.userDetail.userid ? this.state.isLike = true: '' }
+  //      { posts[0].postLikes[i].userId == this.state.user.userid ? this.state.isLike = true: '' }
   //     }
   //     )
   //     : null
@@ -125,11 +124,11 @@ class index extends Component {
 
 
     render() { 
-      const { errors, loading, indexPageData , isLike , userDetail , followMessage } = this.state;
+      const { errors, loading, indexPageData , isLike , user , followMessage } = this.state;
       console.log('checking indexPageData in IndexPage: ', indexPageData);
-      console.log('checking logged in User Data ',userDetail);
+      console.log('checking logged in User Data ',user);
 
-      let userId = this.state.userDetail.userId;
+      let userId = this.state.user && this.state.user.userId ? this.state.user.userId : "";
       let postArray = indexPageData.posts
       // console.log('logged in user Id',likesArray[0]);
 

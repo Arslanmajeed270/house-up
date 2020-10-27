@@ -197,6 +197,7 @@ class vendorSignup extends Component {
            this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
            return;
        }
+       console.log("**** checking phone number:  ", this.props.phNumber);
 
              const userData = {
                 profileImage: profileImage,
@@ -211,7 +212,7 @@ class vendorSignup extends Component {
                 businessSupportingDocument : businessSupportingDocument,
                 businessRegistrationDocument: businessRegistrationDocument,
                 keywordDescriptYourBusiness: keywordDescriptYourBusiness,
-                countryId: countryId,
+                countryId: 1,
                 provinceId: provinceId,
                 cityId: cityId,
                 zipCode: zipCode,
