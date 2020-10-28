@@ -33,6 +33,7 @@ form2DataHandler = ( form2Data ) => {
 form3DataHandler = ( form3Data ) => {
   this.setState({ form3Data : form3Data});
   console.log('checking form3 data in add property paren page',form3Data);
+  this.addProperty();
 }
 
 
@@ -116,7 +117,8 @@ addProperty = () =>{
       address: form3Data.address,
       gym: form2Data.gym, 
       yearFurnaceBuilt: form2Data.yearFurnaceBuilt,
-      areaTypeId: form2Data.areaTypeId
+      areaTypeId: form2Data.areaTypeId,
+      images : form3Data.images
     }
     console.log(this.state.formData);
 
@@ -131,18 +133,10 @@ formShowHandler = (num) =>{
         
     });
 }
-
-
-
-
-
 render() { 
     const { dropDownData , form1Data , form2Data , form3Data  } = this.state;
     console.log('checking dropDown Data',dropDownData);
     console.log("checking number in render: ", this.state.formShow);
-
-    
-
 
     return ( 
             <React.Fragment>

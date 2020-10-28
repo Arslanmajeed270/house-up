@@ -9,8 +9,8 @@ class from2 extends Component {
            moreInfo:false,
             dropDownData:{},
             yearBuilt:'',
-            balcony:'',
-            disposal:'',
+            balcony:false,
+            disposal:false,
             finishedSqftArea:'',
             lotDimensionLength:'',
             noOfBathrooms:'',
@@ -22,19 +22,19 @@ class from2 extends Component {
             rentalListingYN:'',
             yearRoofInstalled:'',
             parkingSpaces:'',
-            ac:'',
+            ac:false,
             garageId:'',
-            dishWasher:'',
-            garage:'',
+            dishWasher:false,
+            garage:false,
             noOfBedrooms:'',
-            playroom:'',
-            bar:'',
+            playroom:false,
+            bar:false,
             primaryHeatingFuelId:'',
-            internet:'',
+            internet:false,
             buildingTypeId:'',
             amenites:'',
             lotTotalArea:'',
-            gym:'',
+            gym:false,
             yearFurnaceBuilt:'',
             areaTypeId:''
         };
@@ -45,16 +45,26 @@ class from2 extends Component {
     }
     
     onChange = e => {
-      this.setState({
-        [e.target.name]: e.target.value
-      });
+      console.log("checking e: ", e.target);
+      if(e.target.type === "checkbox"){
+        const value = !this.state[e.target.name]
+        console.log("checking name: ", value);
+        this.setState({
+          [e.target.name]: value
+        });
+      }
+      else{
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+      }
     }
     onSubmit = e =>{
       e.preventDefault();
         const dataForm2 = {
           yearBuilt:this.state.yearBuilt,
-          balcony:this.state.balcony,
-          disposal:this.state.disposal,
+          balcony: `${this.state.balcony}` ,
+          disposal:`${this.state.disposal}`,
           finishedSqftArea:this.state.finishedSqftArea,
           lotDimensionLength:this.state.lotDimensionLength,
           noOfBathrooms:this.state.noOfBathrooms,
@@ -66,21 +76,22 @@ class from2 extends Component {
           rentalListingYN:this.state.rentalListingYN,
           yearRoofInstalled:this.state.yearRoofInstalled,
           parkingSpaces:this.state.parkingSpaces,
-          ac:this.state.ac,
+          ac:`${this.state.ac}`,
           garageId:this.state.garageId,
-          dishWasher:this.state.dishWasher,
-          garage:this.state.garage,
+          dishWasher:`${this.state.dishWasher}`,
+          garage:`${this.state.garage}`,
           noOfBedrooms:this.state.noOfBedrooms,
-          playroom:this.state.playroom,
-          bar:this.state.bar,
+          playroom:`${this.state.playroom}`,
+          bar:`${this.state.bar}`,
           primaryHeatingFuelId:this.state.primaryHeatingFuelId,
-          internet:this.state.internet,
+          internet:`${this.state.internet}`,
           buildingTypeId:this.state.buildingTypeId,
           amenites:this.state.amenites,
           lotTotalArea:this.state.lotTotalArea,
-          gym:this.state.gym,
+          gym:`${this.state.gym}`,
           yearFurnaceBuilt:this.state.yearFurnaceBuilt,
-          areaTypeId:this.state.areaTypeId
+          areaTypeId:this.state.areaTypeId,
+          parkingSpaces:'0'
          };
          console.log('checking form2 Data', dataForm2);
 
@@ -390,7 +401,9 @@ class from2 extends Component {
                           <div className="col-sm-6 col-md-4">
                             <div className="form-group">
                               <div className="checkbox custom-checkbox">
-                                <label><input type="checkbox"name="balcony" value={balcony} onChange={this.onChange} /><span className="fa fa-clone" /> Balcony</label>
+                                <label>
+                                  <input type="checkbox" name="balcony" onClick={this.onChange} />
+                                  <span className="fa fa-clone" /> Balcony</label>
                               </div>
                             </div>
                           </div>
@@ -411,7 +424,7 @@ class from2 extends Component {
                           <div className="col-sm-6 col-md-4">
                             <div className="form-group">
                               <div className="checkbox custom-checkbox">
-                                <label><input type="checkbox"  name="bar" value={bar} onChange={this.onChange} /><span className="fa fa-glass" /> Bar</label>
+                                <label><input type="checkbox"  name="bar" onChange={this.onChange} /><span className="fa fa-glass" /> Bar</label>
                               </div>
                             </div>
                           </div>

@@ -3,6 +3,9 @@ import Dropzone from 'react-dropzone';
 import {Nav} from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
 
+import fileUpload from 'fuctbase64';
+
+
 
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -20,9 +23,8 @@ class form3 extends Component {
             images:[],
             cityId:'',
             longitude:'',
-            latitude:''
-            
-
+            latitude:'',
+            imagePreview:[],
         };
       }
 
@@ -41,20 +43,36 @@ class form3 extends Component {
             address:this.state.address,
             images:this.state.images,
             longitude:this.state.longitude,
-            latitude:this.state.latitude
+            latitude:this.state.latitude,
+            images:this.state.images
         }
         console.log(dataForm3);
         this.props.form3DataHandler(dataForm3);
       }
 
       onChange = e => {
-        this.setState({
-          [e.target.name]: e.target.value
-        });
+        if(e.target.name === 'images'){
+            const imagePreview = URL.createObjectURL(e.target.files[0]);
+            const imagePreviewState = this.state.imagePreview;
+            const images = this.state.images;
+            imagePreviewState.push(imagePreview);
+            fileUpload(e)
+            .then((data) => {
+                console.log("base64 :",data.base64);
+                images.push(data.base64);
+                this.setState({
+                    imagePreview: imagePreviewState,
+                    images: images
+                })
+            })
+        }
+        else{
+            this.setState({[e.target.name]: e.target.value});
+        }
       }
 
     render() { 
-        const{ address , city , images } = this.state;
+        const{ address , city , imagePreview } = this.state;
         const files = this.state.files.map(file => (
             <li key={file.name}>
               {file.name} - {file.size} bytes
@@ -133,11 +151,18 @@ class form3 extends Component {
                             {({getRootProps, getInputProps}) => (
                             <section className="container drop-zone">
                                 <div {...getRootProps({className: 'dropzone , drop-zone-inner'})}>
-                                <input type="file" {...getInputProps()} id="pictures" name="images" value={images} />
+                                <input type="file" {...getInputProps()} id="pictures" name="images" onChange={this.onChange} />
                                 <p>Drag 'n' drop some files here, or click to select files</p>
                                 </div>
                                 <aside>
                                 <h4>Files</h4>
+                                {imagePreview && imagePreview.length ?
+                                imagePreview.map( (data, index) => (
+                                    <img id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} />
+                                ) )
+                                :
+                                "" 
+                                }
                                 <ul>{files}</ul>
                                 </aside>
                             </section>
