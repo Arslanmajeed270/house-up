@@ -14,7 +14,15 @@ class form3 extends Component {
           this.setState({files})
         };
         this.state = {
-          files: []
+          files: [],
+            city:'',
+            address:'',
+            images:[],
+            cityId:'',
+            longitude:'',
+            latitude:''
+            
+
         };
       }
 
@@ -26,7 +34,27 @@ class form3 extends Component {
         zoom: 11
       };
 
+      onSubmit = e => {
+        e.preventDefault();
+        const dataForm3 = {
+            city:this.state.city,
+            address:this.state.address,
+            images:this.state.images,
+            longitude:this.state.longitude,
+            latitude:this.state.latitude
+        }
+        console.log(dataForm3);
+        this.props.form3DataHandler(dataForm3);
+      }
+
+      onChange = e => {
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+      }
+
     render() { 
+        const{ address , city , images } = this.state;
         const files = this.state.files.map(file => (
             <li key={file.name}>
               {file.name} - {file.size} bytes
@@ -34,7 +62,7 @@ class form3 extends Component {
           ));
         return ( 
             <React.Fragment>
-                
+                <form onSubmit={this.onSubmit}>
                 <div className="add-property-conatiner" style={{backgroundColor:'#F5F5F5'}}>
                 <div className="row border-property">
                     <div className="col-md-12">
@@ -54,7 +82,7 @@ class form3 extends Component {
                 </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <input type="text" placeholder="Enter an address"  className="input-feilds-address" />
+                            <input type="text" placeholder="Enter an address"  className="input-feilds-address" name="address" onChange={this.onChange}  value={address} />
                             <button className="btn btn-primary" style={{marginTop: '-3px'}}>Search</button>
                         </div>
                         <div className="col-md-12" style={{ height: '300px', width: '100%' }}>
@@ -74,11 +102,11 @@ class form3 extends Component {
                     <div className="row border-property">
                         <div className="col-md-7">
                             <h6 className="titles-property">Address</h6>
-                            <input className="input-feilds-property" type="text" />
+                            <input className="input-feilds-property" type="text" name="address" value={address} onChange={this.onChange} />
                         </div>
                         <div className="col-md-5">
                             <h6 className="titles-property">*City</h6>
-                            <input className="input-feilds-property" type="text" />
+                            <input className="input-feilds-property" name="city" value={city} type="text"  onChange={this.onChange}/>
                         </div>
                         <div className="col-md-3">
                             <h6 className="titles-property">* Province/State</h6>
@@ -105,7 +133,7 @@ class form3 extends Component {
                             {({getRootProps, getInputProps}) => (
                             <section className="container drop-zone">
                                 <div {...getRootProps({className: 'dropzone , drop-zone-inner'})}>
-                                <input type="file" {...getInputProps()} id="pictures"/>
+                                <input type="file" {...getInputProps()} id="pictures" name="images" value={images} />
                                 <p>Drag 'n' drop some files here, or click to select files</p>
                                 </div>
                                 <aside>
@@ -134,6 +162,7 @@ class form3 extends Component {
                         </div>
                     </div>
                 </div>
+                </form>
             </React.Fragment>
          );
     }

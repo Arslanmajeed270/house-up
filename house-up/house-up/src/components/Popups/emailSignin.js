@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import { checkPawwordPattern } from '../../utils/regex';
+
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
 
@@ -28,6 +30,11 @@ class emailSignin extends Component {
        onSubmit = e => {
         console.log('checking click handler');
              e.preventDefault();
+             
+            if(!checkPawwordPattern(this.state.password)){
+               this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
+               return;
+           }
             const userData = {
                 msisdn:"",
                 emailAddress: this.state.emailAddress,
@@ -54,11 +61,11 @@ class emailSignin extends Component {
                     <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('emailSignin')} >
                     </Modal.Header>
                     <Modal.Body>
-                        <Link>
+                        <div>
                         <div className="logo-modal" >
                             <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" />
                             </div>
-                            <form >
+                            <form  onSubmit={this.onSubmit}>
                             <div className="form-group">
                                 <Link to="#" style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.phoneSigninHandler('phoneSignin')}>Login with mobile</Link>
                             </div>
@@ -88,7 +95,7 @@ class emailSignin extends Component {
                                 </div>
                                 <div className="form-group">
                                     <div className="form-group">
-                                       <Link to="#" className="pxp-agent-contact-modal-btn" onClick={this.onSubmit}>Sign In</Link>
+                                       <button to="#" className="pxp-agent-contact-modal-btn" type="submit" >Sign In</button>
                                     </div>
                                     <div className="form-group " style={{textAlign:'right'}}>
                                         <Link to="#" className="pxp-modal-link" onClick={() => this.props.phoneNoForgotHandler('phoneNoForgotPass')}>Forgot password</Link>
@@ -101,7 +108,7 @@ class emailSignin extends Component {
                                     </div>
                                 </div> 
                             </form> 
-                        </Link>
+                        </div>
                     </Modal.Body>
                 </Modal> 
          );

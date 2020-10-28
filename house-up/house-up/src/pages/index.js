@@ -18,6 +18,9 @@ import PhoneNumberForgotPass from '../components/Popups/phoneNumberForgotPass';
 import OptForgotPass from '../components/Popups/optForgotPass';
 import ForgotPass from '../components/Popups/forgotPass';
 import ForgotPassCongrats from '../components/Popups/forgotPassCongrats';
+import SubscriptionPlan from '../components/Popups/subscriptionPlan';
+import CardSelection from '../components/Popups/cardSelection';
+import CardDetails from '../components/Popups/cardDetails';
 
 class index extends Component {
     constructor(props){
@@ -38,7 +41,11 @@ class index extends Component {
             vendorSignupModel: false,
             congratulationModel: false,
             phNumber: '',
-            vendorCongrats:false
+            vendorCongrats:false,
+            subscriptionPlan:false,
+            cardSelection:false,
+            cardDetails:false
+
         };
 
     }
@@ -54,7 +61,20 @@ class index extends Component {
             this.setState({ emailSignin:false, [model]: !this.state[model] });
         }
         else if(model === "emailSignin"){
+            console.log('clicked');
             this.setState({ phoneSignin: false, [model]: !this.state[model] });
+        }
+        else if(model === "subscriptionPlan"){
+            console.log('clicked');
+            this.setState({ phoneSignin: false, [model]: !this.state[model] });
+        }
+        else if(model === "cardSelection"){
+            console.log('clicked');
+            this.setState({ subscriptionPlan: false, [model]: !this.state[model] });
+        }
+        else if(model === "cardDetails"){
+            console.log('clicked');
+            this.setState({ cardSelection: false, [model]: !this.state[model] });
         }
         else if(model === "phoneNoForgotPass"){
             this.setState({ phoneSignin: false, emailSignin:false, [model]: !this.state[model] });
@@ -127,6 +147,28 @@ class index extends Component {
                         emailSigninHandler ={this.modelHanlder}
                         phoneNoForgotHandler = {this.modelHanlder}
                         signupSelectionHandler={this.modelHanlder}
+                        subscriptionPlanHandler = { this.modelHanlder }
+
+                    />
+                }
+                {this.state.subscriptionPlan &&
+                    <SubscriptionPlan 
+                        show={this.state.subscriptionPlan}
+                        closeCodelHanlder={this.closeCodelHanlder}
+                        cardSelectionHandler = {this.modelHanlder}
+                    />
+                }
+                {this.state.cardSelection &&
+                    <CardSelection 
+                        show={this.state.cardSelection}
+                        closeCodelHanlder={this.closeCodelHanlder}
+                        cardDetailsHandler = {this.modelHanlder}
+                    />
+                }
+                {this.state.cardDetails &&
+                    <CardDetails 
+                        show={this.state.cardDetails}
+                        closeCodelHanlder={this.closeCodelHanlder}
                     />
                 }
                 {this.state.emailSignin &&

@@ -12,7 +12,7 @@ class vendorCongrats extends Component {
                 centered
                 // size="md"
                 dialogClassName="modal-width"
-                onHide={() => this.props.closeCodelHanlder('congratulationModel')}
+                onHide={() => this.props.closeCodelHanlder('vendorCongrats')}
             >
                 
                 <Modal.Body onClick={this.props.congratulationPopupHandler}>
@@ -27,7 +27,7 @@ class vendorCongrats extends Component {
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
-                            onClick={() => this.props.closeCodelHanlder('congratulationModel')}
+                            onClick={() => this.props.closeCodelHanlder('vendorCongrats')}
                             >Okay</button>
                     </div>
                 </Modal.Body>

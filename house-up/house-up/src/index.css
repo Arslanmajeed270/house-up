@@ -57,16 +57,47 @@ body {
   padding: 10px;
 
 }
+.subscription-card{
+  background: #fff;
+  padding: 30px 10px
+}
+.card-selection{
+  padding: 20px 10px
+}
 .vendor-img{
   max-width: 70px;
   max-height: 70px;
 }
+.card{
+  font-size: 17px;
+    color: #C8C8C8;
+    border: 0px;
+}
+.card-description{
+  font-size: 17px;
+    color: #333;
+}
 .user{
   font-size: 20px;
   font-weight: bold;
+  color: #333;
 }
 .user-description{
   font-size: 14px;
+  color: #333;
+
+}
+.card-btn{
+  width: 100%;
+  border-radius: 10px;
+  padding: 23px;
+  margin-top: 15px;
+}
+.dashed-button{
+  text-align: center;
+  border: 1px dashed #00B0E9;
+  padding: 9px;
+  border-radius: 10px;
 }
 .pxp-prop-card-1-fig .pxp-cover{
   width: 290px;
@@ -82,13 +113,13 @@ body {
 .country-image-login-page
 {
   position: absolute !important;
-  top: 135px !important;
+  top: 10px !important;
   margin-left: 30px !important;
   color: #000 !important;
 }
 .country-code-login-page{
   position: absolute !important;
-  top: 159px !important;
+  top: 33px !important;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
@@ -193,7 +224,6 @@ body {
 .profile-pic-user{
   height: 100px;
   width: 100px;
-  border: 1px solid black;
   border-radius: 50px;
 }
 
@@ -297,7 +327,6 @@ body {
   margin: 10px 0px;
 }
 .border-property{
-  /* border-bottom: 1px solid #DCE0E0; */
     padding-bottom: 40px;
 }
 .btn-div{
@@ -417,7 +446,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   color: red;
 }
 .alice-carousel__stage-item{
-  width: 309.833px !important;
+  /* width: 309.833px !important; */
   margin-right: 30px !important;
 }
 .pxp-prop-card-1-fig .pxp-cover{
