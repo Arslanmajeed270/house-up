@@ -2,7 +2,6 @@ export {
     loginUser,
     logoutUser,
     setCurrentUser
-
 } from './authActions';
 
 
@@ -12,3 +11,11 @@ export {
     clearErrors,
     getDashboardData
 } from './pageActions';
+
+export {
+    getVendorsData,
+    getUsersData,
+    getSingleVendorData,
+    getSingleUserData,
+    updateUserState
+} from './userActions';

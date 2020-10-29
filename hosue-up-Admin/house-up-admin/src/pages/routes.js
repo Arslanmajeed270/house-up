@@ -14,7 +14,6 @@ import SingleUser from './Users/singleUser';
 import SingleVendor from './Users/singleVendor';
 import User from './Users/user';
 import Vendors from './Users/vendor';
-import LogIn from '../components/Auth/Login/content';
 
 
 class routes extends Component {
@@ -24,100 +23,67 @@ class routes extends Component {
                 <Route      
                     exact 
                     path={"/"} 
-                    component={
-                        () => <Index />
-                    }
-                />
-                <Route      
-                    exact 
-                    path={"/login"} 
-                    component={
-                        () => <LogIn />
-                    }
+                    component={Index}
                 />
                 <Route      
                     exact 
                     path={"/index"} 
-                    component={
-                        () => <Index />
-                    }
+                    component={Index}
                 />
                 <Route      
                     exact 
                     path={"/account"} 
-                    component={
-                        () => <Account/>
-                    }
+                    component={Account}
                 />
                 <Route      
                     exact 
                     path={"/boost"} 
-                    component={
-                        () => <Boost />
-                    }
+                    component={Boost}
                 />
                 <Route      
                     exact 
                     path={"/charts"} 
-                    component={
-                        () => <Charts />
-                    }
+                    component={Charts}
                 />
                 <Route      
                     exact 
                     path={"/feature"} 
-                    component={
-                        () => <Feature />
-                    }
+                    component={Feature}
                 />
                 <Route      
                     exact 
                     path={"/helper"} 
-                    component={
-                        () => <Helper />
-                    }
+                    component={Helper}
                 />
                 <Route      
                     exact 
                     path={"/properties"} 
-                    component={
-                        () => <Properties/>
-                    }
+                    component={Properties}
                 />
                 <Route      
                     exact 
-                    path={"/single-prop"} 
-                    component={
-                    () => <SingleProperty />
-                }
+                    path={"/single-prop-:id"} 
+                    component={SingleProperty }
                 />
                 <Route      
                     exact 
-                    path={"/single-user"} 
-                    component={
-                        () => <SingleUser />
-                    }
+                    path={"/single-user-:id"} 
+                    component={SingleUser}
                 />
                 <Route      
                     exact 
-                    path={"/single-vendor"} 
-                    component={
-                        () => <SingleVendor />
-                    }
+                    path={"/single-vendor-:id"} 
+                    component={SingleVendor}
                 />
                 <Route      
                     exact 
                     path={"/user"} 
-                    component={
-                        () => <User />
-                    }
+                    component={User}
                 />
                 <Route      
                     exact 
                     path={"/Vendors"} 
-                    component={
-                        () => <Vendors />
-                    }
+                    component={Vendors}
                 />
 
         </Router>

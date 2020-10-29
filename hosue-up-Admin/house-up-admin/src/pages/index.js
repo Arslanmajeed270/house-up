@@ -17,19 +17,16 @@ class index extends Component {
     }
 
     sideBarHandler = () =>{
-        console.log('checking');
             this.setState ({
                 sideBarShow : !this.state.sideBarShow 
         })
     }
     notificationToggle = () => {
-        console.log('checking');
             this.setState ({
                 notificationShow : !this.state.notificationShow
         })
       }
       userToggleHandler = () => {
-        console.log('checking');
             this.setState ({
                 userShow : !this.state.userShow
         })
@@ -41,7 +38,7 @@ class index extends Component {
                 <Header sideBarHandler = {()=>this.sideBarHandler()}
                  notificationToggle = { () => this.notificationToggle()} 
                  userToggleHandler = { () => this.userToggleHandler()} 
-                 notificationState = {this.state.notiuserToggleficationShow}
+                 notificationState = {this.state.notificationShow}
                  userShowState = {this.state.userShow}
                   />
                 <div className="d-flex align-items-stretch">

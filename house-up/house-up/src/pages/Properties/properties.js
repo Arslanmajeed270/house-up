@@ -18,7 +18,7 @@ class properties extends Component {
                         <div className="row pxp-content-side-search-form-row">
                           <div className="col-5 col-sm-5 col-md-4 col-lg-3 pxp-content-side-search-form-col">
                             <select className="custom-select" id="pxp-p-search-status">
-                              <option value="buy" selected="selected">Buy</option>
+                              <option value="buy" >Buy</option>
                               <option value="rent">Rent</option>
                             </select>
                           </div>
@@ -50,7 +50,7 @@ class properties extends Component {
                           <div className="form-group">
                             <label htmlFor="pxp-p-filter-beds">Beds</label>
                             <select className="custom-select" id="pxp-p-filter-beds">
-                              <option value selected="selected">Any</option>
+                              <option value >Any</option>
                               <option value>Studio</option>
                               <option value>1</option>
                               <option value>2</option>
@@ -64,7 +64,7 @@ class properties extends Component {
                           <div className="form-group">
                             <label htmlFor="pxp-p-filter-baths">Baths</label>
                             <select className="custom-select" id="pxp-p-filter-baths">
-                              <option value selected="selected">Any</option>
+                              <option value >Any</option>
                               <option value>1+</option>
                               <option value>1.5+</option>
                               <option value>2+</option>
@@ -177,7 +177,7 @@ class properties extends Component {
                         <div className="pxp-sort-form form-inline float-right">
                           <div className="form-group">
                             <select className="custom-select" id="pxp-sort-results">
-                              <option value selected="selected">Default Sort</option>
+                              <option value >Default Sort</option>
                               <option value>Price (Lo-Hi)</option>
                               <option value>Price (Hi-Lo)</option>
                               <option value>Beds</option>
@@ -356,9 +356,9 @@ class properties extends Component {
                       <li className="page-item"><Link className="page-link" to="">Next <span className="fa fa-angle-right" /></Link></li>
                     </ul>
                   </div>
-                  {/*                 <div class="pxp-footer pxp-content-side-wrapper">
-                            <div class="pxp-footer-bottom">
-                                <div class="pxp-footer-copyright">&copy;  HouseUP All Rights Reserved. 2019</div>
+                  {/*                 <div className="pxp-footer pxp-content-side-wrapper">
+                            <div className="pxp-footer-bottom">
+                                <div className="pxp-footer-copyright">&copy;  HouseUP All Rights Reserved. 2019</div>
                             </div>
                         </div> */}
                 </div>

@@ -1,9 +1,44 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class vendors extends Component {
-    state = {  }
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+
+class vendor extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      vendorsData: []
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
+   
+    let vendor = props.vendor;
+
+    let stateChanged = false;
+    let changedState = {};
+
+    if(vendor && JSON.stringify(state.vendorsData) !== JSON.stringify(vendor.vendorsData)){
+      changedState.vendorsData = vendor.vendorsData;  
+      stateChanged = true;
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+
+  }
+
+  componentDidMount() {
+    console.log('professionals componenet did mount');
+    this.props.onGetVendorsData();
+  }
+
     render() { 
+      const { vendorsData } = this.state;
+      console.log('checking vendorsData in professionals: ', vendorsData);
+
         return ( 
             <React.Fragment>
                 <div className="pxp-content">
@@ -11,7 +46,7 @@ class vendors extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-sm-12 col-md-7">
-                        <h1 className="pxp-page-header">Our Vendors</h1>
+                        <h1 className="pxp-page-header">Our Professionals</h1>
                         <p className="pxp-text-light">Pairing the industry's top technology with unsurpassed local expertise.</p>
                       </div>
                     </div>
@@ -21,7 +56,7 @@ class vendors extends Component {
                     <div className="pxp-agents-hero-search-container">
                       <div className="container">
                         <div className="pxp-agents-hero-search">
-                          <h2 className="pxp-section-h2">Find an Vendor</h2>
+                          <h2 className="pxp-section-h2">Find an Professional</h2>
                           <div className="pxp-agents-hero-search-form mt-3 mt-md-4">
                             <div className="row">
                               <div className="col-sm-12 col-md-4">
@@ -40,7 +75,7 @@ class vendors extends Component {
                                 <div className="form-group">
                                   <label htmlFor="pxp-agents-search-service">Service Needed</label>
                                   <select className="custom-select" id="pxp-agents-search-service">
-                                    <option value={1} selected="selected">Buying or selling</option>
+                                    <option value={1} >Buying or selling</option>
                                     <option value={2}>Buying a home</option>
                                     <option value={3}>Selling a home</option>
                                   </select>
@@ -54,21 +89,26 @@ class vendors extends Component {
                   </div>
                   <div className="container">
                     <div className="row mt-200">
-                      <div className="col-sm-12 col-md-6 col-lg-3">
-                        <Link to='/single-vendor'  className="pxp-agents-1-item">
+                    {vendorsData && vendorsData.length ? 
+                      vendorsData.map( (data, index) =>
+                      <div key={index} className="col-sm-12 col-md-6 col-lg-3">
+                        <Link to={`/single-vendor-${data && data.userId && data.userId}`}  className="pxp-agents-1-item">
                           <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-1.jpg)', backgroundPosition: 'top center'}} />
+                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: `url(${data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`, backgroundPosition: 'top center'}} />
                           </div>
                           <div className="pxp-agents-1-item-details rounded-lg">
-                            <div className="pxp-agents-1-item-details-name">Scott Goodwin</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (123) 456-7890</div>
+                            <div className="pxp-agents-1-item-details-name">{data.firstName} {data.lastName}</div>
+                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> {data.msisdn}</div>
                             <div className="pxp-agents-1-item-details-spacer" />
                             <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
                           </div>
                           <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
                         </Link>
                       </div>
-                      <div className="col-sm-12 col-md-6 col-lg-3">
+                      )
+                      : ""           
+                      }
+                      {/* <div className="col-sm-12 col-md-6 col-lg-3">
                         <Link to='/single-vendor'  className="pxp-agents-1-item">
                           <div className="pxp-agents-1-item-fig-container rounded-lg">
                             <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-2.jpg)', backgroundPosition: 'top center'}} />
@@ -81,94 +121,10 @@ class vendors extends Component {
                           </div>
                           <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star-o" /></span></div>
                         </Link>
-                      </div>
-                      <div className="col-sm-12 col-md-6 col-lg-3">
-                        <Link to='/single-vendor'  className="pxp-agents-1-item">
-                          <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-3.jpg)', backgroundPosition: 'top center'}} />
-                          </div>
-                          <div className="pxp-agents-1-item-details rounded-lg">
-                            <div className="pxp-agents-1-item-details-name">Melvin Blackwell</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (789) 123-4560</div>
-                            <div className="pxp-agents-1-item-details-spacer" />
-                            <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                          </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
-                        </Link>
-                      </div>
-                      <div className="col-sm-12 col-md-6 col-lg-3">
-                        <Link to='/single-vendor'  className="pxp-agents-1-item">
-                          <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-4.jpg)', backgroundPosition: 'top center'}} />
-                          </div>
-                          <div className="pxp-agents-1-item-details rounded-lg">
-                            <div className="pxp-agents-1-item-details-name">Erika Tillman</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (890) 456-1237</div>
-                            <div className="pxp-agents-1-item-details-spacer" />
-                            <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                          </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star-o" /></span></div>
-                        </Link>
-                      </div>
-                      <div className="col-sm-12 col-md-6 col-lg-3">
-                        <Link to='/single-vendor'  className="pxp-agents-1-item">
-                          <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-3.jpg)', backgroundPosition: 'top center'}} />
-                          </div>
-                          <div className="pxp-agents-1-item-details rounded-lg">
-                            <div className="pxp-agents-1-item-details-name">Melvin Blackwell</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (789) 123-4560</div>
-                            <div className="pxp-agents-1-item-details-spacer" />
-                            <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                          </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
-                        </Link>
-                      </div>
-                      <div className="col-sm-12 col-md-6 col-lg-3">
-                        <Link to='/single-vendor'  className="pxp-agents-1-item">
-                          <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-4.jpg)', backgroundPosition: 'top center'}} />
-                          </div>
-                          <div className="pxp-agents-1-item-details rounded-lg">
-                            <div className="pxp-agents-1-item-details-name">Erika Tillman</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (890) 456-1237</div>
-                            <div className="pxp-agents-1-item-details-spacer" />
-                            <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                          </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star-o" /></span></div>
-                        </Link>
-                      </div>
-                      <div className="col-sm-12 col-md-6 col-lg-3">
-                        <Link to='/single-vendor'  className="pxp-agents-1-item">
-                          <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-1.jpg)', backgroundPosition: 'top center'}} />
-                          </div>
-                          <div className="pxp-agents-1-item-details rounded-lg">
-                            <div className="pxp-agents-1-item-details-name">Scott Goodwin</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (123) 456-7890</div>
-                            <div className="pxp-agents-1-item-details-spacer" />
-                            <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                          </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
-                        </Link>
-                      </div>
-                      <div className="col-sm-12 col-md-6 col-lg-3">
-                        <Link to='/single-vendor'  className="pxp-agents-1-item">
-                          <div className="pxp-agents-1-item-fig-container rounded-lg">
-                            <div className="pxp-agents-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/agent-2.jpg)', backgroundPosition: 'top center'}} />
-                          </div>
-                          <div className="pxp-agents-1-item-details rounded-lg">
-                            <div className="pxp-agents-1-item-details-name">Alayna Becker</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> (456) 123-7890</div>
-                            <div className="pxp-agents-1-item-details-spacer" />
-                            <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
-                          </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star-o" /></span></div>
-                        </Link>
-                      </div>
+                      </div> */}
                     </div>
                     <ul className="pagination pxp-paginantion mt-2 mt-md-3">
-                      <li className="page-item active"><Link className="page-link" to="">1</Link></li>
+                      <li className="page-item "><Link className="page-link" to="">1</Link></li>
                       <li className="page-item"><Link className="page-link" to="">2</Link></li>
                       <li className="page-item"><Link className="page-link" to="">3</Link></li>
                       <li className="page-item"><Link className="page-link" to="">Next <span className="fa fa-angle-right" /></Link></li>
@@ -180,5 +136,16 @@ class vendors extends Component {
          );
     }
 }
+const mapStateToProps = state => {
+  return {
+    vendor: state.vendor
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetVendorsData: () => dispatch(actions.getVendorsData())
+  }
+};
  
-export default vendors;
+export default connect(mapStateToProps, mapDispatchToProps)(vendor);

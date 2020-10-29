@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route , Private} from 'react-router-dom';
+import PrivateRoute from './components/common/PrivateRoute';    
+
 
 import Index from "./pages";
 
@@ -9,22 +11,46 @@ function App() {
     <React.Fragment>
       <Route
         exact 
+        path={'/index'}     
+        component={()=><Index  hideFooter={true}/> }
+      />
+      <Route
+        exact 
         path={'/'}
-        component={Index}
+        component={
+          () => <Index animateHeader={true} />
+        }
+      />
+      <Route
+        exact 
+        path={'/home'}
+        component={
+          () => <Index animateHeader={true} />
+        }
       />
       <Route
         exact 
         path={'/about'}
         component={Index}
       />
-        <Route
+      <Route
         exact 
-        path={'/add-new-prop'}
+        path={'/add-property'}
+        component={Index}
+      />
+      <Route
+        exact 
+        path={'/add-product'}
+        component={Index}
+      />
+      <Route
+        exact 
+        path={'/add-coupon'}
         component={Index}
       />
         <Route
         exact 
-        path={'/single-vendor'}
+        path={'/single-vendor-:id'}
         component={Index}
       />
         <Route
@@ -34,7 +60,7 @@ function App() {
       />
         <Route
         exact 
-        path={'/coming-soon'}
+        path={'/comming-soon'}
         component={Index}
       />
         <Route
@@ -45,11 +71,6 @@ function App() {
         <Route
         exact 
         path={'/contact'}
-        component={Index}
-      />
-        <Route
-        exact 
-        path={'/home'}
         component={Index}
       />
         <Route
@@ -69,15 +90,16 @@ function App() {
       />
       <Route
         exact 
-        path={'/single-prop'}
+        path={'/single-property'}
         component={Index}
       />  
       <Route
         exact 
-        path={'/vendors'}
+        path={'/professionals'}
         component={Index}
-      /> 
+      />
     </React.Fragment>
+  
   );
 }
 

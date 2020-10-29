@@ -12,7 +12,7 @@
 
 body, html {
 	font-family: Arial, sans-serif;
-	font-size: 15px;
+	/* font-size: 15px; */
 	color: #666666;
 
 	height: 100%;
@@ -37,9 +37,9 @@ ul, li {
 
 /* ------------------------------------ */
 input, textarea, label {
-	display: block;
+	/* display: block; */
 	outline: none;
-	border: none;
+	/* border: none; */
 }
 
 /* ------------------------------------ */

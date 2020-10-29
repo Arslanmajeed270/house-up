@@ -9,7 +9,6 @@ import {
 } from './actionTypes';   
 
 export const setPageLoading = () => {
-	// console.log('setPageLoading');
 	return {
 		type: PAGE_LOADING
 	};
@@ -17,7 +16,6 @@ export const setPageLoading = () => {
 
 
 export const clearPageLoading = () => {
-	// console.log('clearPageLoading');
 	return {
 		type: PAGE_LOADED
 	};
@@ -33,7 +31,6 @@ const backendServerURL = process.env.REACT_APP_API_URL;
 // dashboard - Get dashboard data from backend
 export const getDashboardData = () => dispatch => {
     dispatch(setPageLoading());
-	console.log('checking backendServerURL: ', backendServerURL);
     axios
     .post(
 		backendServerURL+'/getDashboardCount',
@@ -42,7 +39,6 @@ export const getDashboardData = () => dispatch => {
 		}
     )
     .then(res => {
-		console.log('checking getDashboardData: ', res);
         dispatch(
 			{
 				type: SET_DASHBOARD,
@@ -51,8 +47,8 @@ export const getDashboardData = () => dispatch => {
 		);        
     })
     .catch(err => {
-        console.log("error: ", err);
         dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
     })      
     .finally(() => dispatch(clearPageLoading()))
 };
+

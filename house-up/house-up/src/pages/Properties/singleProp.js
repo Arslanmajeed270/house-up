@@ -1,8 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import ContactPopup from '../../components/Popups/contact';
 
 class singleProp extends Component {
-    state = {  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      contactModalState : false
+    };
+  }
+
+
+
+    contactPopupHanlder = () =>{
+      this.setState({
+        contactModalState : !this.state.contactModalState
+      });
+      console.log('cecking login pop handler', this.state.signupState);
+    }
+
     render() { 
         return ( 
             <React.Fragment>
@@ -45,31 +61,31 @@ class singleProp extends Component {
                 <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
-                      <Link to="assest/images/prop-7-1-big.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-big.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-big.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assests/images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assets/images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assets/images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="assets/images/prop-1-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
@@ -241,62 +257,62 @@ class singleProp extends Component {
                         <div id="pxp-sp-map" className="mt-3" />
                       </div>
                       {/* 
-                                <div class="pxp-single-property-section mt-4 mt-md-5">
+                                <div className="pxp-single-property-section mt-4 mt-md-5">
                                     <h3>Payment Calculator</h3>
-                                    <div class="pxp-calculator-view mt-3 mt-md-4">
-                                        <div class="row">
-                                            <div class="col-sm-12 col-lg-4 align-self-center">
-                                                <div class="pxp-calculator-chart-container">
+                                    <div className="pxp-calculator-view mt-3 mt-md-4">
+                                        <div className="row">
+                                            <div className="col-sm-12 col-lg-4 align-self-center">
+                                                <div className="pxp-calculator-chart-container">
                                                     <canvas id="pxp-calculator-chart"></canvas>
-                                                    <div class="pxp-calculator-chart-result">
-                                                        <div class="pxp-calculator-chart-result-sum">$11,277</div>
-                                                        <div class="pxp-calculator-chart-result-label">per month</div>
+                                                    <div className="pxp-calculator-chart-result">
+                                                        <div className="pxp-calculator-chart-result-sum">$11,277</div>
+                                                        <div className="pxp-calculator-chart-result-label">per month</div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-lg-8 align-self-center mt-3 mt-lg-0">
-                                                <div class="pxp-calculator-data">
-                                                    <div class="row justify-content-between">
-                                                        <div class="col-8">
-                                                            <div class="pxp-calculator-data-label"><span class="fa fa-minus"></span>Principal and Interest</div>
+                                            <div className="col-sm-12 col-lg-8 align-self-center mt-3 mt-lg-0">
+                                                <div className="pxp-calculator-data">
+                                                    <div className="row justify-content-between">
+                                                        <div className="col-8">
+                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>Principal and Interest</div>
                                                         </div>
-                                                        <div class="col-4 text-right">
-                                                            <div class="pxp-calculator-data-sum" id="pxp-calculator-data-pi"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="pxp-calculator-data">
-                                                    <div class="row justify-content-between">
-                                                        <div class="col-8">
-                                                            <div class="pxp-calculator-data-label"><span class="fa fa-minus"></span>Property Taxes</div>
-                                                        </div>
-                                                        <div class="col-4 text-right">
-                                                            <div class="pxp-calculator-data-sum" id="pxp-calculator-data-pt"></div>
+                                                        <div className="col-4 text-right">
+                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-pi"></div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="pxp-calculator-data">
-                                                    <div class="row justify-content-between">
-                                                        <div class="col-8">
-                                                            <div class="pxp-calculator-data-label"><span class="fa fa-minus"></span>HOA Dues</div>
+                                                <div className="pxp-calculator-data">
+                                                    <div className="row justify-content-between">
+                                                        <div className="col-8">
+                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>Property Taxes</div>
                                                         </div>
-                                                        <div class="col-4 text-right">
-                                                            <div class="pxp-calculator-data-sum" id="pxp-calculator-data-hd"></div>
+                                                        <div className="col-4 text-right">
+                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-pt"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="pxp-calculator-data">
+                                                    <div className="row justify-content-between">
+                                                        <div className="col-8">
+                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>HOA Dues</div>
+                                                        </div>
+                                                        <div className="col-4 text-right">
+                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-hd"></div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="pxp-calculator-form mt-3 mt-md-4">
+                                    <div className="pxp-calculator-form mt-3 mt-md-4">
                                         <input type="hidden" id="pxp-calculator-form-property-taxes" value="$1,068">
                                         <input type="hidden" id="pxp-calculator-form-hoa-dues" value="$2,036">
 
-                                        <div class="row">
-                                            <div class="col-sm-12 col-md-6">
-                                                <div class="form-group">
+                                        <div className="row">
+                                            <div className="col-sm-12 col-md-6">
+                                                <div className="form-group">
                                                     <label for="pxp-calculator-form-term">Term</label>
-                                                    <select class="custom-select" id="pxp-calculator-form-term">
+                                                    <select className="custom-select" id="pxp-calculator-form-term">
                                                         <option value="30">30 Years Fixed</option>
                                                         <option value="20">20 Years Fixed</option>
                                                         <option value="15">15 Years Fixed</option>
@@ -304,30 +320,30 @@ class singleProp extends Component {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-6">
-                                                <div class="form-group">
+                                            <div className="col-sm-12 col-md-6">
+                                                <div className="form-group">
                                                     <label for="pxp-calculator-form-interest">Interest</label>
-                                                    <input type="text" class="form-control pxp-form-control-transform" id="pxp-calculator-form-interest" data-type="percent" value="4.45%">
+                                                    <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-interest" data-type="percent" value="4.45%">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-6">
-                                                <div class="form-group">
+                                            <div className="col-sm-12 col-md-6">
+                                                <div className="form-group">
                                                     <label for="pxp-calculator-form-price">Home Price</label>
-                                                    <input type="text" class="form-control pxp-form-control-transform" id="pxp-calculator-form-price" data-type="currency" value="$5,198,000">
+                                                    <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-price" data-type="currency" value="$5,198,000">
                                                 </div>
                                             </div>
-                                            <div class="col-sm-12 col-md-6">
-                                                <div class="row">
-                                                    <div class="col-7 col-sm-7 col-md-8">
-                                                        <div class="form-group">
+                                            <div className="col-sm-12 col-md-6">
+                                                <div className="row">
+                                                    <div className="col-7 col-sm-7 col-md-8">
+                                                        <div className="form-group">
                                                             <label for="pxp-calculator-form-down-price">Down Payment</label>
-                                                            <input type="text" class="form-control pxp-form-control-transform" id="pxp-calculator-form-down-price" data-type="currency" value="$519,800">
+                                                            <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-down-price" data-type="currency" value="$519,800">
                                                         </div>
                                                     </div>
-                                                    <div class="col-5 col-sm-5 col-md-4">
-                                                        <div class="form-group">
+                                                    <div className="col-5 col-sm-5 col-md-4">
+                                                        <div className="form-group">
                                                             <label for="pxp-calculator-form-down-percentage">&nbsp;</label>
-                                                            <input type="text" class="form-control pxp-form-control-transform" id="pxp-calculator-form-down-percentage" data-type="percent" value="10%">
+                                                            <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-down-percentage" data-type="percent" value="10%">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -339,13 +355,13 @@ class singleProp extends Component {
                         <h3>Schools in Marina District</h3>
                         <ul className="nav nav-tabs pxp-nav-tabs mt-3 mt-md-4">
                           <li className="nav-item">
-                            <Link className="nav-link active" to="#elementary" data-toggle="tab">Elementary</Link>
+                            <Link className="nav-link active" to="" data-toggle="tab">Elementary</Link>
                           </li>
                           <li className="nav-item">
-                            <Link className="nav-link" to="#middle" data-toggle="tab">Middle</Link>
+                            <Link className="nav-link" to="" data-toggle="tab">Middle</Link>
                           </li>
                           <li className="nav-item">
-                            <Link className="nav-link" to="#high" data-toggle="tab">High</Link>
+                            <Link className="nav-link" to="" data-toggle="tab">High</Link>
                           </li>
                         </ul>
                         <div className="tab-content mt-3">
@@ -442,7 +458,7 @@ class singleProp extends Component {
                         </div>
                       </div>
                       <div className="row mt-100">
-                        {/*  <div class="col-sm-12 col-lg-12"></div> */}
+                        {/*  <div className="col-sm-12 col-lg-12"></div> */}
                         <div className="col-sm-12 col-lg-12">
                           <div className="pxp-agent-block">
                             <div className="pxp-agent-comments">
@@ -502,15 +518,15 @@ class singleProp extends Component {
                               <form action="/single-vendor" className="pxp-agent-comments-form mt-3 mt-md-4">
                                 <div className="row">
                                   <div className="col-sm-12 col-md-6">
-                                    {/*                                                 <div class="form-group">
+                                    {/*                                                 <div className="form-group">
                                                             <label for="pxp-agent-comments-name">You Name</label>
-                                                            <input type="text" class="form-control" id="pxp-agent-comments-name" placeholder="Enter your full name">
+                                                            <input type="text" className="form-control" id="pxp-agent-comments-name" placeholder="Enter your full name">
                                                         </div> */}
                                   </div>
-                                  {/*                                             <div class="col-sm-12 col-md-6">
-                                                        <div class="form-group">
+                                  {/*                                             <div className="col-sm-12 col-md-6">
+                                                        <div className="form-group">
                                                             <label for="pxp-agent-comments-email">You Email</label>
-                                                            <input type="text" class="form-control" id="pxp-agent-comments-email" placeholder="Enter your email address">
+                                                            <input type="text" className="form-control" id="pxp-agent-comments-email" placeholder="Enter your email address">
                                                         </div>
                                                     </div> */}
                                 </div>
@@ -543,7 +559,7 @@ class singleProp extends Component {
                               <span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" />
                             </div>
                             <div className="pxp-sp-agent-info-email">
-                              <Link to="mailto:erika.tillman@ HouseUPcom">erika.tillman@ HouseUPcom</Link>
+                              <Link to="">erika.tillman@ HouseUPcom</Link>
                             </div>
                             <div className="pxp-sp-agent-info-phone">
                               <span className="fa fa-phone" /> (123) 456-7890
@@ -551,8 +567,10 @@ class singleProp extends Component {
                           </div>
                           <div className="clearfix" />
                           <div className="pxp-sp-agent-btns mt-3 mt-md-4">
-                            <Link href="#pxp-contact-agent" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-envelope-o" /> Contact Us</Link>
-                            <Link href="#pxp-contact-agent" className="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-calendar-check-o" /> Request
+                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"  onClick={this.contactPopupHanlder}  ><span className="fa fa-envelope-o"/>
+                            {this.state.contactModalState ? <ContactPopup  contactModalState={this.state.contactModalState}  /> :null }
+                             Contact Us</Link>
+                            <Link to="" className="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-calendar-check-o" /> Request
                               Tour</Link>
                           </div>
                         </div>

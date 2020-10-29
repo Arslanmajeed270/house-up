@@ -1,140 +1,118 @@
 import React from 'react';
 import {BrowserRouter as Router , Route,  withRouter} from 'react-router-dom';
 
-
-import About from './Main/about';
-import AddNewProp from './Properties/addNewProp';
+import About from './About/about';
+import AddProperty from './Properties/addProperty';
 import SingleVendor from './User/singleVendor';
-import Blogs from './Main/blogs';
-import Comments from './Main/comments';
-import Contact from './Main/contact';
-import Home from './Main/home';
-import Privacy from './Main/privacy';
+import Blogs from './Blogs/blogs';
+import Comments from './Comments/comments';
+import Contact from './Contact/contact';
+import Home from './Home/home';
+import Privacy from './Privacy/privacy';
 import Properties from './Properties/properties';
 import SinglePost from './Properties/singlePost';
 import SingleProp from './Properties/singleProp';
-import Vendors from './User/vendors';
-import ComingSoon from './Main/comingSoon';
-import Index from '../components/Home';
-
+import Professionals from './User/vendors';
+import ComingSoon from './CommingSoom/comingSoon';
+import Index from './Index/index';
+import AddProduct from './wizards/addProduct';
+import AddCoupon from './wizards/addCoupon';
 
 class Routes extends React.Component {
 
 	render(){
-		console.log("checking props: ", this.props);
 		return (
 			<Router>
+				
 				<Route      
 					exact 
 					path={"/"} 
-					component={
-						() => <Home />
-					}
+					component={Home}
 				/>
 				<Route      
 					exact 
 					path={"/index"} 
-					component={
-						() => <Index />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/about"} 
-					component={
-						() => <About />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/add-new-prop"} 
-					component={
-						() => <AddNewProp />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/single-vendor"} 
-					component={
-						() => <SingleVendor />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/blogs"} 
-					component={
-						() => <Blogs />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/about"} 
-					component={
-						() => <About />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/coming-soon"} 
-					component={
-						() => <ComingSoon />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/comments"} 
-					component={
-						() => <Comments />
-					}
-				/>
-				<Route      
-					exact 
-					path={"/contact"} 
-					component={
-						() => <Contact />
-					}
+					component={Index}
 				/>
 				<Route      
 					exact 
 					path={"/home"} 
-					component={
-						() => <Home />
-					}
+					component={Home}
+				/>
+				<Route      
+					exact 
+					path={"/about"} 
+					component={About}
+				/>
+				<Route      
+					exact 
+					path={"/add-property"} 
+					component={AddProperty}
+				/>
+				<Route      
+					exact 
+					path={"/add-product"} 
+					component={AddProduct}
+				/>
+				<Route      
+					exact 
+					path={"/add-coupon"} 
+					component={AddCoupon}
+				/>
+				<Route      
+					exact 
+					path={"/single-vendor-:id"} 
+					component={SingleVendor}
+				/>
+				<Route      
+					exact 
+					path={"/blogs"} 
+					component={Blogs}
+				/>
+				<Route      
+					exact 
+					path={"/about"} 
+					component={About}
+				/>
+				<Route      
+					exact 
+					path={"/comming-soon"} 
+					component={ComingSoon}
+				/>
+				<Route      
+					exact 
+					path={"/comments"} 
+					component={Comments}
+				/>
+				<Route      
+					exact 
+					path={"/contact"} 
+					component={Contact}
 				/>
 				<Route      
 					exact 
 					path={"/privacy"} 
-					component={
-						() => <Privacy />
-					}
+					component={Privacy}
 				/>
 				<Route      
 					exact 
 					path={"/properties"} 
-					component={
-						() => <Properties />
-					}
+					component={Properties}
 				/>
 				<Route      
 					exact 
 					path={"/single-post"} 
-					component={
-						() => <SinglePost />
-					}
+					component={SinglePost}
 				/>
 				<Route      
 					exact 
-					path={"/single-prop"} 
-					component={
-						() => <SingleProp />
-					}
+					path={"/single-property"} 
+					component={SingleProp}
 				/>
 				<Route      
 					exact 
-					path={"/vendors"} 
-					component={
-						() => <Vendors />
-					}
+					path={"/professionals"} 
+					component={Professionals}
 				/>
 			</Router>
 		);

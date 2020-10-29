@@ -27,10 +27,10 @@ class footer extends Component {
                               <h4 className="pxp-footer-header mt-4 mt-lg-0">Company</h4>
                               <ul className="list-unstyled pxp-footer-links mt-2">
                                 <li><Link to='/about'>About Us</Link></li>
-                                <li><Link to='/vendors'>Vendors</Link></li>
+                                <li><Link to='/professionals'>Professionals</Link></li>
                                 <li><Link to='/blogs'>Resources</Link></li>
                                 {/*   <li><Link to="">Demos</Link></li> */}
-                                <li><Link href="/contact">Contact Us</Link></li>
+                                <li><Link to="/contact">Contact Us</Link></li>
                               </ul>
                             </div>
                             <div className="col-sm-12 col-md-4">

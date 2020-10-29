@@ -1,0 +1,140 @@
+import React, { Component } from 'react';
+import {Nav} from 'react-bootstrap';
+
+
+class form1 extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dropDownData:{},
+            currencyId:'',
+            description:'',
+            adTitle:'',
+            contactEmail:'',
+            contactName:'',
+            contactNumber:'',
+            price:'',
+
+
+        }
+    }
+    onChange = e => {
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+      }
+      onSubmit = e => {
+        e.preventDefault();
+        const form1Data = {
+            description:this.state.description,
+            currencyId:this.state.currencyId,
+            adTitle:this.state.adTitle,
+            contactName:this.state.contactName,
+            contactEmail: this.state.contactEmail,
+            contactNumber:this.state.contactNumber,
+            price: this.state.price
+         };
+         console.log('checking form1 data ', form1Data);
+         
+         this.props.form1DataHandler(form1Data);
+
+
+
+
+         this.props.formShowHandler(1)
+
+      }
+
+    render() {
+        const { dropDownData ,description ,contactName, currencyId ,contactEmail,contactNumber, adTitle,price} =this.state;
+        const dropDownData1 = this.props.dropDownData;
+        console.log(dropDownData1);
+        const currencyData = dropDownData1 && dropDownData1.currencies ? dropDownData1.currencies : [];
+        console.log('currency data', currencyData);
+        console.log()
+        return ( 
+            <React.Fragment>
+                <form onSubmit={this.onSubmit}>
+                <div className="add-property-conatiner" style={{backgroundColor:'#F5F5F5'}}>
+                <div className="row border-property">
+                    <div className="col-md-12">
+                        <h1 className="titles-property">List your property</h1>
+                        <Nav variant="tabs"  >
+                            <Nav.Item>
+                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
+                            </Nav.Item>
+                        </Nav>
+                    </div>
+                </div>
+                <div className="row" >
+                    <div className="col-md-6">
+                        <h6 className="titles-property">*Ad title</h6>
+                        <input className="input-feilds-property" placeholder="Enter a title for your property..." name="adTitle" vale={adTitle} onChange={this.onChange}  required />
+                    </div>
+                    <div className="col-md-6">
+                        <div className="row">
+                            <div className="col-md-4">
+                                <h6 className="titles-property">Currency</h6>
+                                <select className="input-feilds-property" onChange={this.onChange} name="currencyId" value={currencyId}
+                                required >
+                                    {
+                                        currencyData && currencyData.length ? currencyData.map( ( currency, idx ) => (
+                                            <option key={idx} value={currency.id} > { currency.lable }</option>
+                                        ) )
+                                        : ""
+                                    }
+                                </select>
+                            </div>
+                            <div className="col-md-8">
+                                <h6 className="titles-property">*Price</h6>
+                                <input type="text" className="input-feilds-property" onChange={this.onChange} placeholder="$" name="price" value={price} required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row border-property">
+                    <div className="col-md-12">
+                        <h6 className="titles-property">Description</h6>
+                        <textarea className="input-feilds-property" name="description" value={description} onChange={this.onChange} required  placeholder="More detail about your property..." style={{height:'120px'}}/>
+                    </div>
+                </div>
+                <br />
+                <h1 className="titles-property">Contact info</h1>
+                <p className="titles-property">You can edit your contact info anytime in your profile settings.</p>
+                <div className="row">
+                    <div className="col-md-4">
+                        <h6 className="titles-property">Contact email</h6>
+                        <input type="text" className="input-feilds-property" onChange={this.onChange} placeholder="email" name="contactEmail" value={contactEmail} required />
+                        <span className="title-property">Your email will not be shared.</span>
+                    </div>
+                    <div className="col-md-4">
+                        <h6 className="titles-property">Contact name</h6>
+                        <input type="text" className="input-feilds-property" value={contactName} onChange={this.onChange} placeholder="name" name="contactName" required/>
+                    </div>
+                    <div className="col-md-4">
+                        <h6 className="titles-property">Contact number</h6>
+                        <input type="text" className="input-feilds-property" placeholder="Contact number" onChange={this.onChange} name="contactNumber" value={contactNumber} required/>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-md-6" />
+                    <div className="col-md-6">
+                            <div className="btn-div">
+                                <button type="submit" className="btn btn-lg btn-primary btn-property" onChange={this.onChange} >NEXT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            </React.Fragment>
+         );
+    }
+}
+ 
+export default form1;
