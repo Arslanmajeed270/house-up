@@ -56,7 +56,7 @@ class vendor extends Component {
                     <div className="pxp-agents-hero-search-container">
                       <div className="container">
                         <div className="pxp-agents-hero-search">
-                          <h2 className="pxp-section-h2">Find an Vendor</h2>
+                          <h2 className="pxp-section-h2">Find an Professional</h2>
                           <div className="pxp-agents-hero-search-form mt-3 mt-md-4">
                             <div className="row">
                               <div className="col-sm-12 col-md-4">

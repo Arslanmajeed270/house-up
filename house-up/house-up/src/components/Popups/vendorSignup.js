@@ -231,11 +231,9 @@ class vendorSignup extends Component {
                 houseAppartmentSuitNumber: "",
                 postalCode: "",
                 channel: "",
-
-
              };
-             console.log('i am here: ',userData);
-              this.props.onCreateVendor(userData);
+            console.log('i am here: ',userData);
+            this.props.onCreateVendor(userData);
          }
 
     render() { 

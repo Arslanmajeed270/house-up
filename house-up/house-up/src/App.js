@@ -1,5 +1,7 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route , Private} from 'react-router-dom';
+import PrivateRoute from './components/common/PrivateRoute';    
+
 
 import Index from "./pages";
 

@@ -74,9 +74,10 @@ class index extends Component {
   followUnfollwProfessionals = ( id ) =>{
     console.log('vendors Id :', id);
     this.setState({ followProfessional : !this.state.followProfessional});
+    const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null ;
     let data={ 
       category:"Vendor",
-      userId:this.state.user.userId,
+      userId:userId,
       action:"Follow",
       followUnfollowId:"1",
       vendorId:id
@@ -84,7 +85,7 @@ class index extends Component {
 
     const unFollowData = {
       category:"Vendor",
-      userId:this.state.user.userId,
+      userId:userId,
       action:"Unfollow",
       followUnfollowId:"2",
       vendorId:id
@@ -128,8 +129,8 @@ class index extends Component {
       console.log('checking indexPageData in IndexPage: ', indexPageData);
       console.log('checking logged in User Data ',user);
 
-      let userId = this.state.user && this.state.user.userId ? this.state.user.userId : "";
-      let postArray = indexPageData.posts
+      // let userId = this.state.user && this.state.user.userId ? this.state.user.userId : "";
+      // let postArray = indexPageData.posts;
       // console.log('logged in user Id',likesArray[0]);
 
       // this.checkLikes(postArray);
@@ -169,7 +170,7 @@ class index extends Component {
           indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].properties[0] && indexPageData.propertyCounts[i].properties[0].imageList[0] && indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL ? indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }}><Link to="#">
             <div className="d-table w-100 ">
               <div className="d-table-cell va-bottom neighbours-height paddg">
-                <h2>OSHAWA</h2>
+                <h2>{indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].cityName}</h2>
                 <p>{indexPageData.propertyCounts[i].propertyCount} Properties</p>
               </div>
             </div></Link>
@@ -198,7 +199,7 @@ class index extends Component {
                               <div className="container-fluid pxp-props-carousel-right mt-100 mtpx-100">
                                 <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
                                   <div className="owl-carousel pxp-props-carousel-right-stage-2">
-                                    <AliceCarousel
+                                    <AliceCarousel 
                                       mouseTracking
                                       disableButtonsControls ={true}
                                       items={items}
@@ -361,9 +362,12 @@ class index extends Component {
                       <div className="side-bar-user mt-100">
                         <div className="main-user">
                           <div className="row">
+                        {indexPageData && indexPageData.vendors ?
                             <div className="col-md-3">
                               <div className="min-user-img" style={{ backgroundImage: `url(${ indexPageData && indexPageData.vendors && indexPageData.vendors.length ? indexPageData.vendors[0].profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
                             </div>
+                            : null 
+                        }
                             <div className="col-md-9  col-nopadd">
                               <div className="main-user-content">
                                 <p>{indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].firstName ? indexPageData.vendors[0].firstName : ""} {indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].lastName ? indexPageData.vendors[0].lastName : ""}</p>
@@ -373,10 +377,13 @@ class index extends Component {
                           </div>
                         </div>
                         <div className="suggested-vendors mt-4 mt-md-4 mb-md-3">
+                        {indexPageData && indexPageData.vendors ?
                           <div className="row">
                             <div className="col-md-8">
                               <div className="suggested-p">
                                 <p>Suggested Vendor For You</p>
+                               
+                             
                               </div>
                             </div>
                             <div className="col-md-4">
@@ -384,7 +391,9 @@ class index extends Component {
                                 <Link to="/professionals">See ALL</Link>
                               </div>
                             </div>
-                          </div>
+                        </div>
+                            : null
+                        }
                         </div>
                         {indexPageData && indexPageData.vendors &&
                           indexPageData.vendors.map( (data , index) =>

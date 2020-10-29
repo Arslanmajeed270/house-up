@@ -25,3 +25,8 @@ export {
     getVendorsData,
     getSingleVendorData
 } from './vendorPageAction';
+
+export {
+    dropDwonMenu,
+    addProperty
+} from './propertyAction';

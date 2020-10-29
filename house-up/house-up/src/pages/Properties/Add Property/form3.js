@@ -3,6 +3,9 @@ import Dropzone from 'react-dropzone';
 import {Nav} from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
 
+import fileUpload from 'fuctbase64';
+
+
 
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -14,7 +17,14 @@ class form3 extends Component {
           this.setState({files})
         };
         this.state = {
-          files: []
+          files: [],
+            city:'',
+            address:'',
+            images:[],
+            cityId:'',
+            longitude:'',
+            latitude:'',
+            imagePreview:[],
         };
       }
 
@@ -26,7 +36,43 @@ class form3 extends Component {
         zoom: 11
       };
 
+      onSubmit = e => {
+        e.preventDefault();
+        const dataForm3 = {
+            city:this.state.city,
+            address:this.state.address,
+            images:this.state.images,
+            longitude:this.state.longitude,
+            latitude:this.state.latitude,
+            images:this.state.images
+        }
+        console.log(dataForm3);
+        this.props.form3DataHandler(dataForm3);
+      }
+
+      onChange = e => {
+        if(e.target.name === 'images'){
+            const imagePreview = URL.createObjectURL(e.target.files[0]);
+            const imagePreviewState = this.state.imagePreview;
+            const images = this.state.images;
+            imagePreviewState.push(imagePreview);
+            fileUpload(e)
+            .then((data) => {
+                console.log("base64 :",data.base64);
+                images.push(data.base64);
+                this.setState({
+                    imagePreview: imagePreviewState,
+                    images: images
+                })
+            })
+        }
+        else{
+            this.setState({[e.target.name]: e.target.value});
+        }
+      }
+
     render() { 
+        const{ address , city , imagePreview } = this.state;
         const files = this.state.files.map(file => (
             <li key={file.name}>
               {file.name} - {file.size} bytes
@@ -34,7 +80,7 @@ class form3 extends Component {
           ));
         return ( 
             <React.Fragment>
-                
+                <form onSubmit={this.onSubmit}>
                 <div className="add-property-conatiner" style={{backgroundColor:'#F5F5F5'}}>
                 <div className="row border-property">
                     <div className="col-md-12">
@@ -54,7 +100,7 @@ class form3 extends Component {
                 </div>
                     <div className="row">
                         <div className="col-md-12">
-                            <input type="text" placeholder="Enter an address"  className="input-feilds-address" />
+                            <input type="text" placeholder="Enter an address"  className="input-feilds-address" name="address" onChange={this.onChange}  value={address} />
                             <button className="btn btn-primary" style={{marginTop: '-3px'}}>Search</button>
                         </div>
                         <div className="col-md-12" style={{ height: '300px', width: '100%' }}>
@@ -74,11 +120,11 @@ class form3 extends Component {
                     <div className="row border-property">
                         <div className="col-md-7">
                             <h6 className="titles-property">Address</h6>
-                            <input className="input-feilds-property" type="text" />
+                            <input className="input-feilds-property" type="text" name="address" value={address} onChange={this.onChange} />
                         </div>
                         <div className="col-md-5">
                             <h6 className="titles-property">*City</h6>
-                            <input className="input-feilds-property" type="text" />
+                            <input className="input-feilds-property" name="city" value={city} type="text"  onChange={this.onChange}/>
                         </div>
                         <div className="col-md-3">
                             <h6 className="titles-property">* Province/State</h6>
@@ -105,11 +151,18 @@ class form3 extends Component {
                             {({getRootProps, getInputProps}) => (
                             <section className="container drop-zone">
                                 <div {...getRootProps({className: 'dropzone , drop-zone-inner'})}>
-                                <input type="file" {...getInputProps()} id="pictures"/>
+                                <input type="file" {...getInputProps()} id="pictures" name="images" onChange={this.onChange} />
                                 <p>Drag 'n' drop some files here, or click to select files</p>
                                 </div>
                                 <aside>
                                 <h4>Files</h4>
+                                {imagePreview && imagePreview.length ?
+                                imagePreview.map( (data, index) => (
+                                    <img id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} />
+                                ) )
+                                :
+                                "" 
+                                }
                                 <ul>{files}</ul>
                                 </aside>
                             </section>
@@ -134,6 +187,7 @@ class form3 extends Component {
                         </div>
                     </div>
                 </div>
+                </form>
             </React.Fragment>
          );
     }

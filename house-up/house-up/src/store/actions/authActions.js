@@ -39,7 +39,7 @@ export const loginUser = (userData, history) => dispatch => {
 
         console.log("res from backend while login",res);
         if(res.data &&  res.data.data && res.data.data.user ){
-            localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+            localStorage.setItem('jwtToken', res.data.data.user);
             dispatch(setCurrentUser(res.data.data.user));
             dispatch(clearErrors())
             dispatch({ type: SHOW_POP_UP });
@@ -48,6 +48,8 @@ export const loginUser = (userData, history) => dispatch => {
             dispatch({ type: HIDE_POP_UP });
             dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
         }
+         dispatch(clearErrors());
+        history.push(`/index`);
         
     })
     .catch(err => {
