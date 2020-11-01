@@ -9,13 +9,11 @@ import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/index';
 
 import{Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
 class optForgotPass extends Component {
     constructor(props){
         super(props);
         this.state = {
           errors: {},
-          loading : false,
           otp: "",
           otpAuthenticate: false
         }
@@ -24,7 +22,6 @@ class optForgotPass extends Component {
     static getDerivedStateFromProps(props, state) {
         const otpAuthenticate = props.otpAuthenticate;
         let errors = props.errors;
-        let page = props.page; 
     
         let stateChanged = false;
         let changedState = {};
@@ -44,11 +41,6 @@ class optForgotPass extends Component {
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
           changedState.errors = errors;
           stateChanged = true;
-        }
-        
-        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
-            changedState.loading = page.loading;
-            stateChanged = true;            
         }
         
         if(stateChanged){
@@ -77,16 +69,9 @@ class optForgotPass extends Component {
       }
 
     render() { 
-        const { errors , loading } = this.state;
+        const { errors } = this.state;
         console.log('checking value of otp: ', this.state.otp);
-        let pageContent = '';
-
-        if(loading){
-          pageContent = <Spinner />
-        }
-        else{
-          pageContent = "";
-        }
+       
         let phoneNumber = '';
         if(this.props.phNumber)
         {
@@ -138,7 +123,6 @@ class optForgotPass extends Component {
 }
 const mapStateToProps = state => {
     return {
-      page: state.page,
       otpAuthenticate: state.auth.otpAuthenticate,
       errors: state.errors
   

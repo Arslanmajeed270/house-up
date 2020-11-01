@@ -222,7 +222,7 @@ class userSignup extends Component {
                             onChange={this.onChange}     
                             required
                         />
-                                    <span className="pass-userSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="pass-userSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                     </div>
                     <div className="form-group">
                         <input type={ viewConfirmPass ? "text" : "password" } 
@@ -234,7 +234,7 @@ class userSignup extends Component {
                             onChange={this.onChange}  
                             required   
                         />
-                                    <span className="confirmPass-userSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="confirmPass-userSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                     </div>
                     <div className="form-group">
                         <button

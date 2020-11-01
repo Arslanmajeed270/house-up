@@ -6,14 +6,12 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 import{Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
 
 class phonenumberForgotPass extends Component {
     constructor(props){
         super(props);
         this.state = {
             errors: {},
-            loading : false,
             number: ''
         }
     }
@@ -21,7 +19,6 @@ class phonenumberForgotPass extends Component {
      static getDerivedStateFromProps(props, state) {
   
         let errors = props.errors;
-        let page = props.page;      
       
         let stateChanged = false;
         let changedState = {};
@@ -30,12 +27,7 @@ class phonenumberForgotPass extends Component {
             changedState.errors= errors;
             stateChanged = true;
         }
-        
-        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
-            changedState.loading = page.loading;
-            stateChanged = true;            
-        }
-        
+
         if(stateChanged){
             return changedState;
         }
@@ -62,16 +54,8 @@ class phonenumberForgotPass extends Component {
     }
     render() { 
 
-        const {errors , loading} = this.state;
-
-        let pageContent = '';
-
-        if(loading){
-            pageContent = <Spinner />
-        }
-        else{
-            pageContent = "";
-        }
+        const {errors } = this.state;
+        
         return ( 
             <Modal 
             show={this.props.show}
@@ -125,7 +109,7 @@ class phonenumberForgotPass extends Component {
 
 const mapStateToProps = state => {
     return {
-      page: state.page
+      errors: state.errors
     }
 };
 

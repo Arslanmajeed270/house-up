@@ -6,16 +6,13 @@ class form1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dropDownData:{},
             currencyId:'',
             description:'',
             adTitle:'',
             contactEmail:'',
             contactName:'',
             contactNumber:'',
-            price:'',
-
-
+            price:''
         }
     }
     onChange = e => {
@@ -38,15 +35,12 @@ class form1 extends Component {
          
          this.props.form1DataHandler(form1Data);
 
-
-
-
-         this.props.formShowHandler(1)
+         this.props.formShowHandler(1);
 
       }
 
     render() {
-        const { dropDownData ,description ,contactName, currencyId ,contactEmail,contactNumber, adTitle,price} =this.state;
+        const { description ,contactName, currencyId ,contactEmail,contactNumber, adTitle,price} =this.state;
         const dropDownData1 = this.props.dropDownData;
         console.log(dropDownData1);
         const currencyData = dropDownData1 && dropDownData1.currencies ? dropDownData1.currencies : [];
@@ -59,15 +53,15 @@ class form1 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h1 className="titles-property">List your property</h1>
-                        <Nav variant="tabs"  >
+                        <Nav variant="pills"  defaultActiveKey="/1">
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
+                                <Nav.Link eventKey="/1" className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
+                                <Nav.Link eventKey="/2" className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
+                                <Nav.Link eventKey="/3" className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </div>
@@ -93,7 +87,7 @@ class form1 extends Component {
                             </div>
                             <div className="col-md-8">
                                 <h6 className="titles-property">*Price</h6>
-                                <input type="text" className="input-feilds-property" onChange={this.onChange} placeholder="$" name="price" value={price} required />
+                                <input type="number" className="input-feilds-property" onChange={this.onChange} placeholder="$" name="price" value={price} required />
                             </div>
                         </div>
                     </div>

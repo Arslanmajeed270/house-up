@@ -505,3 +505,33 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     right: 20px;
     bottom: 27px;
 }
+.list-inline-item{
+  position: relative;
+}
+.list-inline-item ul{
+  display: none;
+  position:absolute;
+  top: 100%;
+  left: 0;
+  width: 150px;
+  text-transform: uppercase;
+  font-weight: 700;
+  background-color: transparent;
+}
+.list-inline-item:hover ul{
+  display: block;
+}
+.pxp-header.fixed-top.pxp-animate .list-inline-item ul li a{
+  color: white;
+}
+
+.pxp-header.fixed-top.pxp-full .list-inline-item ul li a{
+  color: #333;
+}
+.pxp-header.fixed-top.pxp-animate.pxp-is-sticky .list-inline-item ul li a{
+  color: #333;
+}
+
+.drop-zone-inner :hover {
+  border: none !important;
+}
