@@ -535,3 +535,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .drop-zone-inner :hover {
   border: none !important;
 }
+.text-right{
+  position: relative;
+}
+.profile_header_dropdown{
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  width: 100%;
+  text-align: left;
+  box-shadow: 0px 0px 3px #777;
+}
+.profile_header_dropdown_li{
+  color: #000;
+  font-size: 14px;
+  padding: 4px 10px;
+  cursor: pointer;
+}

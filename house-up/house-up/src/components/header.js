@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import {connect} from 'react-redux';
+import * as actions from '../store/actions';
 
 class header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { user: {} };
+    this.state = { 
+      user: {},
+      dropDownShow: false
+     };
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -33,7 +37,7 @@ class header extends Component {
   
     render() { 
       const animateHeader = this.props.animateHeader;
-      const { user } = this.state;
+      const { user, dropDownShow } = this.state;
         return ( 
             <React.Fragment>
               <div className={"pxp-header fixed-top " + ( animateHeader ? "pxp-animate" : "pxp-full" ) }>
@@ -98,8 +102,19 @@ class header extends Component {
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
                       { user && user.profilePictureUrl ?
                         <div to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
-                        style={{ width: "44px", height: "44px", backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}}
+                        style={{ width: "44px", height: "44px", backgroundSize: "cover",  backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}}
+                        onClick={() => this.setState({dropDownShow: !dropDownShow})}
                         >
+                          {dropDownShow ? 
+                              <div className="profile_header_dropdown">
+                              <ul>
+                                <li onClick={this.props.onLogout} className="profile_header_dropdown_li">Logout</li>
+                              </ul>
+                            </div>
+                            :
+                            "" 
+                        }
+
                         </div>
                         :
                         <Link to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
@@ -124,5 +139,11 @@ const mapStateToProps = state => {
   }
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+      onLogout: () => dispatch(actions.logoutUser())
+  }
+};
 
-export default connect(mapStateToProps, null)(header);
+
+export default connect(mapStateToProps, mapDispatchToProps)(header);
