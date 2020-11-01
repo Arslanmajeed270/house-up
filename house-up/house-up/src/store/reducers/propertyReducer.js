@@ -1,9 +1,6 @@
-import { initial } from 'lodash';
 import {
-    CLEAR_ERRORS,
     PAGE_LOADED,
     PAGE_LOADING,
-	SET_ERRORS,
     PROPERTY_DROP_DWON
 } from '../actions/actionTypes';
 

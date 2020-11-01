@@ -12,7 +12,6 @@ import {
 	REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
     SET_USER_DETAIL,
-    LOGIN_USER,
     SHOW_POP_UP,
 	HIDE_POP_UP
 } from './actionTypes';
@@ -39,18 +38,16 @@ export const loginUser = (userData, history) => dispatch => {
 
         console.log("res from backend while login",res);
         if(res.data &&  res.data.data && res.data.data.user ){
-            localStorage.setItem('jwtToken', res.data.data.user);
+            localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
             dispatch(setCurrentUser(res.data.data.user));
             dispatch(clearErrors())
             dispatch({ type: SHOW_POP_UP });
+            history.push(`/index`);
         }
         else {
             dispatch({ type: HIDE_POP_UP });
             dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
         }
-         dispatch(clearErrors());
-        history.push(`/index`);
-        
     })
     .catch(err => {
         console.log("error: ", err);

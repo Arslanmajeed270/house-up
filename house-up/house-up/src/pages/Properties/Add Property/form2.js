@@ -45,10 +45,8 @@ class from2 extends Component {
     }
     
     onChange = e => {
-      console.log("checking e: ", e.target);
       if(e.target.type === "checkbox"){
         const value = !this.state[e.target.name]
-        console.log("checking name: ", value);
         this.setState({
           [e.target.name]: value
         });
@@ -90,29 +88,21 @@ class from2 extends Component {
           lotTotalArea:this.state.lotTotalArea,
           gym:`${this.state.gym}`,
           yearFurnaceBuilt:this.state.yearFurnaceBuilt,
-          areaTypeId:this.state.areaTypeId,
-          parkingSpaces:'0'
+          areaTypeId:this.state.areaTypeId
          };
          console.log('checking form2 Data', dataForm2);
-
-
          this.props.form2DataHandler(dataForm2);
-        
-
-
-
          this.props.formShowHandler(2)
     }
 
 
     render() { 
-        const { dropDownData, yearBuilt ,balcony , disposal,
+        const { yearBuilt, disposal,
           finishedSqftArea, lotDimensionLength ,noOfBathrooms  ,basementId ,
           waterSourceID ,propertyTypeId ,lotDimensionWidth , storeys,rentalListingYN , yearRoofInstalled,
-          parkingSpaces,ac , garageId,dishWasher ,garage ,noOfBedrooms , playroom,
-          bar ,primaryHeatingFuelId  , internet, buildingTypeId
-           ,gym ,yearFurnaceBuilt, areaTypeId  } = this.state;
-        let { lotTotalArea} = this.state;
+          parkingSpaces,ac , garageId,dishWasher ,garage ,noOfBedrooms , playroom
+           ,primaryHeatingFuelId  , internet, buildingTypeId
+           ,gym ,yearFurnaceBuilt, areaTypeId , lotTotalArea } = this.state;
 
 
         const dropDownData1 = this.props.dropDownData;
@@ -127,9 +117,7 @@ class from2 extends Component {
         const waterSource = dropDownData1 && dropDownData1.waterSource ? dropDownData1.waterSource : [];
         const storeysCount = dropDownData1 && dropDownData1.storeysCount ? dropDownData1.storeysCount : [];
         const areaType = dropDownData1 && dropDownData1.areaType ? dropDownData1.areaType : [];
-        const propertyPostingFees = dropDownData1 && dropDownData1.propertyPostingFees ? dropDownData1.propertyPostingFees : [];
         const buildingType = dropDownData1 && dropDownData1.buildingType ? dropDownData1.buildingType : [];
-
 
       console.log("checking this.state: ", this.state );
 
@@ -140,15 +128,15 @@ class from2 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h1 className="titles-property">List your property</h1>
-                        <Nav variant="tabs">
+                        <Nav variant="pills"  defaultActiveKey="/2">
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
+                                <Nav.Link eventKey="/1" className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
+                                <Nav.Link eventKey="/2" className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
+                                <Nav.Link eventKey="/3" className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </div>
@@ -270,7 +258,7 @@ class from2 extends Component {
                       </div>
                       <div className="col-md-2">
                           <h6 className="titles-property">Lot area</h6>
-                          <input className="input-feilds-property" name="lotTotalArea" value={(this.state.lotTotalArea === '') ? (  this.state.lotTotalArea = (this.state.lotDimensionLength * this.state.lotDimensionWidth)) : lotTotalArea} onChange={this.onChange} />
+                          <input className="input-feilds-property" name="lotTotalArea" value={ lotTotalArea === '' ? this.setState({ lotTotalArea: this.state.lotDimensionLength * this.state.lotDimensionWidth }) : lotTotalArea } onChange={this.onChange} />
                       </div>
                       <div className="col-md-2">
                          <h6 className="titles-property">* Sqft/Acres</h6>

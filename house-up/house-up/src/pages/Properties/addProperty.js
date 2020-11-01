@@ -15,24 +15,22 @@ class addProperty extends Component {
         dropDownData:{},
         form1Data:{},
         form2Data:{},
-        form3Data:{},
-        formData:{},
+        form3Data:{}
     };
 }
 
-
 form1DataHandler = ( form1Data ) =>{
-  this.setState({ form1Data : form1Data});
   console.log('checking form 2 data in add property paren page',form1Data);
+  this.setState({ form1Data : form1Data});
 }
 
 form2DataHandler = ( form2Data ) => {
-  this.setState({ form2Data : form2Data});
   console.log('checking form2 data in add property paren page',form2Data);
+  this.setState({ form2Data : form2Data});
 }
 form3DataHandler = ( form3Data ) => {
-  this.setState({ form3Data : form3Data});
   console.log('checking form3 data in add property paren page',form3Data);
+  this.setState({ form3Data : form3Data});
   this.addProperty();
 }
 
@@ -72,57 +70,56 @@ addProperty = () =>{
   const form1Data = this.state.form1Data;
     const form2Data = this.state.form2Data;
     const form3Data = this.state.form3Data;
-    const formData = this.state.formData;
 
-    this.state.formData ={
-      yearBuilt: form2Data.yearBuilt, 
-      balcony:form2Data.balcony, 
-      currencyId:form1Data.currencyId, 
-      disposal: form2Data.disposal, 
-      description: form1Data.description,
-      longitude:"-79.497369", 
-      finishedSqftArea: form2Data.finishedSqftArea,
-      lotDimensionLength:form2Data.lotDimensionLength, 
-      noOfBathrooms:form2Data.noOfBathrooms, 
-      contactEmail:form1Data.contactEmail, 
-      adTitle: form1Data.adTitle, 
-      basementId: form2Data.basementId,
-      waterSourceID: form2Data.waterSourceID,
-      propertyTypeId: form2Data.propertyTypeId,
-      lotDimensionWidth: form2Data.lotDimensionWidth, 
-      city: form3Data.city,
-      storeys: form2Data.storeys, 
-      rentalListingYN: form2Data.rentalListingYN,
-      yearRoofInstalled:form2Data.yearRoofInstalled,
+    const formData = {
+      yearBuilt: form2Data.yearBuilt ? form2Data.yearBuilt : "0", 
+      balcony: form2Data.balcony ? `${form2Data.balcony}` : "false", 
+      currencyId:form1Data.currencyId ? form1Data.currencyId : "", 
+      disposal: form2Data.disposal ? `${form2Data.disposal}` : "false", 
+      description: form1Data.description ? form1Data.description : "",
+      longitude:"", 
+      finishedSqftArea: form2Data.finishedSqftArea ? `${form2Data.finishedSqftArea}` : "0",
+      lotDimensionLength: form2Data.lotDimensionLength ? `${form2Data.lotDimensionLength}` : "0", 
+      noOfBathrooms: form2Data.noOfBathrooms ? `${form2Data.noOfBathrooms}` : "0", 
+      contactEmail:form1Data.contactEmail ? form1Data.contactEmail : "", 
+      adTitle: form1Data.adTitle ? form1Data.adTitle : "", 
+      basementId: form2Data.basementId ? `${form2Data.basementId}` :"0",
+      waterSourceID: form2Data.waterSourceID ? `${form2Data.waterSourceID}` : "0",
+      propertyTypeId: form2Data.propertyTypeId ? `${form2Data.propertyTypeId}` : "0",
+      lotDimensionWidth: form2Data.lotDimensionWidth ? `${form2Data.lotDimensionWidth}` : "0", 
+      city: form3Data.city ? form3Data.city : "" ,
+      storeys: form2Data.storeys ? `${form2Data.storeys}` :"0", 
+      rentalListingYN: form2Data.rentalListingYN ? form2Data.rentalListingYN : "",
+      yearRoofInstalled: form2Data.yearRoofInstalled ? `${form2Data.yearRoofInstalled}` : "0",
       cityId: "17150",
-      parkingSpaces: form2Data.parkingSpaces, 
-      contactNumber:form1Data.contactNumber, 
-      ac: form2Data.ac, 
-      garageId:form2Data.garageId,
-      dishWasher: form2Data.dishWasher,
-      garage:form2Data.garage,
-      noOfBedrooms: form2Data.noOfBedrooms, 
-      playroom:form2Data.playroom,
-      bar: form2Data.bar, 
-      primaryHeatingFuelId:form2Data.primaryHeatingFuelId, 
-      contactName: form1Data.contactName,
-      internet:form2Data.internet, 
-      buildingTypeId: form2Data.buildingTypeId, 
-      latitude:"43.787083", 
-      price: form1Data.price, 
+      parkingSpaces: form2Data.parkingSpaces ? `${form2Data.parkingSpaces}` : "0", 
+      contactNumber:form1Data.contactNumber ? form1Data.contactNumber : "", 
+      ac: form2Data.ac ? `${form2Data.ac}` : "false", 
+      garageId:form2Data.garageId ? `${form2Data.garageId}` : "0",
+      dishWasher: form2Data.dishWasher ? `${form2Data.dishWasher}`: "false" ,
+      garage: form2Data.garage ? `${form2Data.garage}` : "false",
+      noOfBedrooms: form2Data.noOfBedrooms ? `${form2Data.noOfBedrooms}` : "0",  
+      playroom: form2Data.playroom ? `${form2Data.playroom}` : "false",
+      bar: form2Data.bar ? `${form2Data.bar}` : "false", 
+      primaryHeatingFuelId: form2Data.primaryHeatingFuelId ? `${form2Data.primaryHeatingFuelId}` : "0", 
+      contactName: form1Data.contactName ? form1Data.contactName : "",
+      internet: form2Data.internet ? `${form2Data.internet}` : "false", 
+      buildingTypeId: form2Data.buildingTypeId ? `${form2Data.buildingTypeId}` : "0" , 
+      latitude:"", 
+      price: form1Data.price ? form1Data.price : "", 
       amenites: "",
       channel: "web", 
       userId: "64", 
-      lotTotalArea:form2Data.lotTotalArea, 
-      address: form3Data.address,
-      gym: form2Data.gym, 
-      yearFurnaceBuilt: form2Data.yearFurnaceBuilt,
-      areaTypeId: form2Data.areaTypeId,
-      images : form3Data.images
-    }
-    console.log(this.state.formData);
+      lotTotalArea: form2Data.lotTotalArea ? `${form2Data.lotTotalArea}` : "0", 
+      address: form3Data.address ? form3Data.address : "",
+      gym: form2Data.gym ? `${form2Data.gym}` : "false", 
+      yearFurnaceBuilt: form2Data.yearFurnaceBuilt ? `${form2Data.yearFurnaceBuilt}` : "0",
+      areaTypeId: form2Data.areaTypeId ? `${form2Data.areaTypeId}` : "0",
+      images : form3Data.images ? form3Data.images : ""
+    } 
+    console.log("checking formData: ",formData);
 
-    this.props.onAddProperty(this.state.formData);
+    this.props.onAddProperty(formData);
 }
 
 
@@ -134,7 +131,7 @@ formShowHandler = (num) =>{
     });
 }
 render() { 
-    const { dropDownData , form1Data , form2Data , form3Data  } = this.state;
+    const { dropDownData  } = this.state;
     console.log('checking dropDown Data',dropDownData);
     console.log("checking number in render: ", this.state.formShow);
 

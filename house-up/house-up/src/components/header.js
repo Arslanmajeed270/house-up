@@ -1,17 +1,50 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import {connect} from 'react-redux';
+import * as actions from '../store/actions';
+
 class header extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { 
+      user: {},
+      dropDownShow: false
+     };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+  
+    const auth = props.auth ? props.auth : {};
+
+  
+    let stateChanged = false;
+      let changedState = {};
+  
+  
+    if(auth && auth.user && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
+      changedState.user= auth.user;
+      stateChanged = true;
+  }
+
+  if(stateChanged){
+      return changedState;
+  }
+  
+    return null;
+  }
   
     render() { 
       const animateHeader = this.props.animateHeader;
+      const { user, dropDownShow } = this.state;
         return ( 
             <React.Fragment>
               <div className={"pxp-header fixed-top " + ( animateHeader ? "pxp-animate" : "pxp-full" ) }>
                 <div className="wrapper">
                   <div className="row align-items-center">
                     <div className="col-5 col-md-2">
-                      <Link to="/index" className="pxp-logo text-decoration-none">
+                      <Link to={ user && user.profilePictureUrl ? "/index" : "#" } className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>
                         <img className="img black-logo" src="assets/images/ic_logo_black.svg" alt="logo" />
@@ -33,7 +66,18 @@ class header extends Component {
                             <Link to="/properties">Listing</Link>
                           </li>
                           <li className="list-inline-item">
-                            <Link to="/add-property">Sell</Link>
+                            <Link to="#">add Listing</Link>
+                            <ul>
+                              <li>
+                                <Link to="/add-property">Property</Link>
+                              </li>
+                              <li>
+                                <Link to="/add-product">Product</Link>
+                              </li>
+                              <li>
+                                <Link to="/add-coupon">Coupon</Link>
+                              </li>
+                            </ul>
                           </li>
                           <li className="list-inline-item">
                             <Link to="/professionals">Professionals</Link>
@@ -56,9 +100,29 @@ class header extends Component {
                     </div>
                     <div className="col-5 col-md-1 text-right">
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
-                      <Link to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
-                        onClick={() => this.props.modelHanlder('phoneSignin')}
-                        ><span className="far fa-user" /></Link> 
+                      { user && user.profilePictureUrl ?
+                        <div to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
+                        style={{ width: "44px", height: "44px", backgroundSize: "cover",  backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}}
+                        onClick={() => this.setState({dropDownShow: !dropDownShow})}
+                        >
+                          {dropDownShow ? 
+                              <div className="profile_header_dropdown">
+                              <ul>
+                                <li onClick={this.props.onLogout} className="profile_header_dropdown_li">Logout</li>
+                              </ul>
+                            </div>
+                            :
+                            "" 
+                        }
+
+                        </div>
+                        :
+                        <Link to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
+                          onClick={() => this.props.modelHanlder('phoneSignin')}
+                          >
+                            <span className="far fa-user" />
+                        </Link>
+                      } 
                     </div>
                   </div>
                 </div>
@@ -68,5 +132,18 @@ class header extends Component {
     }
 }
  
-export default header;
 
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onLogout: () => dispatch(actions.logoutUser())
+  }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(header);

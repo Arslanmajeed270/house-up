@@ -91,7 +91,7 @@ class emailSignin extends Component {
                                     value={password} 
                                     required 
                                     />
-                                    <span className="viewPassword-login" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="viewPassword-login" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                                 </div>
                                 <div className="form-group">
                                     <div className="form-group">

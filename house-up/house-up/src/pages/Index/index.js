@@ -28,8 +28,6 @@ class index extends Component {
     this.setState({ isLike : !this.state.isLike });
   }
 
- 
-
   static getDerivedStateFromProps(props, state) {
 
     const auth = props.auth;
@@ -94,12 +92,10 @@ class index extends Component {
     console.log(unFollowData);
 
 
-    {
       this.state.followMessage === 'success' ?
       this.props.onFollowUnfollowProfessionals(data) 
       :
-      this.props.onFollowUnfollowProfessionals(unFollowData) 
-    }
+      this.props.onFollowUnfollowProfessionals(unFollowData)
   }
 
   componentDidMount() {
@@ -364,14 +360,14 @@ class index extends Component {
                           <div className="row">
                         {indexPageData && indexPageData.vendors ?
                             <div className="col-md-3">
-                              <div className="min-user-img" style={{ backgroundImage: `url(${ indexPageData && indexPageData.vendors && indexPageData.vendors.length ? indexPageData.vendors[0].profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
+                              <div className="min-user-img" style={{ backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}} />
                             </div>
                             : null 
                         }
                             <div className="col-md-9  col-nopadd">
                               <div className="main-user-content">
-                                <p>{indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].firstName ? indexPageData.vendors[0].firstName : ""} {indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].lastName ? indexPageData.vendors[0].lastName : ""}</p>
-                                <span>{ indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors[0].userName ? `@ ${indexPageData.vendors[0].userName}` : "" }</span>
+                                <p>{ user && user.firstName ? user.firstName : "" } { user && user.lastName ? user.lastName : "" }</p>
+                                <span>{ user && user.userName ? `@ ${ user.userName }` : "" }</span>
                               </div>
                             </div>
                           </div>

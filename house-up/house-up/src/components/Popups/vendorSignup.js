@@ -185,7 +185,7 @@ class vendorSignup extends Component {
         const {
             profileImage, firstName, lastName, userName, emailAddress, confirmPassword,
             password, professionId, businessSupportingDocument, businessRegistrationDocument,
-            keywordDescriptYourBusiness, countryId, provinceId, cityId, zipCode,streetAddress,
+            keywordDescriptYourBusiness, provinceId, cityId, zipCode,streetAddress,
             businessName, websiteLink, qualification, aboutBusiness, businessStartDate
         } = this.state;
 
@@ -578,7 +578,7 @@ class vendorSignup extends Component {
                                 onChange={this.onChange}
                                 required
                             />
-                            <span className="pass-vendorSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                            <span className="pass-vendorSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                         </div>
                     </div>
                     <div className="col-md-6" style={{padding:'0px', paddingRight:'7px'}}>
@@ -592,7 +592,7 @@ class vendorSignup extends Component {
                                 onChange={this.onChange}
                                 required
                             />
-                            <span className="pass-vendorSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                            <span className="pass-vendorSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                         </div>
                     </div>
                 </div>

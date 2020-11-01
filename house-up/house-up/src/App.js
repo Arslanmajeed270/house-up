@@ -1,32 +1,33 @@
-import React from 'react';
-import { Route , Private} from 'react-router-dom';
-import PrivateRoute from './components/common/PrivateRoute';    
+import React, { Component } from 'react'
+import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-
+import * as actions from './store/actions/index';
+import PrivateRoute from './components/common/PrivateRoute';
 import Index from "./pages";
+class App extends Component {
+  render() {
 
+    if (localStorage.jwtToken) {
+      this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
+    }
 
-function App() {
-  return (
-    <React.Fragment>
-      <Route
+    return (
+      <React.Fragment>
+      <PrivateRoute
         exact 
         path={'/index'}     
-        component={()=><Index  hideFooter={true}/> }
+        component={Index}
       />
       <Route
         exact 
         path={'/'}
-        component={
-          () => <Index animateHeader={true} />
-        }
+        component={Index}
       />
       <Route
         exact 
         path={'/home'}
-        component={
-          () => <Index animateHeader={true} />
-        }
+        component={Index}
       />
       <Route
         exact 
@@ -99,8 +100,16 @@ function App() {
         component={Index}
       />
     </React.Fragment>
-  
-  );
+ 
+    )
+  }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUser: (user) => dispatch(actions.setCurrentUser(user))
+  };
+};
+
+
+export default withRouter(connect(null,mapDispatchToProps)(App));

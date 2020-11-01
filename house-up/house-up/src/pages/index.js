@@ -137,7 +137,14 @@ class index extends Component {
     }
 
     render() {
-        const animateHeader = this.props.animateHeader;
+        let animateHeader = false;
+        let hideFooter = false;
+        if( this.props.location.pathname === "/index" ){
+            hideFooter = true;
+        }
+        if( this.props.location.pathname === "/home" || this.props.location.pathname === "/" ){
+            animateHeader = true;
+        }
         return (
             <React.Fragment>
                 {this.state.phoneSignin &&
@@ -148,6 +155,7 @@ class index extends Component {
                         phoneNoForgotHandler = {this.modelHanlder}
                         signupSelectionHandler={this.modelHanlder}
                         subscriptionPlanHandler = { this.modelHanlder }
+                        history = {this.props.history}
 
                     />
                 }
@@ -178,6 +186,7 @@ class index extends Component {
                         phoneNoForgotHandler = {this.modelHanlder}
                         phoneSigninHandler ={this.modelHanlder}
                         signupSelectionHandler={this.modelHanlder}
+                        history = {this.props.history}
                     />
                 }
                 {this.state.phoneNoForgotPass &&
@@ -286,7 +295,7 @@ class index extends Component {
                 modelHanlder={this.modelHanlder}
                 />
                 <Routes />
-                {this.props.hideFooter === true ? " " : <Footer /> }
+                { hideFooter === true ? " " : <Footer /> }
             </React.Fragment>
         )
     }

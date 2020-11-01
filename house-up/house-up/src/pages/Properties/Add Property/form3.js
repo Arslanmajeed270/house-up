@@ -44,7 +44,6 @@ class form3 extends Component {
             images:this.state.images,
             longitude:this.state.longitude,
             latitude:this.state.latitude,
-            images:this.state.images
         }
         console.log(dataForm3);
         this.props.form3DataHandler(dataForm3);
@@ -85,15 +84,15 @@ class form3 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h1 className="titles-property">List your property</h1>
-                        <Nav variant="tabs" >
-                            <Nav.Item >
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
+                        <Nav variant="pills"  defaultActiveKey="/3">
+                            <Nav.Item>
+                                <Nav.Link eventKey="/1" className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item >
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
+                            <Nav.Item>
+                                <Nav.Link eventKey="/2" className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item >
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
+                            <Nav.Item>
+                                <Nav.Link eventKey="/3" className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </div>
@@ -158,7 +157,7 @@ class form3 extends Component {
                                 <h4>Files</h4>
                                 {imagePreview && imagePreview.length ?
                                 imagePreview.map( (data, index) => (
-                                    <img id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} />
+                                    <img key={index} id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} />
                                 ) )
                                 :
                                 "" 
