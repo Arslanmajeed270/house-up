@@ -11,7 +11,8 @@ import {
 	GET_PROFESSIONS,
 	FOLLOW_PROFESSIONAL,
 	SHOW_POP_UP,
-	HIDE_POP_UP
+	HIDE_POP_UP,
+	SET_HOME_DATA
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -56,6 +57,39 @@ export const getIndexPageData = () => dispatch => {
         dispatch(
 			{
 				type: SET_INDEX_DATA,
+				payload: res.data && res.data.data  ? res.data.data : {}
+			}
+		);
+        dispatch(clearErrors());
+    })
+    .catch(err => {
+	  console.log('checking error on homepage')
+		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})
+	.finally(() => dispatch(clearPageLoading()))
+};
+
+
+//HOME Page  - Get homePage data from backend
+export const getHomePageData = () => dispatch => {
+	dispatch(setPageLoading());
+    axios
+    .post(
+		backendServerURL+'/index',
+		{
+			"channel":"ios",
+			"lat":43.787083,
+			"lng":-79.497369,
+			"city": "Vaughan",
+			"limit":10,
+			"offset":0
+		}
+    )
+    .then(res => {
+		console.log('checking Home page data' , res);
+        dispatch(
+			{
+				type: SET_HOME_DATA,
 				payload: res.data && res.data.data  ? res.data.data : {}
 			}
 		);

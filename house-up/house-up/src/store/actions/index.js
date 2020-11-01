@@ -18,7 +18,8 @@ export {
     GetCountries,
     GetProfessionDetailAPI,
     AddLike,
-    followProfessionals
+    followProfessionals,
+    getHomePageData
 } from './pageActions';
 
 export {
@@ -28,5 +29,6 @@ export {
 
 export {
     dropDwonMenu,
-    addProperty
+    addProperty,
+    getSingleProperty
 } from './propertyAction';

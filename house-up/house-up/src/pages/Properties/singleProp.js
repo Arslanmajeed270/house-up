@@ -2,12 +2,35 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ContactPopup from '../../components/Popups/contact';
 
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+
 class singleProp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contactModalState : false
+      contactModalState : false,
+      singlePropertyData:{},
+      id:''
     };
+  }
+  static getDerivedStateFromProps(props, state) {
+  
+    let property = props.property;
+
+    let stateChanged = false;
+    let changedState = {};
+
+    if(property && JSON.stringify(state.singlePropertyData) !== JSON.stringify(property.singlePropertyData)){
+      changedState.singlePropertyData = property.singlePropertyData;  
+      stateChanged = true;
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+
   }
 
 
@@ -19,7 +42,24 @@ class singleProp extends Component {
       console.log('cecking login pop handler', this.state.signupState);
     }
 
+    componentDidMount (){
+      const id = this.props.match.params.id;
+    console.log('checking id in sigle property: ', id);
+    this.setState({
+      id: id
+    });
+
+    let userData = {
+      propertyId: id
+    }
+    console.log(userData)
+    this.props.onGetSinglePropertyData(userData);
+
+    }
     render() { 
+      const { singlePropertyData } = this.state;
+      console.log('single property data :', singlePropertyData);
+      const data = singlePropertyData;
         return ( 
             <React.Fragment>
                 <div className="pxp-content">
@@ -27,9 +67,9 @@ class singleProp extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-sm-12 col-md-5">
-                        <h2 className="pxp-sp-top-title">Beautiful House in Marina</h2>
+                        <h2 className="pxp-sp-top-title">{data.adTitle}</h2>
                         <p className="pxp-sp-top-address pxp-text-light">
-                          542 29th Avenue, Marina District, San Francisco, CA 94121
+                          {data.address}
                         </p>
                       </div>
                       <div className="col-sm-12 col-md-7">
@@ -49,11 +89,11 @@ class singleProp extends Component {
                         </div>
                         <div className="clearfix d-block d-xl-none" />
                         <div className="pxp-sp-top-feat mt-3 mt-md-0">
-                          <div>5 <span>BD</span></div>
-                          <div>4 <span>BA</span></div>
-                          <div>3,945 <span>SF</span></div>
+                          <div>{data.noOfBedrooms ? data.noOfBathrooms : 0} <span>BD</span></div>
+                          <div>{data.noOfBathrooms ? data.noOfBathrooms : 0 } <span>BA</span></div>
+                          <div>{data.finishedSqftArea ? data.finishedSqftArea : 0} <span>SF</span></div>
                         </div>
-                        <div className="pxp-sp-top-price mt-3 mt-md-0">$5,198,000</div>
+        <div className="pxp-sp-top-price mt-3 mt-md-0">{data.currency && data.currency.symbol ? data.currency.symbol : ''}{data.price}</div>
                       </div>
                     </div>
                   </div>
@@ -61,25 +101,14 @@ class singleProp extends Component {
                 <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-big.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0].imageURL ? data.imageList[0].imageURL : 'assets/images/ic_profile_placeholder.png'})`}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
+                    
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
+                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})` }} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
@@ -113,7 +142,7 @@ class singleProp extends Component {
                               <div className="pxp-sp-kd-item-label text-uppercase">
                                 Property Type
                               </div>
-                              <div className="pxp-sp-kd-item-value">Apartment</div>
+                              <div className="pxp-sp-kd-item-value">{data.propertyType}</div>
                             </div>
                           </div>
                           <div className="col-sm-6">
@@ -121,7 +150,7 @@ class singleProp extends Component {
                               <div className="pxp-sp-kd-item-label text-uppercase">
                                 Year Built
                               </div>
-                              <div className="pxp-sp-kd-item-value">1980</div>
+                              <div className="pxp-sp-kd-item-value">{data.yearBuilt}</div>
                             </div>
                           </div>
                           <div className="col-sm-6">
@@ -129,7 +158,7 @@ class singleProp extends Component {
                               <div className="pxp-sp-kd-item-label text-uppercase">
                                 Stories
                               </div>
-                              <div className="pxp-sp-kd-item-value">23</div>
+                              <div className="pxp-sp-kd-item-value">{data.storeys ? data.storeys : 0}</div>
                             </div>
                           </div>
                           <div className="col-sm-6">
@@ -137,7 +166,7 @@ class singleProp extends Component {
                               <div className="pxp-sp-kd-item-label text-uppercase">
                                 Room Count
                               </div>
-                              <div className="pxp-sp-kd-item-value">6</div>
+                              <div className="pxp-sp-kd-item-value">{data.noOfBedrooms}</div>
                             </div>
                           </div>
                           <div className="col-sm-6">
@@ -145,7 +174,7 @@ class singleProp extends Component {
                               <div className="pxp-sp-kd-item-label text-uppercase">
                                 Parking Spaces
                               </div>
-                              <div className="pxp-sp-kd-item-value">2</div>
+                              <div className="pxp-sp-kd-item-value">{data.parkingSpaces}</div>
                             </div>
                           </div>
                         </div>
@@ -154,32 +183,8 @@ class singleProp extends Component {
                         <h3>Overview</h3>
                         <div className="mt-3 mt-md-4">
                           <p>
-                            Fully furnished. Elegantly appointed condominium unit situated
-                            on premier location. PS6. The wide entry hall leads to a large
-                            living room with dining area. This expansive 2 bedroom and 2
-                            renovated marble bathroom apartment has great windows. Despite
-                            the interior views, the apartments Southern and Eastern
-                            exposures allow for lovely natural light to fill every room.
-                            The master suite is surrounded by handcrafted milkwork and
-                            features incredible walk-in closet and storage space. The
-                            second bedroom is<span className="pxp-dots">...</span><span className="pxp-dots-more">
-                              a corner room with double windows. The kitchen has fabulous
-                              space, new appliances, and a laundry area. Other features
-                              include rich herringbone floors, crown moldings and coffered
-                              ceilings throughout the apartment. 1049 5th Avenue is a
-                              classic pre-war building located across from Central Park,
-                              the reservoir and The Metropolitan Museum. Elegant lobby and
-                              24 hours doorman. This is a pet-friendly building.
-                              <br /><br />
-                              Conveniently located close to several trendy fitness centers
-                              like Equinox, New York Sports Clubs &amp; Crunch. Fine
-                              Door Buds around the area, as well as top-ranked schools.
-                              2% Flip tax paid by buyer to the condominium. Building just
-                              put an assessment for 18 months of approximately $500 per
-                              month.</span>
+                            {data.description}
                           </p>
-                          <Link to="" className="pxp-sp-more text-uppercase"><span className="pxp-sp-more-1">Continue Reading
-                              <span className="fa fa-angle-down" /></span><span className="pxp-sp-more-2">Show Less <span className="fa fa-angle-up" /></span></Link>
                         </div>
                       </div>
                       <div className="pxp-single-property-section mt-4 mt-md-5">
@@ -256,101 +261,6 @@ class singleProp extends Component {
                         </div>
                         <div id="pxp-sp-map" className="mt-3" />
                       </div>
-                      {/* 
-                                <div className="pxp-single-property-section mt-4 mt-md-5">
-                                    <h3>Payment Calculator</h3>
-                                    <div className="pxp-calculator-view mt-3 mt-md-4">
-                                        <div className="row">
-                                            <div className="col-sm-12 col-lg-4 align-self-center">
-                                                <div className="pxp-calculator-chart-container">
-                                                    <canvas id="pxp-calculator-chart"></canvas>
-                                                    <div className="pxp-calculator-chart-result">
-                                                        <div className="pxp-calculator-chart-result-sum">$11,277</div>
-                                                        <div className="pxp-calculator-chart-result-label">per month</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-lg-8 align-self-center mt-3 mt-lg-0">
-                                                <div className="pxp-calculator-data">
-                                                    <div className="row justify-content-between">
-                                                        <div className="col-8">
-                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>Principal and Interest</div>
-                                                        </div>
-                                                        <div className="col-4 text-right">
-                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-pi"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="pxp-calculator-data">
-                                                    <div className="row justify-content-between">
-                                                        <div className="col-8">
-                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>Property Taxes</div>
-                                                        </div>
-                                                        <div className="col-4 text-right">
-                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-pt"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="pxp-calculator-data">
-                                                    <div className="row justify-content-between">
-                                                        <div className="col-8">
-                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>HOA Dues</div>
-                                                        </div>
-                                                        <div className="col-4 text-right">
-                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-hd"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="pxp-calculator-form mt-3 mt-md-4">
-                                        <input type="hidden" id="pxp-calculator-form-property-taxes" value="$1,068">
-                                        <input type="hidden" id="pxp-calculator-form-hoa-dues" value="$2,036">
-
-                                        <div className="row">
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="form-group">
-                                                    <label for="pxp-calculator-form-term">Term</label>
-                                                    <select className="custom-select" id="pxp-calculator-form-term">
-                                                        <option value="30">30 Years Fixed</option>
-                                                        <option value="20">20 Years Fixed</option>
-                                                        <option value="15">15 Years Fixed</option>
-                                                        <option value="10">10 Years Fixed</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="form-group">
-                                                    <label for="pxp-calculator-form-interest">Interest</label>
-                                                    <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-interest" data-type="percent" value="4.45%">
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="form-group">
-                                                    <label for="pxp-calculator-form-price">Home Price</label>
-                                                    <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-price" data-type="currency" value="$5,198,000">
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="row">
-                                                    <div className="col-7 col-sm-7 col-md-8">
-                                                        <div className="form-group">
-                                                            <label for="pxp-calculator-form-down-price">Down Payment</label>
-                                                            <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-down-price" data-type="currency" value="$519,800">
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-5 col-sm-5 col-md-4">
-                                                        <div className="form-group">
-                                                            <label for="pxp-calculator-form-down-percentage">&nbsp;</label>
-                                                            <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-down-percentage" data-type="percent" value="10%">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
                       <div className="pxp-single-property-section mt-4 mt-md-5">
                         <h3>Schools in Marina District</h3>
                         <ul className="nav nav-tabs pxp-nav-tabs mt-3 mt-md-4">
@@ -553,16 +463,16 @@ class singleProp extends Component {
                           <Link to='/single-vendor'  className="pxp-sp-agent-fig pxp-cover rounded-lg" style={{backgroundImage: 'url(assets/images/agent-4.jpg)', backgroundPosition: 'top center'}} />
                           <div className="pxp-sp-agent-info">
                             <div className="pxp-sp-agent-info-name">
-                              <Link to='/single-vendor' >Erika Tillman</Link>
+                              <Link to='/single-vendor' >{data.contactName}</Link>
                             </div>
                             <div className="pxp-sp-agent-info-rating">
                               <span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" />
                             </div>
                             <div className="pxp-sp-agent-info-email">
-                              <Link to="">erika.tillman@ HouseUPcom</Link>
+                              <Link to="">{data.contactEmail}</Link>
                             </div>
                             <div className="pxp-sp-agent-info-phone">
-                              <span className="fa fa-phone" /> (123) 456-7890
+                              <span className="fa fa-phone" /> {data.contactNumber}
                             </div>
                           </div>
                           <div className="clearfix" />
@@ -584,4 +494,16 @@ class singleProp extends Component {
     }
 }
  
-export default singleProp;
+const mapStateToProps = state => {
+  return {
+    property: state.property
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onGetSinglePropertyData: (userData) => dispatch(actions.getSingleProperty(userData))
+  }
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(singleProp);

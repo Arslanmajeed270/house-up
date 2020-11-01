@@ -106,7 +106,7 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/single-property"} 
+					path={"/single-prop-:id"} 
 					component={SingleProp}
 				/>
 				<Route      

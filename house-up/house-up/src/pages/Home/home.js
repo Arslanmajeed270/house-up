@@ -4,51 +4,80 @@ import AliceCarousel from 'react-alice-carousel';
 
 import "react-alice-carousel/lib/alice-carousel.css";
 
-// import { connect } from 'react-redux';
-// import * as actions from '../../store/actions/index';
-// import { Carousel } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
-// import Carousel from 'react-bootstrap/Carousel';
-
+import Spinner from '../../components/common/Spinner';
 class home extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     homePageData : {}
-  //   };
-  // }
-  // static getDerivedStateFromProps(props, state) {
+  constructor(props) {
+    super(props);
+    this.state = {
+      homePageData : {},
+      loading : false,
+
+    };
+  }
+  static getDerivedStateFromProps(props, state) {
   
-  //   let page = props.page;
+    let page = props.page;
 
-  //   let stateChanged = false;
-  //   let changedState = {};
+    let stateChanged = false;
+    let changedState = {};
 
 
-  //   if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
-  //     changedState.loading = page.loading;  
-  //     stateChanged = true;
-  //   }
-  //   if(page && JSON.stringify(state.homePageData) !== JSON.stringify(page.homePageData)){
-  //     changedState.homePageData = page.homePageData;  
-  //     stateChanged = true;
-  //   }
+    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+      changedState.loading = page.loading;  
+      stateChanged = true;
+    }
+    if(page && JSON.stringify(state.homePageData) !== JSON.stringify(page.homePageData)){
+      changedState.homePageData = page.homePageData;  
+      stateChanged = true;
+    }
 
-  //   if(stateChanged){
-  //     return changedState;
-  //   }
-  //   return null;
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
 
-  // }
+  }
 
-  // componentDidMount() {
-  //   console.log('homePage componenet did mount');
-  //   this.props.onGetHomePageData();
-  // }
+  componentDidMount() {
+    console.log('homePage componenet did mount');
+    this.props.onGetHomePageData();
+  }
 
     render() { 
-      // const { homePageData } = this.state;
-      // console.log('checking homePageData in HomePage: ', homePageData);
+      const { homePageData , loading } = this.state;
+      console.log('checking homePageData in HomePage: ', homePageData);
+
+      let pageContent = '';
+      if(loading){
+        pageContent = <Spinner />
+      }
+      else{
+        pageContent = "";
+      }
+      
+  const items = [];
+  if(homePageData && homePageData.properties && homePageData.properties.length){
+    for(let i=0; i<homePageData.properties.length; i++){
+      let item = (<div>
+        <Link to={`/single-prop-${homePageData.properties[i].propertId}`} className="pxp-prop-card-1 rounded-lg">
+          <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: `url(${ 
+          homePageData.properties[i] && homePageData.properties[i].imageList && homePageData.properties[i].imageList[0] && homePageData.properties[i].imageList[0].imageURL ? homePageData.properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }} />
+          <div className="pxp-prop-card-1-gradient pxp-animate" />
+          <div className="pxp-prop-card-1-details">
+            <div className="pxp-prop-card-1-details-title">{homePageData.properties[i].adTitle}</div>
+      <div className="pxp-prop-card-1-details-price">{homePageData.properties[i].currency.symbol}{homePageData.properties[i].price}</div>
+            <div className="pxp-prop-card-1-details-features text-uppercase">{homePageData.properties[i].noOfBedrooms} BD <span>|</span> {homePageData.properties[i].noOfBathrooms} BA <span>|</span> {homePageData.properties[i].finishedSqftArea} SF</div>
+          </div>
+          <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+        </Link>
+      </div>   
+      ); 
+      items.push(item);
+    }
+  }
 
         return ( 
             <React.Fragment>
@@ -91,7 +120,7 @@ class home extends Component {
                           responsive = {responsive}
                           items={items}
                           disableDotsControls={true}
-                          paddingLeft={120} />
+                           />
                         <Link to="/properties" className="pxp-primary-cta text-uppercase mt-4 mt-md-5 pxp-animate">Browse All</Link>
                       </div>
                     </div>
@@ -150,74 +179,24 @@ class home extends Component {
                   <h2 className="pxp-section-h2">Explore Our Neighborhoods</h2>
                   <p className="pxp-text-light">Browse our comprehensive neighborhood listings</p>
                   <div className="row mt-4 mt-md-5">
-                    <div className="col-sm-12 col-md-6 col-lg-4">
+                  {
+                    homePageData && homePageData.propertyCounts && homePageData.propertyCounts.length 
+                    && homePageData.propertyCounts.map( (data, index) =>
+                    
+                      <div className="col-sm-12 col-md-6 col-lg-4">
                       <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
                         <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-1.jpg)'}} />
                         <div className="pxp-areas-1-item-details">
-                          <div className="pxp-areas-1-item-details-area">Bluemont</div>
-                          <div className="pxp-areas-1-item-details-city">Toronto, CA</div>
+                          <div className="pxp-areas-1-item-details-area">{data && data.cityName}</div>
+                          <div className="pxp-areas-1-item-details-city"></div>
                         </div>
-                        <div className="pxp-areas-1-item-counter"><span>324 Properties</span></div>
+                        <div className="pxp-areas-1-item-counter"><span>{data && data.propertyCount} Properties</span></div>
                         <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
                       </Link>
                     </div>
-                    
-                    <div className="col-sm-12 col-md-6 col-lg-4">
-                      <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
-                        <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-2.jpg)'}} />
-                        <div className="pxp-areas-1-item-details">
-                          <div className="pxp-areas-1-item-details-area">Overlake</div>
-                          <div className="pxp-areas-1-item-details-city">Ottawa, CA</div>
-                        </div>
-                        <div className="pxp-areas-1-item-counter"><span>158 Properties</span></div>
-                        <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
-                      </Link>
+                    )
+                  }
                     </div>
-                    <div className="col-sm-12 col-md-6 col-lg-4">
-                      <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
-                        <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-3.jpg)'}} />
-                        <div className="pxp-areas-1-item-details">
-                          <div className="pxp-areas-1-item-details-area">College Terrace</div>
-                          <div className="pxp-areas-1-item-details-city">Mississauga, CA</div>
-                        </div>
-                        <div className="pxp-areas-1-item-counter"><span>129 Properties</span></div>
-                        <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
-                      </Link>
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-4">
-                      <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
-                        <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-4.jpg)'}} />
-                        <div className="pxp-areas-1-item-details">
-                          <div className="pxp-areas-1-item-details-area">Inner Sunset</div>
-                          <div className="pxp-areas-1-item-details-city"> Brampton, CA</div>
-                        </div>
-                        <div className="pxp-areas-1-item-counter"><span>129 Properties</span></div>
-                        <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
-                      </Link>
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-4">
-                      <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
-                        <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-5.jpg)'}} />
-                        <div className="pxp-areas-1-item-details">
-                          <div className="pxp-areas-1-item-details-area">Upper West Side</div>
-                          <div className="pxp-areas-1-item-details-city"> Hamilton, CA</div>
-                        </div>
-                        <div className="pxp-areas-1-item-counter"><span>324 Properties</span></div>
-                        <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
-                      </Link>
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-4">
-                      <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
-                        <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-6.jpg)'}} />
-                        <div className="pxp-areas-1-item-details">
-                          <div className="pxp-areas-1-item-details-area">Marina District</div>
-                          <div className="pxp-areas-1-item-details-city">Markham, CA</div>
-                        </div>
-                        <div className="pxp-areas-1-item-counter"><span>158 Properties</span></div>
-                        <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
-                      </Link>
-                    </div>
-                  </div>
                   <Link to='/properties'  className="pxp-primary-cta text-uppercase mt-2 mt-md-4 pxp-animate">Explore Neighborhoods</Link>
                 </div>
                 <div className="pxp-cta-1 pxp-cover mt-100 pt-300" style={{backgroundImage: 'url(assets/images/cta-fig-1.jpg)', backgroundPosition: '50% 50%'}}>
@@ -233,7 +212,7 @@ class home extends Component {
                     </div>
                   </div>
                 </div>
-                {/* <div className="container mt-100">
+                <div className="container mt-100">
                   <h2 className="pxp-section-h2">Our Featured Professionals</h2>
                   <p className="pxp-text-light">We will help you sell your home</p>
                   <div className="row mt-4 mt-md-5">
@@ -257,55 +236,13 @@ class home extends Component {
                       )
                       : ""           
                       }
-                  <Link to='/professionals'  className="pxp-primary-cta text-uppercase mt-1 mt-md-4 pxp-animate">See All Professionals</Link>
+                      <div className="col-lg-12">
+                        <Link to='/professionals'  className="pxp-primary-cta text-uppercase mt-1 mt-md-4 pxp-animate">See All Professionals</Link>
+                      </div>
                 </div>
-                <div className="container mt-100">
-                  <h2 className="pxp-section-h2 text-center">Membership Plans</h2>
-                  <p className="pxp-text-light text-center">Choose the plan that suits you best</p>
-                  <div className="row mt-5">
-                    <div className="col-sm-12 col-md-6 col-lg-6">
-                      <Link to="" className="pxp-plans-1-item ">
-                        {/* <div className="pxp-plans-1-item-label">Most Popular</div> 
-                        <div className="pxp-plans-1-item-fig">
-                          <img src="assets/images/plan-professional.svg" alt="..." />
-                        </div>
-                        <div className="pxp-plans-1-item-title">Monthly</div>
-                        <ul className="pxp-plans-1-item-features list-unstyled">
-                          {/* <li>10 Listings</li> */}
-                          {/*                                      <span className="pxp-plans-1-item-price-currency">$</span>
-                                        <span className="pxp-plans-1-item-price-sum">29.99</span>
-                                        <span className="pxp-plans-1-item-price-period"> / months</span> 
-                        </ul>
-                        <div className="pxp-plans-1-item-price">
-                          <span className="pxp-plans-1-item-price-currency">$</span>
-                          <span className="pxp-plans-1-item-price-sum">29.99</span>
-                          <span className="pxp-plans-1-item-price-period"> / month</span>
-                        </div>
-                        <div className="pxp-plans-1-item-cta text-uppercase">Choose Plan</div>
-                      </Link>
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-6">
-                      <Link to="" className="pxp-plans-1-item pxp-is-popular">
-                        <div className="pxp-plans-1-item-label">Most Popular</div>
-                        <div className="pxp-plans-1-item-fig">
-                          <img src="assets/images/plan-business.svg" alt="..." />
-                        </div>
-                        <div className="pxp-plans-1-item-title">Annually</div>
-                        <ul className="pxp-plans-1-item-features list-unstyled">
-                          
-                        </ul>
-                        <div className="pxp-plans-1-item-price">
-                          <span className="pxp-plans-1-item-price-currency">$</span>
-                          <span className="pxp-plans-1-item-price-sum">299.99</span>
-                          <span className="pxp-plans-1-item-price-period"> / year</span>
-                        </div>
-                        <div className="pxp-plans-1-item-cta text-uppercase">Choose Plan</div>
-                      </Link>
-                    </div>
-                  </div>
                 </div>
-              </div>*/}
               </div> 
+             {pageContent}
             </React.Fragment>
          );
     }
@@ -317,108 +254,20 @@ class home extends Component {
 const responsive = {
   0: { items: 1 },
   568: { items: 2 },
-  1024: { items: 2.7 },
+  1024: { items: 4.7 },
 };
  
- const items = [
-   <div>
-     <Link to="/single-prop" className="pxp-prop-card-1 rounded-lg">
-       <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-       <div className="pxp-prop-card-1-gradient pxp-animate" />
-       <div className="pxp-prop-card-1-details">
-         <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-         <div className="pxp-prop-card-1-details-price">$890,000</div>
-         <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-       </div>
-       <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-     </Link>
-   </div>,
-   <div>
-     <Link to="/single-prop" className="pxp-prop-card-1 rounded-lg">
-       <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-       <div className="pxp-prop-card-1-gradient pxp-animate" />
-       <div className="pxp-prop-card-1-details">
-         <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-         <div className="pxp-prop-card-1-details-price">$890,000</div>
-         <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-       </div>
-       <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-     </Link>
-   </div>,
-   <div>
-     <Link to="/single-prop" className="pxp-prop-card-1 rounded-lg">
-       <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-       <div className="pxp-prop-card-1-gradient pxp-animate" />
-       <div className="pxp-prop-card-1-details">
-         <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-         <div className="pxp-prop-card-1-details-price">$890,000</div>
-         <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-       </div>
-       <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-     </Link>
-   </div>,
-   <div>
-     <Link to="/single-prop" className="pxp-prop-card-1 rounded-lg">
-       <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-       <div className="pxp-prop-card-1-gradient pxp-animate" />
-       <div className="pxp-prop-card-1-details">
-         <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-         <div className="pxp-prop-card-1-details-price">$890,000</div>
-         <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-       </div>
-       <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-     </Link>
-   </div>,
-   <div>
-     <Link to="/single-prop" className="pxp-prop-card-1 rounded-lg">
-       <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-       <div className="pxp-prop-card-1-gradient pxp-animate" />
-       <div className="pxp-prop-card-1-details">
-         <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-         <div className="pxp-prop-card-1-details-price">$890,000</div>
-         <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-       </div>
-       <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-     </Link>
-   </div>,
-   <div>
-     <Link to="/single-prop" className="pxp-prop-card-1 rounded-lg">
-       <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-       <div className="pxp-prop-card-1-gradient pxp-animate" />
-       <div className="pxp-prop-card-1-details">
-         <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-         <div className="pxp-prop-card-1-details-price">$890,000</div>
-         <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-       </div>
-       <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-     </Link>
-   </div>,
-   <div>
-     <Link to="/single-prop" className="pxp-prop-card-1 rounded-lg">
-       <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-       <div className="pxp-prop-card-1-gradient pxp-animate" />
-       <div className="pxp-prop-card-1-details">
-         <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-         <div className="pxp-prop-card-1-details-price">$890,000</div>
-         <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-       </div>
-       <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-     </Link>
-   </div>,
-   
- ];
+const mapStateToProps = state => {
+  return {
+    page: state.page
+  }
+};
 
-// const mapStateToProps = state => {
-//   return {
-//     page: state.page
-//   }
-// };
-
-// const mapDispatchToProps = dispatch => {
-//   console.log('mapDispatchToProps in HomePage ' );
-//   return {
-//       onGetHomePageData: () => dispatch(actions.getHomePageData())
-//   }
-// };
+const mapDispatchToProps = dispatch => {
+  console.log('mapDispatchToProps in HomePage ' );
+  return {
+      onGetHomePageData: () => dispatch(actions.getHomePageData())
+  }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(home);
  
-export default home;

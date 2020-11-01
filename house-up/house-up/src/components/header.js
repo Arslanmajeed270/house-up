@@ -34,6 +34,12 @@ class header extends Component {
   
     return null;
   }
+
+  dropDownHandler = () => {
+    this.setState({
+      dropDownShow: !this.state.dropDownShow
+    });
+  }
   
     render() { 
       const animateHeader = this.props.animateHeader;
@@ -103,7 +109,7 @@ class header extends Component {
                       { user && user.profilePictureUrl ?
                         <div to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
                         style={{ width: "44px", height: "44px", backgroundSize: "cover",  backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}}
-                        onClick={() => this.setState({dropDownShow: !dropDownShow})}
+                        onClick={this.dropDownHandler}
                         >
                           {dropDownShow ? 
                               <div className="profile_header_dropdown">
