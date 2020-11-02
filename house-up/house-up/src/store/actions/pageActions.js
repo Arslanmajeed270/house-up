@@ -45,10 +45,10 @@ export const getIndexPageData = (userId) => dispatch => {
     .post(
 		backendServerURL+'/home',
 		{
-			"channel":"ios",
+			"channel":"web",
 			"lat":43.787083,
 			"lng":-79.497369,
-			"city": "Vaughan",
+			"city": "",
 			"limit":10,
 			"offset":0,
 			"loggedInuserId":userId
@@ -174,7 +174,6 @@ export const GetProfessionDetailAPI = () => dispatch => {
 
 // Add Like to the post and property
 export const AddLike = (data, index ) => dispatch => {
-	dispatch(setPageLoading());
 	axios
     .post( backendServerURL+'/addLike' , data )
     .then(res => {
@@ -182,7 +181,8 @@ export const AddLike = (data, index ) => dispatch => {
 		if( res && res.data && res.data.resultCode === "200" ){   
 			const payload = {
 				index: index,
-				follow: res && res.data && res.data.data && res.data.data.likeAdded ? res.data.data.likeAdded : false
+				category: data.category,
+				follow: data.action === "Like" ? true : false
 			};
 			dispatch({
 				type: ADD_LIKE,
@@ -196,9 +196,7 @@ export const AddLike = (data, index ) => dispatch => {
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
-	})
-	.finally(() => dispatch(clearPageLoading()))
-	      
+	})	      
 };
 
 // Follow and Unfollow Professionals

@@ -60,10 +60,13 @@ class index extends Component {
     return null;
 
   }
-  addLike = (type , index , like, postId , propertId) => e => {
-    console.log('value of like',like);
-    e.preventDefault();
-    console.log("checking index: ", index );
+  addLike = (type , index , like, postId, propertId) => {
+
+    console.log('value of type',type);
+    console.log('value of index',index);
+    console.log("checking index: ", like );
+    console.log('value of postId',postId);
+    console.log('value of propertId',propertId);
     const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null ;
     let data ={
       postId:postId,
@@ -101,9 +104,9 @@ class index extends Component {
   
 
     render() { 
-      const { errors, loading, indexPageData , isLike , user  } = this.state;
+      const { errors, loading, indexPageData  , user  } = this.state;
 
-      console.log(indexPageData);
+      console.log("checking this.state: ", this.state);
 
       let pageContent = '';
 
@@ -152,6 +155,7 @@ class index extends Component {
   }
         return ( 
             <React.Fragment>
+              { !loading && 
               <main>
                 <div className="container">
                 {errors && errors.message &&
@@ -275,14 +279,14 @@ class index extends Component {
                                 <div className="row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
                                       <span 
-                                        onClick={this.addLike( 
-                                          data  && data.category ,
+                                        onClick={ () => this.addLike( 
+                                          data  && data.category,
                                           index,
-                                          data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser,
-                                          data  && data.object && data.object.postId && data.object.postId, 
-                                          data  && data.object && data.object.propertId && data.object.propertId, 
+                                          data.object && data.object.isPostLikedByLoggedInUser,
+                                          data && data.object && data.object.postId && data.object.postId,
+                                          0 
                                           )}
-                                      ><i className={ data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                      ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <i className="far fa-comment-alt post-navbar-items" />
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
@@ -315,13 +319,13 @@ class index extends Component {
                                   <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
                                 <div className="row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
-                                      <span onClick={this.addLike( 
-                                          data  && data.category ,
+                                      <span onClick={() => this.addLike( 
+                                          data  && data.category,
                                           index,
-                                          data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser,
-                                          data  && data.object && data.object.postId && data.object.postId, 
-                                          data  && data.object && data.object.propertId && data.object.propertId, 
-                                          )}><i className= {data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                          data.object && data.object.isPropertyLikedByLoggedInUser,
+                                          0, 
+                                          data  && data.object && data.object.propertId, 
+                                          )}><i className= {data.object && data.object.isPropertyLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <i className="far fa-comment-alt post-navbar-items" />
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
@@ -382,6 +386,7 @@ class index extends Component {
                         {indexPageData && indexPageData.vendors &&
                           indexPageData.vendors.map( (data , index) =>
                           // index>0 && index<7 ? 
+                          index < 6 &&
                         <div key={index} className="suggested-vendors-list "> 
                           <div className="mb-md-3">
                             <div className="row">
@@ -417,6 +422,7 @@ class index extends Component {
                   </div>
                 </div>
               </main>
+    }
                 { pageContent }
             </React.Fragment>
          );

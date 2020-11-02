@@ -68,10 +68,20 @@ export default function (state = initialState, action) {
 			return {indexPageData};
 		}
 		case ADD_LIKE: {
+			console.log("checking action.payload.index: ", action.payload.index);
 			let indexPageData = Object.assign({}, state.indexPageData);
 			if( indexPageData && indexPageData.vendorPostPropertiesList && 
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index ){
-					indexPageData.vendorPostPropertiesList[action.payload.index].object.user.isUserLikedByLoggedInUser = action.payload.follow;
+					console.log("checking action.payload.category:", action.payload.category);
+					if(action.payload.category === "Property"){
+						console.log("i am into property if");
+						indexPageData.vendorPostPropertiesList[action.payload.index].object.isPropertyLikedByLoggedInUser = action.payload.follow;
+						console.log("checking indexPageData: ", indexPageData);
+					}
+					if(action.payload.category === "Post"){
+						console.log("i am into post else");
+						indexPageData.vendorPostPropertiesList[action.payload.index].object.isPostLikedByLoggedInUser = action.payload.follow;
+					}
 			} 
 			return{indexPageData};
 		}
