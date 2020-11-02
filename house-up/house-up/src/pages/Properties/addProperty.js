@@ -38,8 +38,9 @@ form2DataHandler = ( form2Data ) => {
 }
 form3DataHandler = ( form3Data ) => {
   // console.log('checking form3 data in add property paren page',form3Data);
-  this.setState({ form3Data : form3Data});
-  this.addProperty();
+  this.setState({ form3Data : form3Data}, () => (
+    this.addProperty()
+  ));
 }
 
 
@@ -85,28 +86,29 @@ addProperty = () =>{
     const form3Data = this.state.form3Data;
 
     const formData = {
+      currencyId:form1Data.currencyId ? form1Data.currencyId : 0, 
+      description: form1Data.description ? form1Data.description : "",
+      contactEmail:form1Data.contactEmail ? form1Data.contactEmail : "", 
+      adTitle: form1Data.adTitle ? form1Data.adTitle : "", 
+      contactName: form1Data.contactName ? form1Data.contactName : "",
+      contactNumber:form1Data.contactNumber ? form1Data.contactNumber : 0,
+      userId: form1Data.userId ? form1Data.userId : 0, 
+      price: form1Data.price ? form1Data.price : 0, 
+
       yearBuilt: form2Data.yearBuilt ? form2Data.yearBuilt : 0, 
       balcony: form2Data.balcony ? form2Data.balcony : false, 
-      currencyId:form1Data.currencyId ? form1Data.currencyId : 0, 
       disposal: form2Data.disposal ? form2Data.disposal : false, 
-      description: form1Data.description ? form1Data.description : "",
-      longitude:form3Data.longitude ? form3Data.longitude : 0, 
       finishedSqftArea: form2Data.finishedSqftArea ? form2Data.finishedSqftArea : 0,
       lotDimensionLength: form2Data.lotDimensionLength ? form2Data.lotDimensionLength : 0, 
       noOfBathrooms: form2Data.noOfBathrooms ? form2Data.noOfBathrooms : 0, 
-      contactEmail:form1Data.contactEmail ? form1Data.contactEmail : "", 
-      adTitle: form1Data.adTitle ? form1Data.adTitle : "", 
       basementId: form2Data.basementId ? form2Data.basementId :0,
       waterSourceID: form2Data.waterSourceID ? form2Data.waterSourceID : 0,
-      propertyTypeId: form2Data.propertyTypeId ? form2Data.propertyTypeId : 0,
-      lotDimensionWidth: form2Data.lotDimensionWidth ? form2Data.lotDimensionWidth : 0, 
-      city: form3Data.city ? form3Data.city : "" ,
       storeys: form2Data.storeys ? form2Data.storeys :0, 
+      propertyTypeId: form2Data.propertyTypeId ? form2Data.propertyTypeId : 0,
       rentalListingYN: form2Data.rentalListingYN ? form2Data.rentalListingYN : "",
       yearRoofInstalled: form2Data.yearRoofInstalled ? form2Data.yearRoofInstalled : 0,
-      cityId: 17150,
+      lotDimensionWidth: form2Data.lotDimensionWidth ? form2Data.lotDimensionWidth : 0, 
       parkingSpaces: form2Data.parkingSpaces ? form2Data.parkingSpaces : 0, 
-      contactNumber:form1Data.contactNumber ? form1Data.contactNumber : 0, 
       ac: form2Data.ac ? form2Data.ac : false, 
       garageId:form2Data.garageId ? form2Data.garageId : 0,
       dishWasher: form2Data.dishWasher ? form2Data.dishWasher: false ,
@@ -115,20 +117,24 @@ addProperty = () =>{
       playroom: form2Data.playroom ? form2Data.playroom : false,
       bar: form2Data.bar ? form2Data.bar : false, 
       primaryHeatingFuelId: form2Data.primaryHeatingFuelId ? form2Data.primaryHeatingFuelId : 0, 
-      contactName: form1Data.contactName ? form1Data.contactName : "",
       internet: form2Data.internet ? form2Data.internet : false, 
       buildingTypeId: form2Data.buildingTypeId ? form2Data.buildingTypeId : 0 , 
-      latitude:form3Data.latitude ? form3Data.latitude : 0, 
-      price: form1Data.price ? form1Data.price : 0, 
-      amenites: "",
-      channel: "web", 
-      userId: 64, 
       lotTotalArea: form2Data.lotTotalArea ? form2Data.lotTotalArea : 0, 
-      address: form3Data.address ? form3Data.address : "",
       gym: form2Data.gym ? form2Data.gym : false, 
-      yearFurnaceBuilt: form2Data.yearFurnaceBuilt ? form2Data.yearFurnaceBuilt : 0,
       areaTypeId: form2Data.areaTypeId ? form2Data.areaTypeId : 0,
-      images : form3Data.images ? form3Data.images : ""
+      yearFurnaceBuilt: form2Data.yearFurnaceBuilt ? form2Data.yearFurnaceBuilt : 0,
+      condoFee: `${form2Data.condoFee ? form2Data.condoFee : 0}`,
+      
+      latitude:form3Data.latitude ? form3Data.latitude : 0, 
+      longitude:form3Data.longitude ? form3Data.longitude : 0, 
+      city: form3Data.city ? form3Data.city : "" ,
+      address: form3Data.address ? form3Data.address : "",
+      images : form3Data.images,
+      cityId: 0,
+      amenites: "",
+      channel: "web",
+      action:"add",
+      propertyId: 0
     } 
     console.log("checking formData: ",formData);
 
@@ -144,8 +150,11 @@ formShowHandler = (num) =>{
     });
 }
 render() { 
-    const { dropDownData ,loading , errors} = this.state;
+    const { dropDownData ,loading , errors, form1Data, form2Data, form3Data} = this.state;
     let pageContent = '';
+    console.log("checking form1Data: ",form1Data );
+    console.log("checking form2Data: ",form2Data );
+    // console.log("checking form3Data: ",form3Data );
 
       if(loading){
         pageContent = <Spinner />

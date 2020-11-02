@@ -43,9 +43,13 @@ class form3 extends Component {
             longitude:this.state.longitude,
             latitude:this.state.latitude,
         }
-       // console.log(dataForm3);
+    //    console.log(dataForm3);
+    // if(this.state.images.length !== 0){
+    //     this.props.form3DataHandler(dataForm3);
+    //     }
         this.props.form3DataHandler(dataForm3);
-      }
+
+    }
 
       onChange = e => {
         if(e.target.name === 'images'){
@@ -119,23 +123,23 @@ class form3 extends Component {
                     <div className="row border-property">
                         <div className="col-md-7">
                             <h6 className="titles-property">Address</h6>
-                            <input className="input-feilds-property" type="text" name="address" value={address} onChange={this.onChange} />
+                            <input className="input-feilds-property" type="text" name="address" value={address} required onChange={this.onChange} />
                         </div>
                         <div className="col-md-5">
                             <h6 className="titles-property">*City</h6>
-                            <input className="input-feilds-property" name="city" value={city} type="text"  onChange={this.onChange}/>
+                            <input className="input-feilds-property" name="city" value={city} type="text" required  onChange={this.onChange}/>
                         </div>
                         <div className="col-md-3">
                             <h6 className="titles-property">* Province/State</h6>
-                            <input className="input-feilds-property" type="text" />
+                            <input className="input-feilds-property" required type="text" />
                         </div>
                         <div className="col-md-4">
                             <h6 className="titles-property">*Postal/ZIP code</h6>
-                            <input className="input-feilds-property" type="text" />
+                            <input className="input-feilds-property" required type="text" />
                         </div>
                         <div className="col-md-5">
                             <h6 className="titles-property">* Country</h6>
-                            <input className="input-feilds-property" type="text" />
+                            <input className="input-feilds-property" required type="text" />
                         </div>
                     </div>
                     <div className="row border-property">

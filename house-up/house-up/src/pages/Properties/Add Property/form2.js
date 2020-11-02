@@ -12,12 +12,12 @@ class from2 extends Component {
             balcony:false,
             disposal:false,
             finishedSqftArea:null,
-            lotDimensionLength:null,
+            lotDimensionLength:0,
             noOfBathrooms:null,
             basementId:null,
             waterSourceID:null,
             propertyTypeId:null,
-            lotDimensionWidth:null,
+            lotDimensionWidth:0,
             storeys:null,
             rentalListingYN:'',
             yearRoofInstalled:null,
@@ -33,27 +33,63 @@ class from2 extends Component {
             internet:false,
             buildingTypeId:null,
             amenites:'',
-            lotTotalArea:null,
+            lotTotalArea:0,
             gym:false,
             yearFurnaceBuilt:null,
-            areaTypeId:null
+            areaTypeId:null,
+            propertyType:[],
+            parkingSpace:[],
+            bedroomCount:[],
+            bathroomCount:[],
+            basementType:[],
+            garageType:[],
+            primaryHeatingFuel:[],
+            waterSource:[],
+            storeysCount:[],
+            areaType:[],
+            buildingType:[],
+            condoFee:0
         };
     }
     moreOptionToggle =()=>
     {
         this.setState({moreInfo:!this.state.moreInfo});
     }
-    
+    componentDidMount(){
+      console.log('BOSS',this.props.dropDownData)
+      const dropDownData1 = this.props.dropDownData;
+      this.setState({
+        propertyType : dropDownData1 && dropDownData1.propertyType ? dropDownData1.propertyType : [],
+        parkingSpace : dropDownData1 && dropDownData1.parkingSpaces ? dropDownData1.parkingSpaces : [],
+        bedroomCount : dropDownData1 && dropDownData1.bedroomCount ? dropDownData1.bedroomCount : [],
+        bathroomCount : dropDownData1 && dropDownData1.bathroomCount ? dropDownData1.bathroomCount : [],
+        basementType : dropDownData1 && dropDownData1.basementType ? dropDownData1.basementType : [],
+        garageType : dropDownData1 && dropDownData1.garageType ? dropDownData1.garageType : [],
+        primaryHeatingFuel : dropDownData1 && dropDownData1.primaryHeatingFuel ? dropDownData1.primaryHeatingFuel : [],
+        waterSource : dropDownData1 && dropDownData1.waterSource ? dropDownData1.waterSource : [],
+        storeysCount : dropDownData1 && dropDownData1.storeysCount ? dropDownData1.storeysCount : [],
+        areaType : dropDownData1 && dropDownData1.areaType ? dropDownData1.areaType : [],
+        buildingType : dropDownData1 && dropDownData1.buildingType ? dropDownData1.buildingType : [],
+      });
+        
+    }
     onChange = e => {
+      const targetName = e.target.name;
       if(e.target.type === "checkbox"){
-        const value = !this.state[e.target.name]
+        const value = !this.state[targetName]
         this.setState({
-          [e.target.name]: value
+          [targetName]: value
         });
       }
+      else if( targetName === "lotDimensionLength" || targetName === "lotDimensionWidth" ){
+        this.setState({
+          [targetName]: e.target.value,
+          lotTotalArea: targetName === "lotDimensionLength" ? e.target.value * this.state.lotDimensionWidth : e.target.value * this.state.lotDimensionLength
+        });
+       }
       else{
         this.setState({
-          [e.target.name]: e.target.value
+          [targetName]: e.target.value
         });
       }
     }
@@ -88,9 +124,72 @@ class from2 extends Component {
           lotTotalArea:Number(this.state.lotTotalArea),
           gym:this.state.gym,
           yearFurnaceBuilt:Number(this.state.yearFurnaceBuilt),
-          areaTypeId:Number(this.state.areaTypeId)
+          areaTypeId:Number(this.state.areaTypeId),
+          condoFee:this.state.condoFee
          };
-        console.log('checking form2 Data', dataForm2);
+         const { noOfBathrooms  ,basementId ,
+          waterSourceID ,propertyTypeId , storeys,
+           garageId,noOfBedrooms 
+           ,primaryHeatingFuelId , buildingTypeId
+           , areaTypeId ,propertyType ,parkingSpace,bedroomCount,
+           bathroomCount,basementType,garageType,primaryHeatingFuel,waterSource,storeysCount,areaType,buildingType, } = this.state;
+         
+           if(propertyType && propertyType.length && !propertyTypeId){
+          this.setState({
+            propertyTypeId: propertyType[0].id
+          });
+        }
+        if(parkingSpace && parkingSpace.length && !noOfBedrooms){
+          this.setState({
+            noOfBedrooms: parkingSpace[0].id
+          });
+        }
+        if(bedroomCount && bedroomCount.length && !bedroomCount){
+          this.setState({
+            propertyTypeId: bedroomCount[0].id
+          });
+        }
+        if(bathroomCount && bathroomCount.length && !noOfBathrooms){
+          this.setState({
+            noOfBathrooms: bathroomCount[0].id
+          });
+        }
+        if(basementType && basementType.length && !basementId){
+          this.setState({
+            basementId: basementType[0].id
+          });
+        }
+        if(garageType && garageType.length && !garageId){
+          this.setState({
+            garageId: garageType[0].id
+          });
+        }
+        if(primaryHeatingFuel && primaryHeatingFuel.length && !primaryHeatingFuelId){
+          this.setState({
+            primaryHeatingFuelId: primaryHeatingFuel[0].id
+          });
+        }
+        if(waterSource && waterSource.length && !waterSourceID){
+          this.setState({
+            waterSourceID: waterSource[0].id
+          });
+        }
+        if(storeysCount && storeysCount.length && !storeys){
+          this.setState({
+            storeys: storeysCount[0].id
+          });
+        }
+        if(areaType && areaType.length && !areaTypeId){
+          this.setState({
+            areaTypeId: areaType[0].id
+          });
+        }
+        if(buildingType && buildingType.length && !buildingTypeId){
+          this.setState({
+            buildingTypeId: buildingType[0].id
+          });
+        }
+        // console.log('checking form2 Data', dataForm2);
          this.props.form2DataHandler(dataForm2);
          this.props.formShowHandler(2)
     }
@@ -102,24 +201,9 @@ class from2 extends Component {
           waterSourceID ,propertyTypeId ,lotDimensionWidth , storeys,rentalListingYN , yearRoofInstalled,
           parkingSpaces,ac , garageId,dishWasher ,garage ,noOfBedrooms , playroom
            ,primaryHeatingFuelId  , internet, buildingTypeId
-           ,gym ,yearFurnaceBuilt, areaTypeId , lotTotalArea } = this.state;
+           ,gym ,yearFurnaceBuilt, areaTypeId , lotTotalArea , dropDownData  ,propertyType ,parkingSpace,bedroomCount,
+           bathroomCount,basementType,garageType,primaryHeatingFuel,waterSource,storeysCount,areaType,buildingType,condoFee } = this.state;
 
-
-        const dropDownData1 = this.props.dropDownData;
-       // console.log(dropDownData1);
-        const propertyType = dropDownData1 && dropDownData1.propertyType ? dropDownData1.propertyType : [];
-        const parkingSpace = dropDownData1 && dropDownData1.parkingSpaces ? dropDownData1.parkingSpaces : [];
-        const bedroomCount = dropDownData1 && dropDownData1.bedroomCount ? dropDownData1.bedroomCount : [];
-        const bathroomCount = dropDownData1 && dropDownData1.bathroomCount ? dropDownData1.bathroomCount : [];
-        const basementType = dropDownData1 && dropDownData1.basementType ? dropDownData1.basementType : [];
-        const garageType = dropDownData1 && dropDownData1.garageType ? dropDownData1.garageType : [];
-        const primaryHeatingFuel = dropDownData1 && dropDownData1.primaryHeatingFuel ? dropDownData1.primaryHeatingFuel : [];
-        const waterSource = dropDownData1 && dropDownData1.waterSource ? dropDownData1.waterSource : [];
-        const storeysCount = dropDownData1 && dropDownData1.storeysCount ? dropDownData1.storeysCount : [];
-        const areaType = dropDownData1 && dropDownData1.areaType ? dropDownData1.areaType : [];
-        const buildingType = dropDownData1 && dropDownData1.buildingType ? dropDownData1.buildingType : [];
-
-     // console.log("checking this.state: ", this.state );
 
         return ( 
             <React.Fragment >
@@ -157,8 +241,8 @@ class from2 extends Component {
                         <div className="col-md-4">
                             <h6 className="titles-property" required >Rental listing</h6>
                             <select className="input-feilds-property"  name="rentalListingYN" onChange={this.onChange} value={rentalListingYN}>
-                                <option vlaue={'Y'}>Yes</option>
-                                <option value={'N'}>No </option>
+                                <option value='Y'>Yes</option>
+                                <option value='N'>No </option>
                             </select>
                         </div>
                     </div>
@@ -208,7 +292,7 @@ class from2 extends Component {
                         </div>
                         <div className="col-md-4">
                             <h6 className="titles-property">Condo fees (/month)</h6>
-                            <input className="input-feilds-property"  type="text"  required/>
+                            <input className="input-feilds-property" name="condoFee" value="condoFee" type="text"  required/>
                         </div>
                       </div>
                       : 
