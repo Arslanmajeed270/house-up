@@ -25,6 +25,7 @@ class form3 extends Component {
             longitude:'',
             latitude:'',
             imagePreview:[],
+            googleMapKey: process.env.REACT_APP_GOOGLE_MAP_KEY | "AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk"
         };
       }
 
@@ -45,7 +46,7 @@ class form3 extends Component {
             longitude:this.state.longitude,
             latitude:this.state.latitude,
         }
-        console.log(dataForm3);
+       // console.log(dataForm3);
         this.props.form3DataHandler(dataForm3);
       }
 
@@ -57,7 +58,7 @@ class form3 extends Component {
             imagePreviewState.push(imagePreview);
             fileUpload(e)
             .then((data) => {
-                console.log("base64 :",data.base64);
+               // console.log("base64 :",data.base64);
                 images.push(data.base64);
                 this.setState({
                     imagePreview: imagePreviewState,
@@ -71,7 +72,7 @@ class form3 extends Component {
       }
 
     render() { 
-        const{ address , city , imagePreview } = this.state;
+        const{ address , city , imagePreview, googleMapKey } = this.state;
         const files = this.state.files.map(file => (
             <li key={file.name}>
               {file.name} - {file.size} bytes
@@ -104,7 +105,7 @@ class form3 extends Component {
                         </div>
                         <div className="col-md-12" style={{ height: '300px', width: '100%' }}>
                             <GoogleMapReact
-                            bootstrapURLKeys={{ key: 'AIzaSyDgNUDOEaiSvycDmddKCtls6ZLxJOF_Jmg' }}
+                            bootstrapURLKeys={{ key: googleMapKey }}
                             defaultCenter={this.props.center}
                             defaultZoom={this.props.zoom}
                             >

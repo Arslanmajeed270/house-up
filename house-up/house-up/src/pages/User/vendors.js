@@ -31,13 +31,13 @@ class vendor extends Component {
   }
 
   componentDidMount() {
-    console.log('professionals componenet did mount');
+    // console.log('professionals componenet did mount');
     this.props.onGetVendorsData();
   }
 
     render() { 
       const { vendorsData } = this.state;
-      console.log('checking vendorsData in professionals: ', vendorsData);
+      // console.log('checking vendorsData in professionals: ', vendorsData);
 
         return ( 
             <React.Fragment>

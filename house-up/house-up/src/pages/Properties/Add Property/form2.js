@@ -90,7 +90,7 @@ class from2 extends Component {
           yearFurnaceBuilt:this.state.yearFurnaceBuilt,
           areaTypeId:this.state.areaTypeId
          };
-         console.log('checking form2 Data', dataForm2);
+        // console.log('checking form2 Data', dataForm2);
          this.props.form2DataHandler(dataForm2);
          this.props.formShowHandler(2)
     }
@@ -106,7 +106,7 @@ class from2 extends Component {
 
 
         const dropDownData1 = this.props.dropDownData;
-        console.log(dropDownData1);
+       // console.log(dropDownData1);
         const propertyType = dropDownData1 && dropDownData1.propertyType ? dropDownData1.propertyType : [];
         const parkingSpace = dropDownData1 && dropDownData1.parkingSpaces ? dropDownData1.parkingSpaces : [];
         const bedroomCount = dropDownData1 && dropDownData1.bedroomCount ? dropDownData1.bedroomCount : [];
@@ -119,7 +119,7 @@ class from2 extends Component {
         const areaType = dropDownData1 && dropDownData1.areaType ? dropDownData1.areaType : [];
         const buildingType = dropDownData1 && dropDownData1.buildingType ? dropDownData1.buildingType : [];
 
-      console.log("checking this.state: ", this.state );
+     // console.log("checking this.state: ", this.state );
 
         return ( 
             <React.Fragment >

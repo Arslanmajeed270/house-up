@@ -58,8 +58,8 @@ class forgotPass extends Component {
         return null;
       }
       componentDidMount (){
-        console.log('indexPage componenet did mount');
-        console.log(this.props.phNumber);
+        // console.log('indexPage componenet did mount');
+        // console.log(this.props.phNumber);
         let data={
             emailAddress:"",
             msisdn:this.props.phNumber,
@@ -69,17 +69,17 @@ class forgotPass extends Component {
         this.props.onGetUserDetails(data);
       }
       changeHandler = e => {
-        console.log('heelo in onChange');
+        // console.log('heelo in onChange');
         this.setState({[e.target.name]: e.target.value});
         }
       onSubmit = e => {
         e.preventDefault();
-        console.log('checking click handler');
+        // console.log('checking click handler');
              if(this.state.newPassword !== this.state.confirmPassword){
                 this.props.onErrorSet("Password not matched!");
                 return;
             }
-           console.log(this.state.userDetails);
+          //  console.log(this.state.userDetails);
           let userId = this.state.userDetails && this.state.userDetails.userId ? this.state.userDetails.userId : ''; 
            const userData = {
             userId:userId,   
@@ -87,7 +87,7 @@ class forgotPass extends Component {
             newPassword: this.state.newPassword,
          };
         
-         console.log('checking data for forgotpass API', userData);
+        //  console.log('checking data for forgotpass API', userData);
             this.props.onResetUserPassword(userData);
             this.props.forgotPassCongratsHandler('forgotPassCongrats');
          }
@@ -95,7 +95,7 @@ class forgotPass extends Component {
     render() {
         const{ viewPass,viewConfirmPass, userDetail, newPassword , confirmPassword , errors , loading } = this.state;
         console.log('checking state data', userDetail);
-        console.log("checking this.props.show: ", this.props.show);
+        // console.log("checking this.props.show: ", this.props.show);
         
         return ( 
             <Modal 

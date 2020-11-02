@@ -37,7 +37,7 @@ class singleVendor extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    console.log('checking id in sigle vendero: ', id);
+    // console.log('checking id in sigle vendero: ', id);
     this.setState({
       id: id
     });
@@ -57,8 +57,8 @@ class singleVendor extends Component {
 
     render() { 
       const { singleVendorData } = this.state;
-      console.log('SINGLE professionals');
-      console.log('checking singleVendorsData in professionals: ', singleVendorData);
+      // console.log('SINGLE professionals');
+      // console.log('checking singleVendorsData in professionals: ', singleVendorData);
       
         return ( 
             <React.Fragment>

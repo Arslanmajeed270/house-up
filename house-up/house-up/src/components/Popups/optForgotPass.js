@@ -26,9 +26,9 @@ class optForgotPass extends Component {
         let stateChanged = false;
         let changedState = {};
     
-        console.log('checking otpAuthenticate: ', otpAuthenticate);
+        // console.log('checking otpAuthenticate: ', otpAuthenticate);
     
-        if(  (otpAuthenticate || otpAuthenticate === false) && state.otpAuthenticate !== otpAuthenticate){
+        if((otpAuthenticate || otpAuthenticate === false) && state.otpAuthenticate !== otpAuthenticate){
           changedState.otpAuthenticate = otpAuthenticate;  
           if( changedState.otpAuthenticate === true ){
             props.onFalseOtpAutheticate();
@@ -70,7 +70,7 @@ class optForgotPass extends Component {
 
     render() { 
         const { errors } = this.state;
-        console.log('checking value of otp: ', this.state.otp);
+        // console.log('checking value of otp: ', this.state.otp);
        
         let phoneNumber = '';
         if(this.props.phNumber)
@@ -131,7 +131,7 @@ const mapStateToProps = state => {
   
  
 const mapDispatchToProps = dispatch => {
-  console.log('mapDispatchToProps in HomePage ' );
+  // console.log('mapDispatchToProps in HomePage ' );
   return {
         onFalseOtpAutheticate: () => dispatch({type: actionTypes.OTP_AUTHENTICATE_FAIL }),
         onVerifyPin : (data)=>dispatch(actions.verifyPin(data)),

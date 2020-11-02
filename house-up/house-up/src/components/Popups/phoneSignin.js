@@ -79,13 +79,13 @@ class phoneSignIn extends Component {
       channel: "HouseUp",
       loginBy: "msisdn"
     };
-    console.log(userData);
+    // console.log(userData);
     this.props.onLogin(userData, this.props.history);
   }
  
   render() {
     const { errors , loading, viewPass, msisdn , password } = this.state;
-    console.log("checking this.props.history: ", this.props.history);
+    // console.log("checking this.props.history: ", this.props.history);
     return ( 
     <Modal 
       show={this.props.show}

@@ -16,7 +16,7 @@ class singleProp extends Component {
       this.setState({
         contactModalState : !this.state.contactModalState
       });
-      console.log('cecking login pop handler', this.state.signupState);
+      // console.log('cecking login pop handler', this.state.signupState);
     }
 
     render() { 
