@@ -5,9 +5,6 @@ import GoogleMapReact from 'google-map-react';
 
 import fileUpload from 'fuctbase64';
 
-
-
-
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class form3 extends Component {
@@ -77,6 +74,9 @@ class form3 extends Component {
               {file.name} - {file.size} bytes
             </li>
           ));
+
+let googpleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_KEY;
+
         return ( 
             <React.Fragment>
                 <form onSubmit={this.onSubmit}>
@@ -104,15 +104,15 @@ class form3 extends Component {
                         </div>
                         <div className="col-md-12" style={{ height: '300px', width: '100%' }}>
                             <GoogleMapReact
-                            bootstrapURLKeys={{ key: 'AIzaSyDgNUDOEaiSvycDmddKCtls6ZLxJOF_Jmg' }}
-                            defaultCenter={this.props.center}
-                            defaultZoom={this.props.zoom}
-                            >
-                            <AnyReactComponent
-                                lat={59.955413}
-                                lng={30.337844}
-                                text="My Marker"
-                            />
+                                bootstrapURLKeys={{ key: googpleMapApiKey }}
+                                defaultCenter={this.props.center}
+                                defaultZoom={this.props.zoom}
+                                >
+                                <AnyReactComponent
+                                    lat={59.955413}
+                                    lng={30.337844}
+                                    text="My Marker"
+                                />
                             </GoogleMapReact>
                         </div>
                     </div>

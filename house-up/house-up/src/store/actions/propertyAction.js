@@ -5,7 +5,8 @@ import {
     PAGE_LOADED,
     PAGE_LOADING,
 	SET_ERRORS,
-    PROPERTY_DROP_DWON
+	PROPERTY_DROP_DWON,
+	GET_SINGLE_PROPERTY
 } from './actionTypes';
 
 
@@ -80,3 +81,27 @@ export const addProperty = (userData) => dispatch => {
 	.finally(() => dispatch(clearPageLoading()))
 };
 
+//Get Singel Property  
+export const getSingleProperty = (userData) => dispatch => {
+	dispatch(setPageLoading());
+	console.log('checking backendServerURL: ', backendServerURL);
+
+	axios
+    .post(backendServerURL+'/getProperty',userData)
+    .then(res => {
+		console.log('checking getSinglePropertyData: ', res);	
+        dispatch(
+			{
+				type: GET_SINGLE_PROPERTY,
+				payload: res.data && res.data.data &&  res.data.data.length && res.data.data[0] ? res.data.data[0] : {}
+			}
+		);
+        dispatch(clearErrors());
+    })
+    .catch(err => {
+		console.log("error: ", err);
+		console.log('checking error');
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})
+	.finally(() => dispatch(clearPageLoading()))
+};

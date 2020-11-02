@@ -1,12 +1,14 @@
 import {
     PAGE_LOADED,
     PAGE_LOADING,
-    PROPERTY_DROP_DWON
+	PROPERTY_DROP_DWON,
+	GET_SINGLE_PROPERTY
 } from '../actions/actionTypes';
 
 
 const initialState = {
-	dropDownData:{}
+	dropDownData:{},
+	singlePropertyData:{}
 };
 
 
@@ -27,7 +29,11 @@ export default function (state = initialState, action) {
 			return {
 				dropDownData : action.payload
 			};
-		
+		case GET_SINGLE_PROPERTY:
+			return {
+				singlePropertyData : action.payload
+			};
+			
 	default:
 			return state;
 	}

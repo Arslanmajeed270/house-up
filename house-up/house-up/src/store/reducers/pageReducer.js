@@ -6,7 +6,8 @@ import {
 	GET_PROFESSIONS,
 	ADD_LIKE,
 	SHOW_POP_UP,
-	HIDE_POP_UP
+	HIDE_POP_UP,
+	SET_HOME_DATA
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -15,7 +16,8 @@ const initialState = {
 	indexPageData :{},
 	countries: [],
 	professionList: [],
-	showPopUp:false
+	showPopUp:false,
+	homePageData:{}
 };
 
 export default function (state = initialState, action) {
@@ -55,6 +57,11 @@ export default function (state = initialState, action) {
 			return {
 				showPopUp:false
 			}
+		case SET_HOME_DATA:
+			return{
+				homePageData:action.payload
+			}
+			
 	default:
 			return state;
 	}
