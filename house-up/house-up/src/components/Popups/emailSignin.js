@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
+import * as actionTypes from '../../store/actions/actionTypes';
 import { Link } from 'react-router-dom';
 
 import { checkPawwordPattern } from '../../utils/regex';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
+import{ Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 
 class emailSignin extends Component {
     constructor(props) {
@@ -13,9 +16,42 @@ class emailSignin extends Component {
         this.state = {
             emailAddress: '',
             password: '',
-            viewPass: false
+            viewPass: false,
+            errors: {},
+          loading : false,
         };
     }
+    static getDerivedStateFromProps(props, state) {
+        const errors = props.errors;
+        const page = props.page; 
+        let stateChanged = false;
+        let changedState = {};
+    
+        if( page && JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp) ){
+          changedState.showPopUp = page.showPopUp;  
+          if( changedState.showPopUp === true ){
+            props.onHidePopUp();
+            props.closeCodelHanlder('phoneSignin');
+          }
+          stateChanged = true;
+        }
+    
+        if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+            changedState.errors = errors;
+            stateChanged = true;
+        }
+          
+        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+          changedState.loading = page.loading;
+          stateChanged = true;            
+        }
+        
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+      }
+      
     onChange = e => {
         this.setState({
           [e.target.name]: e.target.value
@@ -28,7 +64,7 @@ class emailSignin extends Component {
       
       
        onSubmit = e => {
-        // console.log('checking click handler');
+        console.log('checking click handler');
              e.preventDefault();
              
             if(!checkPawwordPattern(this.state.password)){
@@ -47,7 +83,7 @@ class emailSignin extends Component {
              this.props.onLogin(userData, this.props.history);
          }
     render() {
-        const {viewPass , emailAddress , password } = this.state;
+        const {viewPass , emailAddress , password,errors , loading } = this.state;
         // console.log("checking this.props.show: ", this.props.show);
         return ( 
             <Modal 
@@ -65,10 +101,15 @@ class emailSignin extends Component {
                         <div className="logo-modal" >
                             <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" />
                             </div>
-                            <form  onSubmit={this.onSubmit}>
                             <div className="form-group">
                                 <Link to="#" style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.phoneSigninHandler('phoneSignin')}>Login with mobile</Link>
                             </div>
+                            <form  onSubmit={this.onSubmit}>
+                            {errors && errors.message &&
+                                <Alert variant='danger'  style={{marginTop:'15px'}}>
+                                <strong>Error!</strong> { errors.message }
+                                </Alert>
+                            }
                                 <div className="form-group">
                                     <input type="text" 
                                         className="form-control"
@@ -109,6 +150,8 @@ class emailSignin extends Component {
                                 </div> 
                             </form> 
                         </div>
+                { loading ? <Spinner /> : "" }
+
                     </Modal.Body>
                 </Modal> 
          );
@@ -118,13 +161,16 @@ class emailSignin extends Component {
 const mapStateToProps = state => {
     return {
       auth: state.auth,
+      errors: state.errors
     }
   };
   
   const mapDispatchToProps = dispatch => {
     return {
         onLogin: (email, history) => dispatch(actions.loginUser(email, history)),
-        
+        onErrorSet: (msg) =>  dispatch({type: actionTypes.SET_ERRORS, payload: { message: msg }}),
+        onHidePopUp: () => dispatch({type: actionTypes.HIDE_POP_UP }),
+   
     }
   };
   

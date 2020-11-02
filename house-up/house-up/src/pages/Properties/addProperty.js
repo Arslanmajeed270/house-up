@@ -6,6 +6,11 @@ import * as actions from '../../store/actions/index';
 import Form1 from './Add Property/form1';
 import Form2 from './Add Property/form2';
 import Form3 from './Add Property/form3';
+import Spinner from '../../components/common/Spinner';
+
+import * as actionTypes from '../../store/actions/actionTypes';
+
+import{ Alert } from 'react-bootstrap';
 
 class addProperty extends Component {
   constructor(props){
@@ -15,7 +20,10 @@ class addProperty extends Component {
         dropDownData:{},
         form1Data:{},
         form2Data:{},
-        form3Data:{}
+        form3Data:{},
+      loading : false,
+      error : {}
+
     };
 }
 
@@ -54,6 +62,11 @@ static getDerivedStateFromProps(props, state) {
       changedState.errors= errors;
       stateChanged = true;
     }
+    if(property && JSON.stringify(state.loading) !== JSON.stringify(property.loading)){
+      changedState.loading = property.loading;
+      stateChanged = true;            
+  }
+
 
     if(stateChanged){
       return changedState;
@@ -72,54 +85,54 @@ addProperty = () =>{
     const form3Data = this.state.form3Data;
 
     const formData = {
-      yearBuilt: form2Data.yearBuilt ? form2Data.yearBuilt : "0", 
-      balcony: form2Data.balcony ? `${form2Data.balcony}` : "false", 
-      currencyId:form1Data.currencyId ? form1Data.currencyId : "", 
-      disposal: form2Data.disposal ? `${form2Data.disposal}` : "false", 
+      yearBuilt: form2Data.yearBuilt ? form2Data.yearBuilt : 0, 
+      balcony: form2Data.balcony ? form2Data.balcony : false, 
+      currencyId:form1Data.currencyId ? form1Data.currencyId : 0, 
+      disposal: form2Data.disposal ? form2Data.disposal : false, 
       description: form1Data.description ? form1Data.description : "",
-      longitude:"", 
-      finishedSqftArea: form2Data.finishedSqftArea ? `${form2Data.finishedSqftArea}` : "0",
-      lotDimensionLength: form2Data.lotDimensionLength ? `${form2Data.lotDimensionLength}` : "0", 
-      noOfBathrooms: form2Data.noOfBathrooms ? `${form2Data.noOfBathrooms}` : "0", 
+      longitude:form3Data.longitude ? form3Data.longitude : 0, 
+      finishedSqftArea: form2Data.finishedSqftArea ? form2Data.finishedSqftArea : 0,
+      lotDimensionLength: form2Data.lotDimensionLength ? form2Data.lotDimensionLength : 0, 
+      noOfBathrooms: form2Data.noOfBathrooms ? form2Data.noOfBathrooms : 0, 
       contactEmail:form1Data.contactEmail ? form1Data.contactEmail : "", 
       adTitle: form1Data.adTitle ? form1Data.adTitle : "", 
-      basementId: form2Data.basementId ? `${form2Data.basementId}` :"0",
-      waterSourceID: form2Data.waterSourceID ? `${form2Data.waterSourceID}` : "0",
-      propertyTypeId: form2Data.propertyTypeId ? `${form2Data.propertyTypeId}` : "0",
-      lotDimensionWidth: form2Data.lotDimensionWidth ? `${form2Data.lotDimensionWidth}` : "0", 
+      basementId: form2Data.basementId ? form2Data.basementId :0,
+      waterSourceID: form2Data.waterSourceID ? form2Data.waterSourceID : 0,
+      propertyTypeId: form2Data.propertyTypeId ? form2Data.propertyTypeId : 0,
+      lotDimensionWidth: form2Data.lotDimensionWidth ? form2Data.lotDimensionWidth : 0, 
       city: form3Data.city ? form3Data.city : "" ,
-      storeys: form2Data.storeys ? `${form2Data.storeys}` :"0", 
+      storeys: form2Data.storeys ? form2Data.storeys :0, 
       rentalListingYN: form2Data.rentalListingYN ? form2Data.rentalListingYN : "",
-      yearRoofInstalled: form2Data.yearRoofInstalled ? `${form2Data.yearRoofInstalled}` : "0",
-      cityId: "17150",
-      parkingSpaces: form2Data.parkingSpaces ? `${form2Data.parkingSpaces}` : "0", 
-      contactNumber:form1Data.contactNumber ? form1Data.contactNumber : "", 
-      ac: form2Data.ac ? `${form2Data.ac}` : "false", 
-      garageId:form2Data.garageId ? `${form2Data.garageId}` : "0",
-      dishWasher: form2Data.dishWasher ? `${form2Data.dishWasher}`: "false" ,
-      garage: form2Data.garage ? `${form2Data.garage}` : "false",
-      noOfBedrooms: form2Data.noOfBedrooms ? `${form2Data.noOfBedrooms}` : "0",  
-      playroom: form2Data.playroom ? `${form2Data.playroom}` : "false",
-      bar: form2Data.bar ? `${form2Data.bar}` : "false", 
-      primaryHeatingFuelId: form2Data.primaryHeatingFuelId ? `${form2Data.primaryHeatingFuelId}` : "0", 
+      yearRoofInstalled: form2Data.yearRoofInstalled ? form2Data.yearRoofInstalled : 0,
+      cityId: 17150,
+      parkingSpaces: form2Data.parkingSpaces ? form2Data.parkingSpaces : 0, 
+      contactNumber:form1Data.contactNumber ? form1Data.contactNumber : 0, 
+      ac: form2Data.ac ? form2Data.ac : false, 
+      garageId:form2Data.garageId ? form2Data.garageId : 0,
+      dishWasher: form2Data.dishWasher ? form2Data.dishWasher: false ,
+      garage: form2Data.garage ? form2Data.garage : false,
+      noOfBedrooms: form2Data.noOfBedrooms ? form2Data.noOfBedrooms : 0,  
+      playroom: form2Data.playroom ? form2Data.playroom : false,
+      bar: form2Data.bar ? form2Data.bar : false, 
+      primaryHeatingFuelId: form2Data.primaryHeatingFuelId ? form2Data.primaryHeatingFuelId : 0, 
       contactName: form1Data.contactName ? form1Data.contactName : "",
-      internet: form2Data.internet ? `${form2Data.internet}` : "false", 
-      buildingTypeId: form2Data.buildingTypeId ? `${form2Data.buildingTypeId}` : "0" , 
-      latitude:"", 
-      price: form1Data.price ? form1Data.price : "", 
+      internet: form2Data.internet ? form2Data.internet : false, 
+      buildingTypeId: form2Data.buildingTypeId ? form2Data.buildingTypeId : 0 , 
+      latitude:form3Data.latitude ? form3Data.latitude : 0, 
+      price: form1Data.price ? form1Data.price : 0, 
       amenites: "",
       channel: "web", 
-      userId: "64", 
-      lotTotalArea: form2Data.lotTotalArea ? `${form2Data.lotTotalArea}` : "0", 
+      userId: 64, 
+      lotTotalArea: form2Data.lotTotalArea ? form2Data.lotTotalArea : 0, 
       address: form3Data.address ? form3Data.address : "",
-      gym: form2Data.gym ? `${form2Data.gym}` : "false", 
-      yearFurnaceBuilt: form2Data.yearFurnaceBuilt ? `${form2Data.yearFurnaceBuilt}` : "0",
-      areaTypeId: form2Data.areaTypeId ? `${form2Data.areaTypeId}` : "0",
+      gym: form2Data.gym ? form2Data.gym : false, 
+      yearFurnaceBuilt: form2Data.yearFurnaceBuilt ? form2Data.yearFurnaceBuilt : 0,
+      areaTypeId: form2Data.areaTypeId ? form2Data.areaTypeId : 0,
       images : form3Data.images ? form3Data.images : ""
     } 
-    // console.log("checking formData: ",formData);
+    console.log("checking formData: ",formData);
 
-    this.props.onAddProperty(formData);
+    this.props.onAddProperty(formData, this.props.history);
 }
 
 
@@ -131,12 +144,24 @@ formShowHandler = (num) =>{
     });
 }
 render() { 
-    const { dropDownData  } = this.state;
-    // console.log('checking dropDown Data',dropDownData);
-    // console.log("checking number in render: ", this.state.formShow);
+    const { dropDownData ,loading , errors} = this.state;
+    let pageContent = '';
+
+      if(loading){
+        pageContent = <Spinner />
+      }
+      else{
+        pageContent = "";
+      }
+      
 
     return ( 
             <React.Fragment>
+              {errors && errors.message &&
+                <Alert variant='danger'  style={{marginTop:'15px'}}>
+                <strong>Error!</strong> { errors.message }
+                </Alert>
+              }
                 { this.state.formShow === 0 && 
                 <Form1  
                   dropDownData = {dropDownData}
@@ -159,6 +184,8 @@ render() {
                   postCLicked={this.state.postCLicked}
                 />
                 }
+                { pageContent }
+
             </React.Fragment>
          );
     }
@@ -166,13 +193,15 @@ render() {
 const mapStateToProps = state => {
     return {
         property: state.property,
+        errors: state.errors
     }
   };
   
   const mapDispatchToProps = dispatch => {
     return {
       onDropDwonMenu: () => dispatch(actions.dropDwonMenu()),
-      onAddProperty :(data) => dispatch(actions.addProperty(data))
+      onAddProperty :(data, history) => dispatch(actions.addProperty(data , history)),
+      onErrorSet: (msg) =>  dispatch({type: actionTypes.SET_ERRORS, payload: { message: msg }})
     }
   };
    

@@ -105,7 +105,7 @@ body {
 
 .country-code{
   position: absolute !important;
-  top: 118px !important;
+  bottom: 155px;
   margin-left: 30px !important;
   color: #000 !important;
   margin-right: 4px;
@@ -113,27 +113,27 @@ body {
 .country-image-login-page
 {
   position: absolute !important;
-  top: 10px !important;
+  bottom: 31px;
   margin-left: 30px !important;
   color: #000 !important;
 }
 .country-code-login-page{
   position: absolute !important;
-  top: 33px !important;
+  bottom: 7px;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
 }
 .country-code-forgot-page{
   position: absolute !important;
-  top: 137px !important;
+  bottom: 101px;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
 }
 .country-code-user-page{
   position: absolute !important;
-  top: 140px !important;
+  bottom: 134px;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
@@ -172,7 +172,7 @@ body {
 }
 .country-code-forgotPass{
   position: absolute !important;
-  top: 94px !important;
+  bottom: 142px;
   margin-left: 30px !important;
   color: #000 !important;
 }

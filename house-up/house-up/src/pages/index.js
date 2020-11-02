@@ -142,6 +142,9 @@ class index extends Component {
         if( this.props.location.pathname === "/index" ){
             hideFooter = true;
         }
+        else if( this.props.location.pathname === "/properties" ){
+            hideFooter = true;
+        }
         if( this.props.location.pathname === "/home" || this.props.location.pathname === "/" ){
             animateHeader = true;
         }
