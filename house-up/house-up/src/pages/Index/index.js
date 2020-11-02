@@ -82,7 +82,7 @@ class index extends Component {
   followUnfollwProfessionals = ( id, index, follow ) => e =>{
     e.preventDefault();
     console.log("checking index: ", index );
-    const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null ;
+    const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null;
     let data={ 
       category:"Vendor",
       userId:userId,
@@ -96,7 +96,7 @@ class index extends Component {
 
   componentDidMount() {
     console.log('indexPage componenet did mount');
-    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;  
+    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
     this.props.onGetIndexPageData(userId);
     
 
