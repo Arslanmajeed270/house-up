@@ -28,7 +28,7 @@ class emailSignin extends Component {
       
       
        onSubmit = e => {
-        console.log('checking click handler');
+        // console.log('checking click handler');
              e.preventDefault();
              
             if(!checkPawwordPattern(this.state.password)){
@@ -42,13 +42,13 @@ class emailSignin extends Component {
                 channel:"HouseUp",
                 loginBy:"emailAddress"
                };
-               console.log(userData);
+            //    console.log(userData);
       
              this.props.onLogin(userData, this.props.history);
          }
     render() {
         const {viewPass , emailAddress , password } = this.state;
-        console.log("checking this.props.show: ", this.props.show);
+        // console.log("checking this.props.show: ", this.props.show);
         return ( 
             <Modal 
             show={this.props.show}

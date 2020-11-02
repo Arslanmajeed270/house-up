@@ -20,16 +20,16 @@ class addProperty extends Component {
 }
 
 form1DataHandler = ( form1Data ) =>{
-  console.log('checking form 2 data in add property paren page',form1Data);
+  // console.log('checking form 2 data in add property paren page',form1Data);
   this.setState({ form1Data : form1Data});
 }
 
 form2DataHandler = ( form2Data ) => {
-  console.log('checking form2 data in add property paren page',form2Data);
+  // console.log('checking form2 data in add property paren page',form2Data);
   this.setState({ form2Data : form2Data});
 }
 form3DataHandler = ( form3Data ) => {
-  console.log('checking form3 data in add property paren page',form3Data);
+  // console.log('checking form3 data in add property paren page',form3Data);
   this.setState({ form3Data : form3Data});
   this.addProperty();
 }
@@ -117,14 +117,14 @@ addProperty = () =>{
       areaTypeId: form2Data.areaTypeId ? `${form2Data.areaTypeId}` : "0",
       images : form3Data.images ? form3Data.images : ""
     } 
-    console.log("checking formData: ",formData);
+    // console.log("checking formData: ",formData);
 
     this.props.onAddProperty(formData);
 }
 
 
 formShowHandler = (num) =>{
-    console.log("checking number: ", num);
+    // console.log("checking number: ", num);
     this.setState({
         formShow: num,
         
@@ -132,8 +132,8 @@ formShowHandler = (num) =>{
 }
 render() { 
     const { dropDownData  } = this.state;
-    console.log('checking dropDown Data',dropDownData);
-    console.log("checking number in render: ", this.state.formShow);
+    // console.log('checking dropDown Data',dropDownData);
+    // console.log("checking number in render: ", this.state.formShow);
 
     return ( 
             <React.Fragment>

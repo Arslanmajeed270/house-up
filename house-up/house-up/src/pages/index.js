@@ -56,20 +56,20 @@ class index extends Component {
         });
     }
     modelHanlder = (model) => {
-        console.log("checking model: ", model);
+        // console.log("checking model: ", model);
         if (model === "phoneSignin" ) {
             this.setState({ emailSignin:false, [model]: !this.state[model] });
         }
         else if(model === "emailSignin"){
-            console.log('clicked');
+            // console.log('clicked');
             this.setState({ phoneSignin: false, [model]: !this.state[model] });
         }
         else if(model === "subscriptionPlan"){
-            console.log('clicked');
+            // console.log('clicked');
             this.setState({ phoneSignin: false, [model]: !this.state[model] });
         }
         else if(model === "cardSelection"){
-            console.log('clicked');
+            // console.log('clicked');
             this.setState({ subscriptionPlan: false, [model]: !this.state[model] });
         }
         else if(model === "cardDetails"){
@@ -87,7 +87,7 @@ class index extends Component {
         }
         else if(model === "forgotPassCongrats"){
             this.setState({ forgotPass: false, [model]: !this.state[model] });
-            console.log(this.state.forgotPassCongrats)
+            // console.log(this.state.forgotPassCongrats)
         }
         else if(model === "signupSelectionModel"){
             this.setState({ phoneSignin: false, emailSignin:false, [model]: !this.state[model] });
@@ -102,7 +102,7 @@ class index extends Component {
             this.setState({ phoneNumberVendorModel: false, [model]: !this.state[model] });
         }
         else if(model === "userSignupModel"){
-            console.log('i am into userSignupModel if else');
+            // console.log('i am into userSignupModel if else');
             this.setState({ optUserModel: false, [model]: !this.state[model] });
         }
         else if(model === "vendorSignupModel"){

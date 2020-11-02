@@ -31,7 +31,7 @@ class form1 extends Component {
             contactNumber:this.state.contactNumber,
             price: this.state.price
          };
-         console.log('checking form1 data ', form1Data);
+         // console.log('checking form1 data ', form1Data);
          
          this.props.form1DataHandler(form1Data);
 
@@ -42,10 +42,10 @@ class form1 extends Component {
     render() {
         const { description ,contactName, currencyId ,contactEmail,contactNumber, adTitle,price} =this.state;
         const dropDownData1 = this.props.dropDownData;
-        console.log(dropDownData1);
+        // console.log(dropDownData1);
         const currencyData = dropDownData1 && dropDownData1.currencies ? dropDownData1.currencies : [];
-        console.log('currency data', currencyData);
-        console.log()
+        // console.log('currency data', currencyData);
+        // console.log()
         return ( 
             <React.Fragment>
                 <form onSubmit={this.onSubmit}>

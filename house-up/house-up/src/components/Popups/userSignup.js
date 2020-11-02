@@ -50,12 +50,12 @@ class userSignup extends Component {
         let stateChanged = false;
         let changedState = {};
 
-        console.log("checkig auth.regiserUser: ", auth);
-        console.log("checkig state.regiserUser: ", state.regiserUser);
+        // console.log("checkig auth.regiserUser: ", auth);
+        // console.log("checkig state.regiserUser: ", state.regiserUser);
       
         if( auth && JSON.stringify(state.regiserUser) !== JSON.stringify(auth.regiserUser) ){
           changedState.regiserUser = auth.regiserUser;  
-        console.log("checkig changedState.regiserUser: ", changedState.regiserUser);
+        // console.log("checkig changedState.regiserUser: ", changedState.regiserUser);
           if( changedState.regiserUser === true ){
             props.onFalseRegisterUser();
             props.congratulationHandler('congratulationModel');
@@ -84,7 +84,7 @@ class userSignup extends Component {
             let imagePreview = URL.createObjectURL(e.target.files[0]);
             fileUpload(e)
             .then((data) => {
-                console.log("base64 :",data.base64);
+                // console.log("base64 :",data.base64);
                 this.setState({
                     imagePreview: imagePreview,
                     profileImage: data.base64
@@ -96,7 +96,7 @@ class userSignup extends Component {
         }
       }
       onSubmit = e => {
-            console.log("checking this.state: ", this.state );
+            // console.log("checking this.state: ", this.state );
              e.preventDefault();
              if(this.state.password !== this.state.confirmPassword){
                  this.props.onErrorSet("Password not matched!");
@@ -106,7 +106,7 @@ class userSignup extends Component {
                 this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
                 return;
             }
-             console.log("checking phoneNumber: ", this.props.phNumber);
+            //  console.log("checking phoneNumber: ", this.props.phNumber);
              const userData = {
                 profileImage:this.state.profileImage,
                 firstName:this.state.firstName,

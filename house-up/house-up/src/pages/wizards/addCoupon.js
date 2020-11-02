@@ -27,7 +27,7 @@ class addProduct extends Component {
     render() { 
         const { tableContent, discountType } = this.state;
 
-        console.log('checking this.state :',this.state);
+        // console.log('checking this.state :',this.state);
 
         const files = this.state.files.map(file => (
             <li key={file.name}>

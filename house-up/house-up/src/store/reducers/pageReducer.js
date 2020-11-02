@@ -7,7 +7,8 @@ import {
 	ADD_LIKE,
 	SHOW_POP_UP,
 	HIDE_POP_UP,
-	SET_HOME_DATA
+	SET_HOME_DATA,s
+	FOLLOW_UNFOLLOW_PROFESSIONAL
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -54,14 +55,22 @@ export default function (state = initialState, action) {
 				showPopUp: true
 			}
 		case HIDE_POP_UP:
-			return {
-				showPopUp:false
+			return {	showPopUp:false
+
 			}
 		case SET_HOME_DATA:
 			return{
 				homePageData:action.payload
 			}
 			
+		case FOLLOW_UNFOLLOW_PROFESSIONAL: {
+			let indexPageData = Object.assign({}, state.indexPageData);
+			if( indexPageData && indexPageData.vendorPostPropertiesList && 
+				indexPageData.vendorPostPropertiesList.length >= action.payload.index ){
+					indexPageData.vendorPostPropertiesList[action.payload.index].object.user.isUserFollowedByLoggedInUser = action.payload.follow;
+			} 
+			return {indexPageData};
+		}
 	default:
 			return state;
 	}

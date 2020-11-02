@@ -88,9 +88,9 @@ class header extends Component {
                           <li className="list-inline-item">
                             <Link to="/professionals">Professionals</Link>
                           </li>
-                          <li className="list-inline-item">
+                          {/* <li className="list-inline-item">
                             <Link to="/blogs">Resources</Link>
-                          </li>
+                          </li> */}
                           <li className="list-inline-item pxp-has-btns">
                             <div className="pxp-user-btns">
                               <Link to="" className="pxp-user-btns-signup pxp-signup-trigger">Sign Up</Link>

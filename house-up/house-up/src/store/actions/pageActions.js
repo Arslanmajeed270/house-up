@@ -9,7 +9,7 @@ import {
 	SET_ERRORS,
 	GET_COUNTRIES,
 	GET_PROFESSIONS,
-	FOLLOW_PROFESSIONAL,
+	FOLLOW_UNFOLLOW_PROFESSIONAL,
 	SHOW_POP_UP,
 	HIDE_POP_UP,
 	SET_HOME_DATA
@@ -38,7 +38,7 @@ export const clearErrors = () => {
 };
 
 //INDEX  - Get indexPage data from backend
-export const getIndexPageData = () => dispatch => {
+export const getIndexPageData = (userId) => dispatch => {
 	dispatch(setPageLoading());
     axios
     .post(
@@ -49,7 +49,8 @@ export const getIndexPageData = () => dispatch => {
 			"lng":-79.497369,
 			"city": "Vaughan",
 			"limit":10,
-			"offset":0
+			"offset":0,
+			"loggedInuserId":userId
 		}
     )
     .then(res => {
@@ -63,7 +64,7 @@ export const getIndexPageData = () => dispatch => {
         dispatch(clearErrors());
     })
     .catch(err => {
-	  console.log('checking error on homepage')
+	  // console.log('checking error on homepage')
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
 	})
 	.finally(() => dispatch(clearPageLoading()))
@@ -115,7 +116,7 @@ export const GetCountries = () => dispatch => {
 		}
     )
     .then(res => {
-		console.log('checking GetCountries page data' , res);
+		// console.log('checking GetCountries page data' , res);
 		if( res && res.data && res.data.resultCode === "200" ){
 			dispatch(
 				{
@@ -146,8 +147,8 @@ export const GetProfessionDetailAPI = () => dispatch => {
 		}
     )
     .then(res => {
-		console.log('checking GetProfessionDetailAPI page data' , res);
-		console.log('checking res && res.data && res.data.data  && res.data.data.professionList' , res && res.data && res.data.data  && res.data.data.professionList);
+		// console.log('checking GetProfessionDetailAPI page data' , res);
+		// console.log('checking res && res.data && res.data.data  && res.data.data.professionList' , res && res.data && res.data.data  && res.data.data.professionList);
 		if( res && res.data && res.data.resultCode === "200"){
 			dispatch(
 				{
@@ -176,7 +177,7 @@ export const AddLike = (data) => dispatch => {
 	axios
     .post( backendServerURL+'/addComment' , data )
     .then(res => {
-		console.log('checking GetProfessionDetailAPI page data' , res);
+		// console.log('checking GetProfessionDetailAPI page data' , res);
 		// console.log('checking res && res.data && res.data.data  && res.data.data.professionList' , res && res.data && res.data.data  && res.data.data.professionList);
 		// if( res && res.data && res.data.resultCode === "200"){
 		// 	dispatch(
@@ -200,20 +201,26 @@ export const AddLike = (data) => dispatch => {
 };
 
 // Follow and Unfollow Professionals
-export const followProfessionals = (data) => dispatch => {
-	dispatch(setPageLoading());
+export const followProfessionals = (data, index) => dispatch => {
 	axios
     .post( backendServerURL+'/followUnfollowUser' , data )
     .then(res => {
-		console.log('checking follow data' , res);
-		dispatch({
-			type: FOLLOW_PROFESSIONAL,
-			payload: data && data.message ? data.message : ''
-		});
+		if( res && res.data && res.data.resultCode === "200" ){   
+			const payload = {
+				index: index,
+				follow: res.data.data.followed ? res.data.data.followed : false
+			};
+			dispatch({
+				type: FOLLOW_UNFOLLOW_PROFESSIONAL,
+				payload: payload
+			});
+			dispatch(clearErrors());
+		}
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
-	})
-	.finally(() => dispatch(clearPageLoading()))
-	      
+	})	      
 };
