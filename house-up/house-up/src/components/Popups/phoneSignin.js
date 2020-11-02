@@ -99,15 +99,15 @@ class phoneSignIn extends Component {
           <div className="logo-modal">
             <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" />
           </div>
+          <div className="form-group">
+                <Link to="#"  style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.emailSigninHandler('emailSignin')}>Login with email</Link>
+              </div>
             <form onSubmit={this.onSubmit}>
               {errors && errors.message &&
                 <Alert variant='danger'  style={{marginTop:'15px'}}>
                 <strong>Error!</strong> { errors.message }
                 </Alert>
               }
-              <div className="form-group">
-                <Link to="#"  style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.emailSigninHandler('emailSignin')}>Login with email</Link>
-              </div>
               <div>
                 <div className="form-group" style={{position:'relative'}}>
                   <input type="tel" style={{paddingLeft:'58px'}}
@@ -152,12 +152,12 @@ class phoneSignIn extends Component {
                       onClick={() => this.props.signupSelectionHandler('signupSelectionModel') }
                       >Create an account</Link>
                   </div>
-                  <div className="text-center pxp-modal-small"> 
+                  {/* <div className="text-center pxp-modal-small"> 
                       <Link to="#" 
                       className="pxp-modal-link pxp-signup-trigger" style={{fontWeight:"bold"}}
                       onClick={() => this.props.subscriptionPlanHandler('subscriptionPlan') }
                       >Upgrade Acoount</Link>
-                  </div>
+                  </div> */}
               </div> 
           </form> 
         </div>

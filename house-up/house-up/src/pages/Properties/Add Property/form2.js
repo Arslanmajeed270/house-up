@@ -8,35 +8,35 @@ class from2 extends Component {
         this.state={
            moreInfo:false,
             dropDownData:{},
-            yearBuilt:'',
+            yearBuilt:null,
             balcony:false,
             disposal:false,
-            finishedSqftArea:'',
-            lotDimensionLength:'',
-            noOfBathrooms:'',
-            basementId:'',
-            waterSourceID:'',
-            propertyTypeId:'',
-            lotDimensionWidth:'',
-            storeys:'',
+            finishedSqftArea:null,
+            lotDimensionLength:null,
+            noOfBathrooms:null,
+            basementId:null,
+            waterSourceID:null,
+            propertyTypeId:null,
+            lotDimensionWidth:null,
+            storeys:null,
             rentalListingYN:'',
-            yearRoofInstalled:'',
-            parkingSpaces:'',
+            yearRoofInstalled:null,
+            parkingSpaces:null,
             ac:false,
-            garageId:'',
+            garageId:null,
             dishWasher:false,
             garage:false,
-            noOfBedrooms:'',
+            noOfBedrooms:null,
             playroom:false,
             bar:false,
-            primaryHeatingFuelId:'',
+            primaryHeatingFuelId:null,
             internet:false,
-            buildingTypeId:'',
+            buildingTypeId:null,
             amenites:'',
-            lotTotalArea:'',
+            lotTotalArea:null,
             gym:false,
-            yearFurnaceBuilt:'',
-            areaTypeId:''
+            yearFurnaceBuilt:null,
+            areaTypeId:null
         };
     }
     moreOptionToggle =()=>
@@ -60,37 +60,37 @@ class from2 extends Component {
     onSubmit = e =>{
       e.preventDefault();
         const dataForm2 = {
-          yearBuilt:this.state.yearBuilt,
-          balcony: `${this.state.balcony}` ,
-          disposal:`${this.state.disposal}`,
-          finishedSqftArea:this.state.finishedSqftArea,
-          lotDimensionLength:this.state.lotDimensionLength,
-          noOfBathrooms:this.state.noOfBathrooms,
-          basementId:this.state.basementId,
-          waterSourceID:this.state.waterSourceID,
-          propertyTypeId:this.state.propertyTypeId,
-          lotDimensionWidth:this.state.lotDimensionWidth,
-          storeys:this.state.storeys,
+          yearBuilt:Number(this.state.yearBuilt),
+          balcony: this.state.balcony ,
+          disposal:this.state.disposal,
+          finishedSqftArea:Number(this.state.finishedSqftArea),
+          lotDimensionLength:Number(this.state.lotDimensionLength),
+          noOfBathrooms:Number(this.state.noOfBathrooms),
+          basementId:Number(this.state.basementId),
+          waterSourceID:Number(this.state.waterSourceID),
+          propertyTypeId:Number(this.state.propertyTypeId),
+          lotDimensionWidth:Number(this.state.lotDimensionWidth),
+          storeys:Number(this.state.storeys),
           rentalListingYN:this.state.rentalListingYN,
-          yearRoofInstalled:this.state.yearRoofInstalled,
-          parkingSpaces:this.state.parkingSpaces,
-          ac:`${this.state.ac}`,
-          garageId:this.state.garageId,
-          dishWasher:`${this.state.dishWasher}`,
-          garage:`${this.state.garage}`,
-          noOfBedrooms:this.state.noOfBedrooms,
-          playroom:`${this.state.playroom}`,
-          bar:`${this.state.bar}`,
-          primaryHeatingFuelId:this.state.primaryHeatingFuelId,
-          internet:`${this.state.internet}`,
-          buildingTypeId:this.state.buildingTypeId,
+          yearRoofInstalled:Number(this.state.yearRoofInstalled),
+          parkingSpaces:Number(this.state.parkingSpaces),
+          ac:this.state.ac,
+          garageId:Number(this.state.garageId),
+          dishWasher:this.state.dishWasher,
+          garage:this.state.garage,
+          noOfBedrooms:Number(this.state.noOfBedrooms),
+          playroom:this.state.playroom,
+          bar:this.state.bar,
+          primaryHeatingFuelId:Number(this.state.primaryHeatingFuelId),
+          internet:this.state.internet,
+          buildingTypeId:Number(this.state.buildingTypeId),
           amenites:this.state.amenites,
-          lotTotalArea:this.state.lotTotalArea,
-          gym:`${this.state.gym}`,
-          yearFurnaceBuilt:this.state.yearFurnaceBuilt,
-          areaTypeId:this.state.areaTypeId
+          lotTotalArea:Number(this.state.lotTotalArea),
+          gym:this.state.gym,
+          yearFurnaceBuilt:Number(this.state.yearFurnaceBuilt),
+          areaTypeId:Number(this.state.areaTypeId)
          };
-        // console.log('checking form2 Data', dataForm2);
+        console.log('checking form2 Data', dataForm2);
          this.props.form2DataHandler(dataForm2);
          this.props.formShowHandler(2)
     }
@@ -157,8 +157,8 @@ class from2 extends Component {
                         <div className="col-md-4">
                             <h6 className="titles-property" required >Rental listing</h6>
                             <select className="input-feilds-property"  name="rentalListingYN" onChange={this.onChange} value={rentalListingYN}>
-                                <option vlaue={'Yes'}>Yes</option>
-                                <option value={'No'}>No </option>
+                                <option vlaue={'Y'}>Yes</option>
+                                <option value={'N'}>No </option>
                             </select>
                         </div>
                     </div>

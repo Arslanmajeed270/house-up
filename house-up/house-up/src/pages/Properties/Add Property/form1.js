@@ -24,7 +24,7 @@ class form1 extends Component {
         e.preventDefault();
         const form1Data = {
             description:this.state.description,
-            currencyId:this.state.currencyId,
+            currencyId:Number(this.state.currencyId),
             adTitle:this.state.adTitle,
             contactName:this.state.contactName,
             contactEmail: this.state.contactEmail,

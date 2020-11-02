@@ -19,8 +19,8 @@ class form3 extends Component {
             address:'',
             images:[],
             cityId:'',
-            longitude:'',
-            latitude:'',
+            longitude: 78.68576,
+            latitude:32.57698,
             imagePreview:[],
             googleMapKey: process.env.REACT_APP_GOOGLE_MAP_KEY | "AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk"
         };

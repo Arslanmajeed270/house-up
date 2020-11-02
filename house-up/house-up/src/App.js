@@ -34,7 +34,7 @@ class App extends Component {
         path={'/about'}
         component={Index}
       />
-      <Route
+      <PrivateRoute
         exact 
         path={'/add-property'}
         component={Index}

@@ -18,14 +18,11 @@ class index extends Component {
       errors: {},
       loading : false,
       indexPageData : {},
-      isLike:false,
       user:{},
     };
   }
 
-  addLike = () => {
-    this.setState({ isLike : !this.state.isLike });
-  }
+ 
 
   static getDerivedStateFromProps(props, state) {
 
@@ -63,6 +60,21 @@ class index extends Component {
     return null;
 
   }
+  addLike = (type , index , like, postId , propertId) => e => {
+    console.log('value of like',like);
+    e.preventDefault();
+    console.log("checking index: ", index );
+    const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null ;
+    let data ={
+      postId:postId,
+      category:type,
+      propertyId:propertId,
+      userId:userId,
+      action:`${like ? "Unlike" : "Like"}`,
+    }
+    console.log(data , index);
+    this.props.onLikedPostOrProperty(data , index);
+  }
 
   followUnfollwProfessionals = ( id, index, follow ) => e =>{
     e.preventDefault();
@@ -90,6 +102,8 @@ class index extends Component {
 
     render() { 
       const { errors, loading, indexPageData , isLike , user  } = this.state;
+
+      console.log(indexPageData);
 
       let pageContent = '';
 
@@ -261,12 +275,14 @@ class index extends Component {
                                 <div className="row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
                                       <span 
-                                        onClick={this.followUnfollwProfessionals( 
-                                          data && data.object && data.object.user && data.object.user.userId && data.object.user.userId, 
+                                        onClick={this.addLike( 
+                                          data  && data.category ,
                                           index,
-                                          data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser  
+                                          data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser,
+                                          data  && data.object && data.object.postId && data.object.postId, 
+                                          data  && data.object && data.object.propertId && data.object.propertId, 
                                           )}
-                                      ><i className={ isLike ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                      ><i className={ data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <i className="far fa-comment-alt post-navbar-items" />
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
@@ -299,7 +315,13 @@ class index extends Component {
                                   <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
                                 <div className="row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
-                                      <span onClick={this.addLike}><i className= {isLike ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                      <span onClick={this.addLike( 
+                                          data  && data.category ,
+                                          index,
+                                          data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser,
+                                          data  && data.object && data.object.postId && data.object.postId, 
+                                          data  && data.object && data.object.propertId && data.object.propertId, 
+                                          )}><i className= {data.object && data.object.user && data.object.user.isUserLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <i className="far fa-comment-alt post-navbar-items" />
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
@@ -376,7 +398,12 @@ class index extends Component {
                               </div>
                               <div className="col-md-3">
                                 <div className="suggested-vendor-follow text-right">
-                                  <Link to="#" onClick={()=>this.followUnfollwProfessionals(`${data && data.userId && data.userId}`)} >Follow</Link>
+                                  <Link to="#" onClick={this.followUnfollwProfessionals( 
+                                        data && data.userId && data.userId, 
+                                        index,
+                                        data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser  
+                                        )}
+                                      > { data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
                                 </div>
                               </div>
                             </div>
@@ -418,7 +445,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
-    onFollowUnfollowProfessionals : (data, index) => dispatch(actions.followProfessionals(data, index))
+    onFollowUnfollowProfessionals : (data, index) => dispatch(actions.followProfessionals(data, index)),
+    onLikedPostOrProperty : (data , index ) => dispatch(actions.AddLike(data, index))
   }
 };
  

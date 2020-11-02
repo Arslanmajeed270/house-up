@@ -4,11 +4,11 @@ import {
 	SET_INDEX_DATA,
 	GET_COUNTRIES,
 	GET_PROFESSIONS,
-	ADD_LIKE,
 	SHOW_POP_UP,
 	HIDE_POP_UP,
-	SET_HOME_DATA,s
-	FOLLOW_UNFOLLOW_PROFESSIONAL
+	SET_HOME_DATA,
+	FOLLOW_UNFOLLOW_PROFESSIONAL,
+	ADD_LIKE
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -46,10 +46,6 @@ export default function (state = initialState, action) {
 			return {
 				professionList : action.payload
 		};
-		case ADD_LIKE:
-			return{
-
-			}
 		case SHOW_POP_UP:
 			return {
 				showPopUp: true
@@ -67,9 +63,17 @@ export default function (state = initialState, action) {
 			let indexPageData = Object.assign({}, state.indexPageData);
 			if( indexPageData && indexPageData.vendorPostPropertiesList && 
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index ){
-					indexPageData.vendorPostPropertiesList[action.payload.index].object.user.isUserFollowedByLoggedInUser = action.payload.follow;
+					indexPageData.vendorPostPropertiesList[action.payload.index].object.user.isUserFollowedByLoggedInUser = action.payload.like;
 			} 
 			return {indexPageData};
+		}
+		case ADD_LIKE: {
+			let indexPageData = Object.assign({}, state.indexPageData);
+			if( indexPageData && indexPageData.vendorPostPropertiesList && 
+				indexPageData.vendorPostPropertiesList.length >= action.payload.index ){
+					indexPageData.vendorPostPropertiesList[action.payload.index].object.user.isUserLikedByLoggedInUser = action.payload.follow;
+			} 
+			return{indexPageData};
 		}
 	default:
 			return state;

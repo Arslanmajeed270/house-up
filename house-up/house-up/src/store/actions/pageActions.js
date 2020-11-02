@@ -12,7 +12,8 @@ import {
 	FOLLOW_UNFOLLOW_PROFESSIONAL,
 	SHOW_POP_UP,
 	HIDE_POP_UP,
-	SET_HOME_DATA
+	SET_HOME_DATA,
+	ADD_LIKE
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -172,26 +173,26 @@ export const GetProfessionDetailAPI = () => dispatch => {
 
 
 // Add Like to the post and property
-export const AddLike = (data) => dispatch => {
+export const AddLike = (data, index ) => dispatch => {
 	dispatch(setPageLoading());
 	axios
-    .post( backendServerURL+'/addComment' , data )
+    .post( backendServerURL+'/addLike' , data )
     .then(res => {
-		// console.log('checking GetProfessionDetailAPI page data' , res);
-		// console.log('checking res && res.data && res.data.data  && res.data.data.professionList' , res && res.data && res.data.data  && res.data.data.professionList);
-		// if( res && res.data && res.data.resultCode === "200"){
-		// 	dispatch(
-		// 		{
-		// 			type: GET_PROFESSIONS,
-		// 			payload: res && res.data && res.data.data  && res.data.data.professionList ? res.data.data.professionList : []
-		// 		}
-		// 	);
-			   
-		// 	dispatch(clearErrors());
-		// }
-		// else{
-        //     dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
-		// }
+		console.log(res);
+		if( res && res.data && res.data.resultCode === "200" ){   
+			const payload = {
+				index: index,
+				follow: res && res.data && res.data.data && res.data.data.likeAdded ? res.data.data.likeAdded : false
+			};
+			dispatch({
+				type: ADD_LIKE,
+				payload: payload
+			});
+			dispatch(clearErrors());
+		}
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})

@@ -67,9 +67,9 @@ class singleProp extends Component {
                   <div className="container">
                     <div className="row">
                       <div className="col-sm-12 col-md-5">
-                        <h2 className="pxp-sp-top-title">{data.adTitle}</h2>
+                        <h2 className="pxp-sp-top-title">{data && data.adTitle}</h2>
                         <p className="pxp-sp-top-address pxp-text-light">
-                          {data.address}
+                          {data && data.address}
                         </p>
                       </div>
                       <div className="col-sm-12 col-md-7">
@@ -93,7 +93,7 @@ class singleProp extends Component {
                           <div>{data.noOfBathrooms ? data.noOfBathrooms : 0 } <span>BA</span></div>
                           <div>{data.finishedSqftArea ? data.finishedSqftArea : 0} <span>SF</span></div>
                         </div>
-        <div className="pxp-sp-top-price mt-3 mt-md-0">{data.currency && data.currency.symbol ? data.currency.symbol : ''}{data.price}</div>
+                       <div className="pxp-sp-top-price mt-3 mt-md-0">{data.currency && data.currency.symbol ? data.currency.symbol : ''}{data.price}</div>
                       </div>
                     </div>
                   </div>

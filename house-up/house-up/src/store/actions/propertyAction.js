@@ -59,7 +59,7 @@ export const dropDwonMenu = () => dispatch => {
 };
 
 //Add Property  - ADD property from front end
-export const addProperty = (userData) => dispatch => {
+export const addProperty = (userData , history) => dispatch => {
 	dispatch(setPageLoading());
     axios
     .post(
@@ -67,11 +67,7 @@ export const addProperty = (userData) => dispatch => {
     )
     .then(res => {
 		console.log('checking Add Property res in store' , res);
-        // dispatch(
-		// 	{
-		// 		type: PROPERTY_DROP_DWON,
-		// 	}
-		// );
+		history.push(`/index`);
         dispatch(clearErrors());
     })
     .catch(err => {
