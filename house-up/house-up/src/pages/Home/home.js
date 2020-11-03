@@ -88,6 +88,7 @@ class home extends Component {
                   <div className="pxp-hero-caption">
                     <div className="container">
                       <h1 className="text-white">House Up</h1>
+                      <h6 className="text-white">Own the way you sell your home</h6>
                       <form className="pxp-hero-search mt-4" action="">
                         <div className="row">
                           <div className="col-sm-12 col-md-4">
@@ -136,8 +137,8 @@ class home extends Component {
                           <img src="assets/images/service-icon-1.svg" alt="..." />
                         </div>
                         <div className="pxp-services-item-text text-center">
-                          <div className="pxp-services-item-text-title">Find your future home</div>
-                          <div className="pxp-services-item-text-sub">We help you find a new home by offering<br />a smart real estate experience</div>
+                          <div className="pxp-services-item-text-title">List Your Property</div>
+                          <div className="pxp-services-item-text-sub">Sell or rent your property <br /> without paying realtor fees</div>
                         </div>
                         <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
                       </Link>
@@ -146,8 +147,8 @@ class home extends Component {
                           <img src="assets/images/service-icon-2.svg" alt="..." />
                         </div>
                         <div className="pxp-services-item-text text-center">
-                          <div className="pxp-services-item-text-title">Virtual Lawyer Closing</div>
-                          <div className="pxp-services-item-text-sub">We provide the lawyer, closing &amp; more</div>
+                          <div className="pxp-services-item-text-title">Get Help From The Pros</div>
+                          <div className="pxp-services-item-text-sub">Find a professional to help <br /> you sell your home</div>
                         </div>
                         <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
                       </Link>
@@ -157,7 +158,7 @@ class home extends Component {
                         </div>
                         <div className="pxp-services-item-text text-center">
                           <div className="pxp-services-item-text-title">Buy or rent homes</div>
-                          <div className="pxp-services-item-text-sub">Millions of houses and apartments<br />in your favourite cities</div>
+                          <div className="pxp-services-item-text-sub">Search thousands of house <br /> and apartments in your area</div>
                         </div>
                         <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
                       </Link>
@@ -213,8 +214,8 @@ class home extends Component {
                   </div>
                 </div>
                 <div className="container mt-100">
-                  <h2 className="pxp-section-h2">Our Featured Professionals</h2>
-                  <p className="pxp-text-light">We will help you sell your home</p>
+                  <h2 className="pxp-section-h2">Find a Professionals</h2>
+                  <p className="pxp-text-light">Search for a qualified professional in your area</p>
                   <div className="row mt-4 mt-md-5">
                     {homePageData && homePageData.vendors ? 
                       homePageData.vendors.map( (data, index) =>

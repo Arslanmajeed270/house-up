@@ -54,55 +54,61 @@ Author URI: http://mariusn.com/
     font-style: normal;
   } */
   
-  @font-face {
-    font-family: 'Light';
-    src: url('AvenirLTStd-Book.eot');
-    src: url('AvenirLTStd-Book.eot?#iefix') format('embedded-opentype'),
-         url('AvenirLTStd-Book.svg#AvenirLTStd-Book') format('svg'),
-         url('AvenirLTStd-Book.ttf') format('truetype'),
-         url('AvenirLTStd-Book.woff') format('woff'),
-         url('AvenirLTStd-Book.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  @font-face {
-    font-family: 'Regular';
-    src: url('AvenirLTStd-Roman.eot');
-    src: url('AvenirLTStd-Roman.eot?#iefix') format('embedded-opentype'),
-         url('AvenirLTStd-Roman.svg#AvenirLTStd-Roman') format('svg'),
-         url('AvenirLTStd-Roman.ttf') format('truetype'),
-         url('AvenirLTStd-Roman.woff') format('woff'),
-         url('AvenirLTStd-Roman.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  
-  @font-face {
-    font-family: 'Medium';
-    src: url('AvenirLTStd-Medium.eot');
-    src: url('AvenirLTStd-Medium.eot?#iefix') format('embedded-opentype'),
-         url('AvenirLTStd-Medium.svg#AvenirLTStd-Medium') format('svg'),
-         url('AvenirLTStd-Medium.ttf') format('truetype'),
-         url('AvenirLTStd-Medium.woff') format('woff'),
-         url('AvenirLTStd-Medium.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
-  }
-  
-  @font-face {
-    font-family: 'Condensed';
-    src: url('RobotoCondensed-Regular.eot');
-    src: url('RobotoCondensed-Regular.eot?#iefix') format('embedded-opentype'),
-         url('RobotoCondensed-Regular.svg#RobotoCondensed-Regular') format('svg'),
-         url('RobotoCondensed-Regular.ttf') format('truetype'),
-         url('RobotoCondensed-Regular.woff') format('woff'),
-         url('RobotoCondensed-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
+
+@font-face {
+font-family: 'Light';
+src: url('../fonts/AvenirLTStd-Book.oft'); /* IE9 Compat Modes */
+src: url('../fonts/AvenirLTStd-Book.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+url('../fonts/AvenirLTStd-Book.woff2') format('woff2'), /* Super Modern Browsers */
+url('../fonts/AvenirLTStd-Book.woff') format('woff'), /* Pretty Modern Browsers */
+url('../fonts/AvenirLTStd-Book.ttf')  format('truetype'), /* Safari, Android, iOS */
+url('../fonts/AvenirLTStd-Book.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+font-family: 'Regular';
+src: url('../fonts/AvenirLTStd-Roman.oft'); /* IE9 Compat Modes */
+src: url('../fonts/AvenirLTStd-Roman.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+url('../fonts/AvenirLTStd-Roman.woff2') format('woff2'), /* Super Modern Browsers */
+url('../fonts/AvenirLTStd-Roman.woff') format('woff'), /* Pretty Modern Browsers */
+url('../fonts/AvenirLTStd-Roman.ttf')  format('truetype'), /* Safari, Android, iOS */
+url('../fonts/AvenirLTStd-Roman.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+font-family: 'Medium';
+src: url('../fonts/AvenirLTStd-Medium.oft'); /* IE9 Compat Modes */
+src: url('../fonts/AvenirLTStd-Medium.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+url('../fonts/AvenirLTStd-Medium.woff2') format('woff2'), /* Super Modern Browsers */
+url('../fonts/AvenirLTStd-Medium.woff') format('woff'), /* Pretty Modern Browsers */
+url('../fonts/AvenirLTStd-Medium.ttf')  format('truetype'), /* Safari, Android, iOS */
+url('../fonts/AvenirLTStd-Medium.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+@font-face {
+font-family: 'Condensed';
+src: url('../fonts/RobotoCondensed-Regular.oft'); /* IE9 Compat Modes */
+src: url('../fonts/RobotoCondensed-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+url('../fonts/RobotoCondensed-Regular.woff2') format('woff2'), /* Super Modern Browsers */
+url('../fonts/RobotoCondensed-Regulart.woff') format('woff'), /* Pretty Modern Browsers */
+url('../fonts/RobotoCondensed-Regular.ttf')  format('truetype'), /* Safari, Android, iOS */
+url('../fonts/RobotoCondensed-Regular.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+font-family: 'Bold';
+src: url('../fonts/RobotoCondensed-Bold.oft'); /* IE9 Compat Modes */
+src: url('../fonts/RobotoCondensed-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+url('../fonts/RobotoCondensed-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+url('../fonts/RobotoCondensed-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+url('../fonts/RobotoCondensed-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+url('../fonts/RobotoCondensed-Bold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+ 
+
+    @font-face {
+    font-family: fontawesome-webfont;
+      src: url(fonts/fontawesome-webfont.ttf);
+}          
 body {
     font-family: Regular;
     color: #333;
@@ -513,7 +519,7 @@ h1.pxp-page-header {
 
 .pxp-nav {
     margin-bottom: 0;
-    padding-right: 8%;
+    /* padding-right: 8%; */
 }
 .pxp-nav.d-inline {
     margin-right: 20px;

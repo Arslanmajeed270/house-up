@@ -519,7 +519,7 @@ class vendorSignup extends Component {
                             <div className="form-group"> 
                                 <select className="custom-select"
                                     placeholder="Prov/State"
-                                    name="cityId"
+                                    name="cityId" required
                                     value={cityId}
                                     onChange={this.onChange}
                                     >

@@ -61,19 +61,22 @@ class header extends Component {
                         }
                         
                       </Link>
+                      <Link to="#">
+                      Street# 32, Canada
+                      </Link>
                     </div>
                     <div className="col-2 col-md-9">
                       <div className="flex-center-nav pr-8">
                         <ul className="pxp-nav list-inline for-pad">
-                          <li className="list-inline-item">
+                          {/* <li className="list-inline-item">
                             <Link to="/home">Home</Link>
+                          </li> */}
+                          <li className="list-inline-item">
+                            <Link to="/properties">Find a Home</Link>
                           </li>
                           <li className="list-inline-item">
-                            <Link to="/properties">Listing</Link>
-                          </li>
-                          <li className="list-inline-item">
-                            <Link to="#">add Listing</Link>
-                            <ul>
+                            <Link to="/add-property">List a Property</Link>
+                            {/* <ul>
                               <li>
                                 <Link to="/add-property">Property</Link>
                               </li>
@@ -83,14 +86,14 @@ class header extends Component {
                               <li>
                                 <Link to="/add-coupon">Coupon</Link>
                               </li>
-                            </ul>
+                            </ul> */}
                           </li>
                           <li className="list-inline-item">
-                            <Link to="/professionals">Professionals</Link>
+                            <Link to="/professionals">Find a Professional</Link>
                           </li>
-                          {/* <li className="list-inline-item">
+                          <li className="list-inline-item">
                             <Link to="/blogs">Resources</Link>
-                          </li> */}
+                          </li>
                           <li className="list-inline-item pxp-has-btns">
                             <div className="pxp-user-btns">
                               <Link to="" className="pxp-user-btns-signup pxp-signup-trigger">Sign Up</Link>
@@ -98,10 +101,14 @@ class header extends Component {
                             </div>
                           </li>
                         </ul>
-                        <div className="form-group has-search mb-0">
+                        {
+                          animateHeader ? '' :
+                          <div className="form-group has-search mb-0">
                           <span className="fa fa-search form-control-feedback" />
                           <input type="text" className="form-control w-100" placeholder="Search" />
-                        </div>
+                        </div> 
+                        }
+                        
                       </div>
                     </div>
                     <div className="col-5 col-md-1 text-right">
