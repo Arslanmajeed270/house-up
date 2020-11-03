@@ -59,8 +59,8 @@ class form3 extends Component {
             imagePreviewState.push(imagePreview);
             fileUpload(e)
             .then((data) => {
-               // console.log("base64 :",data.base64);
-                images.push(data.base64);
+               console.log("base64 :",data.base64);
+                images.push({image: data.base64});
                 this.setState({
                     imagePreview: imagePreviewState,
                     images: images

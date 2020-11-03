@@ -13,7 +13,8 @@ import {
 	SHOW_POP_UP,
 	HIDE_POP_UP,
 	SET_HOME_DATA,
-	ADD_LIKE
+	ADD_LIKE,
+	ADD_COMMENTS
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -212,6 +213,32 @@ export const followProfessionals = (data, index) => dispatch => {
 			dispatch({
 				type: FOLLOW_UNFOLLOW_PROFESSIONAL,
 				payload: payload
+			});
+			dispatch(clearErrors());
+		}
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
+    })
+    .catch(err => {
+		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})	      
+};
+
+// add Comments to the post and property
+export const AddComments = (data, index ) => dispatch => {
+	axios
+    .post( backendServerURL+'/addComment' , data )
+    .then(res => {
+		console.log(res);
+		if( res && res.data && res.data.resultCode === "200" ){   
+		// 	const payload = {
+		// 		index: index,
+		// 		category: data.category,
+		// 	};
+			dispatch({
+				type: ADD_COMMENTS,
+				// payload: payload
 			});
 			dispatch(clearErrors());
 		}
