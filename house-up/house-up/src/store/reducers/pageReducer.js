@@ -8,7 +8,8 @@ import {
 	HIDE_POP_UP,
 	SET_HOME_DATA,
 	FOLLOW_UNFOLLOW_PROFESSIONAL,
-	ADD_LIKE
+	ADD_LIKE,
+	// ADD_COMMENTS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -18,7 +19,8 @@ const initialState = {
 	countries: [],
 	professionList: [],
 	showPopUp:false,
-	homePageData:{}
+	homePageData:{},
+	// comments
 };
 
 export default function (state = initialState, action) {

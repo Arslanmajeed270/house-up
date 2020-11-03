@@ -10,6 +10,7 @@ import * as actions from '../../store/actions/index';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
+import ContactPopup from '../../components/Popups/contact';
 
 class index extends Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class index extends Component {
       loading : false,
       indexPageData : {},
       user:{},
+      postConatctPopup:false,
+      propertyContactPopup:false
     };
   }
 
@@ -94,17 +97,27 @@ class index extends Component {
       this.props.onFollowUnfollowProfessionals(data, index);
   }
 
+  postConatctPopupHanlder = () =>{
+    this.setState({
+      postConatctPopup : !this.state.postConatctPopup,
+    });
+    console.log('clicked')
+  }
+  PropertyConatctPopupHanlder = () =>{
+    this.setState({
+      propertyContactPopup : !this.state.propertyContactPopup,
+    });
+    console.log('clicked')
+  }
   componentDidMount() {
     console.log('indexPage componenet did mount');
     const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
     this.props.onGetIndexPageData(userId);
-    
-
   }
   
 
     render() { 
-      const { errors, loading, indexPageData  , user  } = this.state;
+      const { errors, loading, indexPageData  , user , conatctPopup } = this.state;
 
       console.log("checking this.state: ", this.state);
 
@@ -131,8 +144,6 @@ class index extends Component {
     items.push(item);
   }
 }
-
-
 
   const locationItems = [];
   if( indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts.length){
@@ -275,10 +286,12 @@ class index extends Component {
                                   style={{
                                     backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/ic_post_placeholder.png") }  )` }}>
                                   </div>
-                                  <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
+                                  <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.postConatctPopupHanlder}>  
+                            {this.state.postConatctPopup ? <ContactPopup postConatctPopup={this.state.postConatctPopup} /> : null }
+                                   Contact us</Link>
                                 <div className="row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
-                                      <span 
+                                      <span style={{cursor:'pointer'}}
                                         onClick={ () => this.addLike( 
                                           data  && data.category,
                                           index,
@@ -287,7 +300,7 @@ class index extends Component {
                                           0 
                                           )}
                                       ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
-                                      <i className="far fa-comment-alt post-navbar-items" />
+                                      <Link to="/comments" style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
                                 </div>
@@ -316,17 +329,19 @@ class index extends Component {
                                   {data.object && data.object.adTitle ? data.object.adTitle : '' }
                               </div> 
                                   <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
-                                  <Link to="" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target=""> Contact us</Link>
+                                  <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.PropertyConatctPopupHanlder}>  
+                            {this.state.propertyContactPopup ? <ContactPopup propertyContactPopup={this.state.propertyContactPopup} /> : null }
+                                   Contact us</Link>
                                 <div className="row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-6 post-navbar">
-                                      <span onClick={() => this.addLike( 
+                                      <span style={{cursor:'pointer'}} onClick={() => this.addLike( 
                                           data  && data.category,
                                           index,
                                           data.object && data.object.isPropertyLikedByLoggedInUser,
                                           0, 
                                           data  && data.object && data.object.propertId, 
                                           )}><i className= {data.object && data.object.isPropertyLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
-                                      <i className="far fa-comment-alt post-navbar-items" />
+                                      <Link to="/comments" style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
                                 </div>

@@ -1,9 +1,72 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+import{Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 class comments extends Component {
-    state = {  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      errors: {},
+      loading : false,
+      user:{},
+      indexPageData : {},
+    };
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    const auth = props.auth;
+    const errors = props.errors;
+    const page = props.page;
+
+    let stateChanged = false;
+    let changedState = {};
+
+    if(page && JSON.stringify(state.indexPageData) !== JSON.stringify(page.indexPageData)){
+      changedState.indexPageData = page.indexPageData;  
+      stateChanged = true;
+    }
+    if(auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
+      changedState.user = auth.user;  
+      stateChanged = true;
+    }
+    if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+      changedState.errors= errors;
+      stateChanged = true;
+    }
+    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+        changedState.loading = page.loading;
+        stateChanged = true;            
+    }
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+  }
+  componentDidMount (){
+    console.log('indexPage componenet did mount');
+    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
+    this.props.onGetIndexPageData(userId);
+  }
+
     render() { 
+
+      const { indexPageData , loading } = this.state;
+
+      console.log('indea in comments', indexPageData);
+
+      let pageContent = '';
+
+      if(loading){
+        pageContent = <Spinner />
+      }
+      else{
+        pageContent = "";
+      }
+
         return ( 
             <React.Fragment>
                 <div className="row mt-100">
@@ -69,9 +132,22 @@ class comments extends Component {
                   </div>
                 </div>
               </div>
+              {pageContent}
             </React.Fragment>
          );
     }
 }
  
-export default comments;
+const mapStateToProps = state => {
+  return {
+    page: state.page,
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
+  }
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(comments);

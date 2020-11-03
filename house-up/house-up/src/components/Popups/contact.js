@@ -6,17 +6,18 @@ class contactPopup extends Component {
     render() {
         return (
                 <Modal 
-                    show={this.props.contactModalState}
+                    show={this.props.postConatctPopup ? this.props.postConatctPopup : this.props.propertyContactPopup}
                     aria-labelledby="contained-modal-title-vcenter"
+                    dialogClassName="modal-width"
                     centered
                 >
                     <Modal.Header closeButton >
                     </Modal.Header>
                     <Modal.Body >
-                    <h5 className="modal-title" id="pxpContactAgentModal">
+                        <h5 className="modal-title" id="pxpContactAgentModal">
                             Contact Information
-                            </h5>
-                            <form className="mt-4">
+                        </h5>
+                        <form className="mt-4">
                             <div className="form-group">
                                 <label htmlFor="pxp-contact-agent-name">Name</label>
                                 <input type="text" className="form-control" id="pxp-contact-agent-name" />
