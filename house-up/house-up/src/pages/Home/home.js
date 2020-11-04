@@ -88,7 +88,7 @@ class home extends Component {
                   <div className="pxp-hero-caption">
                     <div className="container">
                       <h1 className="text-white">House Up</h1>
-                      <h6 className="text-white">Own the way you sell your home</h6>
+                      <h3 className="text-White title">Own the way you sell your home</h3>
                       <form className="pxp-hero-search mt-4" action="">
                         <div className="row">
                           <div className="col-sm-12 col-md-4">
