@@ -111,7 +111,7 @@ class home extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="container-fluid pxp-props-carousel-right mt-100 " >
+                <div className="container mt-100 container-fluid pxp-props-carousel-right mt-100 " >
                   <h2 className="pxp-section">Featured Properties</h2>
                   <p className="pxp-text-light">Browse the best of our latest listings</p>
                   <div className="container-fluid pxp-props-carousel-right mt-100" >
