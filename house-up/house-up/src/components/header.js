@@ -75,7 +75,7 @@ class header extends Component {
                             <Link to="/properties">Find a Home</Link>
                           </li>
                           <li className="list-inline-item">
-                            <Link to="/addProperty">List a Property</Link>
+                            <Link to="/add-property">List a Property</Link>
 
                           </li>
                           <li className="list-inline-item">
