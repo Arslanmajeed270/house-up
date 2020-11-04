@@ -48,7 +48,7 @@ class from2 extends Component {
             storeysCount:[],
             areaType:[],
             buildingType:[],
-            condoFee:0
+            condoFee:''
         };
     }
     moreOptionToggle =()=>
@@ -125,7 +125,7 @@ class from2 extends Component {
           gym:this.state.gym,
           yearFurnaceBuilt:Number(this.state.yearFurnaceBuilt),
           areaTypeId:Number(this.state.areaTypeId),
-          condoFee:this.state.condoFee
+          condoFee:Number(this.state.condoFee)
          };
          const { noOfBathrooms  ,basementId ,
           waterSourceID ,propertyTypeId , storeys,
@@ -239,8 +239,8 @@ class from2 extends Component {
                             </select>
                         </div>
                         <div className="col-md-4">
-                            <h6 className="titles-property" required >Rental listing</h6>
-                            <select className="input-feilds-property"  name="rentalListingYN" onChange={this.onChange} value={rentalListingYN}>
+                            <h6 className="titles-property"  >Rental listing</h6>
+                            <select className="input-feilds-property"  name="rentalListingYN" required onChange={this.onChange} value={rentalListingYN}>
                                 <option value='Y'>Yes</option>
                                 <option value='N'>No </option>
                             </select>
@@ -292,7 +292,7 @@ class from2 extends Component {
                         </div>
                         <div className="col-md-4">
                             <h6 className="titles-property">Condo fees (/month)</h6>
-                            <input className="input-feilds-property" name="condoFee" value="condoFee" type="text"  required/>
+                            <input className="input-feilds-property" name="condoFee" value={condoFee} type="text" onChange={this.onChange}  required/>
                         </div>
                       </div>
                       : 

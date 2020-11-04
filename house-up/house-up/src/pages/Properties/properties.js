@@ -309,7 +309,6 @@ class properties extends Component {
                           <div className="pxp-results-card-1-features">
                             <span> {data && data.noOfBedrooms} BD <span>|</span> {data && data.noOfBathrooms} BA <span>|</span> {data && data.finishedSqftArea} SF</span>
                           </div>
-                          <div className="pxp-results-card-1-save"><span className="fa fa-star-o" /></div>
                         </Link>
                       </div>
                     )

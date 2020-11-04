@@ -66,7 +66,7 @@ class App extends Component {
       />
         <Route
         exact 
-        path={'/comments'}
+        path={'/comments-:id&:category'}
         component={Index}
       />
         <Route

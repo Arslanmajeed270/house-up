@@ -80,10 +80,10 @@ export const getHomePageData = () => dispatch => {
     .post(
 		backendServerURL+'/index',
 		{
-			"channel":"ios",
+			"channel":"web",
 			"lat":43.787083,
 			"lng":-79.497369,
-			"city": "Vaughan",
+			"city": "",
 			"limit":10,
 			"offset":0
 		}

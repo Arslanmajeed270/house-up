@@ -63,12 +63,14 @@ class form1 extends Component {
         this.setState({
           [e.target.name]: e.target.value
         });
+        console.log(e.target.value)
       }
 
       dropDownDatahandler = (currencyData) => {
           this.setState({
             currencyData
           });
+          console.log(currencyData)
 
       }
       onSubmit = e => {
@@ -77,9 +79,10 @@ class form1 extends Component {
         console.log("checking contactEmail: ", contactEmail);
         console.log("checking contactName: ", contactName);
         console.log("checking contactNumber: ", contactNumber);
+        console.log(currencyData)
         const form1Data = {
             description,
-            currencyId: currencyId === '' ? currencyData && currencyData.length && currencyData[0].id : 0 ,
+            currencyId: currencyId === '' ? currencyData && currencyData.length && currencyData[0].id : currencyId ,
             adTitle,
             contactName,
             contactEmail,

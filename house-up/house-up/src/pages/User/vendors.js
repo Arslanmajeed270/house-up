@@ -102,7 +102,6 @@ class vendor extends Component {
                             <div className="pxp-agents-1-item-details-spacer" />
                             <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
                           </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
                         </Link>
                       </div>
                       )

@@ -45,11 +45,8 @@ class index extends Component {
             subscriptionPlan:false,
             cardSelection:false,
             cardDetails:false
-
         };
-
     }
-
     closeCodelHanlder = (model) => {
         this.setState({
             [model]: false
@@ -129,20 +126,15 @@ class index extends Component {
             });
         }
     }
-
     phoneNumberHandler = (num) => {
         this.setState({
             phNumber:num
         });
     }
-
     render() {
         let animateHeader = false;
         let hideFooter = false;
         if( this.props.location.pathname === "/index" ){
-            hideFooter = true;
-        }
-        else if( this.props.location.pathname === "/properties" ){
             hideFooter = true;
         }
         if( this.props.location.pathname === "/home" || this.props.location.pathname === "/" ){
@@ -159,7 +151,6 @@ class index extends Component {
                         signupSelectionHandler={this.modelHanlder}
                         subscriptionPlanHandler = { this.modelHanlder }
                         history = {this.props.history}
-
                     />
                 }
                 {this.state.subscriptionPlan &&
@@ -294,11 +285,11 @@ class index extends Component {
                     />
                 }
                 <Header 
-                animateHeader={animateHeader}
-                modelHanlder={this.modelHanlder}
+                    animateHeader={animateHeader}
+                    modelHanlder={this.modelHanlder}
                 />
                 <Routes />
-                { hideFooter === true ? " " : <Footer /> }
+                    { hideFooter === true ? " " : <Footer /> }
             </React.Fragment>
         )
     }

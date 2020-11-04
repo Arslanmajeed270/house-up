@@ -7,7 +7,7 @@ class footer extends Component {
     render() { 
         return ( 
             <React.Fragment>
-                <div className="pxp-footer pt-100 pb-100 mt-100">
+                <div className="pxp-footer pb-100 mt-100">
                     <div className="container">
                       <div className="pxp-footer-bottom mt-2 row" style={{textAlign:'center'}}>
                         <div className="col-md-4">

@@ -54,7 +54,11 @@ class singleVendor extends Component {
       workModalState : !this.state.workModalState
     });
   }
-
+  closeCodelHanlder = () => {
+    this.setState({
+      workModalState : false
+    });
+}
     render() { 
       const { singleVendorData } = this.state;
       
@@ -78,7 +82,7 @@ class singleVendor extends Component {
                         </div>
                         <div className="mt-4 mt-md-5">
                           <Link to="#pxp-work-with" className="pxp-agent-contact-btn" data-toggle="modal" data-target="#pxp-work-with" onClick={this.workPopupHanlder} >
-                            {this.state.workModalState ? <WorkPopup workModalState={this.state.workModalState} /> : null }
+                            {this.state.workModalState ? <WorkPopup workModalState={this.state.workModalState} closeCodelHanlder = {this.closeCodelHanlder} /> : null }
                             Work with {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </Link>
                         </div>
                       </div>

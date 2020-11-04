@@ -262,7 +262,7 @@ class vendorSignup extends Component {
             // dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('vendorSignupModel')}
             >
-            <Modal.Header onClick={() => this.props.closeCodelHanlder('userSignupModel')}>
+            <Modal.Header onClick={() => this.props.closeCodelHanlder('vendorSignupModel')}>
             </Modal.Header>
             <Modal.Body >
             <form className="mt-4" onSubmit={this.onSubmit}>

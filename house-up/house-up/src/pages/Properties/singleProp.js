@@ -43,7 +43,7 @@ class singleProp extends Component {
     }
 
     componentDidMount (){
-      const id = this.props.match.params.id;
+    const id = this.props.match.params.id;
     console.log('checking id in sigle property: ', id);
     this.setState({
       id: id
@@ -74,7 +74,6 @@ class singleProp extends Component {
                       </div>
                       <div className="col-sm-12 col-md-7">
                         <div className="pxp-sp-top-btns mt-2 mt-md-0">
-                          <Link to="" className="pxp-sp-top-btn"><span className="fa fa-star" /> Save</Link>
                           <div className="dropdown">
                             <Link className="pxp-sp-top-btn" to="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <span className="far fa-share-square" /> Share
@@ -89,9 +88,9 @@ class singleProp extends Component {
                         </div>
                         <div className="clearfix d-block d-xl-none" />
                         <div className="pxp-sp-top-feat mt-3 mt-md-0">
-                          <div>{data.noOfBedrooms ? data.noOfBathrooms : 0} <span>BD</span></div>
-                          <div>{data.noOfBathrooms ? data.noOfBathrooms : 0 } <span>BA</span></div>
-                          <div>{data.finishedSqftArea ? data.finishedSqftArea : 0} <span>SF</span></div>
+                          <div>{data && data.noOfBedrooms ? data.noOfBathrooms : 0} <span>BD</span></div>
+                          <div>{data && data.noOfBathrooms ? data.noOfBathrooms : 0 } <span>BA</span></div>
+                          <div>{data && data.finishedSqftArea ? data.finishedSqftArea : 0} <span>SF</span></div>
                         </div>
                        <div className="pxp-sp-top-price mt-3 mt-md-0">{data.currency && data.currency.symbol ? data.currency.symbol : ''}{data.price}</div>
                       </div>
@@ -290,17 +289,11 @@ class singleProp extends Component {
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                                 <tr>
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -320,17 +313,11 @@ class singleProp extends Component {
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                                 <tr>
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -350,17 +337,12 @@ class singleProp extends Component {
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
+                                 
                                 </tr>
                                 <tr>
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -441,11 +423,6 @@ class singleProp extends Component {
                                                     </div> */}
                                 </div>
                                 <div className="form-group">
-                                  <label className="d-block">Rate the Agent</label>
-                                  <span className="pxp-single-agent-rating"><span data-rating={5} /><span data-rating={4} /><span data-rating={3} /><span data-rating={2} /><span data-rating={1} /></span>
-                                  <div className="clearfix" />
-                                </div>
-                                <div className="form-group">
                                   <label htmlFor="pxp-agent-comments-review">Write a Review</label>
                                   <textarea className="form-control" id="pxp-agent-comments-review" rows={6} placeholder="Write your review here..." defaultValue={""} />
                                 </div>
@@ -466,7 +443,6 @@ class singleProp extends Component {
                               <Link to='/single-vendor' >{data.contactName}</Link>
                             </div>
                             <div className="pxp-sp-agent-info-rating">
-                              <span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" />
                             </div>
                             <div className="pxp-sp-agent-info-email">
                               <Link to="">{data.contactEmail}</Link>

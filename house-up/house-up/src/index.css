@@ -340,7 +340,7 @@ body {
 }
 .multiply{
   background-color: #F7F7F7;
-  padding: 7px 15px;
+  padding: 7.5px 15px;
     border-top: 1px solid #CCCCCC;
     border-bottom: 1px solid #CCCCCC;
 }
@@ -611,3 +611,135 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .social-icons{
   margin-left: 5px;
 }
+
+.pxp-nav.list-inline {
+  margin: 0 auto;
+}
+.pxp-hero-caption h1 {
+  font-size:74px;
+}
+.pxp-hero-caption .title {
+  text-decoration:underline;
+  margin-bottom:30px;
+}
+.pxp-hero-search select, .form-control.pxp-is-address, .pxp-p-search-status, .pxp-is-address {
+  color: #4D4D4D;
+      font-family: Condensed;
+      font-size: 15px;
+}
+.pxp-section {
+  font-size: 40px;
+}
+p.pxp-text-light {
+  color: #393939;
+  font-size:18px;
+}
+.pxp-prop-card-1-details-titles {
+  font-size:17px;
+}
+.pxp-primary-cta.text-uppercase.mt-4.mt-md-5.pxp-animate {
+  margin-top:20px !important;
+}
+.pxp-services-item-text-title {
+  color:#000000;
+  font-family:Condensed,sans-serif;
+}
+.pxp-services-item-text-sub {
+  color:#4D4D4D;
+}
+.pxp-areas-1-item-details-area {
+  color:#000;
+}
+.pxp-cta-1.pxp-cover.mt-100.pt-300 {
+  margin-top:50px !important;
+}
+.pxp-agents-1-item-details-name {
+  font-size: 22px;
+  font-family: Condensed;
+}
+.pxp-content-side-h2 {
+  font-size:21px;
+  color:#000;
+}
+.pxp-footer {
+  padding:10px 0;
+}
+h1.pxp-page-header, .pxp-blog-posts-carousel-1-caption-title, pxp-blog-post-block h2, .pxp-blog-post-blockquote, .pxp-blog-post-block h2, .pxp-agent-section h3 {
+  color:#000000;
+  font-size:40px;
+}
+.pxp-agents-hero-search-form label, .pxp-sp-kd-item-label {
+  font-family:regular, sans-serif;
+  color:#000000;
+  font-size:16px;
+}
+.pxp-footer-bottom a {
+  color:#000;
+}
+.viewPassword-login {
+  bottom:167px;
+}
+.country-code-forgotPass {
+  bottom:128px;
+}
+.country-code-forgot-page {
+  bottom:87px;
+}
+.pi-200{
+  padding-left: 200px !important;
+}
+
+
+
+.newsfeed {
+  margin-top:70px;
+}
+.for-rent, .explore-our-neighbours-heading {
+  color:#000;
+}
+.dashboard-newsfeed-details {
+  color:#4d4d4d;
+}
+.suggested-vendor-name p {
+  color:#000;
+}
+.suggested-vendor-follow a {
+  color:#00B0E9;
+}
+/*index page */
+main {
+  background:#fafafa;
+}
+.add-property-conatiner {
+  background-color:#fff;
+}
+.titles-property {
+  color: #000;
+}
+.add-property-conatiner .nav-item .nav-link {
+  background-color:none !important;
+  color:#fff;
+  border-bottom: 2px solid #00B0E9;
+      width: auto;
+      border-radius: 0px;
+      padding-left: 0px;
+      padding-right: 0;
+      text-align: center;
+      padding-bottom: 0;
+}
+h6.titles-property {
+  font-family:condensed, sans-serif;
+  color:#000000;
+  font-size:16px;
+}
+h1.titles-property {
+  font-family:condensed, sans-serif;
+  color:#000000;
+  font-size:37px;
+}
+.btn-div .btn-property {
+  background: #00B0E9;
+      border-radius: 3px;
+  font-size: 16px;
+}
+

@@ -87,7 +87,7 @@ class home extends Component {
                   <div className="pxp-hero-opacity" />
                   <div className="pxp-hero-caption">
                     <div className="container">
-                      <h1 className="text-white">House Up</h1>
+                      <h1 className="text-white">HouseUp</h1>
                       <h6 className="text-white">Own the way you sell your home</h6>
                       <form className="pxp-hero-search mt-4" action="">
                         <div className="row">
@@ -110,7 +110,7 @@ class home extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="container-fluid pxp-props-carousel-right mt-100 " >
+                <div className="mt-100 container-fluid pi-200" >
                   <h2 className="pxp-section-h2">Featured Properties</h2>
                   <p className="pxp-text-light">Browse our latest hot offers</p>
                   <div className="container-fluid pxp-props-carousel-right mt-100" >
@@ -231,7 +231,6 @@ class home extends Component {
                             <div className="pxp-agents-1-item-details-spacer" />
                             <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
                           </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
                         </Link>
                       </div>
                       )
