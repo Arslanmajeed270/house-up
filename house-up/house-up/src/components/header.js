@@ -61,9 +61,9 @@ class header extends Component {
                         }
                         
                       </Link>
-                      <Link to="#">
+                      {/* <Link to="#">
                       Street# 32, Canada
-                      </Link>
+                      </Link> */}
                     </div>
                     <div className="col-2 col-md-9">
                       <div className="flex-center-nav pr-8">
