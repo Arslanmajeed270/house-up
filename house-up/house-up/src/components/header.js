@@ -75,18 +75,8 @@ class header extends Component {
                             <Link to="/properties">Find a Home</Link>
                           </li>
                           <li className="list-inline-item">
-                            <Link to="/add-property">List a Property</Link>
-                            {/* <ul>
-                              <li>
-                                <Link to="/add-property">Property</Link>
-                              </li>
-                              <li>
-                                <Link to="/add-product">Product</Link>
-                              </li>
-                              <li>
-                                <Link to="/add-coupon">Coupon</Link>
-                              </li>
-                            </ul> */}
+                            <Link to="/addProperty">List a Property</Link>
+
                           </li>
                           <li className="list-inline-item">
                             <Link to="/professionals">Find a Professional</Link>
