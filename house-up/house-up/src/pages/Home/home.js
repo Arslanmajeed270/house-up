@@ -111,9 +111,9 @@ class home extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="container mt-100 container-fluid pxp-props-carousel-right mt-100 " >
-                  <h2 className="pxp-section">Featured Properties</h2>
-                  <p className="pxp-text-light">Browse the best of our latest listings</p>
+                <div className="mt-100 container-fluid pi-200" >
+                  <h2 className="pxp-section-h2">Featured Properties</h2>
+                  <p className="pxp-text-light">Browse our latest hot offers</p>
                   <div className="container-fluid pxp-props-carousel-right mt-100" >
                     <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
                       <div className="owl-carousel pxp-props-carousel-right-stage">
@@ -232,7 +232,6 @@ class home extends Component {
                             <div className="pxp-agents-1-item-details-spacer" />
                             <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
                           </div>
-                          {/* <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div> */}
                         </Link>
                       </div>
                       )

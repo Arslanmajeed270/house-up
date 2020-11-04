@@ -71,7 +71,7 @@ class index extends Component {
     console.log('value of postId',postId);
     console.log('value of propertId',propertId);
     const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null ;
-    let data ={
+    let data = {
       postId:postId,
       category:type,
       propertyId:propertId,
@@ -168,7 +168,7 @@ class index extends Component {
             <React.Fragment>
               { !loading && 
               <main>
-                <div className="container">
+                <div className="container" >
                 {errors && errors.message &&
                   <Alert variant='danger'>
                     <strong>Error!</strong> { errors.message }
@@ -179,7 +179,7 @@ class index extends Component {
                       <div className="newsfeed">
                         <div className="container">
                           <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-12 col-lg-12">
                               <div className="container-fluid pxp-props-carousel-right mt-100 mtpx-100">
                                 <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
                                   <div className="owl-carousel pxp-props-carousel-right-stage-2">
@@ -212,7 +212,7 @@ class index extends Component {
                             {index === 2 && 
                             <div className="explore-our-neighbours">
                             <div className="row">
-                                <div className="col-md-12">
+                                <div className="col-md-12 col-lg-12 col-sm-12">
                                     <div className="container-fluid pxp-props-carousel-right">
                                         <div className="pxp-props-carousel-right-container">
                                             <h2 className="explore-our-neighbours-heading">Explore Our Neighbourhoods</h2>
@@ -243,11 +243,6 @@ class index extends Component {
                                       { data && data.firstName ?  data.firstName : ''} {data && data.lastName ? data.lastName : ''}
                                       <p>
                                         <span>{ data && data.professionDesc && data.professionDesc !== "null" ? data.professionDesc : " " }</span>
-                                        <i className="fa fa-star blue" />
-                                        <i className="fa fa-star blue" />
-                                        <i className="fa fa-star blue" />
-                                        <i className="fa fa-star grey" />
-                                        <i className="fa fa-star grey" />
                                       </p>
                                       <span className="address-span">{ data && data.address ? data.address : '' }</span>
                                     </div>
@@ -300,7 +295,7 @@ class index extends Component {
                                           0 
                                           )}
                                       ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
-                                      <Link to="/comments" style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
+                                      <Link to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
                                 </div>
@@ -341,7 +336,7 @@ class index extends Component {
                                           0, 
                                           data  && data.object && data.object.propertId, 
                                           )}><i className= {data.object && data.object.isPropertyLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
-                                      <Link to="/comments" style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
+                                      <Link to={`/comments-${data && data.object && data.object.propertId && data.object.propertId}&${data && data.category}`} style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
                                       <i className="far fa-share-square post-navbar-items" />
                                   </div>
                                 </div>
@@ -366,12 +361,12 @@ class index extends Component {
                         <div className="main-user">
                           <div className="row">
                         {indexPageData && indexPageData.vendors ?
-                            <div className="col-md-3">
+                            <div className="col-md-3 col-lg-3 col-sm-3">
                               <div className="min-user-img" style={{ backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}} />
                             </div>
                             : null 
                         }
-                            <div className="col-md-9  col-nopadd">
+                            <div className="col-md-9 col-lg-9 col-sm-9  col-nopadd">
                               <div className="main-user-content">
                                 <p>{ user && user.firstName ? user.firstName : "" } { user && user.lastName ? user.lastName : "" }</p>
                                 <span>{ user && user.userName ? `@ ${ user.userName }` : "" }</span>
@@ -382,14 +377,14 @@ class index extends Component {
                         <div className="suggested-vendors mt-4 mt-md-4 mb-md-3">
                         {indexPageData && indexPageData.vendors ?
                           <div className="row">
-                            <div className="col-md-8">
+                            <div className="col-md-8 col-lg-8 col-sm-8">
                               <div className="suggested-p">
                                 <p>Suggested Professionals For You</p>
                                
                              
                               </div>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4 col-lg-4 col-sm-4">
                               <div className="suggested-span text-right">
                                 <Link to="/professionals">See ALL</Link>
                               </div>
@@ -405,18 +400,18 @@ class index extends Component {
                         <div key={index} className="suggested-vendors-list "> 
                           <div className="mb-md-3">
                             <div className="row">
-                              <div className="col-md-2">
+                              <div className="col-md-2 col-lg-2 col-sm-2">
                                 <Link to={`/single-vendor-${data && data.userId && data.userId}`}><div className="suggested-vendor-img">
                                     <img src={data && data.profilePictureUrl ? data.profilePictureUrl : "assets/images/dashboard/ic_profile_placeholder.png"} alt=""/>
                                   </div></Link>
                               </div>
-                              <div className="col-md-7 col-nopadd">
+                              <div className="col-md-7 col-lg-7 col-sm-7 col-nopadd">
                                 <div className="suggested-vendor-name">
                                   <p>{data && data.firstName ? data.firstName : ''} {data && data.lastName ? data.lastName : '' }</p>
                                   <span>{data && data.professionDesc && data.professionDesc !== 'null' ? data.professionDesc : '' }</span>
                                 </div>
                               </div>
-                              <div className="col-md-3">
+                              <div className="col-md-3 col-lg-3 col-sm-3">
                                 <div className="suggested-vendor-follow text-right">
                                   <Link to="#" onClick={this.followUnfollwProfessionals( 
                                         data && data.userId && data.userId, 

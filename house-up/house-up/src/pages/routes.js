@@ -81,7 +81,7 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/comments"} 
+					path={"/comments-:id&:category"} 
 					component={Comments}
 				/>
 				<Route      

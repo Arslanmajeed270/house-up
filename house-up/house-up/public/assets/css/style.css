@@ -181,9 +181,9 @@ textarea.form-control {
 .pxp-cover-top {
     background-position: center top;
 }
-/* .pxp-section-h2 {
-   /* font-weight: 900; */
-} */
+.pxp-section-h2 {
+    font-weight: 300;
+}
 .pxp-text-light {
     font-size: 19px;
     opacity: .7;

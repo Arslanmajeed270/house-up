@@ -17,11 +17,9 @@ class header extends Component {
   static getDerivedStateFromProps(props, state) {
   
     const auth = props.auth ? props.auth : {};
-
   
     let stateChanged = false;
       let changedState = {};
-  
   
     if(auth && auth.user && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
       changedState.user= auth.user;
@@ -50,7 +48,7 @@ class header extends Component {
                 <div className="wrapper">
                   <div className="row align-items-center">
                     <div className="col-5 col-md-2">
-                      <Link to={ user && user.profilePictureUrl ? "/index" : "#" } className="pxp-logo text-decoration-none">
+                      <Link to={ user && user.profilePictureUrl ? "/index" : "" } className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>
                         <img className="img black-logo" src="assets/images/ic_logo_black.svg" alt="logo" />
@@ -117,7 +115,6 @@ class header extends Component {
                             :
                             "" 
                         }
-
                         </div>
                         :
                         <Link to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 

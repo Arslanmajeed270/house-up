@@ -19,7 +19,8 @@ export {
     GetProfessionDetailAPI,
     AddLike,
     followProfessionals,
-    getHomePageData
+    getHomePageData,
+    AddComments
 } from './pageActions';
 
 export {
