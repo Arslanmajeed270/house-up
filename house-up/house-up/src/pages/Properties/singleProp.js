@@ -72,7 +72,7 @@ class singleProp extends Component {
                           {data && data.address}
                         </p>
                       </div>
-                      <div className="col-sm-12 col-md-7">
+                      {/* <div className="col-sm-12 col-md-7">
                         <div className="pxp-sp-top-btns mt-2 mt-md-0">
                           <Link to="" className="pxp-sp-top-btn"><span className="fa fa-star" /> Save</Link>
                           <div className="dropdown">
@@ -94,7 +94,7 @@ class singleProp extends Component {
                           <div>{data.finishedSqftArea ? data.finishedSqftArea : 0} <span>SF</span></div>
                         </div>
                        <div className="pxp-sp-top-price mt-3 mt-md-0">{data.currency && data.currency.symbol ? data.currency.symbol : ''}{data.price}</div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

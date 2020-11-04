@@ -67,7 +67,7 @@ class home extends Component {
           homePageData.properties[i] && homePageData.properties[i].imageList && homePageData.properties[i].imageList[0] && homePageData.properties[i].imageList[0].imageURL ? homePageData.properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }} />
           <div className="pxp-prop-card-1-gradient pxp-animate" />
           <div className="pxp-prop-card-1-details">
-            <div className="pxp-prop-card-1-details-title">{homePageData.properties[i].adTitle}</div>
+            <div className="pxp-prop-card-1-details-titles">{homePageData.properties[i].adTitle}</div>
       <div className="pxp-prop-card-1-details-price">{homePageData.properties[i].currency.symbol}{homePageData.properties[i].price}</div>
             <div className="pxp-prop-card-1-details-features text-uppercase">{homePageData.properties[i].noOfBedrooms} BD <span>|</span> {homePageData.properties[i].noOfBathrooms} BA <span>|</span> {homePageData.properties[i].finishedSqftArea} SF</div>
           </div>
@@ -88,6 +88,7 @@ class home extends Component {
                   <div className="pxp-hero-caption">
                     <div className="container">
                       <h1 className="text-white">House Up</h1>
+                      <h3 className="text-White title">Own the way you sell your home</h3>
                       <form className="pxp-hero-search mt-4" action="">
                         <div className="row">
                           <div className="col-sm-12 col-md-4">
@@ -101,7 +102,8 @@ class home extends Component {
                           <div className="col-sm-12 col-md-8">
                             <div className="form-group">
                               <input type="text" className="form-control pxp-is-address" placeholder="City, neighbourhood..." />
-                              <span className="fa fa-search" />
+                              {/* <span className="fa fa-search" /> */}
+                              <img class="search" src="assets/images/ic_search.svg" alt="logo"></img>
                             </div>
                           </div>
                         </div>
@@ -109,9 +111,9 @@ class home extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="container-fluid pxp-props-carousel-right mt-100 " >
-                  <h2 className="pxp-section-h2">Featured Properties</h2>
-                  <p className="pxp-text-light">Browse our latest hot offers</p>
+                <div className="container mt-100 container-fluid pxp-props-carousel-right mt-100 " >
+                  <h2 className="pxp-section">Featured Properties</h2>
+                  <p className="pxp-text-light">Browse the best of our latest listings</p>
                   <div className="container-fluid pxp-props-carousel-right mt-100" >
                     <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
                       <div className="owl-carousel pxp-props-carousel-right-stage">
@@ -127,8 +129,8 @@ class home extends Component {
                   </div>
                 </div>
                 <div className="pxp-services pxp-cover mt-100 pt-100 mb-200" style={{backgroundImage: 'url(assets/images/services-h-fig.jpg)'}}>
-                  <h2 className="text-center pxp-section-h2">Why Choose Us</h2>
-                  <p className="pxp-text-light text-center">We offer full closing services without an vendor</p>
+                  <h2 className="text-center pxp-section">Why Choose Us</h2>
+                  <p className="pxp-text-light text-center">Take control of the most important decision of your life</p>
                   <div className="container">
                     <div className="pxp-services-container rounded-lg mt-4 mt-md-5">
                       <Link to='/properties'  className="pxp-services-item">
@@ -136,48 +138,48 @@ class home extends Component {
                           <img src="assets/images/service-icon-1.svg" alt="..." />
                         </div>
                         <div className="pxp-services-item-text text-center">
-                          <div className="pxp-services-item-text-title">Find your future home</div>
-                          <div className="pxp-services-item-text-sub">We help you find a new home by offering<br />a smart real estate experience</div>
+                          <div className="pxp-services-item-text-title">Find a Home</div>
+                          <div className="pxp-services-item-text-sub">Sell or rent your property <br />without paying realtor fees</div>
                         </div>
-                        <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
+                        {/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
                       </Link>
                       <Link to='/professionals'  className="pxp-services-item">
                         <div className="pxp-services-item-fig">
                           <img src="assets/images/service-icon-2.svg" alt="..." />
                         </div>
                         <div className="pxp-services-item-text text-center">
-                          <div className="pxp-services-item-text-title">Virtual Lawyer Closing</div>
-                          <div className="pxp-services-item-text-sub">We provide the lawyer, closing &amp; more</div>
+                          <div className="pxp-services-item-text-title">Find a Home</div>
+                          <div className="pxp-services-item-text-sub">A smarter, easier way to <br />search homes and rentals</div>
                         </div>
-                        <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
+                        {/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
                       </Link>
                       <Link to='/properties'  className="pxp-services-item">
                         <div className="pxp-services-item-fig">
                           <img src="assets/images/service-icon-3.svg" alt="..." />
                         </div>
                         <div className="pxp-services-item-text text-center">
-                          <div className="pxp-services-item-text-title">Buy or rent homes</div>
-                          <div className="pxp-services-item-text-sub">Millions of houses and apartments<br />in your favourite cities</div>
+                          <div className="pxp-services-item-text-title">Get Help From The Pros</div>
+                          <div className="pxp-services-item-text-sub">Find a professional to help <br /> you sell your home</div>
                         </div>
-                        <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
+                        {/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
                       </Link>
                       <Link to='/add-new-prop'  className="pxp-services-item">
                         <div className="pxp-services-item-fig">
                           <img src="assets/images/service-icon-4.svg" alt="..." />
                         </div>
                         <div className="pxp-services-item-text text-center">
-                          <div className="pxp-services-item-text-title">List your own property</div>
-                          <div className="pxp-services-item-text-sub">Sign up now and sell or rent<br />your own properties</div>
+                          <div className="pxp-services-item-text-title">Buy Or Rent Homes</div>
+                          <div className="pxp-services-item-text-sub">Search thousands of house<br />and apartments in your area </div>
                         </div>
-                        <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div>
+                        {/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
                       </Link>
                       <div className="clearfix" />
                     </div>
                   </div>
                 </div>
                 <div className="container mt-100">
-                  <h2 className="pxp-section-h2">Explore Our Neighborhoods</h2>
-                  <p className="pxp-text-light">Browse our comprehensive neighborhood listings</p>
+                  <h2 className="pxp-section">Explore Your Neighborhoods</h2>
+                  <p className="pxp-text-light">Browse listings curated by neighborhoods</p>
                   <div className="row mt-4 mt-md-5">
                   {
                     homePageData && homePageData.propertyCounts && homePageData.propertyCounts.length 
@@ -197,7 +199,7 @@ class home extends Component {
                     )
                   }
                     </div>
-                  <Link to='/properties'  className="pxp-primary-cta text-uppercase mt-2 mt-md-4 pxp-animate">Explore Neighborhoods</Link>
+                  <Link to='/properties'  className="pxp-primary-cta text-uppercase mt-2 mt-md-4 pxp-animate">EXPLORE NEIGHBORHOODS</Link>
                 </div>
                 <div className="pxp-cta-1 pxp-cover mt-100 pt-300" style={{backgroundImage: 'url(assets/images/cta-fig-1.jpg)', backgroundPosition: '50% 50%'}}>
                   <div className="container">
@@ -205,7 +207,7 @@ class home extends Component {
                       <div className="col-sm-12 col-md-6 col-lg-4">
                         <div className="pxp-cta-1-caption pxp-animate-in rounded-lg">
                           <h2 className="pxp-section-h2">Search Smarter, From Anywhere</h2>
-                          <p className="pxp-text-light">Power your search with our HouseUP real estate platform, for timely listings and a seamless experience.</p>
+                          <p className="pxp-text-light">Power your search with our House Up real estate platform, for timely listings and a seamless experience</p>
                           <Link to='/properties'  className="pxp-primary-cta text-uppercase mt-3 mt-md-5 pxp-animate">Search Now</Link>
                         </div>
                       </div>
@@ -213,8 +215,8 @@ class home extends Component {
                   </div>
                 </div>
                 <div className="container mt-100">
-                  <h2 className="pxp-section-h2">Our Featured Professionals</h2>
-                  <p className="pxp-text-light">We will help you sell your home</p>
+                  <h2 className="pxp-section">Find a Professionals</h2>
+                  <p className="pxp-text-light">Search for a qualified professional in your area</p>
                   <div className="row mt-4 mt-md-5">
                     {homePageData && homePageData.vendors ? 
                       homePageData.vendors.map( (data, index) =>
@@ -226,11 +228,11 @@ class home extends Component {
                           </div>
                           <div className="pxp-agents-1-item-details rounded-lg">
                             <div className="pxp-agents-1-item-details-name">{data.firstName} {data.lastName}</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> {data.msisdn}</div>
+                            <div className="pxp-agents-1-item-details-email"> {data.professionDesc}</div>
                             <div className="pxp-agents-1-item-details-spacer" />
                             <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
                           </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
+                          {/* <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div> */}
                         </Link>
                       </div>
                       )

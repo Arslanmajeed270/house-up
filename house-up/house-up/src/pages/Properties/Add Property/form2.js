@@ -241,8 +241,8 @@ class from2 extends Component {
                         <div className="col-md-4">
                             <h6 className="titles-property" required >Rental listing</h6>
                             <select className="input-feilds-property"  name="rentalListingYN" onChange={this.onChange} value={rentalListingYN}>
-                                <option value='Y'>Yes</option>
-                                <option value='N'>No </option>
+                                <option value='Yes'>Yes</option>
+                                <option value='No'>No </option>
                             </select>
                         </div>
                     </div>

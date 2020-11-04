@@ -129,7 +129,7 @@ addProperty = () =>{
       longitude:form3Data.longitude ? form3Data.longitude : 0, 
       city: form3Data.city ? form3Data.city : "" ,
       address: form3Data.address ? form3Data.address : "",
-      propertyImages : form3Data.propertyImages,
+      propertyImages : form3Data.images,
       cityId: 0,
       amenites: "",
       channel: "web",

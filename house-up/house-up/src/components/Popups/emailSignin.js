@@ -99,7 +99,7 @@ class emailSignin extends Component {
                     <Modal.Body>
                         <div>
                         <div className="logo-modal" >
-                            <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" />
+
                             </div>
                             <div className="form-group">
                                 <Link to="#" style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.phoneSigninHandler('phoneSignin')}>Login with mobile</Link>

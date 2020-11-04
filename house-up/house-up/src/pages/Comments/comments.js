@@ -18,7 +18,7 @@ class comments extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const auth = props.auth;
+    const auth = props.auth ? props.auth : {};
     const errors = props.errors;
     const page = props.page;
 
@@ -46,11 +46,28 @@ class comments extends Component {
     }
     return null;
   }
-  componentDidMount (){
-    console.log('indexPage componenet did mount');
-    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
-    this.props.onGetIndexPageData(userId);
-  }
+  // componentDidMount (){
+  //   console.log('indexPage componenet did mount');
+  //   const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
+  //   this.props.onGetIndexPageData(userId);
+  // }
+
+  componentDidMount(){
+    const { user }  = this.state;
+    const contactEmail = user.emailAddress ? user.emailAddress : "";
+    const firstName =  user.firstName ? user.firstName : "";
+    const lastName =  user.lastName ? user.lastName : "";
+    const contactName = `${firstName} ${lastName}`; 
+    const contactNumber = user.msisdn ? user.msisdn : ""; 
+    const userId = user.userId ? user.userId : "";
+    
+    this.setState({
+      contactEmail,
+      contactName,
+      contactNumber,
+      userId
+    });
+}
 
     render() { 
 
@@ -74,7 +91,7 @@ class comments extends Component {
                 <div className="col-sm-12 col-lg-10">
                   <div className="pxp-agent-block">
                     <div className="pxp-agent-comments">
-                      <h4>3 Reviews</h4>
+                      {/* <h4>3 Reviews</h4>
                       <div className="mt-3 mt-md-4">
                         <div className="media">
                           <img src="assets/images/customer-1.jpg" className="mr-3" alt="..." />
@@ -101,6 +118,7 @@ class comments extends Component {
                           </div>
                         </div>
                       </div>
+                      */}
                       <h4 className="mt-4 mt-md-5">Leave a review</h4>
                       <form action="/single-vendor" className="pxp-agent-comments-form mt-3 mt-md-4">
                         <div className="row">
@@ -116,11 +134,6 @@ class comments extends Component {
                               <input type="text" className="form-control" id="pxp-agent-comments-email" placeholder="Enter your email address" />
                             </div>
                           </div>
-                        </div>
-                        <div className="form-group">
-                          <label className="d-block">Rate the Agent</label>
-                          <span className="pxp-single-agent-rating"><span data-rating={5} /><span data-rating={4} /><span data-rating={3} /><span data-rating={2} /><span data-rating={1} /></span>
-                          <div className="clearfix" />
                         </div>
                         <div className="form-group">
                           <label htmlFor="pxp-agent-comments-review">Write a Review</label>
@@ -141,6 +154,7 @@ class comments extends Component {
 const mapStateToProps = state => {
   return {
     page: state.page,
+    auth: state.auth
   }
 };
 
