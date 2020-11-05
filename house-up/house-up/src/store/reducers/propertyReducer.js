@@ -27,10 +27,12 @@ export default function (state = initialState, action) {
 			};
 		case PROPERTY_DROP_DWON:
 			return {
+				...state,
 				dropDownData : action.payload
 			};
 		case GET_SINGLE_PROPERTY:
 			return {
+				...state,
 				singlePropertyData : action.payload
 			};
 			

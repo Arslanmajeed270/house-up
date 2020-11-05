@@ -104,6 +104,7 @@ export const resetUserPassword = (userData) => dispatch =>{
 // signupUser - signupUser from the web page
 export const createUser = (userData) => dispatch => {
     dispatch(setPageLoading());
+    console.log("checking i am here: ", userData);
     axios
     .post(
         backendServerURL+'/registerUser', 

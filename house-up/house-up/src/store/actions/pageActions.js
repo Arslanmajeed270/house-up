@@ -14,7 +14,8 @@ import {
 	HIDE_POP_UP,
 	SET_HOME_DATA,
 	ADD_LIKE,
-	ADD_COMMENTS
+	ADD_COMMENTS,
+	SET_CURRENT_LOCATION
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -243,3 +244,62 @@ export const AddComments = (data, index ) => dispatch => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
 	})	      
 };
+
+
+
+// Set current location
+export const setCurrentLocation = ( latitude,longitude ) => dispatch => {
+	if (latitude !== 0 || longitude !== 0) {
+		const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_MAP_KEY;
+		console.log("checking GOOGLE_API_KEY: ",GOOGLE_API_KEY );
+		console.log("checking longitude: ",longitude );
+		console.log("checking latitude: ",latitude );
+		axios
+    .get( 
+		`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&sensor=false&key=${GOOGLE_API_KEY}` )
+    .then(res => {
+		console.log("checking response of google api key: ", res.data.status);
+		console.log("checking response of google api key: ", res.data.results);
+		console.log("checking response of google api key: ", res.data.results[5].formatted_address.split(", "));
+		if( res.data.status === "OK" ){
+			const country = res.data.results[6].formatted_address.split(", ")[2];
+			const province = res.data.results[6].formatted_address.split(", ")[1];
+			const city = res.data.results[6].formatted_address.split(", ")[0];
+			console.log("checking country: ",country );
+			console.log("checking province: ",province );
+			console.log("checking city: ",city );
+			dispatch({
+				type: SET_CURRENT_LOCATION , 
+				payload: { 
+					country: country,
+					province: province,
+					city: city
+				}});
+			dispatch(clearErrors());
+		}
+		else{
+			dispatch({
+				type: SET_CURRENT_LOCATION, 
+				payload: { 
+					country: "Canada",
+					province: "Ontorio",
+					city: "Torronto"
+				}});
+	
+		}
+    })
+    .catch(err => {
+		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})	      
+
+	  } else { 
+		dispatch({
+			type: SET_CURRENT_LOCATION , 
+			payload: { 
+				country: "Canada",
+				province: "Ontorio",
+				city: "Torronto"
+			}});
+
+	  }
+	};

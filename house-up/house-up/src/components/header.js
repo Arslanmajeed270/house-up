@@ -10,16 +10,24 @@ class header extends Component {
     super(props);
     this.state = { 
       user: {},
-      dropDownShow: false
+      dropDownShow: false,
+      currentLocation: {}
+
      };
   }
 
   static getDerivedStateFromProps(props, state) {
   
+    const page = props.page; 
     const auth = props.auth ? props.auth : {};
-  
     let stateChanged = false;
-      let changedState = {};
+    let changedState = {};
+
+    if( page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)){
+      changedState.currentLocation = page.currentLocation;
+      stateChanged = true;            
+  }
+
   
     if(auth && auth.user && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
       changedState.user= auth.user;
@@ -41,14 +49,14 @@ class header extends Component {
   
     render() { 
       const animateHeader = this.props.animateHeader;
-      const { user, dropDownShow } = this.state;
+      const { user, dropDownShow, currentLocation } = this.state;
         return ( 
             <React.Fragment>
               <div className={"pxp-header fixed-top " + ( animateHeader ? "pxp-animate" : "pxp-full" ) }>
                 <div className="wrapper">
                   <div className="row align-items-center">
                     <div className="col-5 col-md-3">
-                      <Link to={ user && user.profilePictureUrl ? "/index" : "" } className="pxp-logo text-decoration-none">
+                      <Link to={ user && user.profilePictureUrl ? "/select-location" : "" } className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>
                         <img className="img black-logo" src="assets/images/ic_logo_black.svg" alt="logo" />
@@ -59,9 +67,10 @@ class header extends Component {
                         }
                         
                       </Link>
-                      <Link to="#">
+                      <Link to="/select-location">
                         <img src={require('../assets/images/ic_address.svg')} />
-                      Street# 32, Canada
+                        { currentLocation && currentLocation.city && `${currentLocation.city}` 
+                        }
                       </Link>
                     </div>
                     <div className="col-2 col-md-8">
@@ -140,6 +149,7 @@ class header extends Component {
 const mapStateToProps = state => {
   return {
     auth: state.auth,
+    page: state.page,
   }
 };
 

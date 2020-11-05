@@ -20,7 +20,8 @@ export {
     AddLike,
     followProfessionals,
     getHomePageData,
-    AddComments
+    AddComments,
+    setCurrentLocation
 } from './pageActions';
 
 export {

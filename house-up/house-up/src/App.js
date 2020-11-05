@@ -6,8 +6,32 @@ import * as actions from './store/actions/index';
 import PrivateRoute from './components/common/PrivateRoute';
 import Index from "./pages";
 class App extends Component {
-  render() {
+  constructor(props){
+    super(props);
+    this.showPosition = this.showPosition.bind(this);
 
+  }
+
+  componentDidMount(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else { 
+      this.props.onSetCurrentLocation(0,0);
+    }
+  }
+  setCurrentLocation(lat,lon){
+    this.props.onSetCurrentLocation( lat,lon );
+  }
+  showPosition(position) {
+    console.log("i am here");
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    console.log("checking latitude: ", latitude);
+    console.log("checking latitude: ", longitude);
+    this.setCurrentLocation(latitude,longitude);
+  }
+  
+  render() {
     if (localStorage.jwtToken) {
       this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
     }
@@ -112,7 +136,9 @@ class App extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    setCurrentUser: (user) => dispatch(actions.setCurrentUser(user))
+    setCurrentUser: (user) => dispatch(actions.setCurrentUser(user)),
+    onSetCurrentLocation: ( latitude,longitude ) => dispatch(actions.setCurrentLocation(latitude,longitude))
+
   };
 };
 

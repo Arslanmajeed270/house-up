@@ -9,6 +9,7 @@ import {
 	SET_HOME_DATA,
 	FOLLOW_UNFOLLOW_PROFESSIONAL,
 	ADD_LIKE,
+	SET_CURRENT_LOCATION,
 	// ADD_COMMENTS
 } from '../actions/actionTypes';
 
@@ -20,6 +21,11 @@ const initialState = {
 	professionList: [],
 	showPopUp:false,
 	homePageData:{},
+	currentLocation:{
+		country: "",
+		province: "",
+		city: ""
+	}
 	// comments
 };
 
@@ -38,26 +44,33 @@ export default function (state = initialState, action) {
 			};
 		case SET_INDEX_DATA:
 			return {
+				...state,
 				indexPageData : action.payload
 			};
 		case GET_COUNTRIES:
 			return {
+				...state,
 				countries : action.payload
 		};
 		case GET_PROFESSIONS:
 			return {
+				...state,
 				professionList : action.payload
 		};
 		case SHOW_POP_UP:
 			return {
+				...state,
 				showPopUp: true
 			}
 		case HIDE_POP_UP:
-			return {	showPopUp:false
+			return {
+				...state,	
+				showPopUp:false
 
 			}
 		case SET_HOME_DATA:
 			return{
+				...state,
 				homePageData:action.payload
 			}
 			
@@ -67,7 +80,10 @@ export default function (state = initialState, action) {
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index ){
 					indexPageData.vendorPostPropertiesList[action.payload.index].object.user.isUserFollowedByLoggedInUser = action.payload.like;
 			} 
-			return {indexPageData};
+			return {
+				...state,
+				indexPageData
+			};
 		}
 		case ADD_LIKE: {
 			console.log("checking action.payload.index: ", action.payload.index);
@@ -85,7 +101,17 @@ export default function (state = initialState, action) {
 						indexPageData.vendorPostPropertiesList[action.payload.index].object.isPostLikedByLoggedInUser = action.payload.follow;
 					}
 			} 
-			return{indexPageData};
+			return{
+				...state,
+				indexPageData
+			};
+		}
+	case SET_CURRENT_LOCATION:{
+		let currentLocation = Object.assign({}, action.payload);
+		return {
+			...state,
+			currentLocation: currentLocation
+		};
 		}
 	default:
 			return state;
