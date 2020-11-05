@@ -106,7 +106,7 @@ class phoneNumberVendor extends Component {
                             required
                          />
                         <span className="country-code">
-                            <img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-41px'}}/></span>
+                            <img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-68px'}}/></span>
                             <span className="country-code-user-page"> +1</span>
                         </div>
                          <div className="form-group">

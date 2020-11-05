@@ -47,7 +47,7 @@ class header extends Component {
               <div className={"pxp-header fixed-top " + ( animateHeader ? "pxp-animate" : "pxp-full" ) }>
                 <div className="wrapper">
                   <div className="row align-items-center">
-                    <div className="col-5 col-md-2">
+                    <div className="col-5 col-md-3">
                       <Link to={ user && user.profilePictureUrl ? "/index" : "" } className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>
@@ -59,11 +59,12 @@ class header extends Component {
                         }
                         
                       </Link>
-                      {/* <Link to="#">
+                      <Link to="#">
+                        <img src={require('../assets/images/ic_address.svg')} />
                       Street# 32, Canada
-                      </Link> */}
+                      </Link>
                     </div>
-                    <div className="col-2 col-md-9">
+                    <div className="col-2 col-md-8">
                       <div className="flex-center-nav pr-8">
                         <ul className="pxp-nav list-inline for-pad">
                           {/* <li className="list-inline-item">
@@ -92,8 +93,9 @@ class header extends Component {
                         {
                           animateHeader ? '' :
                           <div className="form-group has-search mb-0">
-                          <span className="fa fa-search form-control-feedback" />
-                          <input type="text" className="form-control w-100" placeholder="Search" />
+                          {/* <span className="fa fa-search form-control-feedback" /> */}
+                          <input type="text" className="form-control w-100" placeholder="Search Location" />
+                          <img src={require('../assets/images/ic_search.svg')} alt="" />
                         </div> 
                         }
                         
@@ -120,8 +122,10 @@ class header extends Component {
                         <Link to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
                           onClick={() => this.props.modelHanlder('phoneSignin')}
                           >
-                            <span className="far fa-user" />
+                            {/* <span className="far fa-user" /> */}
+                            <img src={require('../assets/images/ic_profile.svg')} alt="" />
                         </Link>
+                      
                       } 
                     </div>
                   </div>

@@ -42,7 +42,7 @@ export const loginUser = (userData, history) => dispatch => {
             dispatch(setCurrentUser(res.data.data.user));
             dispatch(clearErrors())
             dispatch({ type: SHOW_POP_UP });
-            history.push(`/index`);
+            history.push(`/select-location`);
         }
         else {
             dispatch({ type: HIDE_POP_UP });

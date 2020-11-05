@@ -121,7 +121,7 @@ body {
 }
 .country-code-login-page{
   position: absolute !important;
-  bottom: 7px;
+  bottom: 223.5px;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
@@ -135,7 +135,7 @@ body {
 }
 .country-code-user-page{
   position: absolute !important;
-  bottom: 134px;
+  bottom: 118.5px;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
@@ -667,6 +667,10 @@ padding: 10px 15px 0 15px;
   text-decoration:underline;
   margin-bottom:30px;
 }
+.pxp-hero-caption-select-location .title-select-location {
+  text-decoration:underline;
+  margin-bottom:30px;
+}
 .pxp-hero-search select, .form-control.pxp-is-address, .pxp-p-search-status, .pxp-is-address {
   color: #4D4D4D;
       font-family: Condensed;
@@ -728,7 +732,7 @@ h1.pxp-page-header, .pxp-blog-posts-carousel-1-caption-title, pxp-blog-post-bloc
   bottom:128px;
 }
 .country-code-forgot-page {
-  bottom:87px;
+  bottom:84.75px;
 }
 .pi-200{
   padding-left: 200px !important;
@@ -788,3 +792,17 @@ h1.titles-property {
   font-size: 16px;
 }
 
+
+
+
+.pxp-hero-opacity-select-location{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+.property-details{
+  font-weight: bold;
+}

@@ -68,6 +68,7 @@ class vendorSignup extends Component {
     static getDerivedStateFromProps(props, state) {
         const errors = props.errors;
         const page = props.page;
+        console.log('checking page data ',page)
         const auth = props.auth;
         let stateChanged = false;
         let changedState = {};
@@ -232,8 +233,8 @@ class vendorSignup extends Component {
                 postalCode: "",
                 channel: "",
              };
-            // console.log('i am here: ',userData);
-            this.props.onCreateVendor(userData);
+            console.log('i am here: ',userData);
+            // this.props.onCreateVendor(userData);
          }
 
     render() { 

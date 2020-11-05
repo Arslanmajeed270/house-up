@@ -66,10 +66,11 @@ class singleProp extends Component {
                 <div className="pxp-single-property-top pxp-content-wrapper mt-100">
                   <div className="container">
                     <div className="row">
-                      <div className="col-sm-12 col-md-5">
+                      <div className="col-sm-12 col-md-12">
                         <h2 className="pxp-sp-top-title">{data && data.adTitle}</h2>
                         <p className="pxp-sp-top-address pxp-text-light">
-                          {data && data.address}
+                          {/* {data && data.address} */}
+                          {data && data.price }
                         </p>
                       </div>
                       {/* <div className="col-sm-12 col-md-7">
@@ -125,7 +126,7 @@ class singleProp extends Component {
                 <div className="container mt-100">
                   <div className="row">
                     <div className="col-lg-8">
-                      <div className="pxp-single-property-section">
+                      {/* <div className="pxp-single-property-section">
                         <h3>Key Details</h3>
                         <div className="row mt-3 mt-md-4">
                           <div className="col-sm-6">
@@ -178,12 +179,39 @@ class singleProp extends Component {
                           </div>
                         </div>
                       </div>
+                       */}
+                          <div > <span className="property-details">Address:</span> {data.address}</div>
+                          <div> <span className="property-details">Property type:</span> {data.propertyType} </div> 
+                          <div><span className="property-details">Rental:</span> No</div> 
+                          <div><span className="property-details">For sale by:</span> Real estate agent</div>
+                          <div><span className="property-details">Date listed:</span> {data.createdDate}</div>
                       <div className="pxp-single-property-section mt-4 mt-md-5">
-                        <h3>Overview</h3>
+                        <h3>Description</h3>
                         <div className="mt-3 mt-md-4">
                           <p>
                             {data.description}
                           </p>
+                        </div>
+                        <div>
+                        <h3>Details</h3>
+                        <div className="mt-3 mt-md-4">
+                          <div> <span  className="property-details">Building type: </span> {data.propertyType} </div> 
+                          <div><span className="property-details">Bedrooms: </span> No</div> 
+                          <div><span className="property-details">Bathrooms: </span> Real estate agent</div>
+                          <div><span className="property-details">Lot dimensions: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Lot area: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Basement: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Garage: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Sqrt Area: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Primary heating fuel: </span> {data.createdDate}</div>
+                          <div><span className="property-details">yearBuilt: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Year furnace installed: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Year roof installed: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Storeys: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Water source: </span> {data.createdDate}</div>
+                          <div><span className="property-details">Condo fees (/month): </span> {data.createdDate}</div>
+                          <div><span className="property-details">Parking Spaces: </span> {data.createdDate}</div>
+                        </div>
                         </div>
                       </div>
                       <div className="pxp-single-property-section mt-4 mt-md-5">
@@ -191,47 +219,47 @@ class singleProp extends Component {
                         <div className="row mt-3 mt-md-4">
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-wifi" /> Internet
+                              Internet
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-car" /> Garage
+                               Garage
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-sun-o" /> Air Conditioning
+                              Air Conditioning
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-bullseye" /> Dishwasher
+                               Dishwasher
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-recycle" /> Disposal
+                               Disposal
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-clone" /> Balcony
+                              Balcony
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-futbol-o" /> Gym
+                              Gym
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-smile-o" /> Playroom
+                               Playroom
                             </div>
                           </div>
                           <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-glass" /> Bar
+                              Bar
                             </div>
                           </div>
                         </div>
@@ -350,45 +378,12 @@ class singleProp extends Component {
                         </div>
                       </div>
                       <div className="row mt-100">
-                        {/*  <div className="col-sm-12 col-lg-12"></div> */}
                         <div className="col-sm-12 col-lg-12">
                           <div className="pxp-agent-block">
                             <div className="pxp-agent-comments">
                               {/* <h4>3 Reviews</h4> */}
                               <div className="mt-3 mt-md-4">
-                                <div className="media">
-                                  <img src="assets/images/customer-1.jpg" className="mr-3" alt="..." />
-                                  <div className="media-body">
-                                    <h5>Scott Goodwin</h5>
-                                    <div className="pxp-agent-comments-date">
-                                      April 9, 2019 at 2:33 pm
-                                    </div>
-                                    <p>
-                                      Cras sit amet nibh libero, in gravida nulla. Nulla
-                                      vel metus scelerisque ante sollicitudin. Cras purus
-                                      odio, vestibulum in vulputate at, tempus viverra
-                                      turpis. Fusce condimentum nunc ac nisi vulputate
-                                      fringilla. Donec lacinia congue felis in faucibus.
-                                    </p>
-                                    <div className="media mt-2 mt-md-3">
-                                      <img src="assets/images/customer-4.jpg" className="mr-3" alt="..." />
-                                      <div className="media-body">
-                                        <h5>Alayna Becker</h5>
-                                        <div className="pxp-agent-comments-date">
-                                          April 9, 2019 at 2:33 pm
-                                        </div>
-                                        <p>
-                                          Cras sit amet nibh libero, in gravida nulla.
-                                          Nulla vel metus scelerisque ante sollicitudin.
-                                          Cras purus odio, vestibulum in vulputate at,
-                                          tempus viverra turpis. Fusce condimentum nunc ac
-                                          nisi vulputate fringilla. Donec lacinia congue
-                                          felis in faucibus.
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
+                              
                                 <div className="media mt-2 mt-md-3">
                                   <img src="assets/images/customer-3.jpg" className="mr-3" alt="..." />
                                   <div className="media-body">
@@ -406,6 +401,7 @@ class singleProp extends Component {
                                   </div>
                                 </div>
                               </div>
+
                               <h4 className="mt-4 mt-md-5">Leave a review</h4>
                               <form action="/single-vendor" className="pxp-agent-comments-form mt-3 mt-md-4">
                                 <div className="row">
@@ -423,10 +419,9 @@ class singleProp extends Component {
                                                     </div> */}
                                 </div>
                                 <div className="form-group">
-                                  <label htmlFor="pxp-agent-comments-review">Write a Review</label>
-                                  <textarea className="form-control" id="pxp-agent-comments-review" rows={6} placeholder="Write your review here..." defaultValue={""} />
+                                  <input className="form-control" placeholder="Write your review here..."  />
+                                  <span><image src="assets/images/customer-3.jpg" alt="" style={{height:'100px'}} /> hello </span>
                                 </div>
-                                <Link to="" className="pxp-agent-comments-form-btn">Post Review</Link>
                               </form>
                             </div>
                           </div>

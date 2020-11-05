@@ -40,20 +40,13 @@ export const clearErrors = () => {
 };
 
 //INDEX  - Get indexPage data from backend
-export const getIndexPageData = (userId) => dispatch => {
+export const getIndexPageData = (data) => dispatch => {
+	console.log('checking data pakage in page action before api', data)
 	dispatch(setPageLoading());
     axios
     .post(
-		backendServerURL+'/home',
-		{
-			"channel":"web",
-			"lat":43.787083,
-			"lng":-79.497369,
-			"city": "",
-			"limit":10,
-			"offset":0,
-			"loggedInuserId":userId
-		}
+		backendServerURL+'/home',data
+		
     )
     .then(res => {
 		console.log('checking Home page data' , res);
@@ -118,7 +111,7 @@ export const GetCountries = () => dispatch => {
 		}
     )
     .then(res => {
-		// console.log('checking GetCountries page data' , res);
+		console.log('checking GetCountries page data' , res);
 		if( res && res.data && res.data.resultCode === "200" ){
 			dispatch(
 				{

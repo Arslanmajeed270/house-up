@@ -12,7 +12,8 @@ class cardSelection extends Component {
                 <Modal 
                     show={this.props.show}
                     aria-labelledby="contained-modal-title-vcenter"
-                    onHide={() => this.props.closeCodelHanlder('cardSelection')}
+                    // onHide={() => this.props.closeCodelHanlder('cardSelection')}
+                    onClick={() => this.props.closeCodelHanlder}
                     centered
                     >
                     <Modal.Body >
@@ -29,6 +30,7 @@ class cardSelection extends Component {
                                     <div className="col-md-9">
                                         <div class="card ">VISA Card</div>
                                         <div class="card-description"> **** **** **** 4545 </div>
+                                        <img src={require('../../assets/images/ic_check_sel.svg')} alt="" />
                                     </div>
                                 </div>
                             </Link>
@@ -47,6 +49,7 @@ class cardSelection extends Component {
                                     <div className="col-md-9">
                                         <div class="card">Master Card</div>
                                         <div class="card-description"> **** **** **** 4545 </div>
+                                        <img src={require('../../assets/images/ic_check_sel.svg')} alt="" />
                                     </div>
                                 </div>
                             </Link>
@@ -63,7 +66,7 @@ class cardSelection extends Component {
                         </div>
                     </div>
                     </Link>
-                    <button className="btn btn-primary card-btn">
+                    <button className="btn btn-primary card-btn" type="submit">
                         Submit
                     </button>
                    
