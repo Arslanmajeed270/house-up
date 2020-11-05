@@ -267,6 +267,7 @@ class vendorSignup extends Component {
             </Modal.Header>
             <Modal.Body >
             <form className="mt-4" onSubmit={this.onSubmit}>
+            <div className="register-form-content-body">
 
             {errors && errors.message &&
                 <Alert variant='danger'>
@@ -290,7 +291,7 @@ class vendorSignup extends Component {
                 </div>
                 <div className="row" style={{padding:'0px 15px'}}>
             
-            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
@@ -321,7 +322,7 @@ class vendorSignup extends Component {
                     
                     
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
                         <div className="form-group">
                          <input type="text" 
                             className="form-control"
@@ -352,7 +353,7 @@ class vendorSignup extends Component {
            
            
                     <div className="row" style={{padding:'0px 15px'}}>
-                        <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                        <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
                     <div className="form-group">
                         <select className="custom-select drop-down" onChange={this.onChange} name="professionId"
                          value={professionId} required >
@@ -368,7 +369,7 @@ class vendorSignup extends Component {
                     </div>
                     <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
 
-                    <div className="form-group input-file">
+                    <div className="form-group input-file" style={{height:'46px' , borderRadius:'4px'}}>
                          <input type="file" 
                             className="form-control"
                             id="file" 
@@ -387,7 +388,7 @@ class vendorSignup extends Component {
                     </div>
             
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
 
                     <div className="form-group">
                         <input type="text" 
@@ -418,7 +419,7 @@ class vendorSignup extends Component {
                     </div>
             
                     <div className="row" style={{padding:'0px 15px'}}>
-            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
 
                     <div className="form-group">
                         <input type="text" 
@@ -452,9 +453,9 @@ class vendorSignup extends Component {
                     </div>
                     </div>
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
 
-                    <div className="form-group input-file">
+                    <div className="form-group input-file" style={{paddingRight:'7px', heihgt: '46px', borderRadius: '4px'}}>
                         <input type="file" 
                             className="form-control" 
                             accept="image/*"
@@ -496,69 +497,69 @@ class vendorSignup extends Component {
                     </div>
 
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
-                    <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group"> 
-                                <select className="custom-select"
-                                    placeholder="City"
-                                    name="provinceId"
-                                    value={provinceId}
-                                    onChange={this.onChange}
-                                >
-                                    <option value=""> Province / state </option>
-                             {
-                                 states && states.length ? states.map( ( state, idx ) => (
-                                     <option key={idx} value={state.id} > { state.name }</option>
-                                 ) )
-                                 : ""
-                             }
-                                </select>
+                        <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="form-group" style={{marginBottom:'9px'}}> 
+                                        <select className="custom-select" style={{height:'42px'}}
+                                            placeholder="City"
+                                            name="provinceId"
+                                            value={provinceId}
+                                            onChange={this.onChange}
+                                        >
+                                            <option value=""> Province / state </option>
+                                        {
+                                            states && states.length ? states.map( ( state, idx ) => (
+                                                <option key={idx} value={state.id} > { state.name }</option>
+                                             ) )
+                                             : ""
+                                        }
+                                    </select>
+                                </div>
+                                </div>
+                                <div className="col-md-6">
+                                <div className="form-group" style={{marginBottom:'9px'}}> 
+                                    <select className="custom-select" style={{height:'42px'}}
+                                        placeholder="Prov/State"
+                                        name="cityId" required
+                                        value={cityId}
+                                        onChange={this.onChange}
+                                        >
+                                          <option value=""> City </option>
+                                        {
+                                            cities && cities.length ? cities.map( ( city, idx ) => (
+                                                <option key={idx} value={city.id} > { city.name }</option>
+                                            ) )
+                                            : ""
+                                        }     
+                                    </select>            
+                                </div>
+                                </div>
                             </div>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <input className="form-control"
+                                        placeholder="Unit Or Other"
+                                        name="unit"
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <input 
+                                        className="form-control" 
+                                        placeholder="Postal or zip" 
+                                        name="zipCode"
+                                        value={zipCode}
+                                        onChange={this.onChange}
+                                        required
+                                    />
+                                </div>
                             </div>
-                            <div className="col-md-6">
-                            <div className="form-group"> 
-                                <select className="custom-select"
-                                    placeholder="Prov/State"
-                                    name="cityId" required
-                                    value={cityId}
-                                    onChange={this.onChange}
-                                    >
-                                      <option value=""> City </option>
-                                    {
-                                        cities && cities.length ? cities.map( ( city, idx ) => (
-                                            <option key={idx} value={city.id} > { city.name }</option>
-                                        ) )
-                                        : ""
-                                    }     
-                                </select>            
-                            </div>
-                            </div>
-                        </div>
-                    <div className="row">
-                            <div className="col-md-6">
-                                <input className="form-control"
-                                    placeholder="Unit Or Other"
-                                    name="unit"
-                                />
-                            </div>
-                            <div className="col-md-6">
-                                <input 
-                                    className="form-control" 
-                                    placeholder="Postal or zip" 
-                                    name="zipCode"
-                                    value={zipCode}
-                                    onChange={this.onChange}
-                                    required
-                                />
-                            </div>
-                       </div>
                        </div>
                     <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
                        <div className="form-group">
                         <textarea 
                             typeof="text" className="form-control" style={{height:'97px'}}
-                            placeholder="street name & number"
+                            placeholder="Street name & number"
                             name="streetAddress"
                             value={streetAddress}
                             onChange={this.onChange}
@@ -568,7 +569,7 @@ class vendorSignup extends Component {
                     </div>
 
                 <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px',paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px',paddingRight:'12px'}}>
                         <div className="form-group">
                             <input type={ viewPass ? "text" : "password" } 
                                 className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
@@ -597,7 +598,8 @@ class vendorSignup extends Component {
                         </div>
                     </div>
                 </div>
-                    <div className="form-group">
+                </div>
+                    <div className="form-group" style={{paddingTop:'15px', height:'56px'}}>
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
@@ -605,6 +607,7 @@ class vendorSignup extends Component {
                         </button>
                     </div>               
                     { pageContent }
+                    
              </form>
 
             </Modal.Body>

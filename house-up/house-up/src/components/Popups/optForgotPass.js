@@ -97,11 +97,11 @@ class optForgotPass extends Component {
                 </Alert>
             }
 
-            <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>We sent you a code to </div>
-            <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>verify your phone number</div>
+            <div className="text-center" style={{fontSize: '22px',fontWeight: '500', color: '#000'}}>We sent you a code to </div>
+            <div className="text-center" style={{fontSize: '22px',fontWeight: '500', color: '#000'}}>verify your phone number</div>
             </div>
             <div className="form-group">
-                <div class="text-center" style={{fontSize: '20px',marginBottom:'15px',color:'#CACACC'}}>sent to {phoneNumber} </div> 
+                <div class="text-center" style={{fontSize: '20px',marginBottom:'15px', color:'#8E8E93'}}>sent to {phoneNumber} </div> 
                 <div style={{marginLeft: "14%",marginBottom:'15px'}}>  
                 <OtpInput
                 value={this.state.otp}
@@ -112,7 +112,7 @@ class optForgotPass extends Component {
                 />
             </div>
             </div>
-            <div className="text-center" style={{marginBottom:'10px', color:'#CACACC'}}>
+            <div className="text-center" style={{marginBottom:'10px', color:'#8E8E93'}}>
               I didn't receeive a code! <Link to="#" onClick={() => this.resendPin(phoneNumber)} >Resend</Link>
             </div>
             </Modal.Body>

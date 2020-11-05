@@ -47,7 +47,7 @@ class header extends Component {
               <div className={"pxp-header fixed-top " + ( animateHeader ? "pxp-animate" : "pxp-full" ) }>
                 <div className="wrapper">
                   <div className="row align-items-center">
-                    <div className="col-5 col-md-3">
+                    <div className="col-5 col-md-3 d-center-element-logo">
                       <Link to={ user && user.profilePictureUrl ? "/index" : "" } className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>
@@ -59,7 +59,7 @@ class header extends Component {
                         }
                         
                       </Link>
-                      <Link to="#">
+                      <Link to="#" className="header-location-link">
                         <img src={require('../assets/images/ic_address.svg')} />
                       Street# 32, Canada
                       </Link>

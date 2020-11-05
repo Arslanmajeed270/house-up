@@ -115,6 +115,7 @@ class form1 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h1 className="titles-property">List your property</h1>
+                        <p className="pairing-industry">Pairing the industry's top technology with unsurpassed local expertise.</p>
                         <Nav variant="pills"  defaultActiveKey="/1">
                             <Nav.Item>
                                 <Nav.Link eventKey="/1" className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>

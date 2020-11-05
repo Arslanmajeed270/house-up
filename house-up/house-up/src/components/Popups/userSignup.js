@@ -149,6 +149,7 @@ class userSignup extends Component {
             
             <Modal.Body>
                 <form className="mt-4" onSubmit={this.onSubmit}>
+                <div className="userSignup-content-t">
                 {errors && errors.message &&
                     <Alert variant='danger'>
                     <strong>Error!</strong> { errors.message }
@@ -235,6 +236,7 @@ class userSignup extends Component {
                             required   
                         />
                                     <span className="confirmPass-userSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
+                    </div>
                     </div>
                     <div className="form-group">
                         <button

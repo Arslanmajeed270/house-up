@@ -2824,9 +2824,8 @@ h1.pxp-page-header {
 .pxp-map-side {
     position: fixed;
     top: 69px;
-    bottom: 0px;
+    bottom: 62.72px;
     width: 50%;
-    z-index: 3;
 }
 .pxp-map-side.pxp-half {
     width: 50%;
@@ -3004,6 +3003,7 @@ a.pxp-list-toggle.pxp-active {
     text-transform: uppercase;
     font-size: 23px;
     text-decoration: underline;
+    font-weight: bold;
   }
 .pxp-dark-mode .pxp-price-marker:after {
     background: #000;
@@ -6454,9 +6454,92 @@ i.grey{
     display: none;
 }
 .pxp-is-sticky .black-logo{
-    display: block;
+    display: inline-block;
 }
 .pxp-is-sticky .white-logo{
     display: none;
+}
 
+.pairing-industry {
+    color: #393939;
+    font-family: 'Condensed', sans-serif;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.add-property-conatiner {
+    background-color: #fff !important;
+}
+
+.add-property-conatiner .border-property .nav-item {
+    margin-right: 10px;
+}
+
+.add-property-conatiner .nav-item .nav-link {
+    border-bottom: none !important;
+    color: #8E8E93 !important;
+}
+
+.add-property-conatiner .nav-item .nav-link.active {
+    border-bottom: 2px solid #00B0E9 !important;
+    background:none;
+    color: #393939 !important;
+}
+
+.btn-div .btn-property {
+    border:none;
+    border-radius: 3px;
+}
+
+.btn-div-prev button, .btn-div-prev button:hover {
+    background: #EFEFF4;
+    border: none;
+    border-radius: 2px;
+    color: #000000;
+    font-size: 16px;
+}
+
+.previous-fwd-btn {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.more-options {
+    margin: 16px 0px !important;
+    color: #007AFF !important;
+    display: inline-block !important;
+}
+
+.input-feilds-property {
+    width: 87% !important;
+}
+
+.form-three-search {
+    background: #00B0E9 !important;
+    border: none !important;
+    border-radius: 0px !important;
+    height: 34px !important;
+}
+
+.pxp-single-property-section h3 {
+    font-size: 32px;
+    color: #000000;
+}
+
+.pxp-sp-amenities-item {
+    color: #000000;
+    padding-left: 15px;
+}
+
+.nav-tabs .nav-item.show .nav-link:hover, .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover, .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.media-body h5 {
+    color: #010101;
+}
+
+.pxp-agent-comments h4 {
+    color: #010101;
 }

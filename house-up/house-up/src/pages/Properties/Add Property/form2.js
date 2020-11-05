@@ -212,6 +212,7 @@ class from2 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h1 className="titles-property">List your property</h1>
+                        <p className="pairing-industry">Pairing the industry's top technology with unsurpassed local expertise.</p>
                         <Nav variant="pills"  defaultActiveKey="/2">
                             <Nav.Item>
                                 <Nav.Link eventKey="/1" className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
@@ -506,7 +507,7 @@ class from2 extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <div className="btn-div-prev">
-                                <button className="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(0)}>Prevsious</button>
+                                <button className="btn btn-lg btn-primary btn-property" onClick={() =>this.props.formShowHandler(0)}>Back</button>
                             </div>
                         </div>
                         <div className="col-md-6">

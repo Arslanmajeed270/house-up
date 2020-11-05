@@ -2888,3 +2888,163 @@ iframe {border: none;}
 	bottom: 0px;
 }
 
+
+.form-group.has-search {
+    position: relative;
+}
+
+.form-group.has-search img {
+    position: absolute;
+    left: 95%;
+    top: 5px;
+}
+
+.modal-dialog.modal-lg.modal-dialog-centered .modal-content {
+	width: 90%;
+	height: 580px;
+    overflow-y: scroll;
+}
+
+.modal-dialog.modal-lg.modal-dialog-centered .modal-content .modal-body {
+	padding: 10px 22px 0 22px;
+}
+
+.modal-dialog.modal-lg.modal-dialog-centered .modal-content input {
+	color:#000;
+}
+
+/* width */
+.register-form-content-body::-webkit-scrollbar ,.modal-dialog.modal-lg.modal-dialog-centered .modal-content::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+.modal-dialog.modal-lg.modal-dialog-centered .modal-content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+.modal-dialog.modal-lg.modal-dialog-centered .modal-content::-webkit-scrollbar-thumb {
+  background: red; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.modal-dialog.modal-lg.modal-dialog-centered .modal-content::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+
+input[type="date"]:before {
+    content: attr(placeholder) !important;
+    color: #aaa;
+    margin-right: 0.5em;
+}
+  
+input[type="date"]:focus:before,
+  input[type="date"]:valid:before {
+    content: "";
+}
+
+.modal-dialog.modal-lg.modal-dialog-centered .modal-content .pxp-agent-contact-modal-btn {
+	width: 50%;
+	margin: 0 auto;
+}
+
+.register-form-content-body {
+	height: 460px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal-dialog.modal-width.modal-dialog-centered .pass-userSignup {
+	bottom: 150px !important;
+}
+
+.modal-dialog.modal-width.modal-dialog-centered .confirmPass-userSignup {
+	bottom: 90px;
+}
+
+.userSignup-content-t {
+	overflow-y: auto;
+	height: 430px;
+}
+
+.userSignup-content-t::-webkit-scrollbar {
+	width: 0px;
+}
+
+.userSignup-content-t input {
+	color: #000;
+}
+
+.password-forgotPass {
+	bottom:150px !important;
+}
+
+.confirmPass-forgotPass {
+	bottom: 90px !important;
+}
+
+img.search {
+    top: 17px;
+    position: absolute;
+    right: 15px;
+}
+
+.header-location-link {
+	padding-left: 30px;
+}
+
+.header-location-link {
+	color: #fff;
+}
+
+.header-location-link img {
+	padding-right: 5px;
+}
+
+.pxp-is-sticky .header-location-link {
+	color: #333;
+}
+
+.pxp-hero-search .btn.btn-primary {
+	background-color: #00B0E9;
+	border:none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 17px;
+	font-family: regular, sans-serif;
+	border-radius: 3px;
+	height: 53px;
+	width: 140px;
+}
+
+.pxp-hero-search .custom-select, .pxp-hero-search .form-control.pxp-is-address {
+	color: #393939 !important;
+}
+
+.select-location-img {
+	margin-bottom: 25px;
+	width: 176px;
+}
+
+.pxp-areas-1-item-details-area span {
+	color: #4D4D4D;
+    font-size: 14px;
+}
+
+.listing-icon-fix {
+	position: relative;
+}
+
+.listing-icon-fix .pxp-adv-toggle {
+	width: 45px;
+}
+
+.listing-icon-fix img {
+	position: absolute;
+	left: 24px;
+	top: 14px;
+}
