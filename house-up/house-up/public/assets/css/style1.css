@@ -6404,10 +6404,43 @@ i.grey{
 .black-logo{
     display: none;
 }
-.pxp-is-sticky .black-logo{
-    display: block;
-}
+
 .pxp-is-sticky .white-logo{
     display: none;
 
+}
+
+.form-group.has-search {
+    position: relative;
+}
+
+.form-group.has-search img {
+    position: absolute;
+    left: 95%;
+    top: 5px;
+}
+
+.d-center-element-logo {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.pxp-is-sticky .header-location-link {
+    color: #333;
+    position: relative;
+    top: -35px;
+    left: 60px;
+    padding-left: 0px !important;
+}
+
+.header-location-link {
+    position: relative;
+    top: -35px;
+    left: 60px;
+    padding-left: 0px !important;
+}
+
+.pxp-is-sticky .black-logo {
+    display: inline-block !important;
 }

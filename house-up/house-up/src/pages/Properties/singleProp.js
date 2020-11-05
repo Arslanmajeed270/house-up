@@ -75,7 +75,7 @@ class singleProp extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
+                <div className="container pxp-single-property-gallery-container mt-4 mt-md-5">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
                       <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0].imageURL ? data.imageList[0].imageURL : 'assets/images/ic_profile_placeholder.png'})`}} />

@@ -136,7 +136,7 @@ class properties extends Component {
                           </div>
                         </div>
                       </div>
-                      <div className="d-flex">
+                      <div className="d-flex listing-icon-fix">
                         <Link role="button" className="pxp-adv-toggle" to="" ><span className="fa fa-sliders" /></Link>
                         <img src={require('../../assets/images/ic_filter.svg')} alt="" />
                       </div>

@@ -55,7 +55,7 @@ class header extends Component {
               <div className={"pxp-header fixed-top " + ( animateHeader ? "pxp-animate" : "pxp-full" ) }>
                 <div className="wrapper">
                   <div className="row align-items-center">
-                    <div className="col-5 col-md-3">
+                    <div className="col-5 col-md-3 d-center-element-logo">
                       <Link to={ user && user.profilePictureUrl ? "/select-location" : "" } className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>

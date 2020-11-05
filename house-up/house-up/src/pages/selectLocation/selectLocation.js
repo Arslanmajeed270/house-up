@@ -120,7 +120,8 @@ onSubmit = e => {
                   <div className="pxp-hero-opacity-select-location" />
                   <div className="pxp-hero-caption">
                     <div className="container">
-                      <h1 className="text-black">House Up</h1>
+                      <img src="assets/images/ic_logo_splash@2x.png" className="select-location-img" alt="logo" />
+                      
                       <h3 className="text-black title-select-location">Own the way you sell your home</h3>
                       <form className="pxp-hero-search mt-4" action="">
                         <div className="row">
