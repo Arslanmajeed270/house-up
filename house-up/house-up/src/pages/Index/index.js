@@ -119,17 +119,21 @@ class index extends Component {
     const state = this.props.match.params.state;
     const city = this.props.match.params.city;
 
-    const { countryName , stateName , cityName } = this.state;
 
     this.setState({
       countryName : country,
       stateName : state,
       cityName : city
     });
+    console.log('country from params',country)
+    console.log('state from params',state)
+    console.log('city from params',city)
+
+
+
 
     const data = {
       state : state,
-      city: city,
       channel:"web",
       lat:43.787083,
       lng:-79.497369,
@@ -138,7 +142,6 @@ class index extends Component {
       offset:0,
       loggedInuserId: userId,
       country: country
-    
     };
 
     console.log("checking data pakage",data)
@@ -240,7 +243,7 @@ class index extends Component {
                             indexPageData.vendorPostPropertiesList.map((data, index) =>
                             data.category && ( data.category === "Post" || data.category === "Property" ) ? 
                             <React.Fragment key={index}>
-                            {index === 2 && 
+                            {index === 0 && 
                             <div className="explore-our-neighbours">
                             <div className="row">
                                 <div className="col-md-12 col-lg-12 col-sm-12">
@@ -271,7 +274,7 @@ class index extends Component {
                                 <div className="row">
                                   <div className="col-md-9 col-sm-9 col-8">
                                     <div className="vendor-detail">
-                                      { data && data.firstName ?  data.firstName : ''} {data && data.lastName ? data.lastName : ''}
+                                      {data && data.firstName ?  data.firstName : ''} {data && data.lastName ? data.lastName : ''}
                                       <p>
                                         <span>{ data && data.professionDesc && data.professionDesc !== "null" ? data.professionDesc : " " }</span>
                                       </p>
@@ -326,8 +329,21 @@ class index extends Component {
                                           0 
                                           )}
                                       ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
-                                      <Link to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
-                                      <i className="far fa-share-square post-navbar-items" />
+                                      <Link to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
+                                      <Link ><img src={require('../../assets/images/ic_timeline_share.svg')} alt="" />  </Link>
+                                      {
+                                    data && data.object && data.object.postLikes && data.object.postLikes.length && data.object.postLikes.length >= 1 ?
+                                    <div> Liked by { data.object.postLikes[data.object.postLikes.length-1].userName + ( data.object.postLikes.length <= 1 ? "" :  `and ${data.object.postLikes.length - 1}`) }  </div> : ""
+                                  }
+                                  {
+                                    data && data.object && data.object.postComments && data.object.postComments.length && data.object.postComments.length >= 1 ?
+                                    <div><span> {data.object.postComments[data.object.postComments.length-1].userName}</span>{data.object.postComments[data.object.postComments.length-1].commentText}  </div>: ""
+                                  }
+                                  {
+                                    data && data.object && data.object.postComments && data.object.postComments.length >= 1 ?
+                                    <Link to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}>view All {data.object.postComments.length} comments</Link>
+                                    : ""
+                                  }
                                   </div>
                                 </div>
                                   </>
@@ -367,15 +383,27 @@ class index extends Component {
                                           0, 
                                           data  && data.object && data.object.propertId, 
                                           )}><i className= {data.object && data.object.isPropertyLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
-                                      <Link to={`/comments-${data && data.object && data.object.propertId && data.object.propertId}&${data && data.category}`} style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
-                                      {/* <i className="far fa-share-square post-navbar-items" /> */}
-                                      {/* <img src={require('../../assets/images/ic_timeline_comment.svg ')} alt="" /> */}
+                                      <Link to={`/comments-${data && data.object && data.object.propertId && data.object.propertId}&${data && data.category}`} style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
+                                      <Link ><img src={require('../../assets/images/ic_timeline_share.svg')} alt="" />  </Link>
                                   </div>
                                 </div>
                                 </>   
                                   : null }
+                                  {
+                                    data && data.object && data.object.propertyLikes && data.object.propertyLikes.length && data.object.propertyLikes.length >= 1 ?
+                                    <div> Liked by { data.object.propertyLikes[data.object.propertyLikes.length-1].userName + ( data.object.propertyLikes.length <= 1 ? "" :  `and ${data.object.propertyLikes.length - 1}`) }  </div> : ""
+                                  }
+                                  {
+                                    data && data.object && data.object.propertyComments && data.object.propertyComments.length && data.object.propertyComments.length >= 1 ?
+                                    <div><span> {data.object.propertyComments[data.object.propertyComments.length-1].userName}</span>{data.object.propertyComments[data.object.propertyComments.length-1].commentText}  </div>: ""
+                                  }
+                                  {
+                                    data && data.object && data.object.propertyComments && data.object.propertyComments.length >= 1 ?
+                                    <Link to={`/comments-${data && data.object && data.object.propertId && data.object.propertId}&${data && data.category}`}>view All {data.object.propertyComments.length} comments</Link>
+                                    : ""
+                                  }
                               </div>
-                            </div> 
+                            </div>
                             </React.Fragment>
                             :
                             null

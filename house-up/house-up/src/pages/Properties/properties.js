@@ -18,7 +18,8 @@ class properties extends Component {
       errors: {},
       loading : false,
       indexPageData : {},
-      propertiesData:[]
+      propertiesData:[],
+      indexPageData : {},
     };
   }
 
@@ -39,6 +40,7 @@ class properties extends Component {
 
     let stateChanged = false;
     let changedState = {};
+
 
     if(page && JSON.stringify(state.indexPageData) !== JSON.stringify(page.indexPageData)){
       changedState.indexPageData = page.indexPageData;  
@@ -63,7 +65,21 @@ class properties extends Component {
 
   componentDidMount() {
     console.log('indexPage componenet did mount');
-    this.props.onGetData();
+    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
+
+    const data = {
+      state : "",
+      channel:"web",
+      lat:43.787083,
+      lng:-79.497369,
+      city: "",
+      limit:10,
+      offset:0,
+      loggedInuserId: userId,
+      country: ""
+    };
+
+    this.props.onGetData(data);
   }
 
   
@@ -134,19 +150,11 @@ class properties extends Component {
                     {propertiesData && propertiesData.length ? 
                       propertiesData.map( (data, index) =>
                       <div className="col-sm-12 col-md-6 col-xxxl-4">
-                        <Link to={`/single-prop-${data && data.propertId && data.propertId}`}  className="pxp-results-card-1 rounded-lg" data-prop={1}>
+                        <Link to={`/single-prop-${data && data.propertId}`}  className="pxp-results-card-1 rounded-lg" data-prop={1}>
                           <div id="card-carousel-1" className="carousel slide" data-ride="carousel" data-interval="false">
                             <div className="carousel-inner">
-                              
                               <div className="carousel-item active" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length &&  data.imageList[0].imageURL ? data.imageList[0].imageURL : 'assets/images/ic_profile_placeholder.png'})`}} />
-                              {/* <div className="carousel-item" style={{backgroundImage: 'url(assets/images/prop-1-2-gallery.jpg)'}} /> */}
                             </div>
-                            {/* <span className="carousel-control-prev" data-to="#card-carousel-1" data-slide="prev">
-                              <span className="fa fa-angle-left" aria-hidden="true" />
-                            </span>
-                            <span className="carousel-control-next" data-to="#card-carousel-1" data-slide="next">
-                              <span className="fa fa-angle-right" aria-hidden="true" />
-                            </span> */}
                           </div>
                           <div className="pxp-results-card-1-gradient" />
                           <div className="pxp-results-card-1-details">
@@ -165,7 +173,7 @@ class properties extends Component {
                     <ul className="pagination pxp-paginantion mt-2 mt-md-4">
                       <li className="page-item active"><Link className="page-link" to="">1</Link></li>
                       <li className="page-item"><Link className="page-link" to="">2</Link></li>
-                      <li className="page-item"><Link className="page-link" to="">3</Link></li>
+                      {/* <li className="page-item"><Link className="page-link" to="">3</Link></li> */}
                       <li className="page-item"><Link className="page-link" to="">Next <span className="fa fa-angle-right" /></Link></li>
                     </ul>
                   </div>
@@ -190,7 +198,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetData: () => dispatch(actions.getIndexPageData()),
+    onGetData: () => (data)=> dispatch(actions.getIndexPageData(data)),
   }
 };
  

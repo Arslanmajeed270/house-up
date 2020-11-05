@@ -48,7 +48,7 @@ class header extends Component {
                 <div className="wrapper">
                   <div className="row align-items-center">
                     <div className="col-5 col-md-3">
-                      <Link to={ user && user.profilePictureUrl ? "/index" : "" } className="pxp-logo text-decoration-none">
+                      <Link to={ user && user.profilePictureUrl ? "/select-location" : "" } className="pxp-logo text-decoration-none">
                         {animateHeader ? 
                         <>
                         <img className="img black-logo" src="assets/images/ic_logo_black.svg" alt="logo" />

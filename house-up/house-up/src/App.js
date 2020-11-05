@@ -16,7 +16,7 @@ class App extends Component {
       <React.Fragment>
       <PrivateRoute
         exact 
-        path={'"/index-:country&:state&:city"'}     
+        path={"/index-:country&:state&:city"}     
         component={Index}
       />
       <Route
