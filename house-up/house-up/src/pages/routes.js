@@ -17,6 +17,7 @@ import ComingSoon from './CommingSoom/comingSoon';
 import Index from './Index/index';
 import AddProduct from './wizards/addProduct';
 import AddCoupon from './wizards/addCoupon';
+import SelectLocation from './selectLocation/selectLocation';
 
 class Routes extends React.Component {
 
@@ -31,7 +32,7 @@ class Routes extends React.Component {
 				/>
 				<Route      
 					exact 
-					path={"/index"} 
+					path={"/index-:country&:state&:city"} 
 					component={Index}
 				/>
 				<Route      
@@ -93,6 +94,11 @@ class Routes extends React.Component {
 					exact 
 					path={"/privacy"} 
 					component={Privacy}
+				/>
+				<Route      
+					exact 
+					path={"/select-location"} 
+					component={SelectLocation}
 				/>
 				<Route      
 					exact 

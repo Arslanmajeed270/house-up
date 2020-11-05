@@ -16,7 +16,7 @@ class App extends Component {
       <React.Fragment>
       <PrivateRoute
         exact 
-        path={'/index'}     
+        path={'"/index-:country&:state&:city"'}     
         component={Index}
       />
       <Route
@@ -67,6 +67,11 @@ class App extends Component {
         <Route
         exact 
         path={'/comments-:id&:category'}
+        component={Index}
+      />
+      <Route
+        exact 
+        path={'/select-location'}
         component={Index}
       />
         <Route

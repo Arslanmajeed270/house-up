@@ -21,7 +21,10 @@ class index extends Component {
       indexPageData : {},
       user:{},
       postConatctPopup:false,
-      propertyContactPopup:false
+      propertyContactPopup:false,
+      countryName :'',
+      stateName:'',
+      cityName:''
     };
   }
 
@@ -112,7 +115,35 @@ class index extends Component {
   componentDidMount() {
     console.log('indexPage componenet did mount');
     const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
-    this.props.onGetIndexPageData(userId);
+    const country = this.props.match.params.country;
+    const state = this.props.match.params.state;
+    const city = this.props.match.params.city;
+
+    const { countryName , stateName , cityName } = this.state;
+
+    this.setState({
+      countryName : country,
+      stateName : state,
+      cityName : city
+    });
+
+    const data = {
+      state : state,
+      city: city,
+      channel:"web",
+      lat:43.787083,
+      lng:-79.497369,
+      city: city,
+      limit:10,
+      offset:0,
+      loggedInuserId: userId,
+      country: country
+    
+    };
+
+    console.log("checking data pakage",data)
+
+    this.props.onGetIndexPageData(data);
   }
   
 
@@ -337,7 +368,8 @@ class index extends Component {
                                           data  && data.object && data.object.propertId, 
                                           )}><i className= {data.object && data.object.isPropertyLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <Link to={`/comments-${data && data.object && data.object.propertId && data.object.propertId}&${data && data.category}`} style={{color:'#706666'}} ><i className="far fa-comment-alt post-navbar-items" /></Link>
-                                      <i className="far fa-share-square post-navbar-items" />
+                                      {/* <i className="far fa-share-square post-navbar-items" /> */}
+                                      {/* <img src={require('../../assets/images/ic_timeline_comment.svg ')} alt="" /> */}
                                   </div>
                                 </div>
                                 </>   

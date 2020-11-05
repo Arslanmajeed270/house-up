@@ -190,9 +190,9 @@ class home extends Component {
                         <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-1.jpg)'}} />
                         <div className="pxp-areas-1-item-details">
                           <div className="pxp-areas-1-item-details-area">{data && data.cityName}</div>
+                        <div className="pxp-areas-1-item-details-area"><span>{data && data.propertyCount} Properties</span></div>
                           <div className="pxp-areas-1-item-details-city"></div>
                         </div>
-                        <div className="pxp-areas-1-item-counter"><span>{data && data.propertyCount} Properties</span></div>
                         <div className="pxp-areas-1-item-cta text-uppercase">Explore</div>
                       </Link>
                     </div>
@@ -242,6 +242,46 @@ class home extends Component {
                       </div>
                 </div>
                 </div>
+                <div className="container mt-100">
+                  <h2 className="pxp-section-h2 text-center">Membership Plans</h2>
+                  <p className="pxp-text-light text-center">Choose the plan that suits you best</p>
+                  <div className="row mt-5">
+              <div className="col-sm-12 col-md-6 col-lg-6">
+                <Link href="#" className="pxp-plans-1-item ">
+                  <div className="pxp-plans-1-item-fig">
+                    <img src={require('../../assets/images/ic_monthly_plan.svg')} alt="..." />
+                  </div>
+                  <div className="pxp-plans-1-item-title">Monthly</div>
+                  <ul className="pxp-plans-1-item-features list-unstyled">
+                  </ul>
+                  <div className="pxp-plans-1-item-price">
+                    <span className="pxp-plans-1-item-price-currency">$</span>
+                    <span className="pxp-plans-1-item-price-sum">29.99</span>
+                    <span className="pxp-plans-1-item-price-period"> / month</span>
+                  </div>
+                  <div className="pxp-plans-1-item-cta text-uppercase">Choose Plan</div>
+                </Link>
+              </div>
+              <div className="col-sm-12 col-md-6 col-lg-6">
+                <Link href="#" className="pxp-plans-1-item pxp-is-popular">
+                  <div className="pxp-plans-1-item-label">Most Popular</div>
+                  <div className="pxp-plans-1-item-fig">
+                    <img src={require('../../assets/images/ic_annually_plan.svg')} alt="..." />
+                  </div>
+                  <div className="pxp-plans-1-item-title">Annually</div>
+                  <ul className="pxp-plans-1-item-features list-unstyled">
+                  </ul>
+                  <div className="pxp-plans-1-item-price">
+                    <span className="pxp-plans-1-item-price-currency">$</span>
+                    <span className="pxp-plans-1-item-price-sum">299.99</span>
+                    <span className="pxp-plans-1-item-price-period"> / year</span>
+                  </div>
+                  <div className="pxp-plans-1-item-cta text-uppercase">Choose Plan</div>
+                </Link>
+              </div>
+            </div>
+          </div>
+
               </div> 
              {pageContent}
             </React.Fragment>

@@ -99,8 +99,8 @@ class phoneSignIn extends Component {
           <div className="logo-modal">
           </div>
           <div className="form-group">
-                <Link to="#"  style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.emailSigninHandler('emailSignin')}>Login with email</Link>
-              </div>
+            <Link to="#"  style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.emailSigninHandler('emailSignin')}>Login with email</Link>
+          </div>
             <form onSubmit={this.onSubmit}>
               {errors && errors.message &&
                 <Alert variant='danger'  style={{marginTop:'15px'}}>
@@ -108,7 +108,7 @@ class phoneSignIn extends Component {
                 </Alert>
               }
               <div>
-                <div className="form-group" style={{position:'relative'}}>
+                <div className="form-group" >
                   <input type="tel" style={{paddingLeft:'58px'}}
                       className="phone-number"
                       id="pxp-signin-email" 
@@ -120,7 +120,7 @@ class phoneSignIn extends Component {
                       value={msisdn} 
                       required
                   />
-                  <span className="country-image-login-page"><img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'-46px',height:'25px'}}/></span>
+                  <span className="country-image-login-page"><img src="assets/images/053-canada.svg" alt="" style={{marginLeft:'-23px', marginBottom:'192px',height:'25px'}}/></span>
                   <span className="country-code-login-page"> +1</span>
               </div>
               </div>
