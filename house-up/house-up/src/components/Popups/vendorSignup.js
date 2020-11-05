@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 
-import { checkPawwordPattern } from '../../utils/regex';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -50,7 +49,10 @@ class vendorSignup extends Component {
             imagePreviewForSupport: [],
             imagePreviewForRegister: [],
             viewPass: false,
-            viewConfirmPass: false
+            viewConfirmPass: false,
+            currentLocation: {},
+            province: '',
+            city: ''
         };
     }
 
@@ -95,7 +97,10 @@ class vendorSignup extends Component {
             // console.log('checking changedState.professionList: ', changedState.professionList);
             stateChanged = true;
         }
-
+        if(page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)){
+            changedState.currentLocation = page.currentLocation;
+            stateChanged = true;            
+        }
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
             changedState.errors = errors;
             stateChanged = true;
@@ -164,15 +169,34 @@ class vendorSignup extends Component {
             });
         }
         else if(e.target.name === 'provinceId'){
+            console.log("checking e.target: ", e.target.value);
             let ind = 0;
             let cities = [];
+            let province = '';
+            let prId = '';
             if(e.target.value !== "" ){
-                ind =  this.state.states && this.state.states.findIndex( x => `${x.id}` === e.target.value );
+                province = e.target.value.split(',')[1];
+                prId = e.target.value.split(',')[0];
+                console.log(`checking province: ${province} and prId: ${prId}`);
+                ind =  this.state.states && this.state.states.findIndex( x => `${x.id}` === prId );
                 cities = cloneDeep(this.state.states[ind]);
             }
             this.setState({ 
-                [e.target.name]: e.target.value,
-                cities: cities.cities
+                [e.target.name]: prId,
+                cities: cities.cities,
+                province: province
+            });
+        }
+        else if(e.target.name === 'cityId'){
+            console.log("checking e.target: ", e.target.value);
+            let city = '';
+            let cId = '';
+                city = e.target.value.split(',')[1];
+                cId = e.target.value.split(',')[0];
+            
+            this.setState({ 
+                [e.target.name]: cId,
+                city: city
             });
         }
         else{
@@ -194,10 +218,6 @@ class vendorSignup extends Component {
             this.props.onErrorSet("Password not matched!");
             return;
         }
-        if(!checkPawwordPattern(this.state.password)){
-           this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
-           return;
-       }
     //    console.log("**** checking phone number:  ", this.props.phNumber);
 
              const userData = {
@@ -231,10 +251,13 @@ class vendorSignup extends Component {
                 stateId: provinceId,
                 houseAppartmentSuitNumber: "",
                 postalCode: "",
-                channel: "",
+                channel: "web",
+                country: "Canada",
+                state: this.state.province,
+                city: this.state.city,
              };
             console.log('i am here: ',userData);
-            // this.props.onCreateVendor(userData);
+            this.props.onCreateVendor(userData);
          }
 
     render() { 
@@ -242,9 +265,8 @@ class vendorSignup extends Component {
             viewPass , viewConfirmPass, errors , loading, imagePreview, firstName, lastName, userName, emailAddress, confirmPassword,
             password, professionId, keywordDescriptYourBusiness, provinceId, cityId, zipCode,
             streetAddress, businessName, websiteLink, qualification, aboutBusiness,businessStartDate,
-             professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport
-        } = this.state;
-        // console.log("checking this.state: ", this.state);
+             professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport        } = this.state;
+        console.log("checking this.state: ", this.state);
 
         let pageContent = '';
 
@@ -509,7 +531,7 @@ class vendorSignup extends Component {
                                     <option value=""> Province / state </option>
                              {
                                  states && states.length ? states.map( ( state, idx ) => (
-                                     <option key={idx} value={state.id} > { state.name }</option>
+                                     <option key={state.name} value={`${state.id},${state.name}`} > { state.name }</option>
                                  ) )
                                  : ""
                              }
@@ -527,7 +549,7 @@ class vendorSignup extends Component {
                                       <option value=""> City </option>
                                     {
                                         cities && cities.length ? cities.map( ( city, idx ) => (
-                                            <option key={idx} value={city.id} > { city.name }</option>
+                                            <option key={city.name} value={`${city.id},${city.name}`} > { city.name }</option>
                                         ) )
                                         : ""
                                     }     

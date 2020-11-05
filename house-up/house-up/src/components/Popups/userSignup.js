@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
 import * as actionTypes from '../../store/actions/actionTypes';
 
-import { checkPawwordPattern } from '../../utils/regex';
-
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 
@@ -27,7 +25,9 @@ class userSignup extends Component {
             password: '',
             regiserUser: false,
             viewPass: false,
-            viewConfirmPass : false
+            viewConfirmPass : false,
+            currentLocation: {}
+
         };
     }
 
@@ -63,6 +63,11 @@ class userSignup extends Component {
           stateChanged = true;
         }
 
+        if(page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)){
+          changedState.currentLocation = page.currentLocation;
+          stateChanged = true;            
+      }
+
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
             changedState.errors = errors;
             stateChanged = true;
@@ -96,16 +101,13 @@ class userSignup extends Component {
         }
       }
       onSubmit = e => {
-            // console.log("checking this.state: ", this.state );
-             e.preventDefault();
+        e.preventDefault();
+        console.log("checking this.state: ", this.state );
+        console.log("checking i am into submit");
              if(this.state.password !== this.state.confirmPassword){
                  this.props.onErrorSet("Password not matched!");
                  return;
              }
-             if(!checkPawwordPattern(this.state.password)){
-                this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
-                return;
-            }
             //  console.log("checking phoneNumber: ", this.props.phNumber);
              const userData = {
                 profileImage:this.state.profileImage,
@@ -119,7 +121,10 @@ class userSignup extends Component {
                 userTypeId: 1,
                 aboutYourSelf: "",
                 phoneNumber: this.props.phNumber,
-                address: ""
+                address: "",
+                country: this.state.currentLocation.country,
+                state: this.state.currentLocation.province,
+                city: this.state.currentLocation.city,
              };
              this.props.onCreateUser(userData);
 
@@ -128,6 +133,7 @@ class userSignup extends Component {
       const { viewPass,viewConfirmPass, errors , loading, imagePreview, firstName, lastName, 
         userName, email, password, 
         confirmPassword } = this.state;
+        console.log("checking this.state: ", this.state);
         let pageContent = '';
 
         if(loading){

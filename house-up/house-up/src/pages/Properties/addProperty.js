@@ -22,8 +22,8 @@ class addProperty extends Component {
         form2Data:{},
         form3Data:{},
       loading : false,
-      error : {}
-
+      error : {},
+      currentLocation: {}
     };
 }
 
@@ -49,6 +49,7 @@ static getDerivedStateFromProps(props, state) {
 
     const errors = props.errors;
     const property = props.property;
+    const page = props.page;
 
     let stateChanged = false;
     let changedState = {};
@@ -57,6 +58,11 @@ static getDerivedStateFromProps(props, state) {
     if(property && JSON.stringify(state.dropDownData) !== JSON.stringify(property.dropDownData)){
       changedState.dropDownData = property.dropDownData;  
       stateChanged = true;
+    }
+
+    if(page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)){
+      changedState.currentLocation = page.currentLocation;
+      stateChanged = true;            
     }
 
     if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
@@ -134,7 +140,9 @@ addProperty = () =>{
       amenites: "",
       channel: "web",
       action:"add",
-      propertyId: 0
+      propertyId: 0,
+      country: this.state.currentLocation.country,
+      state: this.state.currentLocation.province
     } 
     console.log("checking formData: ",formData);
 
@@ -202,7 +210,8 @@ render() {
 const mapStateToProps = state => {
     return {
         property: state.property,
-        errors: state.errors
+        errors: state.errors,
+        page: state.page
     }
   };
   

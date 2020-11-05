@@ -125,7 +125,6 @@ class form3 extends Component {
         this.setState({[e.target.name]: e.target.value});
     }
     }
-    
 
       static defaultProps = {
         center: {
@@ -151,12 +150,11 @@ class form3 extends Component {
             latitude:this.state.latitude,
         }
 
-        this.propertyPlanStateHandler ();
-    //    console.log(dataForm3);
-    // if(this.state.images.length !== 0){
-    //     this.props.form3DataHandler(dataForm3);
-    //     }
-        // this.props.form3DataHandler(dataForm3);
+        // this.propertyPlanStateHandler ();
+       console.log(dataForm3);
+    if(this.state.images.length !== 0){
+        this.props.form3DataHandler(dataForm3);
+        }
 
     }
 
