@@ -748,6 +748,8 @@ h1.pxp-page-header, .pxp-blog-posts-carousel-1-caption-title, pxp-blog-post-bloc
 }
 .dashboard-newsfeed-details {
   color:#4d4d4d;
+  height: 90px;
+  overflow: hidden;
 }
 .suggested-vendor-name p {
   color:#000;
@@ -805,4 +807,13 @@ h1.titles-property {
 }
 .property-details{
   font-weight: bold;
+}
+.send-btn-single-property{
+  position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 10px;
+}
+.comment-send-btn{
+  position: relative;
 }

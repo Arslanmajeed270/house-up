@@ -152,7 +152,7 @@ onSubmit = e =>{
                 <div className="col-sm-12 col-lg-10">
                   <div className="pxp-agent-block">
                     <div className="pxp-agent-comments">
-                    {
+                    {/* {
                       data && data.length ?
                       data[2].object.propertyComments.map((da , index) =>
                     
@@ -168,7 +168,7 @@ onSubmit = e =>{
                       </div>
                       )
                       : ""
-                    }
+                    } */}
                       <h4 className="mt-4 mt-md-5">Leave a review</h4>
                       <form className="pxp-agent-comments-form mt-3 mt-md-4" onSubmit={this.onSubmit}>
                         <div className="row">

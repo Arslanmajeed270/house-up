@@ -178,12 +178,6 @@ onSubmit = e => {
                               </select>
                             </div>
                           </div>
-                          {/* <div className="col-sm-12 col-md-4">
-                            <div className="form-group">
-                              <input type="text" className="form-control pxp-is-address" placeholder="City, neighbourhood..." />
-                              <img class="search" src="assets/images/ic_search.svg" alt="logo"></img>
-                            </div> 
-                           </div> */}
                           <div className="col-sm-12 col-md-2">
                               <Link to={`/index-${country}&${state}&${city}`} className="btn btn-primary"  > FIND NOW</Link>
                             </div>

@@ -37,7 +37,7 @@ class vendor extends Component {
 
     render() { 
       const { vendorsData } = this.state;
-      // console.log('checking vendorsData in professionals: ', vendorsData);
+      console.log('checking vendorsData in professionals: ', vendorsData);
 
         return ( 
             <React.Fragment>
@@ -98,7 +98,7 @@ class vendor extends Component {
                           </div>
                           <div className="pxp-agents-1-item-details rounded-lg">
                             <div className="pxp-agents-1-item-details-name">{data.firstName} {data.lastName}</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> {data.msisdn}</div>
+                            <div className="pxp-agents-1-item-details-email">{data.professionDesc}</div>
                             <div className="pxp-agents-1-item-details-spacer" />
                             <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
                           </div>
