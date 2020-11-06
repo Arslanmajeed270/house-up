@@ -184,7 +184,6 @@ class home extends Component {
                   {
                     homePageData && homePageData.propertyCounts && homePageData.propertyCounts.length 
                     && homePageData.propertyCounts.map( (data, index) =>
-                    
                       <div className="col-sm-12 col-md-6 col-lg-4">
                       <Link to='/properties'  className="pxp-areas-1-item rounded-lg">
                         <div className="pxp-areas-1-item-fig pxp-cover" style={{backgroundImage: 'url(assets/images/area-1.jpg)'}} />

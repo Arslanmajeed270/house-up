@@ -4,6 +4,7 @@ import ContactPopup from '../../components/Popups/contact';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import index from '..';
 
 class singleProp extends Component {
   constructor(props) {
@@ -11,16 +12,24 @@ class singleProp extends Component {
     this.state = {
       contactModalState : false,
       singlePropertyData:{},
-      id:''
+      id:'',
+      commentText:'',
+      user:{}
     };
   }
+
   static getDerivedStateFromProps(props, state) {
   
     let property = props.property;
+    let auth = props.auth;
 
     let stateChanged = false;
     let changedState = {};
 
+    if(auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
+      changedState.user = auth.user;  
+      stateChanged = true;
+    }
     if(property && JSON.stringify(state.singlePropertyData) !== JSON.stringify(property.singlePropertyData)){
       changedState.singlePropertyData = property.singlePropertyData;  
       stateChanged = true;
@@ -32,8 +41,6 @@ class singleProp extends Component {
     return null;
 
   }
-
-
 
     contactPopupHanlder = () =>{
       this.setState({
@@ -52,12 +59,46 @@ class singleProp extends Component {
     let userData = {
       propertyId: id
     }
+    const { singlePropertyData , user  } = this.state;
+    console.log(singlePropertyData)
+    console.log('property Id', singlePropertyData);
+
+    console.log('user',this.state.user)
+
     console.log(userData)
     this.props.onGetSinglePropertyData(userData);
 
     }
+
+    onChange = e => {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+    
+    onSubmit = e =>{
+      e.preventDefault();
+      const { userId ,user , commentText , propertyId , postId , storyImageId , vendorId , category  , singlePropertyData } = this.state;
+
+    
+      const data = {
+        postId:Number(postId),
+        category:category,
+        storyImageId:Number(storyImageId),
+        // propertyId:Number(propId),
+        commentText:commentText,
+        userId:userId,
+        vendorId:vendorId
+    }
+      console.log('data pakage of comment api', data);
+    
+      this.props.onCommentAdded(data);
+    
+    }
+
+
     render() { 
-      const { singlePropertyData } = this.state;
+      const { singlePropertyData , commentText } = this.state;
       console.log('single property data :', singlePropertyData);
       const data = singlePropertyData;
         return ( 
@@ -75,29 +116,49 @@ class singleProp extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="container pxp-single-property-gallery-container mt-4 mt-md-5">
+                <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0].imageURL ? data.imageList[0].imageURL : 'assets/images/ic_profile_placeholder.png'})`}} />
+                      <a href="images/prop-7-1-big.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0] && data.imageList[0].imageURL})`}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
+                    {
+                      data && data.imageList && data.imageList.length ?
+                      data.imageList.map((img, index) => 
+                      index>0 && index<5 ?
+                        <figure key={index} itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
+                          <a href="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: `url(${img && img.imageURL})`}} />
+                          <figcaption itemProp="caption description">
+                            Image caption
+                          </figcaption>
+                        </figure>
+                        : ""
+                      )
+                      : "" 
+                    }
                     
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})` }} />
+                      <a href="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(images/prop-2-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
+                      <a href="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(images/prop-2-3-gallery.jpg)'}} />
+                      <figcaption itemProp="caption description">
+                        Image caption
+                      </figcaption>
+                    </figure>
+                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
+                      <a href="images/prop-1-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(images/prop-1-3-gallery.jpg)'}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
                   </div>
-                  <Link to="" className="pxp-sp-gallery-btn">View Photos</Link>
+                  <a href="#" className="pxp-sp-gallery-btn">View Photos</a>
                   <div className="clearfix" />
                 </div>
                 <div className="container mt-100">
@@ -445,19 +506,18 @@ class singleProp extends Component {
                                 )
                                 : ""
                                 }
-                                
                               </div>
-
                               <h4 className="mt-4 mt-md-5">Leave a review</h4>
                               <form action="/single-vendor" className="pxp-agent-comments-form mt-3 mt-md-4">
                                 <div className="row">
                                   <div className="col-sm-12 col-md-6">
                                   </div>
-                                  </div>
-                                <div className="form-group comment-send-btn">
-                                  <input className="form-control" placeholder="Write your review here..." style={{height:'75px'}} />
-                                  <span className="send-btn-single-property"><img src={require('../../assets/images/ic_sent.svg')} alt=""/></span>
                                 </div>
+                                <div className="form-group comment-send-btn">
+                                <input className="form-control" placeholder="Write your review here..." style={{height:'75px'}} 
+                                name="commentText" value={commentText} onChange={this.onChange} />
+                                <span className="send-btn-single-property" onClick={this.onSubmit}><img src={require('../../assets/images/ic_sent.svg')} alt=""/></span>
+                              </div>
                               </form>
                             </div>
                           </div>
@@ -484,7 +544,6 @@ class singleProp extends Component {
                             <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"  onClick={this.contactPopupHanlder}  ><span className="fa fa-envelope-o"/>
                             {this.state.contactModalState ? <ContactPopup  contactModalState={this.state.contactModalState}  /> :null }
                              Contact Us</Link>
-                            
                           </div>
                         </div>
                       </div>
@@ -499,13 +558,15 @@ class singleProp extends Component {
  
 const mapStateToProps = state => {
   return {
-    property: state.property
+    property: state.property,
+    auth : state.auth
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetSinglePropertyData: (userData) => dispatch(actions.getSingleProperty(userData))
+    onCommentAdded : (data) => dispatch(actions.AddComments(data)),
+    onGetSinglePropertyData: (userData) => dispatch(actions.getSingleProperty(userData))
   }
 };
  

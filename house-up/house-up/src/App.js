@@ -39,8 +39,8 @@ class App extends Component {
     return (
       <React.Fragment>
       <PrivateRoute
-        exact 
-        path={"/index-:country&:state&:city"}     
+        exact
+        path={'/index-:country&:state&:city'}    
         component={Index}
       />
       <Route
@@ -61,11 +61,6 @@ class App extends Component {
       <PrivateRoute
         exact 
         path={'/add-property'}
-        component={Index}
-      />
-      <Route
-        exact 
-        path={'/add-product'}
         component={Index}
       />
       <Route

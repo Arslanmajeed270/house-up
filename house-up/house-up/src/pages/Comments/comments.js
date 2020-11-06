@@ -76,7 +76,7 @@ class comments extends Component {
     const contactEmail = user.emailAddress ? user.emailAddress : "";
     const firstName =  user.firstName ? user.firstName : "";
     const lastName =  user.lastName ? user.lastName : "";
-    const contactName = `${firstName} ${lastName}`; 
+    const contactName = `${firstName} ${lastName}`;
     const userId = user.userId ? user.userId : "";
     
     this.setState({
@@ -185,11 +185,11 @@ onSubmit = e =>{
                             </div>
                           </div>
                         </div>
-                        <div className="form-group">
-                          <label htmlFor="pxp-agent-comments-review">Write a Review</label>
-                          <textarea className="form-control" id="pxp-agent-comments-review" required rows={6} placeholder="Write your review here..." name="commentText" value={commentText} onChange={this.onChange}/>
+                        <div className="form-group comment-send-btn">
+                          <input className="form-control" placeholder="Write your review here..." style={{height:'75px'}} 
+                          name="commentText" value={commentText} onChange={this.onChange} />
+                          <span className="send-btn-single-property" onClick={this.onSubmit}><img src={require('../../assets/images/ic_sent.svg')} alt=""/></span>
                         </div>
-                        <button type="submit" className="pxp-agent-comments-form-btn">Post Review</button>
                       </form>
                     </div>
                   </div>
@@ -198,6 +198,7 @@ onSubmit = e =>{
               {pageContent}
             </React.Fragment>
          );
+         
     }
 }
  
