@@ -78,6 +78,7 @@ class properties extends Component {
       loggedInuserId: userId,
       country: ""
     };
+    console.log('data ', data)
 
     this.props.onGetData(data);
   }
@@ -198,7 +199,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetData: () => (data)=> dispatch(actions.getIndexPageData(data)),
+    onGetData: (data) => dispatch(actions.getIndexPageData(data)),
   }
 };
  

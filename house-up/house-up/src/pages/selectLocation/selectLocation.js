@@ -19,13 +19,15 @@ class selectLocation extends Component {
       countries: [],
       states: [],
       cities: [],
+      user:{}
     };
 }
 static getDerivedStateFromProps(props, state) {
   const errors = props.errors;
   const page = props.page;
-  console.log('checking page data ',page)
   const auth = props.auth;
+
+  console.log('checking page data ',page)
   let stateChanged = false;
   let changedState = {};
 
@@ -35,6 +37,10 @@ static getDerivedStateFromProps(props, state) {
       let states = [];
       states = cloneDeep(changedState.countries[0]);
       changedState.states = states.states;
+  }
+  if(auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
+    changedState.user = auth.user;  
+    stateChanged = true;
   }
 
 
@@ -109,9 +115,9 @@ onSubmit = e => {
 
 
     render() { 
-      const { states , cities , city , state , countries , country } = this.state;
+      const { states , cities , city , state , countries , country , user} = this.state;
 
-      console.log('checking the value of state : ', countries)
+      console.log('checking the value of state : ', user)
 
         return ( 
             <React.Fragment>
@@ -180,7 +186,7 @@ onSubmit = e => {
                             </div>
                           </div>
                           <div className="col-sm-12 col-md-2">
-                              <Link to={`/index-${country}&${state}&${city}`} className="btn btn-primary"  > FIND NOW</Link>
+                              <Link  to={`/index-${country}&${state}&${city}`} className="btn btn-primary"  > FIND NOW</Link>
                             </div>
                         </div>
                       </form>
@@ -194,7 +200,8 @@ onSubmit = e => {
 }
 const mapStateToProps = state => {
   return {
-      page: state.page,
+    auth: state.auth,
+    page: state.page,
   }
 };
 
