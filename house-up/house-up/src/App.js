@@ -1,46 +1,66 @@
-import React from 'react';
-import { Route , Private} from 'react-router-dom';
-import PrivateRoute from './components/common/PrivateRoute';    
+import React, { Component } from 'react'
+import { Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-
+import * as actions from './store/actions/index';
+import PrivateRoute from './components/common/PrivateRoute';
 import Index from "./pages";
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.showPosition = this.showPosition.bind(this);
 
+  }
 
-function App() {
-  return (
-    <React.Fragment>
-      <Route
-        exact 
-        path={'/index'}     
-        component={()=><Index  hideFooter={true}/> }
+  componentDidMount(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else { 
+      this.props.onSetCurrentLocation(0,0);
+    }
+  }
+  setCurrentLocation(lat,lon){
+    this.props.onSetCurrentLocation( lat,lon );
+  }
+  showPosition(position) {
+    console.log("i am here");
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    console.log("checking latitude: ", latitude);
+    console.log("checking latitude: ", longitude);
+    this.setCurrentLocation(latitude,longitude);
+  }
+  
+  render() {
+    if (localStorage.jwtToken) {
+      this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
+    }
+
+    return (
+      <React.Fragment>
+      <PrivateRoute
+        exact
+        path={'/index-:country&:state&:city'}    
+        component={Index}
       />
       <Route
         exact 
         path={'/'}
-        component={
-          () => <Index animateHeader={true} />
-        }
+        component={Index}
       />
       <Route
         exact 
         path={'/home'}
-        component={
-          () => <Index animateHeader={true} />
-        }
+        component={Index}
       />
       <Route
         exact 
         path={'/about'}
         component={Index}
       />
-      <Route
+      <PrivateRoute
         exact 
         path={'/add-property'}
-        component={Index}
-      />
-      <Route
-        exact 
-        path={'/add-product'}
         component={Index}
       />
       <Route
@@ -65,7 +85,12 @@ function App() {
       />
         <Route
         exact 
-        path={'/comments'}
+        path={'/comments-:id&:category'}
+        component={Index}
+      />
+      <Route
+        exact 
+        path={'/select-location'}
         component={Index}
       />
         <Route
@@ -99,8 +124,18 @@ function App() {
         component={Index}
       />
     </React.Fragment>
-  
-  );
+ 
+    )
+  }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    setCurrentUser: (user) => dispatch(actions.setCurrentUser(user)),
+    onSetCurrentLocation: ( latitude,longitude ) => dispatch(actions.setCurrentLocation(latitude,longitude))
+
+  };
+};
+
+
+export default withRouter(connect(null,mapDispatchToProps)(App));

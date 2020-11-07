@@ -1,57 +1,113 @@
 import React, { Component } from 'react';
 import {Nav} from 'react-bootstrap';
+import {connect} from 'react-redux';
 
 
 class form1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dropDownData:{},
             currencyId:'',
             description:'',
             adTitle:'',
             contactEmail:'',
             contactName:'',
             contactNumber:'',
-            price:'',
-
+            price:0,
+            user: {},
+            userId:'',
+            currencyData: []
 
         }
     }
+
+  static getDerivedStateFromProps(props, state) {
+  
+    const auth = props.auth ? props.auth : {};
+
+  
+    let stateChanged = false;
+      let changedState = {};
+  
+  
+    if(auth && auth.user && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
+      changedState.user= auth.user;
+      stateChanged = true;
+  }
+
+  if(stateChanged){
+      return changedState;
+  }
+  
+    return null;
+  }
+  
+  componentDidMount(){
+      const { user }  = this.state;
+      const contactEmail = user.emailAddress ? user.emailAddress : "";
+      const firstName =  user.firstName ? user.firstName : "";
+      const lastName =  user.lastName ? user.lastName : "";
+      const contactName = `${firstName} ${lastName}`; 
+      const contactNumber = user.msisdn ? user.msisdn : ""; 
+      const userId = user.userId ? user.userId : "";
+      
+      this.setState({
+        contactEmail,
+        contactName,
+        contactNumber,
+        userId
+      });
+  }
+
     onChange = e => {
         this.setState({
           [e.target.name]: e.target.value
         });
+        console.log(e.target.value)
+      }
+
+      dropDownDatahandler = (currencyData) => {
+          this.setState({
+            currencyData
+          });
+          console.log(currencyData)
+
       }
       onSubmit = e => {
         e.preventDefault();
+        const { description, currencyId, adTitle, contactEmail, contactName, contactNumber, price, userId, currencyData } = this.state;
+        console.log("checking contactEmail: ", contactEmail);
+        console.log("checking contactName: ", contactName);
+        console.log("checking contactNumber: ", contactNumber);
+        console.log(currencyData)
         const form1Data = {
-            description:this.state.description,
-            currencyId:this.state.currencyId,
-            adTitle:this.state.adTitle,
-            contactName:this.state.contactName,
-            contactEmail: this.state.contactEmail,
-            contactNumber:this.state.contactNumber,
-            price: this.state.price
+            description,
+            currencyId: currencyId === '' ? currencyData && currencyData.length && currencyData[0].id : currencyId ,
+            adTitle,
+            contactName,
+            contactEmail,
+            contactNumber,
+            price:Number(price),
+            userId,
          };
-         console.log('checking form1 data ', form1Data);
+         // console.log('checking form1 data ', form1Data);
          
          this.props.form1DataHandler(form1Data);
 
-
-
-
-         this.props.formShowHandler(1)
+         this.props.formShowHandler(1);
 
       }
 
     render() {
-        const { dropDownData ,description ,contactName, currencyId ,contactEmail,contactNumber, adTitle,price} =this.state;
+        let { description ,contactName, currencyId ,contactEmail,contactNumber, adTitle,price, currencyData } =this.state;
         const dropDownData1 = this.props.dropDownData;
-        console.log(dropDownData1);
-        const currencyData = dropDownData1 && dropDownData1.currencies ? dropDownData1.currencies : [];
-        console.log('currency data', currencyData);
-        console.log()
+        console.log("checking drop: ", dropDownData1);
+        if( dropDownData1 && dropDownData1.currencies && dropDownData1.currencies.length && currencyData.length === 0 ){
+            console.log("i am here");
+            this.dropDownDatahandler(dropDownData1 && dropDownData1.currencies ? dropDownData1.currencies : []);
+
+        }
+
         return ( 
             <React.Fragment>
                 <form onSubmit={this.onSubmit}>
@@ -59,15 +115,16 @@ class form1 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h1 className="titles-property">List your property</h1>
-                        <Nav variant="tabs"  >
+                        <p className="pairing-industry">Pairing the industry's top technology with unsurpassed local expertise.</p>
+                        <Nav variant="pills"  defaultActiveKey="/1">
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
+                                <Nav.Link eventKey="/1" className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
+                                <Nav.Link eventKey="/2" className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
+                                <Nav.Link eventKey="/3" className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </div>
@@ -93,7 +150,7 @@ class form1 extends Component {
                             </div>
                             <div className="col-md-8">
                                 <h6 className="titles-property">*Price</h6>
-                                <input type="text" className="input-feilds-property" onChange={this.onChange} placeholder="$" name="price" value={price} required />
+                                <input type="number" className="input-feilds-property" onChange={this.onChange} placeholder="$" name="price" value={price} required />
                             </div>
                         </div>
                     </div>
@@ -137,4 +194,10 @@ class form1 extends Component {
     }
 }
  
-export default form1;
+const mapStateToProps = state => {
+    return {
+      auth: state.auth,
+    }
+  };
+  
+export default connect(mapStateToProps,null)(form1);

@@ -3,10 +3,13 @@ import Dropzone from 'react-dropzone';
 import {Nav} from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
 
+import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+import cloneDeep from 'lodash/cloneDeep';
+import { Link } from 'react-router-dom';
+
 import fileUpload from 'fuctbase64';
-
-
-
+import PropertyPlan from '../../../components/Popups/propertyPlan';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -18,15 +21,110 @@ class form3 extends Component {
         };
         this.state = {
           files: [],
-            city:'',
             address:'',
             images:[],
-            cityId:'',
-            longitude:'',
-            latitude:'',
+            longitude: 78.68576,
+            latitude:32.57698,
             imagePreview:[],
+            googleMapKey: process.env.REACT_APP_GOOGLE_MAP_KEY | "AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk",
+            propertyPlanState: false,
+            errors: {},
+            loading : false,
+            country:'',
+            state:'',
+            city:'',
+            countries: [],
+            states: [],
+            cities: [],
         };
       }
+
+    static getDerivedStateFromProps(props, state) {
+      const errors = props.errors;
+      const page = props.page;
+      console.log('checking page data ',page)
+      const auth = props.auth;
+      let stateChanged = false;
+      let changedState = {};
+    
+      if( page && page.countries && JSON.stringify(state.countries) !== JSON.stringify(page.countries) ){
+          changedState.countries = page.countries;  
+          stateChanged = true;
+          let states = [];
+          states = cloneDeep(changedState.countries[0]);
+          changedState.states = states.states;
+      }
+    
+    
+      if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+          changedState.errors = errors;
+          stateChanged = true;
+        }
+        
+      if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+          changedState.loading = page.loading;
+          stateChanged = true;            
+      }
+      
+      if(stateChanged){
+        return changedState;
+      }
+      return null;
+    }
+    
+    
+    
+      componentDidMount(){
+        this.props.onGetCountries();
+    }
+    
+    
+    
+    onChange = e => {
+    
+    if(e.target.name === 'country'){
+      let index = 0;
+      let states = [];
+      if(e.target.value !== "" ){
+          index =  this.state.countries && this.state.countries.findIndex( x => `${x.name}` === e.target.value );
+          states = cloneDeep(this.state.countries[index]);
+      }
+      this.setState({ 
+          [e.target.name]: e.target.value,
+          states: states.states
+      });
+    }
+      else if(e.target.name === 'state'){
+      let ind = 0;
+      let cities = [];
+      if(e.target.value !== "" ){
+          ind =  this.state.states && this.state.states.findIndex( x => `${x.name}` === e.target.value );
+          cities = cloneDeep(this.state.states[ind]);
+      }
+      this.setState({ 
+          [e.target.name]: e.target.value,
+          cities: cities.cities
+      });
+    }
+    else if(e.target.name === 'images'){
+        const imagePreview = URL.createObjectURL(e.target.files[0]);
+        const imagePreviewState = this.state.imagePreview;
+        const images = this.state.images;
+        imagePreviewState.push(imagePreview);
+        fileUpload(e)
+        .then((data) => {
+           console.log("base64 :",data.base64);
+            images.push({image: data.base64});
+            this.setState({
+                imagePreview: imagePreviewState,
+                images: images
+            })
+        })
+    }
+    else{
+        this.setState({[e.target.name]: e.target.value});
+    }
+    }
 
       static defaultProps = {
         center: {
@@ -36,6 +134,12 @@ class form3 extends Component {
         zoom: 11
       };
 
+      propertyPlanStateHandler = () =>{
+          this.setState({
+              propertyPlanState : !this.state.propertyPlanState
+          })
+      }
+
       onSubmit = e => {
         e.preventDefault();
         const dataForm3 = {
@@ -44,40 +148,26 @@ class form3 extends Component {
             images:this.state.images,
             longitude:this.state.longitude,
             latitude:this.state.latitude,
-            images:this.state.images
         }
-        console.log(dataForm3);
-        this.props.form3DataHandler(dataForm3);
-      }
 
-      onChange = e => {
-        if(e.target.name === 'images'){
-            const imagePreview = URL.createObjectURL(e.target.files[0]);
-            const imagePreviewState = this.state.imagePreview;
-            const images = this.state.images;
-            imagePreviewState.push(imagePreview);
-            fileUpload(e)
-            .then((data) => {
-                console.log("base64 :",data.base64);
-                images.push(data.base64);
-                this.setState({
-                    imagePreview: imagePreviewState,
-                    images: images
-                })
-            })
+        // this.propertyPlanStateHandler ();
+       console.log(dataForm3);
+    if(this.state.images.length !== 0){
+        this.props.form3DataHandler(dataForm3);
         }
-        else{
-            this.setState({[e.target.name]: e.target.value});
-        }
-      }
+
+    }
+
 
     render() { 
-        const{ address , city , imagePreview } = this.state;
+        const{ address , city , imagePreview, googleMapKey ,  states , cities  , state , countries , country } = this.state;
         const files = this.state.files.map(file => (
             <li key={file.name}>
               {file.name} - {file.size} bytes
             </li>
           ));
+
+
         return ( 
             <React.Fragment>
                 <form onSubmit={this.onSubmit}>
@@ -85,27 +175,68 @@ class form3 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h1 className="titles-property">List your property</h1>
-                        <Nav variant="tabs" >
-                            <Nav.Item >
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
+                        <p className="pairing-industry">Pairing the industry's top technology with unsurpassed local expertise.</p>
+                        <Nav variant="pills"  defaultActiveKey="/3">
+                            <Nav.Item>
+                                <Nav.Link eventKey="/1" className="tabs" onClick={() =>this.props.formShowHandler(0)}>Step 1</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item >
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
+                            <Nav.Item>
+                                <Nav.Link eventKey="/2" className="tabs" onClick={() =>this.props.formShowHandler(1)}>Step 2</Nav.Link>
                             </Nav.Item>
-                            <Nav.Item >
-                                <Nav.Link className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
+                            <Nav.Item>
+                                <Nav.Link eventKey="/3" className="tabs" onClick={() =>this.props.formShowHandler(2)} >Step 3</Nav.Link>
                             </Nav.Item>
                         </Nav>
                     </div>
                 </div>
                     <div className="row">
-                        <div className="col-md-12">
-                            <input type="text" placeholder="Enter an address"  className="input-feilds-address" name="address" onChange={this.onChange}  value={address} />
-                            <button className="btn btn-primary" style={{marginTop: '-3px'}}>Search</button>
+                        <div className="col-md-2" >
+                        <div className="form-group">
+                        <select className="custom-select"
+                              placeholder="City"
+                              name="state"
+                              value={state}
+                              onChange={this.onChange}
+                              >
+                                <option >Select Province</option>
+                             {
+                                 states && states.length ? states.map( ( province, idx ) => (
+                                     <option key={idx} value={province.name} > { province.name }</option>
+                                 ) )
+                                 : ""
+                             }
+                              </select>
+                              </div>
                         </div>
+                        <div className="col-md-2">
+                        <div className="form-group">
+                              <select className="custom-select"
+                              placeholder="Prov/State"
+                              name="city" required
+                              value={city}
+                              onChange={this.onChange}
+                              >
+                                <option >Select City</option>
+                                    {
+                                        cities && cities.length ? cities.map( ( city, idx ) => (
+                                            <option key={idx} value={city.name} > { city.name }</option>
+                                        ) )
+                                        : ""
+                                    }     
+                              </select>
+                            </div>
+                        </div>
+                        <div className="col-md-8">
+                            <div className="form-group">
+                                <input type="text" placeholder="Enter an address" className="input-feilds-property" name="address" value={address} onChange={this.onChange} />
+                                <button className="btn btn-primary form-three-search">Search</button>
+                            </div>
+
+                        </div>
+                        
                         <div className="col-md-12" style={{ height: '300px', width: '100%' }}>
                             <GoogleMapReact
-                            bootstrapURLKeys={{ key: 'AIzaSyDgNUDOEaiSvycDmddKCtls6ZLxJOF_Jmg' }}
+                            bootstrapURLKeys={{ key: googleMapKey }}
                             defaultCenter={this.props.center}
                             defaultZoom={this.props.zoom}
                             >
@@ -115,28 +246,6 @@ class form3 extends Component {
                                 text="My Marker"
                             />
                             </GoogleMapReact>
-                        </div>
-                    </div>
-                    <div className="row border-property">
-                        <div className="col-md-7">
-                            <h6 className="titles-property">Address</h6>
-                            <input className="input-feilds-property" type="text" name="address" value={address} onChange={this.onChange} />
-                        </div>
-                        <div className="col-md-5">
-                            <h6 className="titles-property">*City</h6>
-                            <input className="input-feilds-property" name="city" value={city} type="text"  onChange={this.onChange}/>
-                        </div>
-                        <div className="col-md-3">
-                            <h6 className="titles-property">* Province/State</h6>
-                            <input className="input-feilds-property" type="text" />
-                        </div>
-                        <div className="col-md-4">
-                            <h6 className="titles-property">*Postal/ZIP code</h6>
-                            <input className="input-feilds-property" type="text" />
-                        </div>
-                        <div className="col-md-5">
-                            <h6 className="titles-property">* Country</h6>
-                            <input className="input-feilds-property" type="text" />
                         </div>
                     </div>
                     <div className="row border-property">
@@ -150,21 +259,23 @@ class form3 extends Component {
                         <Dropzone onDrop={this.onDrop} className="drop-zone" > 
                             {({getRootProps, getInputProps}) => (
                             <section className="container drop-zone">
-                                <div {...getRootProps({className: 'dropzone , drop-zone-inner'})}>
-                                <input type="file" {...getInputProps()} id="pictures" name="images" onChange={this.onChange} />
-                                <p>Drag 'n' drop some files here, or click to select files</p>
-                                </div>
                                 <aside>
                                 <h4>Files</h4>
                                 {imagePreview && imagePreview.length ?
                                 imagePreview.map( (data, index) => (
-                                    <img id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px',borderRadius:'50px'}} />
+                                    <img key={index} id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}} />
                                 ) )
                                 :
                                 "" 
                                 }
                                 <ul>{files}</ul>
                                 </aside>
+                                <div {...getRootProps({className: 'dropzone , drop-zone-inner'})}>
+                                
+                                <input type="file" {...getInputProps()} id="pictures" name="images" onChange={this.onChange} />
+                                <p>Drag 'n' drop some files here, or click to select files</p>
+                                </div>
+                                
                             </section>
                             )}
                         </Dropzone>
@@ -185,6 +296,9 @@ class form3 extends Component {
                                 <button type="submit" className="btn btn-lg btn-primary btn-property" >Post Property</button>
                             </div>
                         </div>
+                        {
+                            this.state.propertyPlanState ? <PropertyPlan show = {this.state.propertyPlanState} closeCodelHanlder={this.propertyPlanStateHandler} /> : ''
+                        }
                     </div>
                 </div>
                 </form>
@@ -193,4 +307,16 @@ class form3 extends Component {
     }
 }
  
-export default form3;
+const mapStateToProps = state => {
+    return {
+        page: state.page,
+    }
+  };
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+        onGetCountries: () => dispatch(actions.GetCountries()),
+    }
+  };
+  
+  export default connect(mapStateToProps,mapDispatchToProps)(form3);

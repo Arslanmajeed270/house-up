@@ -1,236 +1,360 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ContactPopup from '../../components/Popups/contact';
+import Contact from '../../components/Popups/contact';
+
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+import index from '..';
 
 class singleProp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      contactModalState : false
+      contactModalState : false,
+      singlePropertyData:{},
+      id:'',
+      commentText:'',
+      user:{},
+      userId:''
     };
   }
 
+  static getDerivedStateFromProps(props, state) {
+  
+    let property = props.property;
+    let auth = props.auth;
 
+    let stateChanged = false;
+    let changedState = {};
+
+    if(auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
+      changedState.user = auth.user;  
+      stateChanged = true;
+    }
+    if(property && JSON.stringify(state.singlePropertyData) !== JSON.stringify(property.singlePropertyData)){
+      changedState.singlePropertyData = property.singlePropertyData;  
+      stateChanged = true;
+    }
+
+    if(stateChanged){
+      return changedState;
+    }
+    return null;
+
+  }
 
     contactPopupHanlder = () =>{
       this.setState({
         contactModalState : !this.state.contactModalState
       });
-      console.log('cecking login pop handler', this.state.signupState);
+    }
+
+    componentDidMount (){
+    const { singlePropertyData , user  } = this.state;
+    const id = this.props.match.params.id;
+    console.log('checking id in sigle property: ', id);
+
+    const userId = user.userId ? user.userId : "";
+
+    this.setState({
+      id,
+      userId 
+    });
+
+    let userData = {
+      propertyId: id
+    }
+
+    console.log(singlePropertyData)
+    console.log('property Id', singlePropertyData);
+
+    console.log('user',this.state.user)
+
+    console.log(userData)
+    this.props.onGetSinglePropertyData(userData);
+
+    }
+
+    onChange = e => {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
+    
+    onSubmit = e =>{
+      e.preventDefault();
+      const {id, user , commentText , userId} = this.state;
+
+      const data = {
+        postId:0,
+        category:"Property",
+        storyImageId:0,
+        propertyId:Number(id),
+        commentText:commentText,
+        userId:userId,
+        vendorId:0
+    }
+      console.log('data pakage of comment api', data);
+    
+      this.props.onCommentAdded(data);
     }
 
     render() { 
+      const { singlePropertyData , commentText } = this.state;
+      console.log('single property data :', singlePropertyData);
+      const data = singlePropertyData;
         return ( 
             <React.Fragment>
                 <div className="pxp-content">
                 <div className="pxp-single-property-top pxp-content-wrapper mt-100">
-                  <div className="container">
+                  <div className="wrapper">
                     <div className="row">
-                      <div className="col-sm-12 col-md-5">
-                        <h2 className="pxp-sp-top-title">Beautiful House in Marina</h2>
+                      <div className="col-sm-12 col-md-12">
+                        <h2 className="pxp-sp-top-title">{data && data.adTitle}</h2>
                         <p className="pxp-sp-top-address pxp-text-light">
-                          542 29th Avenue, Marina District, San Francisco, CA 94121
+                         {data && data.currency && data.currency.symbol} {data && data.price } {data && data.currency && data.currency.lable}
                         </p>
-                      </div>
-                      <div className="col-sm-12 col-md-7">
-                        <div className="pxp-sp-top-btns mt-2 mt-md-0">
-                          <Link to="" className="pxp-sp-top-btn"><span className="fa fa-star" /> Save</Link>
-                          <div className="dropdown">
-                            <Link className="pxp-sp-top-btn" to="" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <span className="far fa-share-square" /> Share
-                            </Link>
-                            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                              <Link className="dropdown-item" to=""><span className="fa fa-facebook" /> Facebook</Link>
-                              <Link className="dropdown-item" to=""><span className="fa fa-twitter" /> Twitter</Link>
-                              <Link className="dropdown-item" to=""><span className="fa fa-pinterest" /> Pinterest</Link>
-                              <Link className="dropdown-item" to=""><span className="fa fa-linkedin" /> LinkedIn</Link>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="clearfix d-block d-xl-none" />
-                        <div className="pxp-sp-top-feat mt-3 mt-md-0">
-                          <div>5 <span>BD</span></div>
-                          <div>4 <span>BA</span></div>
-                          <div>3,945 <span>SF</span></div>
-                        </div>
-                        <div className="pxp-sp-top-price mt-3 mt-md-0">$5,198,000</div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
+                <div className="wrapper pxp-single-property-gallery-container">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-big.jpg)'}} />
+                      <a href="images/prop-7-1-big.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0] && data.imageList[0].imageURL})`}} />
                       <figcaption itemProp="caption description">
                         Image caption
                       </figcaption>
                     </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <Link to="" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
+                    {
+                      data && data.imageList && data.imageList.length ?
+                      data.imageList.map((img, index) => 
+                      index>0 && index<5 ?
+                        <figure key={index} itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
+                          <a href="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: `url(${img && img.imageURL})`}} />
+                          <figcaption itemProp="caption description">
+                            Image caption
+                          </figcaption>
+                        </figure>
+                        : ""
+                      )
+                      : "" 
+                    }
+                    
                   </div>
-                  <Link to="" className="pxp-sp-gallery-btn">View Photos</Link>
+                  <a href="#" className="pxp-sp-gallery-btn">View Photos</a>
                   <div className="clearfix" />
                 </div>
-                <div className="container mt-100">
+                <div className="container mt-4">
                   <div className="row">
                     <div className="col-lg-8">
-                      <div className="pxp-single-property-section">
-                        <h3>Key Details</h3>
-                        <div className="row mt-3 mt-md-4">
-                          <div className="col-sm-6">
-                            <div className="pxp-sp-key-details-item">
-                              <div className="pxp-sp-kd-item-label text-uppercase">
-                                Status
-                              </div>
-                              <div className="pxp-sp-kd-item-value">Coming Soon</div>
-                            </div>
-                          </div>
-                          <div className="col-sm-6">
-                            <div className="pxp-sp-key-details-item">
-                              <div className="pxp-sp-kd-item-label text-uppercase">
-                                Property Type
-                              </div>
-                              <div className="pxp-sp-kd-item-value">Apartment</div>
-                            </div>
-                          </div>
-                          <div className="col-sm-6">
-                            <div className="pxp-sp-key-details-item">
-                              <div className="pxp-sp-kd-item-label text-uppercase">
-                                Year Built
-                              </div>
-                              <div className="pxp-sp-kd-item-value">1980</div>
-                            </div>
-                          </div>
-                          <div className="col-sm-6">
-                            <div className="pxp-sp-key-details-item">
-                              <div className="pxp-sp-kd-item-label text-uppercase">
-                                Stories
-                              </div>
-                              <div className="pxp-sp-kd-item-value">23</div>
-                            </div>
-                          </div>
-                          <div className="col-sm-6">
-                            <div className="pxp-sp-key-details-item">
-                              <div className="pxp-sp-kd-item-label text-uppercase">
-                                Room Count
-                              </div>
-                              <div className="pxp-sp-kd-item-value">6</div>
-                            </div>
-                          </div>
-                          <div className="col-sm-6">
-                            <div className="pxp-sp-key-details-item">
-                              <div className="pxp-sp-kd-item-label text-uppercase">
-                                Parking Spaces
-                              </div>
-                              <div className="pxp-sp-kd-item-value">2</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      {
+                        data && data.address ?
+                        <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}> <span className="property-details">Address:</span> {data && data.address}</div>
+                        : ""
+                      }
+                          {data && data.propertyType ?
+                          <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}> <span className="property-details">Property type:</span> { data && data.propertyType} </div> 
+                          : ""
+                          }
+                          {
+                            data && data.rentalListingYN ? 
+                            <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}><span className="property-details">Rental:</span>{data && data.rentalListingYN}</div> 
+                            : ""
+                          }
+                          {
+                            data && data.createdDate ?
+                            <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}><span className="property-details">Date listed:</span> {data && data.createdDate}</div>
+                            : ""
+                          }
                       <div className="pxp-single-property-section mt-4 mt-md-5">
-                        <h3>Overview</h3>
                         <div className="mt-3 mt-md-4">
-                          <p>
-                            Fully furnished. Elegantly appointed condominium unit situated
-                            on premier location. PS6. The wide entry hall leads to a large
-                            living room with dining area. This expansive 2 bedroom and 2
-                            renovated marble bathroom apartment has great windows. Despite
-                            the interior views, the apartments Southern and Eastern
-                            exposures allow for lovely natural light to fill every room.
-                            The master suite is surrounded by handcrafted milkwork and
-                            features incredible walk-in closet and storage space. The
-                            second bedroom is<span className="pxp-dots">...</span><span className="pxp-dots-more">
-                              a corner room with double windows. The kitchen has fabulous
-                              space, new appliances, and a laundry area. Other features
-                              include rich herringbone floors, crown moldings and coffered
-                              ceilings throughout the apartment. 1049 5th Avenue is a
-                              classic pre-war building located across from Central Park,
-                              the reservoir and The Metropolitan Museum. Elegant lobby and
-                              24 hours doorman. This is a pet-friendly building.
-                              <br /><br />
-                              Conveniently located close to several trendy fitness centers
-                              like Equinox, New York Sports Clubs &amp; Crunch. Fine
-                              Door Buds around the area, as well as top-ranked schools.
-                              2% Flip tax paid by buyer to the condominium. Building just
-                              put an assessment for 18 months of approximately $500 per
-                              month.</span>
-                          </p>
-                          <Link to="" className="pxp-sp-more text-uppercase"><span className="pxp-sp-more-1">Continue Reading
-                              <span className="fa fa-angle-down" /></span><span className="pxp-sp-more-2">Show Less <span className="fa fa-angle-up" /></span></Link>
+                          {
+                            data && data.description ?
+                            <>
+                            <h3>Description</h3>
+                            <p>
+                              {data.description}
+                            </p>
+                            </>
+                            : ""
+                          }
+                        
+                        </div>
+                        <hr style={{background: '#EFEFF4'}} />
+                        <div>
+                        <h3>Details</h3>
+                        <div className="mt-3 mt-md-4">
+                          {
+                            data && data.buildingType ? 
+                            <div> <span  className="property-details">Building type: </span>{data && data.buildingType} </div> 
+                            : ''
+                          }
+                          {
+                            data && data.noOfBathroomsValue ? 
+                            <div><span className="property-details">Bathrooms: </span>{data && data.noOfBathroomsValue}</div>
+                            : "" 
+                          }
+                          {
+                            data && data.noOfBedrooms ? 
+                            <div><span className="property-details">Bedrooms: </span>{data && data.noOfBedrooms}</div>
+                            : ""
+                          }
+                          {
+                            data && data.lotDimensionLength && data.lotDimensionWidth ?
+                            <div><span className="property-details">Lot dimensions: </span> {data && data.lotDimensionLength} x {data && data.lotDimensionWidth} </div>
+                            : ""
+                          }
+                          {
+                            data && data.lotTotalArea ? 
+                            <div><span className="property-details">Lot area: </span> {data && data.lotTotalArea}</div>
+                            : ""
+                          }
+                          {
+                            data && data.basementType ?
+                            <div><span className="property-details">Basement: </span> {data && data.basementType}</div>
+                            : ""
+                          }
+                          {
+                            data && data.garageType ? 
+                            <div><span className="property-details">Garage: </span> {data && data.garageType}</div>
+                            : ""
+                          }
+                          {
+                            data && data.finishedSqftArea ? 
+                            <div><span className="property-details">Sqrt Area: </span> {data && data.finishedSqftArea}</div>
+                            : ""
+                          }
+                          {
+                            data && data.primaryHeatingFuel ?
+                            <div><span className="property-details">Primary heating fuel: </span> {data && data.primaryHeatingFuel}</div>
+                            : ""
+                          }
+                          {
+                            data && data.yearBuilt ?
+                            <div><span className="property-details">yearBuilt: </span> {data && data.yearBuilt}</div>
+                            : ""
+                          }
+                          {
+                            data && data.yearFurnaceBuilt ?
+                           <div><span className="property-details">Year furnace installed: </span> {data && data.yearFurnaceBuilt}</div>
+                            : ""
+                        }
+                        {
+                          data && data.yearRoofInstalled ?
+                          <div><span className="property-details">Year roof installed: </span> {data && data.yearRoofInstalled}</div>
+                          : ""
+                        }
+                        {
+                          data && data.storeys ?
+                          <div><span className="property-details">Storeys: </span> {data && data.storeys}</div>
+                          : ""
+                        }
+                        {
+                          data && data.waterSourceType ?
+                          <div><span className="property-details">Water source: </span> {data && data.waterSourceType}</div>
+                          : ""
+                        }
+                        {
+                          data && data.condoFee ?
+                          <div><span className="property-details">Condo fees (/month): </span> {data && data.condoFee}</div>
+                          : ""
+                        }
+                        {
+                          data && data.parkingSpaces ?  
+                          <div><span className="property-details">Parking Spaces: </span> {data && data.parkingSpaces}</div>
+                          : ""
+                        }
+                        </div>
                         </div>
                       </div>
                       <div className="pxp-single-property-section mt-4 mt-md-5">
                         <h3>Amenities</h3>
                         <div className="row mt-3 mt-md-4">
+                        {
+                              data && data.amenites && data.amenites.internet ?
                           <div className="col-sm-6 col-lg-4">
-                            <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-wifi" /> Internet
+                            
+                              <div className="pxp-sp-amenities-item">
+                              Internet
                             </div>
                           </div>
-                          <div className="col-sm-6 col-lg-4">
+                             : ""
+                            }
+                            
+                            {
+                              data && data.amenites && data.amenites.garage ?
+                              <div className="col-sm-6 col-lg-4">
+                              <div className="pxp-sp-amenities-item">
+                                 Garage
+                              </div>
+                            </div>
+                            : ""
+                            }
+                          {
+                            data && data.amenites && data.amenites.ac ?
+                            <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-car" /> Garage
+                              Air Conditioning
                             </div>
                           </div>
-                          <div className="col-sm-6 col-lg-4">
+                          : ""
+                          }
+                          {
+                            data && data.amenites && data.amenites.dishWasher ?
+                            <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-sun-o" /> Air Conditioning
+                               Dishwasher
                             </div>
                           </div>
-                          <div className="col-sm-6 col-lg-4">
+                          : ""
+                          }
+                          {
+                            data && data.amenites && data.amenites.disposal ?
+                            <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-bullseye" /> Dishwasher
+                               Disposal
+                            </div>
+                          </div> 
+                          : ""
+                          }
+                          {
+                            data && data.amenites && data.amenites.balcony ?
+                            <div className="col-sm-6 col-lg-4">
+                            <div className="pxp-sp-amenities-item">
+                              Balcony
                             </div>
                           </div>
-                          <div className="col-sm-6 col-lg-4">
+                          : ""
+                          }
+                          {
+                            data && data.amenites && data.amenites.gym ?
+                            <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-recycle" /> Disposal
+                              Gym
                             </div>
                           </div>
-                          <div className="col-sm-6 col-lg-4">
+                          : ""
+                          }
+                          {
+                            data && data.amenites && data.amenites.playroom ?
+                            <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-clone" /> Balcony
+                               Playroom
                             </div>
                           </div>
-                          <div className="col-sm-6 col-lg-4">
+                          : ""
+                          }
+                          {
+                            data && data.amenites && data.amenites.bar ?
+                            <div className="col-sm-6 col-lg-4">
                             <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-futbol-o" /> Gym
+                              Bar
                             </div>
                           </div>
-                          <div className="col-sm-6 col-lg-4">
-                            <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-smile-o" /> Playroom
-                            </div>
+                          : ""
+                          }
                           </div>
-                          <div className="col-sm-6 col-lg-4">
-                            <div className="pxp-sp-amenities-item">
-                              <span className="fa fa-glass" /> Bar
-                            </div>
-                          </div>
-                        </div>
                       </div>
                       <div className="pxp-single-property-section mt-4 mt-md-5">
                         <h3>Explore the Area</h3>
@@ -256,101 +380,6 @@ class singleProp extends Component {
                         </div>
                         <div id="pxp-sp-map" className="mt-3" />
                       </div>
-                      {/* 
-                                <div className="pxp-single-property-section mt-4 mt-md-5">
-                                    <h3>Payment Calculator</h3>
-                                    <div className="pxp-calculator-view mt-3 mt-md-4">
-                                        <div className="row">
-                                            <div className="col-sm-12 col-lg-4 align-self-center">
-                                                <div className="pxp-calculator-chart-container">
-                                                    <canvas id="pxp-calculator-chart"></canvas>
-                                                    <div className="pxp-calculator-chart-result">
-                                                        <div className="pxp-calculator-chart-result-sum">$11,277</div>
-                                                        <div className="pxp-calculator-chart-result-label">per month</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-lg-8 align-self-center mt-3 mt-lg-0">
-                                                <div className="pxp-calculator-data">
-                                                    <div className="row justify-content-between">
-                                                        <div className="col-8">
-                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>Principal and Interest</div>
-                                                        </div>
-                                                        <div className="col-4 text-right">
-                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-pi"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="pxp-calculator-data">
-                                                    <div className="row justify-content-between">
-                                                        <div className="col-8">
-                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>Property Taxes</div>
-                                                        </div>
-                                                        <div className="col-4 text-right">
-                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-pt"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="pxp-calculator-data">
-                                                    <div className="row justify-content-between">
-                                                        <div className="col-8">
-                                                            <div className="pxp-calculator-data-label"><span className="fa fa-minus"></span>HOA Dues</div>
-                                                        </div>
-                                                        <div className="col-4 text-right">
-                                                            <div className="pxp-calculator-data-sum" id="pxp-calculator-data-hd"></div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="pxp-calculator-form mt-3 mt-md-4">
-                                        <input type="hidden" id="pxp-calculator-form-property-taxes" value="$1,068">
-                                        <input type="hidden" id="pxp-calculator-form-hoa-dues" value="$2,036">
-
-                                        <div className="row">
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="form-group">
-                                                    <label for="pxp-calculator-form-term">Term</label>
-                                                    <select className="custom-select" id="pxp-calculator-form-term">
-                                                        <option value="30">30 Years Fixed</option>
-                                                        <option value="20">20 Years Fixed</option>
-                                                        <option value="15">15 Years Fixed</option>
-                                                        <option value="10">10 Years Fixed</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="form-group">
-                                                    <label for="pxp-calculator-form-interest">Interest</label>
-                                                    <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-interest" data-type="percent" value="4.45%">
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="form-group">
-                                                    <label for="pxp-calculator-form-price">Home Price</label>
-                                                    <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-price" data-type="currency" value="$5,198,000">
-                                                </div>
-                                            </div>
-                                            <div className="col-sm-12 col-md-6">
-                                                <div className="row">
-                                                    <div className="col-7 col-sm-7 col-md-8">
-                                                        <div className="form-group">
-                                                            <label for="pxp-calculator-form-down-price">Down Payment</label>
-                                                            <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-down-price" data-type="currency" value="$519,800">
-                                                        </div>
-                                                    </div>
-                                                    <div className="col-5 col-sm-5 col-md-4">
-                                                        <div className="form-group">
-                                                            <label for="pxp-calculator-form-down-percentage">&nbsp;</label>
-                                                            <input type="text" className="form-control pxp-form-control-transform" id="pxp-calculator-form-down-percentage" data-type="percent" value="10%">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
                       <div className="pxp-single-property-section mt-4 mt-md-5">
                         <h3>Schools in Marina District</h3>
                         <ul className="nav nav-tabs pxp-nav-tabs mt-3 mt-md-4">
@@ -380,17 +409,11 @@ class singleProp extends Component {
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                                 <tr>
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -410,17 +433,11 @@ class singleProp extends Component {
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                                 <tr>
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -440,17 +457,12 @@ class singleProp extends Component {
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
+                                 
                                 </tr>
                                 <tr>
                                   <td>Harvest Collegiate High School</td>
                                   <td>Public</td>
                                   <td>9-11</td>
-                                  <td>
-                                    5/5<span className="pxp-school-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
-                                  </td>
                                 </tr>
                               </tbody>
                             </table>
@@ -458,88 +470,39 @@ class singleProp extends Component {
                         </div>
                       </div>
                       <div className="row mt-100">
-                        {/*  <div className="col-sm-12 col-lg-12"></div> */}
                         <div className="col-sm-12 col-lg-12">
                           <div className="pxp-agent-block">
                             <div className="pxp-agent-comments">
                               {/* <h4>3 Reviews</h4> */}
                               <div className="mt-3 mt-md-4">
-                                <div className="media">
-                                  <img src="assets/images/customer-1.jpg" className="mr-3" alt="..." />
+                              {
+                                data && data.propertyComments && data.propertyComments.length ?
+                                data.propertyComments.map( (da , index ) => 
+                                  <div key={index} className="media mt-2 mt-md-3">
+                                  <img src={da && da.profilePictureUrl} className="mr-3" alt="..." />
                                   <div className="media-body">
-                                    <h5>Scott Goodwin</h5>
+                              <h5> {da && da.userFullName}</h5>
                                     <div className="pxp-agent-comments-date">
-                                      April 9, 2019 at 2:33 pm
+                                      {da && da.createDateTime}
                                     </div>
-                                    <p>
-                                      Cras sit amet nibh libero, in gravida nulla. Nulla
-                                      vel metus scelerisque ante sollicitudin. Cras purus
-                                      odio, vestibulum in vulputate at, tempus viverra
-                                      turpis. Fusce condimentum nunc ac nisi vulputate
-                                      fringilla. Donec lacinia congue felis in faucibus.
-                                    </p>
-                                    <div className="media mt-2 mt-md-3">
-                                      <img src="assets/images/customer-4.jpg" className="mr-3" alt="..." />
-                                      <div className="media-body">
-                                        <h5>Alayna Becker</h5>
-                                        <div className="pxp-agent-comments-date">
-                                          April 9, 2019 at 2:33 pm
-                                        </div>
-                                        <p>
-                                          Cras sit amet nibh libero, in gravida nulla.
-                                          Nulla vel metus scelerisque ante sollicitudin.
-                                          Cras purus odio, vestibulum in vulputate at,
-                                          tempus viverra turpis. Fusce condimentum nunc ac
-                                          nisi vulputate fringilla. Donec lacinia congue
-                                          felis in faucibus.
-                                        </p>
-                                      </div>
-                                    </div>
+                                    <p> {da && da.commentText} </p>
                                   </div>
                                 </div>
-                                <div className="media mt-2 mt-md-3">
-                                  <img src="assets/images/customer-3.jpg" className="mr-3" alt="..." />
-                                  <div className="media-body">
-                                    <h5>Erika Tillman</h5>
-                                    <div className="pxp-agent-comments-date">
-                                      April 9, 2019 at 2:33 pm
-                                    </div>
-                                    <p>
-                                      Cras sit amet nibh libero, in gravida nulla. Nulla
-                                      vel metus scelerisque ante sollicitudin. Cras purus
-                                      odio, vestibulum in vulputate at, tempus viverra
-                                      turpis. Fusce condimentum nunc ac nisi vulputate
-                                      fringilla. Donec lacinia congue felis in faucibus.
-                                    </p>
-                                  </div>
-                                </div>
+                                )
+                                : ""
+                                }
                               </div>
                               <h4 className="mt-4 mt-md-5">Leave a review</h4>
                               <form action="/single-vendor" className="pxp-agent-comments-form mt-3 mt-md-4">
                                 <div className="row">
                                   <div className="col-sm-12 col-md-6">
-                                    {/*                                                 <div className="form-group">
-                                                            <label for="pxp-agent-comments-name">You Name</label>
-                                                            <input type="text" className="form-control" id="pxp-agent-comments-name" placeholder="Enter your full name">
-                                                        </div> */}
                                   </div>
-                                  {/*                                             <div className="col-sm-12 col-md-6">
-                                                        <div className="form-group">
-                                                            <label for="pxp-agent-comments-email">You Email</label>
-                                                            <input type="text" className="form-control" id="pxp-agent-comments-email" placeholder="Enter your email address">
-                                                        </div>
-                                                    </div> */}
                                 </div>
-                                <div className="form-group">
-                                  <label className="d-block">Rate the Agent</label>
-                                  <span className="pxp-single-agent-rating"><span data-rating={5} /><span data-rating={4} /><span data-rating={3} /><span data-rating={2} /><span data-rating={1} /></span>
-                                  <div className="clearfix" />
-                                </div>
-                                <div className="form-group">
-                                  <label htmlFor="pxp-agent-comments-review">Write a Review</label>
-                                  <textarea className="form-control" id="pxp-agent-comments-review" rows={6} placeholder="Write your review here..." defaultValue={""} />
-                                </div>
-                                <Link to="" className="pxp-agent-comments-form-btn">Post Review</Link>
+                                <div className="form-group comment-send-btn">
+                                <input className="form-control" placeholder="Write your review here..." style={{height:'75px'}} 
+                                name="commentText" value={commentText} onChange={this.onChange} />
+                                <span className="send-btn-single-property" onClick={this.onSubmit}><img src={require('../../assets/images/ic_sent.svg')} alt=""/></span>
+                              </div>
                               </form>
                             </div>
                           </div>
@@ -550,28 +513,22 @@ class singleProp extends Component {
                       <div className="pxp-single-property-section pxp-sp-agent-section mt-4 mt-md-5 mt-lg-0">
                         <h3>Listed By</h3>
                         <div className="pxp-sp-agent mt-3 mt-md-4">
-                          <Link to='/single-vendor'  className="pxp-sp-agent-fig pxp-cover rounded-lg" style={{backgroundImage: 'url(assets/images/agent-4.jpg)', backgroundPosition: 'top center'}} />
+                          <Link to='/single-vendor'  className="pxp-sp-agent-fig pxp-cover rounded-lg" style={{backgroundImage: `url(${data && data.user && data.user.profilePictureUrl ? data.user.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
                           <div className="pxp-sp-agent-info">
                             <div className="pxp-sp-agent-info-name">
-                              <Link to='/single-vendor' >Erika Tillman</Link>
+                              <Link to='/single-vendor' >{data && data.user && data.user.firstName} {data && data.user && data.user.lastName} </Link>
                             </div>
                             <div className="pxp-sp-agent-info-rating">
-                              <span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" />
-                            </div>
-                            <div className="pxp-sp-agent-info-email">
-                              <Link to="">erika.tillman@ HouseUPcom</Link>
                             </div>
                             <div className="pxp-sp-agent-info-phone">
-                              <span className="fa fa-phone" /> (123) 456-7890
+                               {data && data.user && data.user.provinceDesc}
                             </div>
                           </div>
                           <div className="clearfix" />
                           <div className="pxp-sp-agent-btns mt-3 mt-md-4">
-                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"  onClick={this.contactPopupHanlder}  ><span className="fa fa-envelope-o"/>
-                            {this.state.contactModalState ? <ContactPopup  contactModalState={this.state.contactModalState}  /> :null }
+                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" onClick={this.contactPopupHanlder}  >
+                            { this.state.contactModalState ? <Contact  show={this.state.contactModalState} contactPopupHanlder={this.contactPopupHanlder}  /> :null }
                              Contact Us</Link>
-                            <Link to="" className="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-calendar-check-o" /> Request
-                              Tour</Link>
                           </div>
                         </div>
                       </div>
@@ -584,4 +541,18 @@ class singleProp extends Component {
     }
 }
  
-export default singleProp;
+const mapStateToProps = state => {
+  return {
+    property: state.property,
+    auth : state.auth
+  }
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onCommentAdded : (data) => dispatch(actions.AddComments(data)),
+    onGetSinglePropertyData: (userData) => dispatch(actions.getSingleProperty(userData))
+  }
+};
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(singleProp);

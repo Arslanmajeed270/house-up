@@ -12,7 +12,6 @@ import {
 	REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
     SET_USER_DETAIL,
-    LOGIN_USER,
     SHOW_POP_UP,
 	HIDE_POP_UP
 } from './actionTypes';
@@ -39,18 +38,16 @@ export const loginUser = (userData, history) => dispatch => {
 
         console.log("res from backend while login",res);
         if(res.data &&  res.data.data && res.data.data.user ){
-            localStorage.setItem('jwtToken', res.data.data.user);
+            localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
             dispatch(setCurrentUser(res.data.data.user));
             dispatch(clearErrors())
             dispatch({ type: SHOW_POP_UP });
+            history.push(`/select-location`);
         }
         else {
             dispatch({ type: HIDE_POP_UP });
-            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+            dispatch({type: SET_ERRORS, payload: { message: "Username or password wrong!" } });
         }
-         dispatch(clearErrors());
-        history.push(`/index`);
-        
     })
     .catch(err => {
         console.log("error: ", err);
@@ -107,6 +104,7 @@ export const resetUserPassword = (userData) => dispatch =>{
 // signupUser - signupUser from the web page
 export const createUser = (userData) => dispatch => {
     dispatch(setPageLoading());
+    console.log("checking i am here: ", userData);
     axios
     .post(
         backendServerURL+'/registerUser', 
@@ -169,8 +167,17 @@ export const generatePin = (data) => dispatch => {
         data
     )
     .then(res => {
-        dispatch(clearErrors())
         console.log('checking response in generatePin',res);
+        if(res && res.data && res.data.resultCode === "200" ){
+            console.log("i am into if");
+            dispatch({ type: SHOW_POP_UP });
+            dispatch(clearErrors());
+        }
+        else {
+            console.log("checking i am into else");
+            dispatch({ type: HIDE_POP_UP });
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+        }
     })
     .catch(err => {
         console.log("error: ", err);

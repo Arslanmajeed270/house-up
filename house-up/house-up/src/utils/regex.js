@@ -7,3 +7,15 @@ export const checkPawwordPattern = str => {
     if(!/\W/.test(str)){ return false; }
     return true;
 };
+
+
+export const checkValidURL = str => {
+    if(
+        !/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/.test(str)
+        ){
+            console.log("Checking checkValidURL : ", str);
+            return false; 
+        }
+            console.log("i am into problem");
+    return true;
+}

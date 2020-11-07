@@ -1,15 +1,14 @@
-import { initial } from 'lodash';
 import {
-    CLEAR_ERRORS,
     PAGE_LOADED,
     PAGE_LOADING,
-	SET_ERRORS,
-    PROPERTY_DROP_DWON
+	PROPERTY_DROP_DWON,
+	GET_SINGLE_PROPERTY
 } from '../actions/actionTypes';
 
 
 const initialState = {
-	dropDownData:{}
+	dropDownData:{},
+	singlePropertyData:{}
 };
 
 
@@ -28,9 +27,15 @@ export default function (state = initialState, action) {
 			};
 		case PROPERTY_DROP_DWON:
 			return {
+				...state,
 				dropDownData : action.payload
 			};
-		
+		case GET_SINGLE_PROPERTY:
+			return {
+				...state,
+				singlePropertyData : action.payload
+			};
+			
 	default:
 			return state;
 	}

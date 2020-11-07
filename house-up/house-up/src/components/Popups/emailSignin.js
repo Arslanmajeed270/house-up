@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { checkPawwordPattern } from '../../utils/regex';
-
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
+import * as actionTypes from '../../store/actions/actionTypes';
+import{ Alert } from 'react-bootstrap';
+import Spinner from '../../components/common/Spinner';
 
 class emailSignin extends Component {
     constructor(props) {
@@ -13,9 +14,44 @@ class emailSignin extends Component {
         this.state = {
             emailAddress: '',
             password: '',
-            viewPass: false
+            viewPass: false,
+            errors: {},
+          loading : false,
+          showPopUp: false
         };
     }
+    static getDerivedStateFromProps(props, state) {
+        const errors = props.errors;
+        const page = props.page; 
+        let stateChanged = false;
+        let changedState = {};
+    
+        if( page && JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp) ){
+            changedState.showPopUp = page.showPopUp;  
+            if( changedState.showPopUp === true ){
+              props.onHidePopUp();
+              props.closeCodelHanlder('emailSignin');
+            }
+            stateChanged = true;
+          }
+      
+    
+        if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
+            changedState.errors = errors;
+            stateChanged = true;
+        }
+          
+        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+          changedState.loading = page.loading;
+          stateChanged = true;            
+        }
+        
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+      }
+      
     onChange = e => {
         this.setState({
           [e.target.name]: e.target.value
@@ -31,8 +67,8 @@ class emailSignin extends Component {
         console.log('checking click handler');
              e.preventDefault();
              
-            if(!checkPawwordPattern(this.state.password)){
-               this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
+            if(this.state.password.length < 6 ){
+               this.props.onErrorSet("Password length should be minimum 6!");
                return;
            }
             const userData = {
@@ -42,13 +78,13 @@ class emailSignin extends Component {
                 channel:"HouseUp",
                 loginBy:"emailAddress"
                };
-               console.log(userData);
+            //    console.log(userData);
       
              this.props.onLogin(userData, this.props.history);
          }
     render() {
-        const {viewPass , emailAddress , password } = this.state;
-        console.log("checking this.props.show: ", this.props.show);
+        const {viewPass , emailAddress , password,errors , loading } = this.state;
+        // console.log("checking this.props.show: ", this.props.show);
         return ( 
             <Modal 
             show={this.props.show}
@@ -60,15 +96,20 @@ class emailSignin extends Component {
                     >
                     <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('emailSignin')} >
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={{paddingTop:'0px'}}>
                         <div>
                         <div className="logo-modal" >
-                            <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" />
+
                             </div>
-                            <form  onSubmit={this.onSubmit}>
                             <div className="form-group">
                                 <Link to="#" style={{float:'right', marginBottom:'3px'}} onClick={() => this.props.phoneSigninHandler('phoneSignin')}>Login with mobile</Link>
                             </div>
+                            <form  onSubmit={this.onSubmit}>
+                            {errors && errors.message &&
+                                <Alert variant='danger'  style={{marginTop:'15px'}}>
+                                <strong>Error!</strong> { errors.message }
+                                </Alert>
+                            }
                                 <div className="form-group">
                                     <input type="text" 
                                         className="form-control"
@@ -91,7 +132,7 @@ class emailSignin extends Component {
                                     value={password} 
                                     required 
                                     />
-                                    <span className="viewPassword-login" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="viewPassword-login" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                                 </div>
                                 <div className="form-group">
                                     <div className="form-group">
@@ -109,6 +150,8 @@ class emailSignin extends Component {
                                 </div> 
                             </form> 
                         </div>
+                { loading ? <Spinner /> : "" }
+
                     </Modal.Body>
                 </Modal> 
          );
@@ -118,13 +161,17 @@ class emailSignin extends Component {
 const mapStateToProps = state => {
     return {
       auth: state.auth,
+      page: state.page,
+      errors: state.errors
     }
   };
   
   const mapDispatchToProps = dispatch => {
     return {
         onLogin: (email, history) => dispatch(actions.loginUser(email, history)),
-        
+        onErrorSet: (msg) =>  dispatch({type: actionTypes.SET_ERRORS, payload: { message: msg }}),
+        onHidePopUp: () => dispatch({type: actionTypes.HIDE_POP_UP }),
+   
     }
   };
   

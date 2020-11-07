@@ -9,13 +9,11 @@ import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/index';
 
 import{Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
 class optForgotPass extends Component {
     constructor(props){
         super(props);
         this.state = {
           errors: {},
-          loading : false,
           otp: "",
           otpAuthenticate: false
         }
@@ -24,14 +22,13 @@ class optForgotPass extends Component {
     static getDerivedStateFromProps(props, state) {
         const otpAuthenticate = props.otpAuthenticate;
         let errors = props.errors;
-        let page = props.page; 
     
         let stateChanged = false;
         let changedState = {};
     
-        console.log('checking otpAuthenticate: ', otpAuthenticate);
+        // console.log('checking otpAuthenticate: ', otpAuthenticate);
     
-        if(  (otpAuthenticate || otpAuthenticate === false) && state.otpAuthenticate !== otpAuthenticate){
+        if((otpAuthenticate || otpAuthenticate === false) && state.otpAuthenticate !== otpAuthenticate){
           changedState.otpAuthenticate = otpAuthenticate;  
           if( changedState.otpAuthenticate === true ){
             props.onFalseOtpAutheticate();
@@ -44,11 +41,6 @@ class optForgotPass extends Component {
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
           changedState.errors = errors;
           stateChanged = true;
-        }
-        
-        if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
-            changedState.loading = page.loading;
-            stateChanged = true;            
         }
         
         if(stateChanged){
@@ -77,16 +69,9 @@ class optForgotPass extends Component {
       }
 
     render() { 
-        const { errors , loading } = this.state;
-        console.log('checking value of otp: ', this.state.otp);
-        let pageContent = '';
-
-        if(loading){
-          pageContent = <Spinner />
-        }
-        else{
-          pageContent = "";
-        }
+        const { errors } = this.state;
+        // console.log('checking value of otp: ', this.state.otp);
+       
         let phoneNumber = '';
         if(this.props.phNumber)
         {
@@ -112,11 +97,11 @@ class optForgotPass extends Component {
                 </Alert>
             }
 
-            <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>We sent you a code to </div>
-            <div className="text-center" style={{fontSize: '22px',fontWeight: '500'}}>verify your phone number</div>
+            <div className="text-center" style={{fontSize: '22px',fontWeight: '500', color: '#000'}}>We sent you a code to </div>
+            <div className="text-center" style={{fontSize: '22px',fontWeight: '500', color: '#000'}}>verify your phone number</div>
             </div>
             <div className="form-group">
-                <div class="text-center" style={{fontSize: '20px',marginBottom:'15px',color:'#CACACC'}}>sent to {phoneNumber} </div> 
+                <div class="text-center" style={{fontSize: '20px',marginBottom:'15px', color:'#8E8E93'}}>sent to {phoneNumber} </div> 
                 <div style={{marginLeft: "14%",marginBottom:'15px'}}>  
                 <OtpInput
                 value={this.state.otp}
@@ -127,7 +112,7 @@ class optForgotPass extends Component {
                 />
             </div>
             </div>
-            <div className="text-center" style={{marginBottom:'10px', color:'#CACACC'}}>
+            <div className="text-center" style={{marginBottom:'10px', color:'#8E8E93'}}>
               I didn't receeive a code! <Link to="#" onClick={() => this.resendPin(phoneNumber)} >Resend</Link>
             </div>
             </Modal.Body>
@@ -138,7 +123,6 @@ class optForgotPass extends Component {
 }
 const mapStateToProps = state => {
     return {
-      page: state.page,
       otpAuthenticate: state.auth.otpAuthenticate,
       errors: state.errors
   
@@ -147,7 +131,7 @@ const mapStateToProps = state => {
   
  
 const mapDispatchToProps = dispatch => {
-  console.log('mapDispatchToProps in HomePage ' );
+  // console.log('mapDispatchToProps in HomePage ' );
   return {
         onFalseOtpAutheticate: () => dispatch({type: actionTypes.OTP_AUTHENTICATE_FAIL }),
         onVerifyPin : (data)=>dispatch(actions.verifyPin(data)),

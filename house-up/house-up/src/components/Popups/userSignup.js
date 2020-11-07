@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
 import * as actionTypes from '../../store/actions/actionTypes';
 
-import { checkPawwordPattern } from '../../utils/regex';
-
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 
@@ -27,7 +25,9 @@ class userSignup extends Component {
             password: '',
             regiserUser: false,
             viewPass: false,
-            viewConfirmPass : false
+            viewConfirmPass : false,
+            currentLocation: {}
+
         };
     }
 
@@ -50,18 +50,23 @@ class userSignup extends Component {
         let stateChanged = false;
         let changedState = {};
 
-        console.log("checkig auth.regiserUser: ", auth);
-        console.log("checkig state.regiserUser: ", state.regiserUser);
+        // console.log("checkig auth.regiserUser: ", auth);
+        // console.log("checkig state.regiserUser: ", state.regiserUser);
       
         if( auth && JSON.stringify(state.regiserUser) !== JSON.stringify(auth.regiserUser) ){
           changedState.regiserUser = auth.regiserUser;  
-        console.log("checkig changedState.regiserUser: ", changedState.regiserUser);
+        // console.log("checkig changedState.regiserUser: ", changedState.regiserUser);
           if( changedState.regiserUser === true ){
             props.onFalseRegisterUser();
             props.congratulationHandler('congratulationModel');
           }
           stateChanged = true;
         }
+
+        if(page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)){
+          changedState.currentLocation = page.currentLocation;
+          stateChanged = true;            
+      }
 
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
             changedState.errors = errors;
@@ -84,7 +89,7 @@ class userSignup extends Component {
             let imagePreview = URL.createObjectURL(e.target.files[0]);
             fileUpload(e)
             .then((data) => {
-                console.log("base64 :",data.base64);
+                // console.log("base64 :",data.base64);
                 this.setState({
                     imagePreview: imagePreview,
                     profileImage: data.base64
@@ -96,17 +101,14 @@ class userSignup extends Component {
         }
       }
       onSubmit = e => {
-            console.log("checking this.state: ", this.state );
-             e.preventDefault();
+        e.preventDefault();
+        console.log("checking this.state: ", this.state );
+        console.log("checking i am into submit");
              if(this.state.password !== this.state.confirmPassword){
                  this.props.onErrorSet("Password not matched!");
                  return;
              }
-             if(!checkPawwordPattern(this.state.password)){
-                this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
-                return;
-            }
-             console.log("checking phoneNumber: ", this.props.phNumber);
+            //  console.log("checking phoneNumber: ", this.props.phNumber);
              const userData = {
                 profileImage:this.state.profileImage,
                 firstName:this.state.firstName,
@@ -119,7 +121,10 @@ class userSignup extends Component {
                 userTypeId: 1,
                 aboutYourSelf: "",
                 phoneNumber: this.props.phNumber,
-                address: ""
+                address: "",
+                country: this.state.currentLocation.country,
+                state: this.state.currentLocation.province,
+                city: this.state.currentLocation.city,
              };
              this.props.onCreateUser(userData);
 
@@ -128,6 +133,7 @@ class userSignup extends Component {
       const { viewPass,viewConfirmPass, errors , loading, imagePreview, firstName, lastName, 
         userName, email, password, 
         confirmPassword } = this.state;
+        console.log("checking this.state: ", this.state);
         let pageContent = '';
 
         if(loading){
@@ -148,7 +154,8 @@ class userSignup extends Component {
             </Modal.Header>
             
             <Modal.Body>
-                <form className="mt-4" onSubmit={this.onSubmit}>
+                <form className="mt-2" onSubmit={this.onSubmit}>
+                <div className="userSignup-content-t">
                 {errors && errors.message &&
                     <Alert variant='danger'>
                     <strong>Error!</strong> { errors.message }
@@ -222,7 +229,7 @@ class userSignup extends Component {
                             onChange={this.onChange}     
                             required
                         />
-                                    <span className="pass-userSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="pass-userSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                     </div>
                     <div className="form-group">
                         <input type={ viewConfirmPass ? "text" : "password" } 
@@ -234,7 +241,8 @@ class userSignup extends Component {
                             onChange={this.onChange}  
                             required   
                         />
-                                    <span className="confirmPass-userSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="confirmPass-userSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
+                    </div>
                     </div>
                     <div className="form-group">
                         <button

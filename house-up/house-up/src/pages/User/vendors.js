@@ -31,7 +31,7 @@ class vendor extends Component {
   }
 
   componentDidMount() {
-    console.log('professionals componenet did mount');
+    // console.log('professionals componenet did mount');
     this.props.onGetVendorsData();
   }
 
@@ -98,11 +98,10 @@ class vendor extends Component {
                           </div>
                           <div className="pxp-agents-1-item-details rounded-lg">
                             <div className="pxp-agents-1-item-details-name">{data.firstName} {data.lastName}</div>
-                            <div className="pxp-agents-1-item-details-email"><span className="fa fa-phone" /> {data.msisdn}</div>
+                            <div className="pxp-agents-1-item-details-email">{data.professionDesc}</div>
                             <div className="pxp-agents-1-item-details-spacer" />
                             <div className="pxp-agents-1-item-cta text-uppercase">More Details</div>
                           </div>
-                          <div className="pxp-agents-1-item-rating"><span><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span></div>
                         </Link>
                       </div>
                       )

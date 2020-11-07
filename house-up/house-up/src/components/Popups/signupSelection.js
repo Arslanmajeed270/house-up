@@ -14,7 +14,7 @@ class signupSelection extends Component {
                     >
                     <Modal.Header closeButton  onClick={() => this.props.closeCodelHanlder("signupSelectionModel")} >
                     </Modal.Header>
-                    <Modal.Body >
+                    <Modal.Body style={{paddingBottom:'15px', paddingTop:'15px'}}>
                         
                     <Link >
                     <div className="signupCards">

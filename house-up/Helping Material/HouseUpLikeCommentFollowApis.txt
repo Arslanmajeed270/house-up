@@ -1,0 +1,52 @@
+Add Comment
+
+http://localhost:8443/houseup/apistore/addComment
+
+Vendor
+{
+    "postId":12,"category":"Vendor","storyImageId":22,"propertyId":1,"commentText":"Good Painter","userId":2,"vendorId":26
+}
+Post
+{
+    "postId":7,"category":"Post","storyImageId":0,"propertyId":0,"commentText":"Informative Post","userId":2,"vendorId":0
+}
+Story
+{
+    "postId":7,"category":"Story","storyImageId":12,"propertyId":1,"commentText":"Informative Story","userId":2,"vendorId":26
+}
+Property
+{
+    "postId":7,"category":"Property","storyImageId":12,"propertyId":3,"commentText":"Informative Story","userId":2,"vendorId":26
+}
+
+Add Like
+
+http://localhost:8443/houseup/apistore/addLike
+
+Vendor
+{
+    "postId":7,"category":"Vendor","storyImageId":12,"propertyId":3,"userId":2,"action":"Like","likeId":"9","vendorId":26
+}
+Post
+{
+    "postId":7,"category":"Post","storyImageId":0,"propertyId":0,"userId":2,"action":"[Unlike,Like]","likeId":[9,0],"vendorId":[0]
+}
+Story
+{
+    "postId":7,"category":"Story","storyImageId":12,"propertyId":3,"userId":2,"action":"Like","likeId":"9","vendorId":26
+}
+Property
+{
+    "postId":[0],"category":"Property","storyImageId":0,"propertyId":3,"userId":2,"action":"Like","likeId":"[0,9]","vendorId":0
+}
+
+Follow Unfollow
+
+http://localhost:8443/houseup/apistore/followUnfollowUser
+{
+   "category":"Vendor","userId":2,"action":"Follow","followUnfollowId":"1","vendorId":26
+}
+
+{
+   "category":"Vendor","userId":2,"action":"Unfollow","followUnfollowId":"2","vendorId":26
+}

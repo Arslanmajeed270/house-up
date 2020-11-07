@@ -37,7 +37,7 @@ class singleVendor extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    console.log('checking id in sigle vendero: ', id);
+    // console.log('checking id in sigle vendero: ', id);
     this.setState({
       id: id
     });
@@ -54,11 +54,13 @@ class singleVendor extends Component {
       workModalState : !this.state.workModalState
     });
   }
-
+  closeCodelHanlder = () => {
+    this.setState({
+      workModalState : false
+    });
+}
     render() { 
       const { singleVendorData } = this.state;
-      console.log('SINGLE professionals');
-      console.log('checking singleVendorsData in professionals: ', singleVendorData);
       
         return ( 
             <React.Fragment>
@@ -80,7 +82,7 @@ class singleVendor extends Component {
                         </div>
                         <div className="mt-4 mt-md-5">
                           <Link to="#pxp-work-with" className="pxp-agent-contact-btn" data-toggle="modal" data-target="#pxp-work-with" onClick={this.workPopupHanlder} >
-                            {this.state.workModalState ? <WorkPopup workModalState={this.state.workModalState} /> : null }
+                            {this.state.workModalState ? <WorkPopup workModalState={this.state.workModalState} closeCodelHanlder = {this.closeCodelHanlder} /> : null }
                             Work with {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </Link>
                         </div>
                       </div>

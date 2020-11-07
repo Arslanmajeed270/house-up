@@ -28,7 +28,7 @@ export const getVendorsData = () => dispatch => {
 		}
     )
     .then(res => {
-	console.log('checking getVendorData: ', res);
+	// console.log('checking getVendorData: ', res);
         dispatch(
 			{
 				type: SET_VENDORS,
@@ -47,12 +47,12 @@ export const getVendorsData = () => dispatch => {
 //SingleVendor  - Get SingleVendor data from backend
 export const getSingleVendorData = (userData) => dispatch => {
 	dispatch(setPageLoading());
-	console.log('checking backendServerURL: ', backendServerURL);
+	// console.log('checking backendServerURL: ', backendServerURL);
 
 	axios
     .post(backendServerURL+'/getUser',userData)
     .then(res => {
-		console.log('checking getSingleVendorsData: ', res);
+		// console.log('checking getSingleVendorsData: ', res);
         dispatch(
 			{
 				type: SET_SINGLE_VENDOR,
@@ -62,8 +62,8 @@ export const getSingleVendorData = (userData) => dispatch => {
         dispatch(clearErrors());
     })
     .catch(err => {
-		console.log("error: ", err);
-		console.log('checking error');
+		// console.log("error: ", err);
+		// console.log('checking error');
         dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
 	})
 	.finally(() => dispatch(clearPageLoading()))

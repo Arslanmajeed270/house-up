@@ -8,13 +8,7 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import Spinner from '../../components/common/Spinner';
 
-
-
 import{Alert } from 'react-bootstrap';
-
-
-import { checkPawwordPattern } from '../../utils/regex';
-
 
 class forgotPass extends Component {
     constructor(props) {
@@ -64,8 +58,8 @@ class forgotPass extends Component {
         return null;
       }
       componentDidMount (){
-        console.log('indexPage componenet did mount');
-        console.log(this.props.phNumber);
+        // console.log('indexPage componenet did mount');
+        // console.log(this.props.phNumber);
         let data={
             emailAddress:"",
             msisdn:this.props.phNumber,
@@ -75,21 +69,17 @@ class forgotPass extends Component {
         this.props.onGetUserDetails(data);
       }
       changeHandler = e => {
-        console.log('heelo in onChange');
+        // console.log('heelo in onChange');
         this.setState({[e.target.name]: e.target.value});
         }
       onSubmit = e => {
-        console.log('checking click handler');
-             e.preventDefault();
+        e.preventDefault();
+        // console.log('checking click handler');
              if(this.state.newPassword !== this.state.confirmPassword){
                 this.props.onErrorSet("Password not matched!");
                 return;
             }
-            if(!checkPawwordPattern(this.state.newPassword)){
-               this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
-               return;
-           }
-           console.log(this.state.userDetails);
+          //  console.log(this.state.userDetails);
           let userId = this.state.userDetails && this.state.userDetails.userId ? this.state.userDetails.userId : ''; 
            const userData = {
             userId:userId,   
@@ -97,22 +87,16 @@ class forgotPass extends Component {
             newPassword: this.state.newPassword,
          };
         
-         console.log('checking data for forgotpass API', userData);
+        //  console.log('checking data for forgotpass API', userData);
             this.props.onResetUserPassword(userData);
             this.props.forgotPassCongratsHandler('forgotPassCongrats');
          }
-    render() {
-        const{ viewPass,viewConfirmPass, userDetail, newPassword , confirmPassword , errors , loading}=this.state;
-        console.log('checking state data', userDetail);
-        console.log("checking this.props.show: ", this.props.show);
-        let pageContent = '';
 
-        if(loading){
-          pageContent = <Spinner />
-        }
-        else{
-          pageContent = "";
-        }
+    render() {
+        const{ viewPass,viewConfirmPass, userDetail, newPassword , confirmPassword , errors , loading } = this.state;
+        console.log('checking state data', userDetail);
+        // console.log("checking this.props.show: ", this.props.show);
+        
         return ( 
             <Modal 
             show={this.props.show}
@@ -147,7 +131,7 @@ class forgotPass extends Component {
                                 onChange={this.changeHandler}
                                 required
                               />
-                                    <span className="password-forgotPass" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="password-forgotPass" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                             </div>
                             <div className="form-group">
                               <input 
@@ -160,7 +144,7 @@ class forgotPass extends Component {
                                 onChange={this.changeHandler}
                                 required
                               />
-                                    <span className="confirmPass-forgotPass" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                                    <span className="confirmPass-forgotPass" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
 
                             </div>
                             <div className="form-group">
@@ -169,9 +153,9 @@ class forgotPass extends Component {
                                 type="submit" onClick={this.onSubmit}
                                 >Submit</button>
                             </div>
-                            {pageContent}
                           </form> 
                         </Link>
+                        {loading ? <Spinner /> : ""}
                     </Modal.Body>
                 </Modal> 
          );

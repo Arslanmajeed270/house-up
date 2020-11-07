@@ -45,31 +45,28 @@ class index extends Component {
             subscriptionPlan:false,
             cardSelection:false,
             cardDetails:false
-
         };
-
     }
-
     closeCodelHanlder = (model) => {
         this.setState({
             [model]: false
         });
     }
     modelHanlder = (model) => {
-        console.log("checking model: ", model);
+        // console.log("checking model: ", model);
         if (model === "phoneSignin" ) {
             this.setState({ emailSignin:false, [model]: !this.state[model] });
         }
         else if(model === "emailSignin"){
-            console.log('clicked');
+            // console.log('clicked');
             this.setState({ phoneSignin: false, [model]: !this.state[model] });
         }
         else if(model === "subscriptionPlan"){
-            console.log('clicked');
-            this.setState({ phoneSignin: false, [model]: !this.state[model] });
+            // console.log('clicked');
+            this.setState({ [model]: !this.state[model] });
         }
         else if(model === "cardSelection"){
-            console.log('clicked');
+            // console.log('clicked');
             this.setState({ subscriptionPlan: false, [model]: !this.state[model] });
         }
         else if(model === "cardDetails"){
@@ -87,7 +84,7 @@ class index extends Component {
         }
         else if(model === "forgotPassCongrats"){
             this.setState({ forgotPass: false, [model]: !this.state[model] });
-            console.log(this.state.forgotPassCongrats)
+            // console.log(this.state.forgotPassCongrats)
         }
         else if(model === "signupSelectionModel"){
             this.setState({ phoneSignin: false, emailSignin:false, [model]: !this.state[model] });
@@ -102,7 +99,7 @@ class index extends Component {
             this.setState({ phoneNumberVendorModel: false, [model]: !this.state[model] });
         }
         else if(model === "userSignupModel"){
-            console.log('i am into userSignupModel if else');
+            // console.log('i am into userSignupModel if else');
             this.setState({ optUserModel: false, [model]: !this.state[model] });
         }
         else if(model === "vendorSignupModel"){
@@ -129,15 +126,20 @@ class index extends Component {
             });
         }
     }
-
     phoneNumberHandler = (num) => {
         this.setState({
             phNumber:num
         });
     }
-
     render() {
-        const animateHeader = this.props.animateHeader;
+        let animateHeader = false;
+        let hideFooter = false;
+        if( this.props.location.pathname === "/index" ){
+            hideFooter = true;
+        }
+        if( this.props.location.pathname === "/home" || this.props.location.pathname === "/" ){
+            animateHeader = true;
+        }
         return (
             <React.Fragment>
                 {this.state.phoneSignin &&
@@ -147,8 +149,7 @@ class index extends Component {
                         emailSigninHandler ={this.modelHanlder}
                         phoneNoForgotHandler = {this.modelHanlder}
                         signupSelectionHandler={this.modelHanlder}
-                        subscriptionPlanHandler = { this.modelHanlder }
-
+                        history = {this.props.history}
                     />
                 }
                 {this.state.subscriptionPlan &&
@@ -178,6 +179,7 @@ class index extends Component {
                         phoneNoForgotHandler = {this.modelHanlder}
                         phoneSigninHandler ={this.modelHanlder}
                         signupSelectionHandler={this.modelHanlder}
+                        history = {this.props.history}
                     />
                 }
                 {this.state.phoneNoForgotPass &&
@@ -282,11 +284,11 @@ class index extends Component {
                     />
                 }
                 <Header 
-                animateHeader={animateHeader}
-                modelHanlder={this.modelHanlder}
+                    animateHeader={animateHeader}
+                    modelHanlder={this.modelHanlder}
                 />
                 <Routes />
-                {this.props.hideFooter === true ? " " : <Footer /> }
+                    { hideFooter === true ? " " : <Footer /> }
             </React.Fragment>
         )
     }

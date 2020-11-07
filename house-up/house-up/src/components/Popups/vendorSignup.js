@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 
-import { checkPawwordPattern } from '../../utils/regex';
+import { checkValidURL } from '../../utils/regex';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -50,7 +50,9 @@ class vendorSignup extends Component {
             imagePreviewForSupport: [],
             imagePreviewForRegister: [],
             viewPass: false,
-            viewConfirmPass: false
+            viewConfirmPass: false,
+            currentLocation: {},
+            unitOther: ''
         };
     }
 
@@ -68,6 +70,7 @@ class vendorSignup extends Component {
     static getDerivedStateFromProps(props, state) {
         const errors = props.errors;
         const page = props.page;
+        console.log('checking page data ',page)
         const auth = props.auth;
         let stateChanged = false;
         let changedState = {};
@@ -88,13 +91,16 @@ class vendorSignup extends Component {
             states = cloneDeep(changedState.countries[0]);
             changedState.states = states.states;
         }
-        console.log('checking page: ', page);
+        // console.log('checking page: ', page);
         if( page && page.professionList && JSON.stringify(state.professionList) !== JSON.stringify(page.professionList) ){
             changedState.professionList = page.professionList;  
-            console.log('checking changedState.professionList: ', changedState.professionList);
+            // console.log('checking changedState.professionList: ', changedState.professionList);
             stateChanged = true;
         }
-
+        if(page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)){
+            changedState.currentLocation = page.currentLocation;
+            stateChanged = true;            
+        }
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
             changedState.errors = errors;
             stateChanged = true;
@@ -121,7 +127,7 @@ class vendorSignup extends Component {
             let imagePreview = URL.createObjectURL(e.target.files[0]);
             fileUpload(e)
             .then((data) => {
-                console.log("base64 :",data.base64);
+                // console.log("base64 :",data.base64);
                 this.setState({
                     imagePreview: imagePreview,
                     profileImage: data.base64
@@ -132,7 +138,7 @@ class vendorSignup extends Component {
             let imagePreviewForSupport = e.target.files[0];
             fileUpload(e)
             .then((data) => {
-                console.log("base64 :",data.base64);
+                // console.log("base64 :",data.base64);
                 this.setState({
                     imagePreviewForSupport: imagePreviewForSupport,
                     businessSupportingDocument: data.base64
@@ -143,7 +149,7 @@ class vendorSignup extends Component {
             let imagePreviewForRegister = e.target.files[0];
             fileUpload(e)
             .then((data) => {
-                console.log("base64 :",data.base64);
+                // console.log("base64 :",data.base64);
                 this.setState({
                     imagePreviewForRegister: imagePreviewForRegister,
                     businessRegistrationDocument: data.base64
@@ -163,10 +169,13 @@ class vendorSignup extends Component {
             });
         }
         else if(e.target.name === 'provinceId'){
+            console.log("checking e.target: ", e.target.value);
             let ind = 0;
             let cities = [];
+            let prId = '';
             if(e.target.value !== "" ){
-                ind =  this.state.states && this.state.states.findIndex( x => `${x.id}` === e.target.value );
+                prId = e.target.value.split(',')[0];
+                ind =  this.state.states && this.state.states.findIndex( x => `${x.id}` === prId );
                 cities = cloneDeep(this.state.states[ind]);
             }
             this.setState({ 
@@ -181,23 +190,30 @@ class vendorSignup extends Component {
       }
       onSubmit = e => {
         e.preventDefault();    
-        console.log('checking click handler');
+        // console.log('checking click handler');
         const {
             profileImage, firstName, lastName, userName, emailAddress, confirmPassword,
             password, professionId, businessSupportingDocument, businessRegistrationDocument,
-            keywordDescriptYourBusiness, countryId, provinceId, cityId, zipCode,streetAddress,
-            businessName, websiteLink, qualification, aboutBusiness, businessStartDate
+            keywordDescriptYourBusiness, provinceId, cityId, zipCode,streetAddress,
+            businessName, websiteLink, qualification, aboutBusiness, businessStartDate, unitOther
         } = this.state;
 
-        if(this.state.password !== this.state.confirmPassword){
+        if(password !== confirmPassword){
             this.props.onErrorSet("Password not matched!");
             return;
         }
-        if(!checkPawwordPattern(this.state.password)){
-           this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
-           return;
-       }
-       console.log("**** checking phone number:  ", this.props.phNumber);
+
+        if(!checkValidURL(websiteLink)){
+            this.props.onErrorSet("Please Enter Valid URL!");
+            return;
+        }
+                const city = cityId.split(',')[1];
+                const cId = cityId.split(',')[0];
+
+                const province = provinceId.split(',')[1];
+                const pId = provinceId.split(',')[0];
+
+    //    console.log("**** checking phone number:  ", this.props.phNumber);
 
              const userData = {
                 profileImage: profileImage,
@@ -211,10 +227,10 @@ class vendorSignup extends Component {
                 professionId: professionId, 
                 businessSupportingDocument : businessSupportingDocument,
                 businessRegistrationDocument: businessRegistrationDocument,
-                keywordDescriptYourBusiness: keywordDescriptYourBusiness,
+                keywordsDescribeYourBusiness: keywordDescriptYourBusiness,
                 countryId: 1,
-                provinceId: provinceId,
-                cityId: cityId,
+                provinceId: pId,
+                cityId: cId,
                 zipCode: zipCode,
                 streetAddress: streetAddress,
                 websiteLink: websiteLink,
@@ -225,15 +241,20 @@ class vendorSignup extends Component {
                 userTypeId: 2,
                 aboutYourSelf: "",
                 phoneNumber: this.props.phNumber,
-                streetAddress1: "",
-                address: "",
-                stateId: provinceId,
-                houseAppartmentSuitNumber: "",
-                postalCode: "",
-                channel: "",
+                streetAddress1: streetAddress,
+                address: `${streetAddress}, ${city}, ${province},Canada`,
+                stateId: pId,
+                houseAppartmentSuiteNumber: unitOther,
+                postalCode: zipCode,
+                channel: "web",
+                country: "Canada",
+                state: province,
+                city: city,
              };
             console.log('i am here: ',userData);
             this.props.onCreateVendor(userData);
+             
+ 
          }
 
     render() { 
@@ -241,8 +262,7 @@ class vendorSignup extends Component {
             viewPass , viewConfirmPass, errors , loading, imagePreview, firstName, lastName, userName, emailAddress, confirmPassword,
             password, professionId, keywordDescriptYourBusiness, provinceId, cityId, zipCode,
             streetAddress, businessName, websiteLink, qualification, aboutBusiness,businessStartDate,
-             professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport
-        } = this.state;
+             professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport, unitOther        } = this.state;
         console.log("checking this.state: ", this.state);
 
         let pageContent = '';
@@ -262,10 +282,11 @@ class vendorSignup extends Component {
             // dialogClassName="modal-width"
             onHide={() => this.props.closeCodelHanlder('vendorSignupModel')}
             >
-            <Modal.Header onClick={() => this.props.closeCodelHanlder('userSignupModel')}>
+            <Modal.Header onClick={() => this.props.closeCodelHanlder('vendorSignupModel')}>
             </Modal.Header>
             <Modal.Body >
             <form className="mt-4" onSubmit={this.onSubmit}>
+            <div className="register-form-content-body">
 
             {errors && errors.message &&
                 <Alert variant='danger'>
@@ -284,12 +305,12 @@ class vendorSignup extends Component {
                     style={{display:'none'}}
                     />
                     <label for="profileImage" className="profile-pic-professional">
-                        <img id="imagePreviewVendor" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}}/>
+                        <img id="imagePreviewVendor" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px', borderRadius:'5px'}}/>
                     </label>
                 </div>
                 <div className="row" style={{padding:'0px 15px'}}>
             
-            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
                     <div className="form-group">
                         <input type="text" 
                             className="form-control"
@@ -320,7 +341,7 @@ class vendorSignup extends Component {
                     
                     
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
                         <div className="form-group">
                          <input type="text" 
                             className="form-control"
@@ -351,7 +372,7 @@ class vendorSignup extends Component {
            
            
                     <div className="row" style={{padding:'0px 15px'}}>
-                        <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                        <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
                     <div className="form-group">
                         <select className="custom-select drop-down" onChange={this.onChange} name="professionId"
                          value={professionId} required >
@@ -367,7 +388,7 @@ class vendorSignup extends Component {
                     </div>
                     <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
 
-                    <div className="form-group input-file">
+                    <div className="form-group input-file" style={{height:'46px' , borderRadius:'4px'}}>
                          <input type="file" 
                             className="form-control"
                             id="file" 
@@ -386,7 +407,7 @@ class vendorSignup extends Component {
                     </div>
             
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
 
                     <div className="form-group">
                         <input type="text" 
@@ -417,7 +438,7 @@ class vendorSignup extends Component {
                     </div>
             
                     <div className="row" style={{padding:'0px 15px'}}>
-            <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+            <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
 
                     <div className="form-group">
                         <input type="text" 
@@ -451,9 +472,9 @@ class vendorSignup extends Component {
                     </div>
                     </div>
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
 
-                    <div className="form-group input-file">
+                    <div className="form-group input-file" style={{paddingRight:'7px', heihgt: '46px', borderRadius: '4px'}}>
                         <input type="file" 
                             className="form-control" 
                             accept="image/*"
@@ -495,69 +516,71 @@ class vendorSignup extends Component {
                     </div>
 
                     <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
-                    <div className="row">
-                            <div className="col-md-6">
-                                <div className="form-group"> 
-                                <select className="custom-select"
-                                    placeholder="City"
-                                    name="provinceId"
-                                    value={provinceId}
-                                    onChange={this.onChange}
-                                >
-                                    <option value=""> Province / state </option>
-                             {
-                                 states && states.length ? states.map( ( state, idx ) => (
-                                     <option key={idx} value={state.id} > { state.name }</option>
-                                 ) )
-                                 : ""
-                             }
-                                </select>
+                        <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <div className="form-group" style={{marginBottom:'9px'}}> 
+                                        <select className="custom-select" style={{height:'42px'}}
+                                            placeholder="City"
+                                            name="provinceId"
+                                            value={provinceId}
+                                            onChange={this.onChange}
+                                        >
+                                            <option value=""> Province / state </option>
+                                        {
+                                            states && states.length ? states.map( ( state, idx ) => (
+                                                <option key={idx} value={`${state.id},${state.name}`} > { state.name }</option>
+                                             ) )
+                                             : ""
+                                        }
+                                    </select>
+                                </div>
+                                </div>
+                                <div className="col-md-6">
+                                <div className="form-group" style={{marginBottom:'9px'}}> 
+                                    <select className="custom-select" style={{height:'42px'}}
+                                        placeholder="Prov/State"
+                                        name="cityId" required
+                                        value={cityId}
+                                        onChange={this.onChange}
+                                        >
+                                          <option value=""> City </option>
+                                        {
+                                            cities && cities.length ? cities.map( ( city, idx ) => (
+                                                <option key={idx} value={`${city.id},${city.name}`} > { city.name }</option>
+                                            ) )
+                                            : ""
+                                        }     
+                                    </select>            
+                                </div>
+                                </div>
                             </div>
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <input className="form-control"
+                                        placeholder="Unit Or Other"
+                                        name="unitOther"
+                                        value={unitOther}
+                                        onChange={this.onChange}
+                                    />
+                                </div>
+                                <div className="col-md-6">
+                                    <input 
+                                        className="form-control" 
+                                        placeholder="Postal or zip" 
+                                        name="zipCode"
+                                        value={zipCode}
+                                        onChange={this.onChange}
+                                        required
+                                    />
+                                </div>
                             </div>
-                            <div className="col-md-6">
-                            <div className="form-group"> 
-                                <select className="custom-select"
-                                    placeholder="Prov/State"
-                                    name="cityId"
-                                    value={cityId}
-                                    onChange={this.onChange}
-                                    >
-                                      <option value=""> City </option>
-                                    {
-                                        cities && cities.length ? cities.map( ( city, idx ) => (
-                                            <option key={idx} value={city.id} > { city.name }</option>
-                                        ) )
-                                        : ""
-                                    }     
-                                </select>            
-                            </div>
-                            </div>
-                        </div>
-                    <div className="row">
-                            <div className="col-md-6">
-                                <input className="form-control"
-                                    placeholder="Unit Or Other"
-                                    name="unit"
-                                />
-                            </div>
-                            <div className="col-md-6">
-                                <input 
-                                    className="form-control" 
-                                    placeholder="Postal or zip" 
-                                    name="zipCode"
-                                    value={zipCode}
-                                    onChange={this.onChange}
-                                    required
-                                />
-                            </div>
-                       </div>
                        </div>
                     <div className="col-md-6" style={{padding:'0px' , paddingRight:'7px'}}>
                        <div className="form-group">
                         <textarea 
                             typeof="text" className="form-control" style={{height:'97px'}}
-                            placeholder="street name & number"
+                            placeholder="Street name & number"
                             name="streetAddress"
                             value={streetAddress}
                             onChange={this.onChange}
@@ -567,7 +590,7 @@ class vendorSignup extends Component {
                     </div>
 
                 <div className="row" style={{padding:'0px 15px'}}>
-                    <div className="col-md-6" style={{padding:'0px',paddingRight:'7px'}}>
+                    <div className="col-md-6" style={{padding:'0px',paddingRight:'12px'}}>
                         <div className="form-group">
                             <input type={ viewPass ? "text" : "password" } 
                                 className={`form-control ${ errors && errors.message  ? "customError" : '' }`}  
@@ -578,7 +601,7 @@ class vendorSignup extends Component {
                                 onChange={this.onChange}
                                 required
                             />
-                            <span className="pass-vendorSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                            <span className="pass-vendorSignup" onClick={this.viewPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                         </div>
                     </div>
                     <div className="col-md-6" style={{padding:'0px', paddingRight:'7px'}}>
@@ -592,11 +615,12 @@ class vendorSignup extends Component {
                                 onChange={this.onChange}
                                 required
                             />
-                            <span className="pass-vendorSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} /></span>
+                            <span className="pass-vendorSignup" onClick={this.viewConfirmPassword}><img src={require('../../assets/images/icons/ic_view_password.png')} alt="" /></span>
                         </div>
                     </div>
                 </div>
-                    <div className="form-group">
+                </div>
+                    <div className="form-group" style={{paddingTop:'15px', height:'56px'}}>
                         <button
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
@@ -604,6 +628,7 @@ class vendorSignup extends Component {
                         </button>
                     </div>               
                     { pageContent }
+                    
              </form>
 
             </Modal.Body>
