@@ -58,26 +58,26 @@ class home extends Component {
         pageContent = "";
       }
       
-  const items = [];
-  if(homePageData && homePageData.properties && homePageData.properties.length){
-    for(let i=0; i<homePageData.properties.length; i++){
-      let item = (<div>
-        <Link to={`/single-prop-${homePageData.properties[i].propertId}`} className="pxp-prop-card-1 rounded-lg">
-          <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: `url(${ 
-          homePageData.properties[i] && homePageData.properties[i].imageList && homePageData.properties[i].imageList[0] && homePageData.properties[i].imageList[0].imageURL ? homePageData.properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }} />
-          <div className="pxp-prop-card-1-gradient pxp-animate" />
-          <div className="pxp-prop-card-1-details">
-            <div className="pxp-prop-card-1-details-titles">{homePageData.properties[i].adTitle}</div>
-      <div className="pxp-prop-card-1-details-price">{homePageData.properties[i].currency.symbol}{homePageData.properties[i].price}</div>
-            <div className="pxp-prop-card-1-details-features text-uppercase">{homePageData.properties[i].noOfBedrooms} BD <span>|</span> {homePageData.properties[i].noOfBathrooms} BA <span>|</span> {homePageData.properties[i].finishedSqftArea} SF</div>
-          </div>
-          <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-        </Link>
-      </div>   
-      ); 
-      items.push(item);
-    }
-  }
+        const items = [];
+        if(homePageData && homePageData.properties && homePageData.properties.length){
+          for(let i=0; i<homePageData.properties.length; i++){
+            let item = (<div>
+              <Link to={`/single-prop-${homePageData.properties[i].propertId}`} className="pxp-prop-card-1 rounded-lg">
+                <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: `url(${ 
+                homePageData.properties[i] && homePageData.properties[i].imageList && homePageData.properties[i].imageList[0] && homePageData.properties[i].imageList[0].imageURL ? homePageData.properties[i].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }} />
+                <div className="pxp-prop-card-1-gradient pxp-animate" />
+                <div className="pxp-prop-card-1-details">
+                  <div className="pxp-prop-card-1-details-titles">{homePageData.properties[i].adTitle}</div>
+                  <div className="pxp-prop-card-1-details-price">{homePageData.properties[i].currency.symbol}{homePageData.properties[i].price}</div>
+                  <div className="pxp-prop-card-1-details-features text-uppercase">{homePageData.properties[i].noOfBedrooms} BD <span>|</span> {homePageData.properties[i].noOfBathrooms} BA <span>|</span> {homePageData.properties[i].finishedSqftArea} SF</div>
+                </div>
+                <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
+              </Link>
+            </div>   
+            ); 
+            items.push(item);
+          }
+        }
 
         return ( 
             <React.Fragment>

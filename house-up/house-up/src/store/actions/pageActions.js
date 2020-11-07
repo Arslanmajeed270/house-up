@@ -245,6 +245,19 @@ export const AddComments = (data, index ) => dispatch => {
 	})	      
 };
 
+// Contact US 
+export const contactUs = (data, index ) => dispatch => {
+	axios
+    .post( backendServerURL+'/contactUs' , data )
+    .then(res => {
+		console.log(res);
+			dispatch(clearErrors());
+    	})
+    .catch(err => {
+		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})	      
+};
+
 
 
 // Set current location

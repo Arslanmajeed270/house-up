@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import ContactPopup from '../../components/Popups/contact';
+import Contact from '../../components/Popups/contact';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
@@ -14,7 +14,8 @@ class singleProp extends Component {
       singlePropertyData:{},
       id:'',
       commentText:'',
-      user:{}
+      user:{},
+      userId:''
     };
   }
 
@@ -46,20 +47,24 @@ class singleProp extends Component {
       this.setState({
         contactModalState : !this.state.contactModalState
       });
-      // console.log('cecking login pop handler', this.state.signupState);
     }
 
     componentDidMount (){
+    const { singlePropertyData , user  } = this.state;
     const id = this.props.match.params.id;
     console.log('checking id in sigle property: ', id);
+
+    const userId = user.userId ? user.userId : "";
+
     this.setState({
-      id: id
+      id,
+      userId 
     });
 
     let userData = {
       propertyId: id
     }
-    const { singlePropertyData , user  } = this.state;
+
     console.log(singlePropertyData)
     console.log('property Id', singlePropertyData);
 
@@ -78,24 +83,21 @@ class singleProp extends Component {
     
     onSubmit = e =>{
       e.preventDefault();
-      const { userId ,user , commentText , propertyId , postId , storyImageId , vendorId , category  , singlePropertyData } = this.state;
+      const {id, user , commentText , userId} = this.state;
 
-    
       const data = {
-        postId:Number(postId),
-        category:category,
-        storyImageId:Number(storyImageId),
-        // propertyId:Number(propId),
+        postId:0,
+        category:"Property",
+        storyImageId:0,
+        propertyId:Number(id),
         commentText:commentText,
         userId:userId,
-        vendorId:vendorId
+        vendorId:0
     }
       console.log('data pakage of comment api', data);
     
       this.props.onCommentAdded(data);
-    
     }
-
 
     render() { 
       const { singlePropertyData , commentText } = this.state;
@@ -541,8 +543,8 @@ class singleProp extends Component {
                           </div>
                           <div className="clearfix" />
                           <div className="pxp-sp-agent-btns mt-3 mt-md-4">
-                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"  onClick={this.contactPopupHanlder}  ><span className="fa fa-envelope-o"/>
-                            {this.state.contactModalState ? <ContactPopup  contactModalState={this.state.contactModalState}  /> :null }
+                            <Link to="" className="pxp-sp-agent-btn-main" data-toggle="modal" onClick={this.contactPopupHanlder}  >
+                            { this.state.contactModalState ? <Contact  show={this.state.contactModalState} contactPopupHanlder={this.contactPopupHanlder}  /> :null }
                              Contact Us</Link>
                           </div>
                         </div>
