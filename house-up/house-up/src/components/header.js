@@ -113,6 +113,7 @@ class header extends Component {
                     <div className="col-5 col-md-1 text-right">
                       <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
                       { user && user.profilePictureUrl ?
+                        <>
                         <div to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
                         style={{ width: "44px", height: "44px", backgroundSize: "cover",  backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}}
                         onClick={this.dropDownHandler}
@@ -125,8 +126,17 @@ class header extends Component {
                             </div>
                             :
                             "" 
-                        }
+                          }
                         </div>
+                        {user && user.userTypeId === 2 ? 
+                        <div onClick={() => this.props.modelHanlder('subscriptionPlan')} style={{cursor: "pointer"}} >
+                          <img src={require('../assets/images/icons/ic_upgrade.svg')} alt="upgradeIcon" />
+                          upgrade
+                        </div>
+                        :
+                        ""  
+                      }
+                        </>
                         :
                         <Link to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
                           onClick={() => this.props.modelHanlder('phoneSignin')}

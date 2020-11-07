@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 
+import { checkValidURL } from '../../utils/regex';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -51,8 +52,7 @@ class vendorSignup extends Component {
             viewPass: false,
             viewConfirmPass: false,
             currentLocation: {},
-            province: '',
-            city: ''
+            unitOther: ''
         };
     }
 
@@ -172,31 +172,15 @@ class vendorSignup extends Component {
             console.log("checking e.target: ", e.target.value);
             let ind = 0;
             let cities = [];
-            let province = '';
             let prId = '';
             if(e.target.value !== "" ){
-                province = e.target.value.split(',')[1];
                 prId = e.target.value.split(',')[0];
-                console.log(`checking province: ${province} and prId: ${prId}`);
                 ind =  this.state.states && this.state.states.findIndex( x => `${x.id}` === prId );
                 cities = cloneDeep(this.state.states[ind]);
             }
             this.setState({ 
-                [e.target.name]: prId,
-                cities: cities.cities,
-                province: province
-            });
-        }
-        else if(e.target.name === 'cityId'){
-            console.log("checking e.target: ", e.target.value);
-            let city = '';
-            let cId = '';
-                city = e.target.value.split(',')[1];
-                cId = e.target.value.split(',')[0];
-            
-            this.setState({ 
-                [e.target.name]: cId,
-                city: city
+                [e.target.name]: e.target.value,
+                cities: cities.cities
             });
         }
         else{
@@ -211,13 +195,24 @@ class vendorSignup extends Component {
             profileImage, firstName, lastName, userName, emailAddress, confirmPassword,
             password, professionId, businessSupportingDocument, businessRegistrationDocument,
             keywordDescriptYourBusiness, provinceId, cityId, zipCode,streetAddress,
-            businessName, websiteLink, qualification, aboutBusiness, businessStartDate
+            businessName, websiteLink, qualification, aboutBusiness, businessStartDate, unitOther
         } = this.state;
 
-        if(this.state.password !== this.state.confirmPassword){
+        if(password !== confirmPassword){
             this.props.onErrorSet("Password not matched!");
             return;
         }
+
+        if(!checkValidURL(websiteLink)){
+            this.props.onErrorSet("Please Enter Valid URL!");
+            return;
+        }
+                const city = cityId.split(',')[1];
+                const cId = cityId.split(',')[0];
+
+                const province = provinceId.split(',')[1];
+                const pId = provinceId.split(',')[0];
+
     //    console.log("**** checking phone number:  ", this.props.phNumber);
 
              const userData = {
@@ -232,10 +227,10 @@ class vendorSignup extends Component {
                 professionId: professionId, 
                 businessSupportingDocument : businessSupportingDocument,
                 businessRegistrationDocument: businessRegistrationDocument,
-                keywordDescriptYourBusiness: keywordDescriptYourBusiness,
+                keywordsDescribeYourBusiness: keywordDescriptYourBusiness,
                 countryId: 1,
-                provinceId: provinceId,
-                cityId: cityId,
+                provinceId: pId,
+                cityId: cId,
                 zipCode: zipCode,
                 streetAddress: streetAddress,
                 websiteLink: websiteLink,
@@ -246,18 +241,20 @@ class vendorSignup extends Component {
                 userTypeId: 2,
                 aboutYourSelf: "",
                 phoneNumber: this.props.phNumber,
-                streetAddress1: "",
-                address: "",
-                stateId: provinceId,
-                houseAppartmentSuitNumber: "",
-                postalCode: "",
+                streetAddress1: streetAddress,
+                address: `${streetAddress}, ${city}, ${province},Canada`,
+                stateId: pId,
+                houseAppartmentSuiteNumber: unitOther,
+                postalCode: zipCode,
                 channel: "web",
                 country: "Canada",
-                state: this.state.province,
-                city: this.state.city,
+                state: province,
+                city: city,
              };
             console.log('i am here: ',userData);
             this.props.onCreateVendor(userData);
+             
+ 
          }
 
     render() { 
@@ -265,7 +262,7 @@ class vendorSignup extends Component {
             viewPass , viewConfirmPass, errors , loading, imagePreview, firstName, lastName, userName, emailAddress, confirmPassword,
             password, professionId, keywordDescriptYourBusiness, provinceId, cityId, zipCode,
             streetAddress, businessName, websiteLink, qualification, aboutBusiness,businessStartDate,
-             professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport        } = this.state;
+             professionList,  states, cities, imagePreviewForRegister, imagePreviewForSupport, unitOther        } = this.state;
         console.log("checking this.state: ", this.state);
 
         let pageContent = '';
@@ -562,7 +559,9 @@ class vendorSignup extends Component {
                                 <div className="col-md-6">
                                     <input className="form-control"
                                         placeholder="Unit Or Other"
-                                        name="unit"
+                                        name="unitOther"
+                                        value={unitOther}
+                                        onChange={this.onChange}
                                     />
                                 </div>
                                 <div className="col-md-6">

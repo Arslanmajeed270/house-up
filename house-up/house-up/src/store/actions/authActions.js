@@ -46,7 +46,7 @@ export const loginUser = (userData, history) => dispatch => {
         }
         else {
             dispatch({ type: HIDE_POP_UP });
-            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+            dispatch({type: SET_ERRORS, payload: { message: "Username or password wrong!" } });
         }
     })
     .catch(err => {
@@ -167,8 +167,17 @@ export const generatePin = (data) => dispatch => {
         data
     )
     .then(res => {
-        dispatch(clearErrors())
         console.log('checking response in generatePin',res);
+        if(res && res.data && res.data.resultCode === "200" ){
+            console.log("i am into if");
+            dispatch({ type: SHOW_POP_UP });
+            dispatch(clearErrors());
+        }
+        else {
+            console.log("checking i am into else");
+            dispatch({ type: HIDE_POP_UP });
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+        }
     })
     .catch(err => {
         console.log("error: ", err);
