@@ -308,7 +308,7 @@ class vendorSignup extends Component {
                     style={{display:'none'}}
                     />
                     <label for="profileImage" className="profile-pic-professional">
-                        <img id="imagePreviewVendor" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}}/>
+                        <img id="imagePreviewVendor" src={ imagePreview ? imagePreview : require("../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px', borderRadius:'5px'}}/>
                     </label>
                 </div>
                 <div className="row" style={{padding:'0px 15px'}}>
