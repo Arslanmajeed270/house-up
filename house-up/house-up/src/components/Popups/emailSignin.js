@@ -96,7 +96,7 @@ class emailSignin extends Component {
                     >
                     <Modal.Header closeButton onClick={() => this.props.closeCodelHanlder('emailSignin')} >
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body style={{paddingTop:'0px'}}>
                         <div>
                         <div className="logo-modal" >
 

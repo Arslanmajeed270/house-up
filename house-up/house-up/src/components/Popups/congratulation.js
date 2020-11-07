@@ -17,18 +17,18 @@ class congrationPopup extends Component {
                 
                 <Modal.Body onClick={this.props.congratulationPopupHandler}>
                     <div className="form-group">
-                        <div class="text-center" style={{fontSize: '25px',color:'#1082FF',fontWeight: '500',padding: '12px'}}>CONGRATULATIONS!</div>
+                        <div class="text-center" style={{fontSize: '21px',color:'#00B0E9',fontWeight: '500',paddingTop: '12px', paddingBottom: '0px'}}>CONGRATULATIONS!</div>
                     </div>
                     <div className="form-group">
-                        <div class="text-center" style={{fontSize: '20px'}}>Your account has been </div>
-                        <div class="text-center" style={{fontSize: '20px'}}> successfully created.</div> 
+                        <div class="text-center" style={{fontSize: '18px', color: '#000000'}}>Your account has been </div>
+                        <div class="text-center" style={{fontSize: '18px', color: '#000000'}}> successfully created.</div> 
                     </div>
                     <div className="form-group">
-                        <button
+                        <button style={{fontSize: '16px'}}
                             className="pxp-agent-contact-modal-btn"
                             type="submit"
                             onClick={() => this.props.closeCodelHanlder('congratulationModel')}
-                            >Okay</button>
+                            >THANKS</button>
                     </div>
                 </Modal.Body>
             </Modal>             

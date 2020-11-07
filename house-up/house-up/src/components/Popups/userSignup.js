@@ -154,7 +154,7 @@ class userSignup extends Component {
             </Modal.Header>
             
             <Modal.Body>
-                <form className="mt-4" onSubmit={this.onSubmit}>
+                <form className="mt-2" onSubmit={this.onSubmit}>
                 <div className="userSignup-content-t">
                 {errors && errors.message &&
                     <Alert variant='danger'>

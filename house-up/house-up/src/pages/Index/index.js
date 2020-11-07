@@ -344,7 +344,7 @@ class index extends Component {
                                         data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser  
                                         )}
                                       > { data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
-                                      <h2 style={{fontSize:'20px'}}>{data &data.object.user& data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.date} </h2>
+                                      <h2 style={{fontSize:'20px'}}>{data &data.object.user& data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.createDateAndTime} </h2>
                                     </span>  
                                   </li>
                                   

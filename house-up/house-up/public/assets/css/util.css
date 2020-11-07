@@ -3048,3 +3048,62 @@ img.search {
 	left: 24px;
 	top: 14px;
 }
+
+.pxp-header.fixed-top.pxp-full .pxp-header-user.pxp-signin-trigger.forborder{
+	border:none;
+}
+
+.pxp-header.fixed-top.pxp-full .has-search input {
+	padding-left: 10px;    
+	height: 35px;
+    width: 213px !important;
+    border-radius: 0px;
+}
+
+.form-group.has-search img {
+    left: 92% !important;
+    top: 8px !important;
+}
+
+.pxp-header.fixed-top.pxp-full a:nth-child(2), .pxp-header.fixed-top.pxp-animate a:nth-child(2) {
+	margin-left: 50px;
+}
+
+.pxp-footer {
+	position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.modal-dialog .modal-content .modal-header button span {
+	display: none;
+}
+
+.modal-dialog {
+	display: flex;
+	justify-content: center;
+}
+
+.userSignup-content-t .form-group {
+	position: relative;
+}
+
+.modal-dialog.modal-width.modal-dialog-centered .userSignup-content-t .pass-userSignup {
+	bottom: 10px !important;
+}
+
+.userSignup-content-t .confirmPass-userSignup {
+	bottom: 10px !important;
+}
+
+.pxp-props-carousel-right-container .alice-carousel .alice-carousel__stage-item {
+	width: 277px !important;
+}
+
+.properties-search-icon {
+	position: absolute;
+    top: 12px;
+    width: 20px;
+    right: 25px;
+}

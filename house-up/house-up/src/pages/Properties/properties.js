@@ -133,7 +133,8 @@ class properties extends Component {
                           </div>
                           <div className="col-7 col-sm-7 col-md-8 col-lg-9 pxp-content-side-search-form-col">
                             <input type="text" className="form-control pxp-is-address" placeholder="Search by City, Neighborhood, or Address" id="pxp-p-search-address" />
-                            <span className="fa fa-search" />
+                            <img src={require('../../assets/images/ic_search@2x.png')} alt="" className="properties-search-icon" />
+                            
                           </div>
                         </div>
                       </div>

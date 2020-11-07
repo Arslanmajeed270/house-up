@@ -105,7 +105,7 @@ class singleProp extends Component {
             <React.Fragment>
                 <div className="pxp-content">
                 <div className="pxp-single-property-top pxp-content-wrapper mt-100">
-                  <div className="container">
+                  <div className="wrapper">
                     <div className="row">
                       <div className="col-sm-12 col-md-12">
                         <h2 className="pxp-sp-top-title">{data && data.adTitle}</h2>
@@ -116,7 +116,7 @@ class singleProp extends Component {
                     </div>
                   </div>
                 </div>
-                <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
+                <div className="wrapper pxp-single-property-gallery-container">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
                     <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
                       <a href="images/prop-7-1-big.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0] && data.imageList[0].imageURL})`}} />
@@ -139,48 +139,30 @@ class singleProp extends Component {
                       : "" 
                     }
                     
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <a href="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(images/prop-2-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <a href="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(images/prop-2-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                      <a href="images/prop-1-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(images/prop-1-3-gallery.jpg)'}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
                   </div>
                   <a href="#" className="pxp-sp-gallery-btn">View Photos</a>
                   <div className="clearfix" />
                 </div>
-                <div className="container mt-100">
+                <div className="container mt-4">
                   <div className="row">
                     <div className="col-lg-8">
                       {
                         data && data.address ?
-                        <div > <span className="property-details">Address:</span> {data && data.address}</div>
+                        <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}> <span className="property-details">Address:</span> {data && data.address}</div>
                         : ""
                       }
                           {data && data.propertyType ?
-                          <div> <span className="property-details">Property type:</span> { data && data.propertyType} </div> 
+                          <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}> <span className="property-details">Property type:</span> { data && data.propertyType} </div> 
                           : ""
                           }
                           {
                             data && data.rentalListingYN ? 
-                            <div><span className="property-details">Rental:</span>{data && data.rentalListingYN}</div> 
+                            <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}><span className="property-details">Rental:</span>{data && data.rentalListingYN}</div> 
                             : ""
                           }
                           {
                             data && data.createdDate ?
-                            <div><span className="property-details">Date listed:</span> {data && data.createdDate}</div>
+                            <div style={{color: '#000', fontWeight: '300', fontFamily: 'Light'}}><span className="property-details">Date listed:</span> {data && data.createdDate}</div>
                             : ""
                           }
                       <div className="pxp-single-property-section mt-4 mt-md-5">
@@ -197,6 +179,7 @@ class singleProp extends Component {
                           }
                         
                         </div>
+                        <hr style={{background: '#EFEFF4'}} />
                         <div>
                         <h3>Details</h3>
                         <div className="mt-3 mt-md-4">

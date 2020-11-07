@@ -3003,7 +3003,6 @@ a.pxp-list-toggle.pxp-active {
     text-transform: uppercase;
     font-size: 23px;
     text-decoration: underline;
-    font-weight: bold;
   }
 .pxp-dark-mode .pxp-price-marker:after {
     background: #000;
@@ -3137,15 +3136,16 @@ a.pxp-results-card-1 .carousel-inner > .carousel-item {
 }
 .pxp-results-card-1-details-title {
     font-size: 17px;
-    font-family: "Light", sans-serif;
+    font-family: "Condensed", sans-serif;
     color: #fff;
     white-space: nowrap;
     text-overflow: ellipsis;
     width: 100%;
+    overflow: hidden;
 }
 .pxp-results-card-1-details-price {
     font-size: 21px;
-    font-family: "Regular", sans-serif;
+    font-family: "Medium", sans-serif;
     padding: 7px 0 7px 0;
    /* font-weight: 900; */
     line-height: 22px;
@@ -3350,8 +3350,17 @@ a.pxp-results-card-1 .carousel-inner > .carousel-item {
     margin-bottom: .5rem;
     line-height: 1.2;
    /* font-weight: 900; */
-    font-size: 44px;
+    font-size: 41px;
+    margin-bottom: 0px;
 }
+
+.pxp-sp-top-address {
+    font-family: "Condensed", sans-serif !important;
+    color: #4D4D4D !important;
+    font-size: 25px !important;
+    margin-bottom: 10px !important;
+}
+
 .pxp-sp-top-feat {
     margin-left: 10px;
     float: right;
@@ -3493,12 +3502,14 @@ a.pxp-results-card-1 .carousel-inner > .carousel-item {
 .pxp-sp-agent-info {
     padding-top: 4px;
 }
-.pxp-sp-agent-info-name,
-.pxp-sp-agent-info-name a {
+.pxp-sp-agent-info-name, .pxp-sp-agent-info-name:hover,
+.pxp-sp-agent-info-name a, .pxp-sp-agent-info-name a:hover {
    /* font-weight: 900; */
     line-height: 1.2;
-    color: #333;
+    color: #000;
     text-decoration: none;
+    font-family: Condensed;
+    font-size: 21px;
 }
 .pxp-sp-agent-info-name a:hover {
     opacity: .7;
@@ -4124,9 +4135,9 @@ a.pxp-results-card-1 .carousel-inner > .carousel-item {
 }
 .pxp-blog-post-comments p, 
 .pxp-agent-comments p {
-    color: #333;
-        font-size: 16px;
-    font-family: "Condensed", sans-serif;
+    color: #000000;
+    font-size: 15px;
+    font-family: Condensed;
     margin-bottom: 2rem;
 }
 .pxp-blog-post-comments-form label, 
@@ -6478,10 +6489,11 @@ i.grey{
 .add-property-conatiner .nav-item .nav-link {
     border-bottom: none !important;
     color: #8E8E93 !important;
+    font-family: Condensed;
 }
 
 .add-property-conatiner .nav-item .nav-link.active {
-    border-bottom: 2px solid #00B0E9 !important;
+    border-bottom: 1px solid #00B0E9 !important;
     background:none;
     color: #393939 !important;
 }
@@ -6510,8 +6522,12 @@ i.grey{
     display: inline-block !important;
 }
 
-.input-feilds-property {
-    width: 87% !important;
+.btn-div .btn-property {
+    border-radius: 0 !important;
+}
+
+.btn-div {
+    margin-bottom: 50px !important;
 }
 
 .form-three-search {
@@ -6538,8 +6554,51 @@ i.grey{
 
 .media-body h5 {
     color: #010101;
+    font-size: 22px;
+    font-family: Condensed;
+    margin-bottom: 10px;
 }
 
 .pxp-agent-comments h4 {
     color: #010101;
+}
+
+.property-details {
+    color: #000;
+    font-family: COndensed;
+    font-weight: 400 !important;
+}
+
+.pxp-single-property-section h3 {
+    font-family: light;
+    margin-bottom: 15px;
+}
+
+.pxp-single-property-section p {
+    font-family: Condensed;
+    color: #000;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.pxp-agent-comments {
+    margin-bottom: 100px;
+}
+
+.send-btn-single-property img {
+    width: 40px !important;
+}
+
+.form-group.comment-send-btn input {
+    font-size: 18px;
+    color: #8E8E93;
+    font-family: Condensed;
+}
+
+h1.titles-property {
+    font-family: light;
+}
+
+.add-property-conatiner .nav-item .nav-link {
+    line-height: 1;
 }
