@@ -73,17 +73,17 @@ class singleVendor extends Component {
                         <span className="pxp-agent-rating"><span className="fa fa-star" />
                         <span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></span>
                         <div className="clearfix" />
-                        <p>{singleVendorData && singleVendorData.aboutBusiness}</p>
-                        <div className="mt-4 mt-md-5">
+                        
+                        <div className="">
                           <div className="pxp-agent-email">
                             <Link to={singleVendorData && singleVendorData.emailAddress }>
                               <span className="fa fa-envelope-o" /> {singleVendorData && singleVendorData.emailAddress}</Link></div>
                           <div className="pxp-agent-phone"><span className="fa fa-phone" /> {singleVendorData && singleVendorData.msisdn}</div>
                         </div>
-                        <div className="mt-4 mt-md-5">
+                        <div className="">
                           <Link to="#pxp-work-with" className="pxp-agent-contact-btn" data-toggle="modal" data-target="#pxp-work-with" onClick={this.workPopupHanlder} >
                             {this.state.workModalState ? <WorkPopup workModalState={this.state.workModalState} closeCodelHanlder = {this.closeCodelHanlder} /> : null }
-                            Work with {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </Link>
+                          CONTACTS US </Link>
                         </div>
                       </div>
                       <div className="col-sm-12 offset-lg-1 col-lg-3">
@@ -92,7 +92,7 @@ class singleVendor extends Component {
                     </div>
                     <div className="row">
                       <div className="col-sm-12 col-lg-8">
-                        <div className="pxp-agent-section mt-4 mt-md-5">
+                        <div className="pxp-agent-section">
                           <h3>About {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </h3>
                           <div className="mt-3 mt-md-4">
                             <p>Award winner and nominee, {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} , is one of NYC’s top producing vendors. In 2016 she was a Top Producer Individual by sales volume and GCI. This high achiever received, among other recognitions, a Quadruple Platinum Award and was cover of Outfront Magazine in December 2016.</p>
@@ -107,15 +107,7 @@ class singleVendor extends Component {
                             <li>{singleVendorData && singleVendorData.keywordsDescribeYourBusiness}</li>
                           </ul>
                         </div>
-                        <div className="pxp-agent-section mt-4 mt-md-5">
-                          <h3>Social Media</h3>
-                          <ul className="list-unstyled pxp-agent-social mt-3 mt-md-4">
-                            <li><Link to="#"><span className="fa fa-facebook" /></Link></li>
-                            <li><Link to="#"><span className="fa fa-twitter" /></Link></li>
-                            <li><Link to="#"><span className="fa fa-pinterest" /></Link></li>
-                            <li><Link to="#"><span className="fa fa-linkedin" /></Link></li>
-                          </ul>
-                        </div>
+                        
                       </div>
                     </div>
                     <h2 className="pxp-section-h2 mt-100">Listings by {singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </h2>
@@ -222,7 +214,9 @@ class singleVendor extends Component {
                                   </div>
                                 </div>
                               </div>
-                              <div className="media mt-2 mt-md-3">
+                              
+                            </div>
+                            <div className="media mt-2 mt-md-3">
                                 <img src="assets/images/customer-3.jpg" className="mr-3" alt="..." />
                                 <div className="media-body">
                                   <h5>Scott Goodwin</h5>
@@ -230,33 +224,13 @@ class singleVendor extends Component {
                                   <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                                 </div>
                               </div>
-                            </div>
-                            <h4 className="mt-4 mt-md-5">Leave a review</h4>
+                            
                             <form action="/single-vendor" className="pxp-agent-comments-form mt-3 mt-md-4">
-                              <div className="row">
-                                <div className="col-sm-12 col-md-6">
-                                  <div className="form-group">
-                                    <label htmlFor="pxp-agent-comments-name">You Name</label>
-                                    <input type="text" className="form-control" id="pxp-agent-comments-name" placeholder="Enter your full name" />
-                                  </div>
-                                </div>
-                                <div className="col-sm-12 col-md-6">
-                                  <div className="form-group">
-                                    <label htmlFor="pxp-agent-comments-email">You Email</label>
-                                    <input type="text" className="form-control" id="pxp-agent-comments-email" placeholder="Enter your email address" />
-                                  </div>
-                                </div>
-                              </div>
                               <div className="form-group">
-                                <label className="d-block">Rate the Agent</label>
-                                <span className="pxp-single-agent-rating"><span data-rating={5} /><span data-rating={4} /><span data-rating={3} /><span data-rating={2} /><span data-rating={1} /></span>
-                                <div className="clearfix" />
+                                
+                                <textarea placeholder="Type comment here..." className="form-control" id="pxp-agent-comments-review" rows={6} placeholder="Write your review here..." defaultValue={""} style={{height: '75px'}}/>
                               </div>
-                              <div className="form-group">
-                                <label htmlFor="pxp-agent-comments-review">Write a Review</label>
-                                <textarea className="form-control" id="pxp-agent-comments-review" rows={6} placeholder="Write your review here..." defaultValue={""} />
-                              </div>
-                              <Link to="#" className="pxp-agent-comments-form-btn">Post Review</Link>
+                              
                             </form>
                           </div>
                         </div>

@@ -105,7 +105,7 @@ class cardSelection extends Component {
                     onHide={() => this.props.closeCodelHanlder('cardDetails')}
                     centered
                     >
-                    <Modal.Body >
+                    <Modal.Body style={{paddingTop: '0px', paddingBottom: '15px'}}>
                         <form onSubmit={this.onSubmit}>
                     {errors && errors.message &&
                             <Alert variant='danger'  style={{marginTop:'15px'}}>
@@ -113,7 +113,7 @@ class cardSelection extends Component {
                             </Alert>
                         }
                     <div className="row">
-                        <div className="col-md-12" style={{margin:'15px 0px'}}>
+                        <div className="col-md-12" style={{margin:'15px 0px 0px'}}>
                             <input type="text"
                                 className="form-control"
                                 placeholder="Card Number"
@@ -125,7 +125,7 @@ class cardSelection extends Component {
                                 required
                             />
                         </div>
-                        <div className="col-md-6" style={{margin:'15px 0px'}}>
+                        <div className="col-md-6" style={{margin:'15px 0px', paddingRight: '0px'}}>
                             <input type="text"
                                 className="form-control"
                                 placeholder="Expire Date"
@@ -148,8 +148,8 @@ class cardSelection extends Component {
                             />
                         </div>
                     </div>    
-                    <button type="submit" className="btn btn-primary card-btn">
-                        Submit
+                    <button type="submit" className="btn btn-primary card-btn" style={{borderRadius:'4px'}}>
+                        SUBMIT
                     </button>
                     </form>
                     </Modal.Body>

@@ -56,7 +56,7 @@ class cardSelection extends Component {
                     onHide={() => this.props.closeCodelHanlder('cardSelection')}
                     centered
                     >
-                    <Modal.Body >
+                    <Modal.Body style={{paddingBottom: '15px', paddingTop: '0px'}}>
                         
                     <div>
                     <div className="card-selection" style={{borderBottom:'1px solid #DEE2F2'}}>
@@ -70,9 +70,11 @@ class cardSelection extends Component {
                                         style={{width:"46px", height:'14px', marginTop: "20px"}}
                                         />
                                     </div>
-                                    <div className="col-md-9">
-                                        <div class="card ">VISA Card</div>
-                                        <div class="card-description"> **** **** **** 4545 </div>
+                                    <div className="col-md-9 visa-card-selection">
+                                        <div>
+                                            <div class="card ">VISA Card</div>
+                                            <div class="card-description"> **** **** **** 4545 </div>
+                                        </div>
                                         <img src={require('../../assets/images/ic_check_sel.svg')} alt="" />
                                     </div>
                                 </div>
@@ -91,9 +93,11 @@ class cardSelection extends Component {
                                         alt=""  
                                         style={{width:"46px", height:'14px', marginTop: "20px"}}/>
                                     </div>
-                                    <div className="col-md-9">
-                                        <div class="card">Master Card</div>
-                                        <div class="card-description"> **** **** **** 4545 </div>
+                                    <div className="col-md-9 visa-card-selection">
+                                        <div>
+                                            <div class="card">Master Card</div>
+                                            <div class="card-description"> **** **** **** 4545 </div>
+                                        </div>
                                         <img src={require('../../assets/images/ic_check_sel.svg')} alt="" />
                                     </div>
                                 </div>
@@ -112,7 +116,7 @@ class cardSelection extends Component {
                     </div>
                     </div>
                     <button className="btn btn-primary card-btn" type="submit">
-                        Submit
+                        SUBMIT
                     </button>
                    
                     </Modal.Body>
