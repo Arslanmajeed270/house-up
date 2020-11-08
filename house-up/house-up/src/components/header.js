@@ -67,7 +67,7 @@ class header extends Component {
                         }
                         
                       </Link>
-                      <Link to="/select-location">
+                      <Link to="/select-location" className="location-header" style={{ color: '#000'}}>
                         <img src={require('../assets/images/ic_address.svg')} />
                         { currentLocation && currentLocation.city && `${currentLocation.city}` 
                         }
@@ -111,7 +111,8 @@ class header extends Component {
                       </div>
                     </div>
                     <div className="col-5 col-md-1 text-right">
-                      <Link to="#" className="pxp-header-nav-trigger"><span className="fa fa-bars" /></Link>
+                      <Link to="#" className="pxp-header-nav-trigger">
+                      <span className="fa fa-bars" /></Link>
                       { user && user.profilePictureUrl ?
                         <>
                         <div to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 
@@ -122,20 +123,23 @@ class header extends Component {
                               <div className="profile_header_dropdown">
                               <ul>
                                 <li onClick={this.props.onLogout} className="profile_header_dropdown_li">Logout</li>
-                              </ul>
-                            </div>
-                            :
-                            "" 
-                          }
-                        </div>
-                        {user && user.userTypeId === 2 ? 
+                                <li className="profile_header_dropdown_li">
+                                  {user && user.userTypeId === 2 ? 
                         <div onClick={() => this.props.modelHanlder('subscriptionPlan')} style={{cursor: "pointer"}} >
                           <img src={require('../assets/images/icons/ic_upgrade.svg')} alt="upgradeIcon" />
                           upgrade
                         </div>
                         :
                         ""  
-                      }
+                      } 
+                                </li>
+                              </ul>
+                            </div>
+                            :
+                            "" 
+                          }
+                        </div>
+                        
                         </>
                         :
                         <Link to="#" className={`pxp-header-user pxp-signin-trigger ${ animateHeader ? '' : 'forborder'}`} 

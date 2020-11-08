@@ -4559,6 +4559,7 @@ ul.pxp-agent-social > li > a:hover {
     cursor: pointer;
     font-family: "Condensed", sans-serif;
     font-size: 15px;
+    color: #000;
 }
 .checkbox.custom-checkbox span {
     font-size: 14px;
@@ -6518,7 +6519,7 @@ i.grey{
 
 .more-options {
     margin: 16px 0px !important;
-    color: #007AFF !important;
+    color: #00B0E9 !important;
     display: inline-block !important;
 }
 
@@ -6597,8 +6598,38 @@ i.grey{
 
 h1.titles-property {
     font-family: light;
+    font-size: 40px !important;
 }
 
 .add-property-conatiner .nav-item .nav-link {
     line-height: 1;
+}
+
+.location-header img {
+    padding-right: 8px;
+}
+
+.input-feilds-property {
+    background:#fff;
+}
+
+p.titles-property {
+    color: #393939;
+    font-size: 18px;
+    font-family: Condensed;
+}
+
+span.title-property {
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.btn-div .btn-property {
+    font-size: 15px !important;
+    height: 33px;
+}
+
+.checkbox.custom-checkbox {
+    border-bottom: 1px solid #F2F2F2;
+    padding-bottom: 10px;
 }

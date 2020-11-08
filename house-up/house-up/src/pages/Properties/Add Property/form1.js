@@ -161,8 +161,8 @@ class form1 extends Component {
                         <textarea className="input-feilds-property" name="description" value={description} onChange={this.onChange} required  placeholder="More detail about your property..." style={{height:'120px'}}/>
                     </div>
                 </div>
-                <br />
-                <h1 className="titles-property">Contact info</h1>
+                
+                <h1 className="titles-property" style={{ fontFamily: 'light'}}>Contact info</h1>
                 <p className="titles-property">You can edit your contact info anytime in your profile settings.</p>
                 <div className="row">
                     <div className="col-md-4">

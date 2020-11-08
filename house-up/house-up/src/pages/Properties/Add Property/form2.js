@@ -226,10 +226,10 @@ class from2 extends Component {
                         </Nav>
                     </div>
                 </div>
-                    <h1 className="titles-property">Property details</h1>
+                    
                     <div className="row border-property">
                         <div className="col-md-4">
-                            <h6 className="titles-property">Property type</h6>
+                            <h6 className="titles-property">*Property type</h6>
                             <select className="input-feilds-property" name="propertyTypeId" onChange={this.onChange}  value={propertyTypeId} required>
                             {
                                 propertyType && propertyType.length ? propertyType.map( ( propertyTypeId, idx ) => (
@@ -434,7 +434,7 @@ class from2 extends Component {
                   
                     }
                     <div>
-                        <h3 className="mt-4 mt-md-5">Amenities</h3>
+                        <h3 style={{ color: '#000000', fontFamily: 'light', fontSize: '32px'}}>Amenities</h3>
                         <div className="row mt-3 mt-md-4">
                           <div className="col-sm-6 col-md-4">
                             <div className="form-group">

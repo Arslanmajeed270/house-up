@@ -192,7 +192,7 @@ class form3 extends Component {
                     <div className="row">
                         <div className="col-md-2" >
                         <div className="form-group">
-                        <select className="custom-select"
+                        <select style={{ borderRadius: '0px'}} className="custom-select"
                               placeholder="City"
                               name="state"
                               value={state}
@@ -210,7 +210,7 @@ class form3 extends Component {
                         </div>
                         <div className="col-md-2">
                         <div className="form-group">
-                              <select className="custom-select"
+                              <select style={{ borderRadius: '0px'}} className="custom-select"
                               placeholder="Prov/State"
                               name="city" required
                               value={city}
@@ -228,7 +228,7 @@ class form3 extends Component {
                         </div>
                         <div className="col-md-8">
                             <div className="form-group">
-                                <input type="text" placeholder="Enter an address" className="input-feilds-property" name="address" value={address} onChange={this.onChange} />
+                                <input type="text" style={{ width: '88%'}} placeholder="Enter an address" className="input-feilds-property" name="address" value={address} onChange={this.onChange} />
                                 <button className="btn btn-primary form-three-search">Search</button>
                             </div>
 
@@ -249,9 +249,9 @@ class form3 extends Component {
                         </div>
                     </div>
                     <div className="row border-property">
-                        <h1 className="col-md-6 titles-property">Property photos</h1>
+                        <h1 className="col-md-6 titles-property" style={{ fontFamily: 'light', marginTop: '50px'}}>Property photos</h1>
                         <div className="col-md-6" style={{textAlign:'right'}}>
-                            <label className="btn btn-lg btn-primary" htmlFor="pictures" style={{marginTop:'15px'}}>Upload images</label>
+                            <label className="btn btn-lg btn-primary" htmlFor="pictures" style={{marginTop:'15px', backgroundColor: '#00B0E9', borderRadius: '0px', border:'none'}}>Upload images</label>
                         </div>
                         <h6 className="col-md-12 text-danger titles-property">WARNING: Any images with HouseUp.ca watermarks are a violation of copyright. If these images are uploaded your listing will be removed and your account may be suspended.</h6>
                     <div className="col-12">
@@ -260,7 +260,7 @@ class form3 extends Component {
                             {({getRootProps, getInputProps}) => (
                             <section className="container drop-zone">
                                 <aside>
-                                <h4>Files</h4>
+                                
                                 {imagePreview && imagePreview.length ?
                                 imagePreview.map( (data, index) => (
                                     <img key={index} id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}} />
@@ -281,7 +281,7 @@ class form3 extends Component {
                         </Dropzone>
 
 
-                        <h6 className="titles-property">Upload a maximum of 25 photos. Click on a picture to select a cover photo, otherwise the first picture will be used.</h6>
+                        <h6 className="titles-property" style={{ color: '#8E8E93', marginTop: '40px'}}>Upload a maximum of 25 photos. Click on a picture to select a cover photo, otherwise the first picture will be used.</h6>
                     </div>
                         
                     </div>
