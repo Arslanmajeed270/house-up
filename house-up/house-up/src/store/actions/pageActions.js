@@ -10,14 +10,14 @@ import {
 	GET_COUNTRIES,
 	GET_PROFESSIONS,
 	FOLLOW_UNFOLLOW_PROFESSIONAL,
-	SHOW_POP_UP,
-	HIDE_POP_UP,
 	SET_HOME_DATA,
 	ADD_LIKE,
 	ADD_COMMENTS,
 	SET_CURRENT_LOCATION,
 	SET_DEFAULT_ALL_CARDS,
-	LOAD_ALL_CARDS
+	LOAD_ALL_CARDS,
+	HIDE_POP_UP,
+	SHOW_POP_UP
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -344,31 +344,6 @@ export const getAllCards = ( userData ) => dispatch => {
 	})	      
 };
 
-// ADD Professional CARD
-export const addCreditCard = ( userData ) => dispatch => {
-	
-	axios
-    .post( backendServerURL+'/addCreditCard' , userData  )
-    .then(res => {
-		console.log(res);
-		if( res && res.data && res.data.resultCode === "200" ){
-			const payload = res.data.data ? res.data.data : [];   
-			dispatch({
-				type: LOAD_ALL_CARDS,
-				payload: payload
-			});
-			dispatch(clearErrors());
-		}
-		else{
-			dispatch({type: SET_DEFAULT_ALL_CARDS});
-            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
-		}
-    })
-    .catch(err => {
-		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
-	})	      
-};
-
 // CREATE TOKEN FOR STRIPE
 export const createCreditCardToken = ( userData ) => dispatch => {
 	
@@ -376,13 +351,13 @@ export const createCreditCardToken = ( userData ) => dispatch => {
     .post( backendServerURL+'/createCreditCardToken' , userData  )
     .then(res => {
 		console.log("checking createCreditCardToken response: ", res);
-		// if( res && res.data && res.data.resultCode === "200" ){
-			
-		// }
-		// else{
-		// 	dispatch({type: SET_DEFAULT_ALL_CARDS});
-        //     dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
-		// }
+		if( res && res.data && res.data.resultCode === "200" ){
+			dispatch({ type: SHOW_POP_UP });
+		}
+		else{
+			dispatch({ type: HIDE_POP_UP });
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
