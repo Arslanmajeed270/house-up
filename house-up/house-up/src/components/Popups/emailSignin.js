@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
-import * as actionTypes from '../../store/actions/actionTypes';
 import { Link } from 'react-router-dom';
-
-import { checkPawwordPattern } from '../../utils/regex';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
+import * as actionTypes from '../../store/actions/actionTypes';
 import{ Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 
@@ -19,6 +17,7 @@ class emailSignin extends Component {
             viewPass: false,
             errors: {},
           loading : false,
+          showPopUp: false
         };
     }
     static getDerivedStateFromProps(props, state) {
@@ -28,13 +27,14 @@ class emailSignin extends Component {
         let changedState = {};
     
         if( page && JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp) ){
-          changedState.showPopUp = page.showPopUp;  
-          if( changedState.showPopUp === true ){
-            props.onHidePopUp();
-            props.closeCodelHanlder('phoneSignin');
+            changedState.showPopUp = page.showPopUp;  
+            if( changedState.showPopUp === true ){
+              props.onHidePopUp();
+              props.closeCodelHanlder('emailSignin');
+            }
+            stateChanged = true;
           }
-          stateChanged = true;
-        }
+      
     
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
             changedState.errors = errors;
@@ -67,8 +67,8 @@ class emailSignin extends Component {
         console.log('checking click handler');
              e.preventDefault();
              
-            if(!checkPawwordPattern(this.state.password)){
-               this.props.onErrorSet("Password should be at least 1 special character, 1 capital letter, 1 lowercase,1 intiger and minmum length 6");
+            if(this.state.password.length < 6 ){
+               this.props.onErrorSet("Password length should be minimum 6!");
                return;
            }
             const userData = {
@@ -161,6 +161,7 @@ class emailSignin extends Component {
 const mapStateToProps = state => {
     return {
       auth: state.auth,
+      page: state.page,
       errors: state.errors
     }
   };

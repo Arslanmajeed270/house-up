@@ -63,7 +63,7 @@ class index extends Component {
         }
         else if(model === "subscriptionPlan"){
             // console.log('clicked');
-            this.setState({ phoneSignin: false, [model]: !this.state[model] });
+            this.setState({ [model]: !this.state[model] });
         }
         else if(model === "cardSelection"){
             // console.log('clicked');
@@ -149,7 +149,6 @@ class index extends Component {
                         emailSigninHandler ={this.modelHanlder}
                         phoneNoForgotHandler = {this.modelHanlder}
                         signupSelectionHandler={this.modelHanlder}
-                        subscriptionPlanHandler = { this.modelHanlder }
                         history = {this.props.history}
                     />
                 }

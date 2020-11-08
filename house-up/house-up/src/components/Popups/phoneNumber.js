@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // importing actions
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -15,7 +16,8 @@ class phoneNumber extends Component {
         this.state = {
             errors: {},
             loading : false,
-            number: ''
+            number: '',
+            showPopUp: false
         }
     }
 
@@ -26,7 +28,15 @@ class phoneNumber extends Component {
       
         let stateChanged = false;
         let changedState = {};
-      
+        if( JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp)){
+            changedState.showPopUp= page.showPopUp;
+            if(changedState.showPopUp){
+                props.onHidePopUp();
+                props.optUserHandler('optUserModel');
+            }
+            stateChanged = true;
+        }
+
         if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
             changedState.errors= errors;
             stateChanged = true;
@@ -50,7 +60,8 @@ class phoneNumber extends Component {
         
       }
 
-    onSubmit = () => {
+    onSubmit = (e) => {
+        e.preventDefault();
         let number = ('+' +1) + (this.state.number);
         this.props.phoneNumberHandler(number);
         let data = {
@@ -59,7 +70,6 @@ class phoneNumber extends Component {
             type:"LOGIN_PIN_SMS"
         };
         this.props.onGeneratePin(data);
-        this.props.optUserHandler('optUserModel');
     }
     render() { 
       const {errors , loading} = this.state;
@@ -86,9 +96,9 @@ class phoneNumber extends Component {
             </Modal.Header>
             <Modal.Body >
                 {errors && errors.message &&
-                <Alert variant='danger'>
-                <strong>Error!</strong> { errors.message }
-                </Alert>
+                    <Alert variant='danger'>
+                    <strong>Error!</strong> { errors.message }
+                    </Alert>
                 }
                 <div className="logo-modal">
                 <img src={require("../../assets/images/icons/ic_logo.svg")} alt="" className="logo-signupModal" style={{marginBottom:'20px'}}/>
@@ -133,13 +143,15 @@ class phoneNumber extends Component {
 
 const mapStateToProps = state => {
     return {
-      page: state.page
+      page: state.page,
+      errors: state.errors
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onGeneratePin: (data) => dispatch(actions.generatePin(data))
+        onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+        onHidePopUp: () => dispatch({type: actionTypes.HIDE_POP_UP }),
     }
   };
    

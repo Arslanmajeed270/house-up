@@ -10,6 +10,9 @@ import {
 	FOLLOW_UNFOLLOW_PROFESSIONAL,
 	ADD_LIKE,
 	SET_CURRENT_LOCATION,
+	SET_DEFAULT_ALL_CARDS,
+	LOAD_ALL_CARDS
+
 	// ADD_COMMENTS
 } from '../actions/actionTypes';
 
@@ -25,7 +28,8 @@ const initialState = {
 		country: "",
 		province: "",
 		city: ""
-	}
+	},
+	allCards: []
 	// comments
 };
 
@@ -72,6 +76,17 @@ export default function (state = initialState, action) {
 			return{
 				...state,
 				homePageData:action.payload
+			}
+
+		case LOAD_ALL_CARDS:
+			return {
+				...state,
+				allCards: action.payload
+			}
+		case SET_DEFAULT_ALL_CARDS:
+			return {
+				...state,
+				allCards: []
 			}
 			
 		case FOLLOW_UNFOLLOW_PROFESSIONAL: {

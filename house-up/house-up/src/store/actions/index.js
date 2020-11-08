@@ -22,7 +22,9 @@ export {
     getHomePageData,
     AddComments,
     setCurrentLocation,
-    contactUs
+    contactUs,
+    getAllCards,
+    createCreditCardToken
 } from './pageActions';
 
 export {
