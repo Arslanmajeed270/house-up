@@ -163,6 +163,9 @@ class index extends Component {
     const state = this.props.match.params.state;
     const city = this.props.match.params.city;
 
+    console.log('checking country: ', country);
+    console.log('checking state: ', state);
+    console.log('checking city: ', city);
     this.setState({
       countryName : country,
       stateName : state,
@@ -324,9 +327,9 @@ class index extends Component {
                         </div>
                             } 
                             {index === 9 && 
-                            indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors.map((data, index)=>
-                            index<3 &&
-                            <Link key={index} to={`/single-vendor-${data && data.userId && data.userId}`}>
+                            indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors.map((data, idx)=>
+                            idx<3 &&
+                            <Link key={idx} to={`/single-vendor-${data && data.userId && data.userId}`}>
                               <div className="vendor-box">
                                 <div className="row">
                                   <div className="col-md-9 col-sm-9 col-8">

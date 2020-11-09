@@ -69,8 +69,7 @@ class header extends Component {
                       </Link>
                       <Link to="/select-location" className="location-header" style={{ color: '#000'}}>
                         <img src={require('../assets/images/ic_address.svg')} />
-                        { currentLocation && currentLocation.city && `${currentLocation.city}` 
-                        }
+                        { currentLocation && `${currentLocation.city && currentLocation.city}` }
                       </Link>
                     </div>
                     <div className="col-2 col-md-8">
@@ -122,7 +121,7 @@ class header extends Component {
                           {dropDownShow ? 
                               <div className="profile_header_dropdown">
                               <ul>
-                                <li onClick={this.props.onLogout} className="profile_header_dropdown_li">Logout</li>
+                                <li onClick={() => this.props.onLogout(this.props.history)} className="profile_header_dropdown_li">Logout</li>
                                 <li className="profile_header_dropdown_li">
                                   {user && user.userTypeId === 2 ? 
                         <div onClick={() => this.props.modelHanlder('subscriptionPlan')} style={{cursor: "pointer"}} >
@@ -169,7 +168,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onLogout: () => dispatch(actions.logoutUser())
+      onLogout: (history) => dispatch(actions.logoutUser(history))
   }
 };
 

@@ -43,13 +43,18 @@ export const dropDwonMenu = () => dispatch => {
     )
     .then(res => {
 		console.log('checking dropDwon data in store' , res);
-        dispatch(
-			{
-				type: PROPERTY_DROP_DWON,
-				payload: res && res.data && res.data.data ? res.data.data : {}
-			}
-		);
-        dispatch(clearErrors());
+		if( res && res.data && res.data.resultCode === "200" ){
+			dispatch(
+				{
+					type: PROPERTY_DROP_DWON,
+					payload: res && res.data && res.data.data ? res.data.data : {}
+				}
+			);
+			dispatch(clearErrors());
+		}
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
     })
     .catch(err => {
 	  console.log('checking error on homepage')
@@ -67,8 +72,14 @@ export const addProperty = (userData , history) => dispatch => {
     )
     .then(res => {
 		console.log('checking Add Property res in store' , res);
-		history.push(`/index`);
-        dispatch(clearErrors());
+		if( res && res.data && res.data.resultCode === "200" ){
+			history.push(`/index-${userData.country}&${userData.state}&${userData.city}`);
+        	dispatch(clearErrors());
+		}
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
+		
     })
     .catch(err => {
 	  console.log('checking error on homepage')
@@ -85,14 +96,20 @@ export const getSingleProperty = (userData) => dispatch => {
 	axios
     .post(backendServerURL+'/getProperty',userData)
     .then(res => {
-		console.log('checking getSinglePropertyData: ', res);	
-        dispatch(
-			{
-				type: GET_SINGLE_PROPERTY,
-				payload: res.data && res.data.data &&  res.data.data.length && res.data.data[0] ? res.data.data[0] : {}
-			}
-		);
-        dispatch(clearErrors());
+		console.log('checking getSinglePropertyData: ', res);
+		if( res && res.data && res.data.resultCode === "200" ){
+			dispatch(
+				{
+					type: GET_SINGLE_PROPERTY,
+					payload: res.data && res.data.data &&  res.data.data.length && res.data.data[0] ? res.data.data[0] : {}
+				}
+			);
+			dispatch(clearErrors());
+		}
+		else{
+            dispatch({type: SET_ERRORS, payload: { message: res.data.message ? res.data.message : "Something went wrong! Please try again." } });
+		}
+       
     })
     .catch(err => {
 		console.log("error: ", err);

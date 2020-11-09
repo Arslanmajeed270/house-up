@@ -122,6 +122,7 @@ export default function (state = initialState, action) {
 			};
 		}
 	case SET_CURRENT_LOCATION:{
+		console.log('checking action.payload: ', action.payload)
 		let currentLocation = Object.assign({}, action.payload);
 		return {
 			...state,

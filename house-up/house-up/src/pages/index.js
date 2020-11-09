@@ -67,7 +67,10 @@ class index extends Component {
         }
         else if(model === "cardSelection"){
             // console.log('clicked');
-            this.setState({ subscriptionPlan: false, [model]: !this.state[model] });
+            this.setState({ 
+                subscriptionPlan: false, 
+                [model]: !this.state[model]
+             });
         }
         else if(model === "cardDetails"){
             console.log('clicked');
@@ -109,6 +112,7 @@ class index extends Component {
             this.setState({ 
                 userSignupModel: false,
                 vendorSignupModel: false,
+                cardSelection: false,
                 [model]: !this.state[model] 
             });
         }
