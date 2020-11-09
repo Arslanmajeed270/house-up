@@ -23,8 +23,8 @@ export {
     AddComments,
     setCurrentLocation,
     contactUs,
-    getAllCards,
-    createCreditCardToken
+    createCreditCardToken,
+    markCreditCardDefault
 } from './pageActions';
 
 export {

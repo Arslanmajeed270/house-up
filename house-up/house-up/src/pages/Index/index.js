@@ -162,6 +162,9 @@ class index extends Component {
     const state = this.props.match.params.state;
     const city = this.props.match.params.city;
 
+    console.log('checking country: ', country);
+    console.log('checking state: ', state);
+    console.log('checking city: ', city);
     this.setState({
       countryName : country,
       stateName : state,

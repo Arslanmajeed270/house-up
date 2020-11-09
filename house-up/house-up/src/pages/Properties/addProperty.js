@@ -141,8 +141,8 @@ addProperty = () =>{
       channel: "web",
       action:"add",
       propertyId: 0,
-      country: this.state.currentLocation.country,
-      state: this.state.currentLocation.province
+      country: 'Canada',
+      state: form3Data.state ? form3Data.state : ""
     } 
     console.log("checking formData: ",formData);
 

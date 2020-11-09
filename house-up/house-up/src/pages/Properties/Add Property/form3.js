@@ -101,6 +101,7 @@ class form3 extends Component {
           ind =  this.state.states && this.state.states.findIndex( x => `${x.name}` === e.target.value );
           cities = cloneDeep(this.state.states[ind]);
       }
+      console.log('checking e.target.value in state: ', e.target.value);
       this.setState({ 
           [e.target.name]: e.target.value,
           cities: cities.cities
@@ -142,12 +143,14 @@ class form3 extends Component {
 
       onSubmit = e => {
         e.preventDefault();
+        const { city, address, state, images, longitude, latitude }  = this.state;
         const dataForm3 = {
-            city:this.state.city,
-            address:this.state.address,
-            images:this.state.images,
-            longitude:this.state.longitude,
-            latitude:this.state.latitude,
+            city: city,
+            address: address,
+            state: state,
+            images: images,
+            longitude: longitude,
+            latitude: latitude
         }
 
         // this.propertyPlanStateHandler ();

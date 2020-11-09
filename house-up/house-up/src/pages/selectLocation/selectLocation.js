@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
 import cloneDeep from 'lodash/cloneDeep';
-import { Link } from 'react-router-dom';
-
-
 
 class selectLocation extends Component {
   
@@ -19,7 +17,8 @@ class selectLocation extends Component {
       countries: [],
       states: [],
       cities: [],
-      user:{}
+      user:{},
+      currentLocation: {}
     };
 }
 static getDerivedStateFromProps(props, state) {
@@ -38,10 +37,21 @@ static getDerivedStateFromProps(props, state) {
       states = cloneDeep(changedState.countries[0]);
       changedState.states = states.states;
   }
+
+  if( page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation) ){
+    changedState.currentLocation = page.currentLocation;  
+    stateChanged = true;
+    let currentLocation = [];
+    currentLocation = cloneDeep(changedState.currentLocation);
+    changedState.currentLocation = currentLocation;
+}
+
   if(auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)){
     changedState.user = auth.user;  
     stateChanged = true;
   }
+
+  
 
 
   if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
@@ -102,15 +112,22 @@ else{
 onSubmit = e => {
   e.preventDefault();    
   // console.log('checking click handler');
-  const { states , cities , city , state , countries , country } = this.state;
+  const { city , state, country, user } = this.state;
 
-       const userData = {
-         country,
-         city,
-         state
-       };
-       console.log('checking pakage for api ', userData)
-      // this.props.onCreateVendor(userData);
+      if(user && user.userId){
+        const userData = {
+          country: country,
+          city: city,
+           province: state
+         };
+         console.log('checking data in onsubmit ', userData);
+         this.props.onUpdateCurrentLocaiton(userData);
+         this.props.history.push(`/index-${country}&${state}&${city}`);
+        }
+        else{
+         console.log('i am into else');
+          this.props.history.goBack();
+      }
    }
 
 
@@ -129,7 +146,7 @@ onSubmit = e => {
                       <img src="assets/images/ic_logo_splash@2x.png" className="select-location-img" alt="logo" />
                       
                       <h3 className="text-black title-select-location">Own the way you sell your home</h3>
-                      <form className="pxp-hero-search mt-4" action="">
+                      <form className="pxp-hero-search mt-4" onSubmit={this.onSubmit}  action="">
                         <div className="row">
                           <div className="col-sm-12 col-md-3">
                             <div className="form-group">
@@ -186,7 +203,7 @@ onSubmit = e => {
                             </div>
                           </div>
                           <div className="col-sm-12 col-md-2">
-                              <Link  to={`/index-${country}&${state}&${city}`} className="btn btn-primary"  > FIND NOW</Link>
+                            <button type="submit" className="btn btn-primary"  > FIND NOW</button>
                             </div>
                         </div>
                       </form>
@@ -208,6 +225,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       onGetCountries: () => dispatch(actions.GetCountries()),
+      onUpdateCurrentLocaiton: (data) =>  dispatch({type: actionTypes.SET_CURRENT_LOCATION, payload: data})
   }
 };
 

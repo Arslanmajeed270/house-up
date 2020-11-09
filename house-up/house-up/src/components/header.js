@@ -69,8 +69,7 @@ class header extends Component {
                       </Link>
                       <Link to="/select-location" className="location-header" style={{ color: '#000'}}>
                         <img src={require('../assets/images/ic_address.svg')} />
-                        { currentLocation && currentLocation.city && `${currentLocation.city}` 
-                        }
+                        { currentLocation && `${currentLocation.city && currentLocation.city}` }
                       </Link>
                     </div>
                     <div className="col-2 col-md-8">
