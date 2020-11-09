@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Contact from '../../components/Popups/contact';
+import Contact from '../../components/Popups/contactUsPopup';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import index from '..';
+import ImagePreview from '../../components/Popups/ImagePreview'
 
 class singleProp extends Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class singleProp extends Component {
       id:'',
       commentText:'',
       user:{},
-      userId:''
+      userId:'',
+      imageToggle:false
     };
   }
 
@@ -99,8 +100,12 @@ class singleProp extends Component {
       this.props.onCommentAdded(data);
     }
 
+    ImagePreviewHandler = () =>{
+      this.setState({ imageToggle: !this.state.imageToggle });
+    }
+
     render() { 
-      const { singlePropertyData , commentText } = this.state;
+      const { singlePropertyData , commentText , imageToggle } = this.state;
       console.log('single property data :', singlePropertyData);
       const data = singlePropertyData;
         return ( 
@@ -120,29 +125,36 @@ class singleProp extends Component {
                 </div>
                 <div className="wrapper pxp-single-property-gallery-container">
                   <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
-                    <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
-                      <a href="images/prop-7-1-big.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0] && data.imageList[0].imageURL})`}} />
-                      <figcaption itemProp="caption description">
-                        Image caption
-                      </figcaption>
-                    </figure>
+                      <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
+                      <Link onClick={this.ImagePreviewHandler} itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: `url(${data && data.imageList && data.imageList.length && data.imageList[0] && data.imageList[0].imageURL})`}} />
+                        <figcaption itemProp="caption description">
+                          Image caption
+                        </figcaption>
+                      </figure>
                     {
                       data && data.imageList && data.imageList.length ?
-                      data.imageList.map((img, index) => 
+                      data.imageList.map ((img, index) => 
                       index>0 && index<5 ?
                         <figure key={index} itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                          <a href="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: `url(${img && img.imageURL})`}} />
+                          <Link onClick={this.ImagePreviewHandler}  itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: `url(${img && img.imageURL})`}} />
                           <figcaption itemProp="caption description">
                             Image caption
                           </figcaption>
                         </figure>
-                        : ""
+                      : ""
                       )
                       : "" 
                     }
-                    
+                    {
+                      imageToggle ? 
+                      <ImagePreview 
+                        show={this.state.imageToggle}
+                        close={this.ImagePreviewHandler}
+                        propertyImg={data && data.imageList}
+                      /> : ""
+                    }
                   </div>
-                  <a href="#" className="pxp-sp-gallery-btn">View Photos</a>
+                  <Link onClick={this.ImagePreviewHandler} className="pxp-sp-gallery-btn">View Photos</Link>
                   <div className="clearfix" />
                 </div>
                 <div className="container mt-4">

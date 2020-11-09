@@ -10,7 +10,8 @@ import * as actions from '../../store/actions/index';
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
-import ContactPopup from '../../components/Popups/contact';
+import ContactPopup from '../../components/Popups/contactUsPopup';
+import StoryPrevivew from '../../components/Popups/storyPrevivew';
 
 class index extends Component {
   constructor(props) {
@@ -31,8 +32,8 @@ class index extends Component {
       postId:'',
       storyImageId:'',
       propertyId:'',
-      category:''
-
+      category:'',
+      storyToggle:false
     };
   }
 
@@ -189,11 +190,13 @@ class index extends Component {
     this.props.onGetIndexPageData(data);
   }
 
-
+  storyHandler = () =>{
+    this.setState({ storyToggle: !this.state.storyToggle });
+  }
   
 
     render() { 
-      const { errors, loading, indexPageData  , user , conatctPopup , commentText} = this.state;
+      const { errors, loading, indexPageData  , user  , commentText , propertyId , storyToggle , category} = this.state;
 
       console.log("checking this.state: ", this.state);
 
@@ -210,13 +213,15 @@ class index extends Component {
 
       if(indexPageData && indexPageData.userStories && indexPageData.userStories.length){
         for(let i=0; i<indexPageData.userStories.length; i++){
-          let item = (<div style={{width: '80px'}}>
-            <div className="pxp-prop-card-dashboard" style={{backgroundImage: `url(${ indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL ? indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL : "assets/images/dashboard/slider-4.png"})`}} />
-              <span className="dashboard-user-name">{indexPageData.userStories[i].user.firstName}</span>
-              <span className="dashboard-user-name withPropertyDealer">{indexPageData.userStories[i].user.professionDesc}</span>
-
-            </div>
-       ); 
+          let item = (
+          <Link onClick={this.storyHandler}>  
+            <div style={{width: '80px'}}>
+              <div className="pxp-prop-card-dashboard" style={{backgroundImage: `url(${ indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL ? indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL : "assets/images/dashboard/slider-4.png"})`}} />
+                <span className="dashboard-user-name">{indexPageData.userStories[i].user.firstName}</span>
+                <span className="dashboard-user-name withPropertyDealer">{indexPageData.userStories[i].user.professionDesc}</span>
+              </div>
+          </Link>
+        ); 
     items.push(item);
   }
 }
@@ -224,18 +229,20 @@ class index extends Component {
   const locationItems = [];
   if( indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts.length){
     for(let i=0; i<indexPageData.propertyCounts.length; i++){
-      let locationItem = (<div className="neighbourhoods_slider">
-        <Link to="#" />
+      let locationItem = (
+      <Link to="/properties">
+      <div className="neighbourhoods_slider">
         <div className="pxp-prop-card-explore" style={{backgroundImage: `url(${ 
-          indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].properties[0] && indexPageData.propertyCounts[i].properties[0].imageList[0] && indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL ? indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }}><Link to="#">
+          indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].properties[0] && indexPageData.propertyCounts[i].properties[0].imageList[0] && indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL ? indexPageData.propertyCounts[i].properties[0].imageList[0].imageURL : require("../../assets/images/dashboard/ottawa.png")  })` }}>
             <div className="d-table w-100 ">
               <div className="d-table-cell va-bottom neighbours-height paddg">
                 <h2>{indexPageData.propertyCounts[i] && indexPageData.propertyCounts[i].cityName}</h2>
                 <p>{indexPageData.propertyCounts[i].propertyCount} Properties</p>
               </div>
-            </div></Link>
+            </div>
         </div>
       </div>
+      </Link>
       ); 
       locationItems.push(locationItem);
     }
@@ -259,12 +266,20 @@ class index extends Component {
                               <div className="container-fluid pxp-props-carousel-right mt-100 mtpx-100">
                                 <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
                                   <div className="owl-carousel pxp-props-carousel-right-stage-2">
-                                    <AliceCarousel 
-                                      mouseTracking
-                                      disableButtonsControls ={true}
-                                      items={items}
-                                      responsive={responsive}
-                                    />
+                                      <AliceCarousel 
+                                        mouseTracking
+                                        disableButtonsControls ={true}
+                                        items={items}
+                                        responsive={responsive}
+                                      />
+                                    {
+                                      storyToggle ? 
+                                      <StoryPrevivew 
+                                        show={this.state.storyToggle}
+                                        close={this.storyHandler}
+                                        storys={indexPageData && indexPageData.userStories}
+                                      /> : ""
+                                    }
                                   </div>
                                 </div>
                               </div>
@@ -344,7 +359,7 @@ class index extends Component {
                                         data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser  
                                         )}
                                       > { data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
-                                      <h2 style={{fontSize:'20px'}}>{data &data.object.user& data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.createDateAndTime} </h2>
+                                      <h2 style={{fontSize:'20px'}}>{data && data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.createDateAndTime} </h2>
                                     </span>  
                                   </li>
                                   
@@ -353,11 +368,11 @@ class index extends Component {
                                   {
                                     data.category && data.category === "Post" ? 
                                   <>
-                                  <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
                                   <div className="dashboard-newsfeed-img" 
                                   style={{
                                     backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/ic_post_placeholder.png") }  )` }}>
                                   </div>
+                                  <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
                                   <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.postConatctPopupHanlder}>  
                                 {this.state.postConatctPopup ? <ContactPopup postConatctPopup={this.state.postConatctPopup} /> : null }
                                    Contact us</Link>
@@ -377,7 +392,7 @@ class index extends Component {
                                       {
                                         data && data.object && data.object.postLikes && data.object.postLikes.length && data.object.postLikes.length >= 1 ?
                                         <div className="likedByText"> Liked by { data.object.postLikes[data.object.postLikes.length-1].userName + ( data.object.postLikes.length <= 1 ? "" : 
-                                        `and ${data.object.postLikes.length - 1}`) } </div> : ""
+                                        `and ${data.object.postLikes.length - 1} others `) } </div> : ""
                                       }
                                       {
                                         data && data.object && data.object.postComments && data.object.postComments.length && data.object.postComments.length >= 1 ?
@@ -418,60 +433,61 @@ class index extends Component {
                                   :  data.category && data.category === "Property" ?
                                   <>
                                   <Link to={`/single-prop-${data && data.object && data.object.propertId}`} >
-                                  <div className="pxp-prop-card-featured" 
-                                    style={{
-                                    backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL :  require("../../assets/images/ic_post_placeholder.png") } )`}}
-                                  >              
-                              <div className="d-table w-100 ">
-                                  <div className="d-table-cell va-bottom featured-height">
-                                      <div className="row">
-                                          <div className="col-md-6 col-sm-6 col-6">
-                                              <div className="feature-head">
-                                                  <span><b> {data.object && data.object.price ? `${data.object.currency && data.object.currency.symbol ? data.object.currency.symbol : '$' }${data.object.price}.00` : '0'}</b></span>
-                                              </div>
-                                          </div>
-                                          <div className="col-md-6 col-sm-6 col-6">
+                                    <div className="pxp-prop-card-featured" 
+                                      style={{
+                                      backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL :  require("../../assets/images/ic_post_placeholder.png") } )`}}
+                                    >              
+                                      <div className="d-table w-100 ">
+                                        <div className="d-table-cell va-bottom featured-height">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </Link>
+                                  <div className="for-rent">
+                                      {data.object && data.object.adTitle ? data.object.adTitle : '' }
+                                  </div>
+                                  <div className="row">
+                                    <div className="col-md-6 col-sm-6 col-6">
+                                      <div className="dashboard-newsfeed-details"> Property Type: {data.object && data.object.propertyType}</div>
+                                        </div>
+                                      <div className="col-md-6 col-sm-6 col-6">
+                                          <div className="feature-head" style={{textAlign:'right'}}>
+                                              <span><b> {data.object && data.object.price ? `${data.object.currency && data.object.currency.symbol ? data.object.currency.symbol : '$' }${data.object.price}.00` : '0'}</b></span>
                                           </div>
                                       </div>
-                                  </div>
-                              </div>
-                              </div>
-                              </Link>
-                              <div className="for-rent">
-                                  {data.object && data.object.adTitle ? data.object.adTitle : '' }
-                              </div> 
+                                  </div>  
                                   <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
-                                  <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.PropertyConatctPopupHanlder}>  
-                            {this.state.propertyContactPopup ? <ContactPopup propertyContactPopup={this.state.propertyContactPopup} /> : null }
-                                   Contact us</Link>
-                                <div className="row custom-row-styles">
-                                  <div className="col-12 post-navbar">
+                                    <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.PropertyConatctPopupHanlder}>  
+                                      {this.state.propertyContactPopup ? <ContactPopup propertyContactPopup={this.state.propertyContactPopup} /> : null }
+                                      Contact us</Link>
+                                    <div className="row custom-row-styles">
+                                    <div className="col-12 post-navbar">
                                       <span style={{cursor:'pointer'}}
                                         onClick={ () => this.addLike( 
                                           data  && data.category,
                                           index,
-                                          data.object && data.object.isPostLikedByLoggedInUser,
-                                          data && data.object && data.object.postId && data.object.postId,
-                                          0 
+                                          data.object && data.object.isPropertyLikedByLoggedInUser,
+                                          0 ,
+                                          data && data.object && data.object.propertId && data.object.propertId,
                                           )}
-                                      ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                      ><i className={ data.object && data.object.isPropertyLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <Link className="post-navbar-items" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
                                       <Link ><img src={require('../../assets/images/ic_timeline_share.svg')} alt="" />  </Link>
                                       {
-                                        data && data.object && data.object.postLikes && data.object.postLikes.length && data.object.postLikes.length >= 1 ?
-                                        <div className="likedByText"> Liked by { data.object.postLikes[data.object.postLikes.length-1].userName + ( data.object.postLikes.length <= 1 ? "" : 
-                                        `and ${data.object.postLikes.length - 1}`) } </div> : ""
+                                        data && data.object && data.object.propertyLikes && data.object.propertyLikes.length && data.object.propertyLikes.length >= 1 ?
+                                        <div className="likedByText"> Liked by {data.object.propertyLikes[data.object.propertyLikes.length-1].userName + ( data.object.propertyLikes.length <= 1 ? "" : 
+                                        `and ${data.object.propertyLikes.length - 1} others`) } </div> : ""
                                       }
                                       {
-                                        data && data.object && data.object.postComments && data.object.postComments.length && data.object.postComments.length >= 1 ?
+                                        data && data.object && data.object.propertyComments && data.object.propertyComments.length && data.object.propertyComments.length >= 1 ?
                                         <div className="personintroinfo">
-                                        <span className="personSingleName"> {data.object.postComments[data.object.postComments.length-1].userName} &nbsp;</span>
-                                        {data.object.postComments[data.object.postComments.length-1].commentText}  </div>: ""
+                                        <span className="personSingleName"> {data.object.propertyComments[data.object.propertyComments.length-1].userName} &nbsp;</span>
+                                        {data.object.propertyComments[data.object.propertyComments.length-1].commentText}  </div>: ""
                                       }
                                       {
-                                        data && data.object && data.object.postComments && data.object.postComments.length >= 1 ?
+                                        data && data.object && data.object.propertyComments && data.object.propertyComments.length >= 1 ?
                                         <Link className="viewCommentLight" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}>
-                                          View all {data.object.postComments.length} comments</Link>
+                                          View all {data.object.propertyComments.length} comments</Link>
                                         : ""
                                       }
 
@@ -484,10 +500,10 @@ class index extends Component {
                                     </span>
                                     <div className="comment-input-pointer">
                                       <input className="form-control" placeholder="Write your review here..." style={{height:'35px'}} 
-                                        name="commentText" value={commentText} onChange={this.onChange} />
+                                        name="commentText" value={`${propertyId}${category}${commentText}`} onChange={this.onChange} />
                                       
                                         <span className=""  onClick={() => this.AddComment(
-                                          data && data.object && data.object.postId ,
+                                          data && data.object && data.object.propertId ,
                                           data && data.category)} >
                                           <img src={require('../../assets/images/ic_sent.svg')} alt=""/>
                                         </span>

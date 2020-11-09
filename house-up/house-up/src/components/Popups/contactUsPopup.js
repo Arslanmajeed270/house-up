@@ -3,9 +3,8 @@ import { Modal } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/pageActions';
-import * as actionTypes from '../../store/actions/actionTypes';
 
-class contacPopup extends Component {
+class contacUsPopup extends Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -187,4 +186,4 @@ const mapStateToProps = state => {
     }
   };
    
-  export default connect(mapStateToProps, mapDispatchToProps)(contacPopup);
+  export default connect(mapStateToProps, mapDispatchToProps)(contacUsPopup);
