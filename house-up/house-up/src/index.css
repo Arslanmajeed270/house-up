@@ -746,10 +746,15 @@ h1.pxp-page-header, .pxp-blog-posts-carousel-1-caption-title, pxp-blog-post-bloc
 .for-rent, .explore-our-neighbours-heading {
   color:#000;
 }
-.dashboard-newsfeed-details {
+.dashboard-newsfeed-details-hidden {
   color:#4d4d4d;
-  height: 90px;
+  height: 45px !important;
   overflow: hidden;
+}
+.dashboard-newsfeed-details-shown {
+  color:#4d4d4d;
+  height: auto;
+  overflow: visible;
 }
 .suggested-vendor-name p {
   color:#000;
