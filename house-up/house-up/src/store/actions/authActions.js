@@ -26,7 +26,7 @@ import {
 let backendServerURL = process.env.REACT_APP_API_URL;
 
 // Login - Get User Token (Verified)
-export const loginUser = (userData, history) => dispatch => {
+export const loginUser = (userData, currentLocation, history) => dispatch => {
     dispatch(setPageLoading());
 
     axios
@@ -42,7 +42,7 @@ export const loginUser = (userData, history) => dispatch => {
             dispatch(setCurrentUser(res.data.data.user));
             dispatch(clearErrors())
             dispatch({ type: SHOW_POP_UP });
-            history.push(`/select-location`);
+            history.push(`/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}`);
         }
         else {
             dispatch({ type: HIDE_POP_UP });

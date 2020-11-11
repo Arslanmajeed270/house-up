@@ -8,6 +8,7 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import{ Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
+import cloneDeep from 'lodash/cloneDeep';
 
 class phoneSignIn extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class phoneSignIn extends Component {
           msisdn: '',
           password: '',
           viewPass: false,
-          showPopUp: false
+          showPopUp: false,
+          currentLocation: {}
       };
   }
 
@@ -37,6 +39,14 @@ class phoneSignIn extends Component {
       }
       stateChanged = true;
     }
+
+    if( page && page.currentLocation && JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation) ){
+      changedState.currentLocation = page.currentLocation;  
+      stateChanged = true;
+      let currentLocation = [];
+      currentLocation = cloneDeep(changedState.currentLocation);
+      changedState.currentLocation = currentLocation;
+  }
 
     if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
         changedState.errors = errors;
@@ -80,7 +90,7 @@ class phoneSignIn extends Component {
       loginBy: "msisdn"
     };
     // console.log(userData);
-    this.props.onLogin(userData, this.props.history);
+    this.props.onLogin(userData, this.state.currentLocation, this.props.history);
   }
  
   render() {
@@ -176,7 +186,7 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-        onLogin: (email, history) => dispatch(actions.loginUser(email, history)),
+        onLogin: (email,currentLocation, history) => dispatch(actions.loginUser(email,currentLocation, history)),
         onHidePopUp: () => dispatch({type: actionTypes.HIDE_POP_UP }),
         onErrorSet: (msg) =>  dispatch({type: actionTypes.SET_ERRORS, payload: { message: msg }})
         
