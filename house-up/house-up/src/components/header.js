@@ -121,7 +121,6 @@ class header extends Component {
                           {dropDownShow ? 
                               <div className="profile_header_dropdown">
                               <ul>
-                                <li onClick={() => this.props.onLogout(this.props.history)} className="profile_header_dropdown_li">Logout</li>
                                 <li className="profile_header_dropdown_li">
                                   {user && user.userTypeId === 2 ? 
                         <div onClick={() => this.props.modelHanlder('subscriptionPlan')} style={{cursor: "pointer"}} >
@@ -132,6 +131,7 @@ class header extends Component {
                         ""  
                       } 
                                 </li>
+                      <li onClick={() => this.props.onLogout(this.props.history)} className="profile_header_dropdown_li">Logout</li>
                               </ul>
                             </div>
                             :

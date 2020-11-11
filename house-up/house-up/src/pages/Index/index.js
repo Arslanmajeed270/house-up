@@ -7,6 +7,8 @@ import "react-alice-carousel/lib/alice-carousel.css";
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
+
 
 import{Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -21,8 +23,7 @@ class index extends Component {
       loading : false,
       indexPageData : {},
       user:{},
-      postConatctPopup:false,
-      propertyContactPopup:false,
+      contactUsPop: false,
       countryName :'',
       stateName:'',
       cityName:'',
@@ -37,7 +38,49 @@ class index extends Component {
     };
   }
 
- 
+  componentDidMount() {
+    console.log('indexPage componenet did mount');
+    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
+    const country = this.props.match.params.country;
+    const state = this.props.match.params.state;
+    const city = this.props.match.params.city;
+
+    console.log('checking country: ', country);
+    console.log('checking state: ', state);
+    console.log('checking city: ', city);
+    this.setState({
+      countryName : country,
+      stateName : state,
+      cityName : city,
+      userId : userId
+    });
+    console.log('country from params',country)
+    console.log('state from params',state)
+    console.log('city from params',city)
+
+    const data = {
+      state : state,
+      channel:"web",
+      lat:43.787083,
+      lng:-79.497369,
+      city: city,
+      limit:10,
+      offset:0,
+      loggedInuserId: userId,
+      country: country
+    };
+
+    console.log("checking data pakage",data)
+    const userData = {
+      country: country,
+      city: city,
+       province: state
+     };
+    this.props.onGetIndexPageData(data);
+    setTimeout(() => {
+      this.props.onUpdateCurrentLocaiton(userData);
+    }, 2000);
+  }
 
   static getDerivedStateFromProps(props, state) {
 
@@ -143,54 +186,11 @@ class index extends Component {
       this.props.onFollowUnfollowProfessionals(data, index);
   }
 
-  postConatctPopupHanlder = () =>{
+  contactUsPopHandler = () =>{
     this.setState({
-      postConatctPopup : !this.state.postConatctPopup,
+      contactUsPop : !this.state.contactUsPop,
     });
     console.log('clicked')
-  }
-  PropertyConatctPopupHanlder = () =>{
-    this.setState({
-      propertyContactPopup : !this.state.propertyContactPopup,
-    });
-    console.log('clicked')
-  }
-
-  componentDidMount() {
-    console.log('indexPage componenet did mount');
-    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
-    const country = this.props.match.params.country;
-    const state = this.props.match.params.state;
-    const city = this.props.match.params.city;
-
-    console.log('checking country: ', country);
-    console.log('checking state: ', state);
-    console.log('checking city: ', city);
-    this.setState({
-      countryName : country,
-      stateName : state,
-      cityName : city,
-      userId : userId
-    });
-    console.log('country from params',country)
-    console.log('state from params',state)
-    console.log('city from params',city)
-
-    const data = {
-      state : state,
-      channel:"web",
-      lat:43.787083,
-      lng:-79.497369,
-      city: city,
-      limit:10,
-      offset:0,
-      loggedInuserId: userId,
-      country: country
-    };
-
-    console.log("checking data pakage",data)
-
-    this.props.onGetIndexPageData(data);
   }
 
   storyHandler = () =>{
@@ -252,6 +252,7 @@ class index extends Component {
   }
         return ( 
             <React.Fragment>
+              <ContactPopup show={this.state.contactUsPop} contactUsPopHandler={this.contactUsPopHandler} />
               { !loading && 
               <main>
                 <div className="container" >
@@ -301,7 +302,6 @@ class index extends Component {
                             indexPageData && indexPageData.vendorPostPropertiesList &&
                             indexPageData.vendorPostPropertiesList.length ?
                             indexPageData.vendorPostPropertiesList.map((data, index) =>
-                            data.category && ( data.category === "Post" || data.category === "Property" ) ? 
                             <React.Fragment key={index}>
                             {index === 0 && 
                             <div className="explore-our-neighbours">
@@ -326,29 +326,28 @@ class index extends Component {
                             </div>
                         </div>
                             } 
-                            {index === 9 && 
-                            indexPageData && indexPageData.vendors && indexPageData.vendors.length && indexPageData.vendors.map((data, idx)=>
-                            idx<3 &&
-                            <Link key={idx} to={`/single-vendor-${data && data.userId && data.userId}`}>
+                            { data.category && data.category === "Vendor" ?
+                            <Link key={index} to={`/single-vendor-${data && data.object.userId && data.object.userId}`}>
                               <div className="vendor-box">
+                                {console.log('i am into vendor')}
                                 <div className="row">
                                   <div className="col-md-9 col-sm-9 col-8">
                                     <div className="vendor-detail">
-                                      {data && data.firstName ?  data.firstName : ''} {data && data.lastName ? data.lastName : ''}
+                                      {data && data.object.firstName ?  data.object.firstName : ''} {data && data.object.lastName ? data.object.lastName : ''}
                                       <p>
-                                        <span>{ data && data.professionDesc && data.professionDesc !== "null" ? data.professionDesc : " " }</span>
+                                        <span>{ data && data.object.professionDesc && data.object.professionDesc !== "null" ? data.object.professionDesc : " " }</span>
                                       </p>
-                                      <span className="address-span">{ data && data.address ? data.address : '' }</span>
+                                      <span className="address-span">{ data && data.object.address ? data.object.address : '' }</span>
                                     </div>
                                   </div>
                                   <div className="col-md-3 col-sm-3 col-4">
-                                    <div className="vendor-img" style={{backgroundImage:`url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
+                                    <div className="vendor-img" style={{backgroundImage:`url(${data && data.object.profilePictureUrl ? data.object.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
                                   </div>
                                 </div>
                               </div>
                             </Link>
-                            )
-                            }
+                            :
+                            ""}
                             <div className="dashboard-newsfeed">
                               <div className="dashboard-newsfeed-content">
                                 <ul className="news-feed-user-ul">
@@ -376,9 +375,9 @@ class index extends Component {
                                     backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/ic_post_placeholder.png") }  )` }}>
                                   </div>
                                   <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
-                                  <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.postConatctPopupHanlder}>  
-                                {this.state.postConatctPopup ? <ContactPopup postConatctPopup={this.state.postConatctPopup} /> : null }
-                                   Contact us</Link>
+                                  <button onClick={this.contactUsPopHandler} className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="">  
+                                   Contact us
+                                   </button>
                                 <div className="row custom-row-styles">
                                   <div className="col-12 post-navbar">
                                       <span style={{cursor:'pointer'}}
@@ -460,9 +459,8 @@ class index extends Component {
                                       </div>
                                   </div>  
                                   <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
-                                    <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.PropertyConatctPopupHanlder}>  
-                                      {this.state.propertyContactPopup ? <ContactPopup propertyContactPopup={this.state.propertyContactPopup} /> : null }
-                                      Contact us</Link>
+                                    <button onClick={this.contactUsPopHandler} className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.PropertyConatctPopupHanlder}>  
+                                      Contact us</button>
                                     <div className="row custom-row-styles">
                                     <div className="col-12 post-navbar">
                                       <span style={{cursor:'pointer'}}
@@ -523,8 +521,6 @@ class index extends Component {
                               </div>
                             </div>
                             </React.Fragment>
-                            :
-                            null
                             )
                             :
                             null
@@ -641,7 +637,9 @@ const mapDispatchToProps = dispatch => {
     onCommentAdded : (data) => dispatch(actions.AddComments(data)),
     onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
     onFollowUnfollowProfessionals : (data, index) => dispatch(actions.followProfessionals(data, index)),
-    onLikedPostOrProperty : (data , index ) => dispatch(actions.AddLike(data, index))
+    onLikedPostOrProperty : (data , index ) => dispatch(actions.AddLike(data, index)),
+    onUpdateCurrentLocaiton: (data) =>  dispatch({type: actionTypes.SET_CURRENT_LOCATION, payload: data})
+
   }
 };
  

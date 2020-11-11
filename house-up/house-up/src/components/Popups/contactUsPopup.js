@@ -94,7 +94,7 @@ static getDerivedStateFromProps(props, state) {
         aria-labelledby="contained-modal-title-vcenter"
         dialogClassName="modal-width"
         centere
-        onHide ={this.props.contactPopupHanlder}
+        onHide ={this.props.contactUsPopHandler}
         >
         <Modal.Body >
             <h5 className="modal-title">
