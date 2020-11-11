@@ -102,12 +102,30 @@ class userSignup extends Component {
       }
       onSubmit = e => {
         e.preventDefault();
+        const { profileImage , firstName , lastName , userName , emailAddress , password , confirmPassword } = this.state;
         console.log("checking this.state: ", this.state );
         console.log("checking i am into submit");
-             if(this.state.password !== this.state.confirmPassword){
-                 this.props.onErrorSet("Password not matched!");
-                 return;
-             }
+          if(password !== confirmPassword){
+              this.props.onErrorSet("Password not matched!");
+              return;
+          }
+          if( profileImage === ''){
+            this.props.onErrorSet("Profile Picture is Missing");
+            return;
+          }
+          // else if( firstName === '' ) {
+          //   this.props.onErrorSet("First Name is Missing");
+          // }
+          // else if( lastName === '' ){
+          //   this.props.onErrorSet("Last Name is Missing");
+          // }
+          // else if( userName === '' ){
+          //   this.props.onErrorSet("User Name is Missing");
+          // }
+          // else if ( emailAddress === '' ){
+          //   this.props.onErrorSet("Email Address is Missing")
+          // }
+        else{
             //  console.log("checking phoneNumber: ", this.props.phNumber);
              const userData = {
                 profileImage:this.state.profileImage,
@@ -125,9 +143,11 @@ class userSignup extends Component {
                 country: this.state.currentLocation.country,
                 state: this.state.currentLocation.province,
                 city: this.state.currentLocation.city,
+                channel: "web"
              };
+             console.log("user Data in user Sign up", userData)
              this.props.onCreateUser(userData);
-
+            }
          }
     render() {
       const { viewPass,viewConfirmPass, errors , loading, imagePreview, firstName, lastName, 

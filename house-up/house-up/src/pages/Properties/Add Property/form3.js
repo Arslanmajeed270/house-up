@@ -38,7 +38,6 @@ class form3 extends Component {
             cities: [],
         };
       }
-
     static getDerivedStateFromProps(props, state) {
       const errors = props.errors;
       const page = props.page;
@@ -54,32 +53,22 @@ class form3 extends Component {
           states = cloneDeep(changedState.countries[0]);
           changedState.states = states.states;
       }
-    
-    
       if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
           changedState.errors = errors;
           stateChanged = true;
         }
-        
       if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
           changedState.loading = page.loading;
           stateChanged = true;            
       }
-      
       if(stateChanged){
         return changedState;
       }
       return null;
     }
-    
-    
-    
       componentDidMount(){
         this.props.onGetCountries();
     }
-    
-    
-    
     onChange = e => {
     
     if(e.target.name === 'country'){
@@ -101,6 +90,7 @@ class form3 extends Component {
           ind =  this.state.states && this.state.states.findIndex( x => `${x.name}` === e.target.value );
           cities = cloneDeep(this.state.states[ind]);
       }
+      console.log('checking e.target.value in state: ', e.target.value);
       this.setState({ 
           [e.target.name]: e.target.value,
           cities: cities.cities
@@ -113,7 +103,7 @@ class form3 extends Component {
         imagePreviewState.push(imagePreview);
         fileUpload(e)
         .then((data) => {
-           console.log("base64 :",data.base64);
+        //    console.log("base64 :",data.base64);
             images.push({image: data.base64});
             this.setState({
                 imagePreview: imagePreviewState,
@@ -133,32 +123,36 @@ class form3 extends Component {
         },
         zoom: 11
       };
-
       propertyPlanStateHandler = () =>{
           this.setState({
               propertyPlanState : !this.state.propertyPlanState
           })
       }
-
+     
       onSubmit = e => {
         e.preventDefault();
+        const { city, address, state, images, longitude, latitude }  = this.state;
         const dataForm3 = {
-            city:this.state.city,
-            address:this.state.address,
-            images:this.state.images,
-            longitude:this.state.longitude,
-            latitude:this.state.latitude,
+            city: city,
+            address: address,
+            state: state,
+            images: images,
+            longitude: longitude,
+            latitude: latitude
         }
 
         // this.propertyPlanStateHandler ();
        console.log(dataForm3);
-    if(this.state.images.length !== 0){
-        this.props.form3DataHandler(dataForm3);
+        if(this.state.images.length !== 0 && this.state.images.length >=5){
+            this.props.form3DataHandler(dataForm3);
+        }
+        else{
+            console.log("error picture must be 5 or more");
+            alert("Property Images Must be 5 or more")
+            
         }
 
     }
-
-
     render() { 
         const{ address , city , imagePreview, googleMapKey ,  states , cities  , state , countries , country } = this.state;
         const files = this.state.files.map(file => (
@@ -191,26 +185,26 @@ class form3 extends Component {
                 </div>
                     <div className="row">
                         <div className="col-md-2" >
-                        <div className="form-group">
-                        <select className="custom-select"
-                              placeholder="City"
-                              name="state"
-                              value={state}
-                              onChange={this.onChange}
-                              >
+                            <div className="form-group">
+                                <select style={{ borderRadius: '0px'}} className="custom-select"
+                                    placeholder="City"
+                                    name="state"
+                                    value={state}
+                                    onChange={this.onChange}
+                                >
                                 <option >Select Province</option>
-                             {
-                                 states && states.length ? states.map( ( province, idx ) => (
-                                     <option key={idx} value={province.name} > { province.name }</option>
-                                 ) )
-                                 : ""
-                             }
-                              </select>
-                              </div>
+                                {
+                                    states && states.length ? states.map( ( province, idx ) => (
+                                        <option key={idx} value={province.name} > { province.name }</option>
+                                    ) )
+                                    : ""
+                                }
+                                </select>
+                            </div>
                         </div>
                         <div className="col-md-2">
                         <div className="form-group">
-                              <select className="custom-select"
+                              <select style={{ borderRadius: '0px'}} className="custom-select"
                               placeholder="Prov/State"
                               name="city" required
                               value={city}
@@ -228,7 +222,7 @@ class form3 extends Component {
                         </div>
                         <div className="col-md-8">
                             <div className="form-group">
-                                <input type="text" placeholder="Enter an address" className="input-feilds-property" name="address" value={address} onChange={this.onChange} />
+                                <input type="text" style={{ width: '88%'}} placeholder="Enter an address" className="input-feilds-property" name="address" value={address} onChange={this.onChange} />
                                 <button className="btn btn-primary form-three-search">Search</button>
                             </div>
 
@@ -249,9 +243,9 @@ class form3 extends Component {
                         </div>
                     </div>
                     <div className="row border-property">
-                        <h1 className="col-md-6 titles-property">Property photos</h1>
+                        <h1 className="col-md-6 titles-property" style={{ fontFamily: 'light', marginTop: '50px'}}>Property photos</h1>
                         <div className="col-md-6" style={{textAlign:'right'}}>
-                            <label className="btn btn-lg btn-primary" htmlFor="pictures" style={{marginTop:'15px'}}>Upload images</label>
+                            <label className="btn btn-lg btn-primary" htmlFor="pictures" style={{marginTop:'15px', backgroundColor: '#00B0E9', borderRadius: '0px', border:'none'}}>Upload images</label>
                         </div>
                         <h6 className="col-md-12 text-danger titles-property">WARNING: Any images with HouseUp.ca watermarks are a violation of copyright. If these images are uploaded your listing will be removed and your account may be suspended.</h6>
                     <div className="col-12">
@@ -260,7 +254,7 @@ class form3 extends Component {
                             {({getRootProps, getInputProps}) => (
                             <section className="container drop-zone">
                                 <aside>
-                                <h4>Files</h4>
+                                
                                 {imagePreview && imagePreview.length ?
                                 imagePreview.map( (data, index) => (
                                     <img key={index} id="data" src={ data ? data : require("../../../assets/images/ic_profile_placeholder.png")} alt="" style={{height:'98px'}} />
@@ -281,7 +275,7 @@ class form3 extends Component {
                         </Dropzone>
 
 
-                        <h6 className="titles-property">Upload a maximum of 25 photos. Click on a picture to select a cover photo, otherwise the first picture will be used.</h6>
+                        <h6 className="titles-property" style={{ color: '#8E8E93', marginTop: '40px'}}>Upload a maximum of 25 photos. Click on a picture to select a cover photo, otherwise the first picture will be used.</h6>
                     </div>
                         
                     </div>

@@ -5,6 +5,7 @@ import {
 	SET_VENDORS,
     SET_SINGLE_VENDOR,
 	SET_ERRORS,
+	SET_SINGLE_VENDORS_PROPERTIES
 } from './actionTypes';
 
 import {
@@ -69,3 +70,31 @@ export const getSingleVendorData = (userData) => dispatch => {
 	.finally(() => dispatch(clearPageLoading()))
 	      
 };
+
+
+//SingleVendorsProperty  - Get SingleVendorsProperty data from backend
+export const getSingleVendorsPropertyData = (userData) => dispatch => {
+	dispatch(setPageLoading());
+	// console.log('checking backendServerURL: ', backendServerURL);
+
+	axios
+    .post(backendServerURL+'/getVendorPostsNdProperties',userData)
+    .then(res => {
+		console.log('checking getSingleVendorsPropertiesData: ', res);
+        dispatch(
+			{
+				type: SET_SINGLE_VENDORS_PROPERTIES,
+				payload: res.data && res.data.data &&  res.data.data.postNdPropertiesList ? res.data.data.postNdPropertiesList : []
+			}
+		);
+        dispatch(clearErrors());
+    })
+    .catch(err => {
+		// console.log("error: ", err);
+		// console.log('checking error');
+        dispatch({type: SET_ERRORS, payload: err && err.response && err.response.data ? err.response.data : {}})
+	})
+	.finally(() => dispatch(clearPageLoading()))
+	      
+};
+

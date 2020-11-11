@@ -15,7 +15,7 @@ class subscriptionPlan extends Component {
                     onHide={() => this.props.closeCodelHanlder('subscriptionPlan')}
                     centered
                     >
-                    <Modal.Body >
+                    <Modal.Body style={{paddingTop: '0px'}}>
                         
                     <Link >
                     <div className="subscription-card" style={{borderBottom:'1px solid #DEE2F2'}}>

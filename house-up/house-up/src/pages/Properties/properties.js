@@ -6,6 +6,7 @@ import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/common/Spinner';
+import index from '..';
 
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -83,6 +84,25 @@ class properties extends Component {
     this.props.onGetData(data);
   }
 
+  getSelectedCityData = ( cityName) => {
+    const userId  =  this.state.user && this.state.user.userId ? this.state.user.userId : null;
+
+    const data = {
+      state : "",
+      channel:"web",
+      lat:43.787083,
+      lng:-79.497369,
+      city: cityName,
+      limit:10,
+      offset:0,
+      loggedInuserId: userId,
+      country: ""
+    };
+    console.log('data ', data)
+
+    this.props.onGetData(data);
+  }
+
   
     state = {  }
     render() { 
@@ -106,6 +126,18 @@ class properties extends Component {
         return ( 
             <React.Fragment>
                 <div className="pxp-content pxp-full-height">
+                  <div className="row">
+                   
+                      {
+                        indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts.length ? 
+                        indexPageData.propertyCounts.map( (data ,index) =>
+                        <div className="col-md-1">
+                          <button key={index} className="btn" onClick={()=> this.getSelectedCityData(data.cityName)} > {data && data.cityName} </button>
+                          </div>
+                        )
+                        : ""
+                      }
+                  </div>
                 <div className="pxp-map-side pxp-map-right pxp-half">
                   <GoogleMapReact
                     bootstrapURLKeys={{ key: googpleMapApiKey }}
@@ -145,7 +177,7 @@ class properties extends Component {
                     </div>
                     <div className="row pb-4">
                       <div className="col-sm-6">
-                        <h2 className="pxp-content-side-h2">1,684 Results</h2>
+                        <h2 className="pxp-content-side-h2">{propertiesData && propertiesData.length} Results</h2>
                       </div>
                     </div>
                     <div className="row">

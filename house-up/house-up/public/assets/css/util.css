@@ -3098,7 +3098,7 @@ img.search {
 }
 
 .pxp-props-carousel-right-container .alice-carousel .alice-carousel__stage-item {
-	width: 277px !important;
+	width: 213px !important;
 }
 
 .properties-search-icon {
@@ -3106,4 +3106,52 @@ img.search {
     top: 12px;
     width: 20px;
     right: 25px;
+}
+
+.neighbours-height {
+	height: 140px !important;
+}
+
+.neighbours-height h2 {
+	font-size: 15px;
+	font-family: Condensed;
+}
+
+.neighbours-height p {
+	font-size: 10px;
+}
+
+.col-md-9.col-lg-9.col-sm-9.col-nopadd {
+	padding-left: 0px !important;
+}
+
+.main-user-content p {
+	font-family: Condensed;
+}
+
+.pxp-agent-rating {
+	display: none;
+}
+
+.pxp-agent-contact-btn {
+	width: 229px !important;
+	font-family: Condensed;
+}
+
+.pxp-agent-photo {
+	width: 234px !important;
+	height: 234px !important;
+}
+
+.pxp-agent-section p {
+	color: #000;
+	font-size: 16px;
+}
+
+.pxp-agent-section h3 {
+	font-family: light;
+}
+
+.pxp-agent-comments-review {
+	height: 73px !important;
 }

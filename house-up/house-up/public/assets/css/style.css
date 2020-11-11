@@ -4559,6 +4559,7 @@ ul.pxp-agent-social > li > a:hover {
     cursor: pointer;
     font-family: "Condensed", sans-serif;
     font-size: 15px;
+    color: #000;
 }
 .checkbox.custom-checkbox span {
     font-size: 14px;
@@ -5718,8 +5719,8 @@ main{
     margin-left: 5%;
 }
 .pxp-prop-card-dashboard {
-    height: 69px;
-    width: 69px;
+    height: 80px;
+    width: 80px;
     background-size: cover;
     /*border: 1px dashed #007aff;*/
     border-radius: 5px;
@@ -5806,8 +5807,7 @@ main{
     padding: 10px 10px 0px 10px
 }
 span.news-feed-user-img{
-    height:50px;
-    width: 50px;
+    width: 37px;
     background-size: 100% 100%;
 }
 span.news-feed-user-imgs{
@@ -5840,6 +5840,7 @@ span.news-feed-user-date {
 .newsfeed{
     height: 100vh;
     overflow-y: scroll;
+    margin-bottom: 70px;
 }
 
 .newsfeed::-webkit-scrollbar {
@@ -6518,7 +6519,7 @@ i.grey{
 
 .more-options {
     margin: 16px 0px !important;
-    color: #007AFF !important;
+    color: #00B0E9 !important;
     display: inline-block !important;
 }
 
@@ -6597,8 +6598,188 @@ i.grey{
 
 h1.titles-property {
     font-family: light;
+    font-size: 40px !important;
 }
 
 .add-property-conatiner .nav-item .nav-link {
     line-height: 1;
+}
+
+.location-header img {
+    padding-right: 8px;
+}
+
+.input-feilds-property {
+    background:#fff;
+}
+
+p.titles-property {
+    color: #393939;
+    font-size: 18px;
+    font-family: Condensed;
+}
+
+span.title-property {
+    margin-top: 5px;
+    display: inline-block;
+}
+
+.btn-div .btn-property {
+    font-size: 15px !important;
+    height: 33px;
+}
+
+.checkbox.custom-checkbox {
+    border-bottom: 1px solid #F2F2F2;
+    padding-bottom: 10px;
+}
+
+.news-feed-user-name a {
+    color: #00B0E9;
+}
+
+.dashboard-newsfeed-details {
+    color: #000000;
+    font-size: 16px;
+    font-family: Regular;
+    margin-bottom: 15px;
+    height: auto !important;
+}
+
+.likedByText {
+    font-family: Condensed;
+    font-size: 16px;
+    color: #000000;
+}
+
+.viewCommentLight {
+    color: #c6c6d2;
+    font-size: 16px;
+    font-family: regular;
+}
+
+.personintroinfo {
+    font-family: regular;
+    font-size: 16px;
+    color: #4d4d4d;
+}
+
+.personSingleName {
+    color: #000;
+}
+
+.sidebar-fixed-index-property {
+    position: fixed !important;
+    right: 15px !important;
+}
+
+.custom-row-styles {
+    font-size: 30px;
+    padding: 5px 0px 5px 15px;
+    width: 100% !important;
+    position: relative;
+    bottom: 50px;
+}
+
+.comment-send-btn {
+    display: flex;
+    hyphens:
+}
+
+.comment-input-pointer {
+    position: relative;
+}
+
+.comment-input-pointer img {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 25px;
+}
+
+.comment-send-btn .comment-input-pointer {
+    width: 100%;  
+    padding-left: 10px;
+}
+
+.comment-send-btn .comment-input-pointer input {
+    background-color: #f3f3f3;
+    border:none;
+}
+
+.post-navbar {
+    padding: 5px 0px 5px 15px !important;
+}
+
+.news-feed-user-img img {
+    position: relative;
+    bottom: 6px;
+}
+
+.dashboard-newsfeed .dashboard-newsfeed-content .news-feed-user-ul li span.news-feed-user-img {
+    width: 53px !important;
+}
+
+.neighbourhoods_slider .pxp-prop-card-explore {
+        width: 213px !important;
+    height: 140px;
+}
+
+.pxp-props-carousel-right-container .alice-carousel .alice-carousel__stage-item {
+    width: 213px !important;
+}
+
+.dashboard-user-name.withPropertyDealer {
+    font-size: 12px;
+    color: #4d4d4d;
+}
+
+.logo-modal {
+    background: #F3F3F3;
+    border-radius: 5px;
+    width: 50px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.logo-modal img {
+    width: 30px;
+    height: 60px;
+    line-height: 60px;
+}
+
+.user {
+    font-size: 18px !important;
+    padding: 8px 0px 0px 0px !important;
+}
+ 
+.visa-card-selection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card {
+    font-size: 16px !important; 
+    color: #000 !important;
+    font-family: Regular !important;
+}
+
+.dashed-button {
+    border: 2px dashed #00B0E9 !important;  
+    padding: 3px 9px !important;  
+}
+
+.dashed-button button {
+    font-size: 16px;
+    color: #00B0E9;
+}
+
+.btn.btn-primary.card-btn, .btn.btn-primary.card-btn:focus {
+    background-color: #00B0E9;
+    border:none;
+    padding: 16px 23px !important;
+}
+
+.subscription-card {
+    padding: 20px 10px 28px;
 }

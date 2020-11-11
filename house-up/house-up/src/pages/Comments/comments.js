@@ -23,7 +23,8 @@ class comments extends Component {
       vendorId:'',
       category:'',
       data:[],
-      comments:[]
+      comments:[],
+      indexValue:''
     };
   }
 
@@ -87,9 +88,13 @@ class comments extends Component {
 
     const id = this.props.match.params.id;
     const category = this.props.match.params.category;
+    const indexValue = this.props.match.params.indexValue;
+    console.log('index', indexValue)
+    
     this.setState({
       id: id,
-      category: category
+      category: category,
+      indexValue : indexValue
     });
     if(category === "Post"){
       this.setState({ postId : id });
