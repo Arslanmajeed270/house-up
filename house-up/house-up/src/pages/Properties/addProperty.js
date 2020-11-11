@@ -146,7 +146,7 @@ addProperty = () =>{
     } 
     console.log("checking formData: ",formData);
 
-    this.props.onAddProperty(formData, this.props.history);
+    // this.props.onAddProperty(formData, this.props.history);
 }
 
 
