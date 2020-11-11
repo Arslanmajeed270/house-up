@@ -118,7 +118,7 @@ class index extends Component {
     return null;
 
   }
-  addLike = (type , index , like, postId, propertId) => {
+  addLike = (type , index , like, postId, propertId , vendorId) => {
 
     console.log('value of type',type);
     console.log('value of index',index);
@@ -127,6 +127,7 @@ class index extends Component {
     console.log('value of propertId',propertId);
     const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null ;
     let data = {
+      vendorId:vendorId,
       postId:postId,
       category:type,
       propertyId:propertId,
@@ -155,6 +156,9 @@ class index extends Component {
     else if( typeCategory === "Property"){
       propertyId = id
     }
+    else if( typeCategory === "Vendor"){
+      vendorId = id
+    }
   
     const data = {
       postId:Number(postId),
@@ -174,12 +178,13 @@ class index extends Component {
     followUnfollwProfessionals = ( id, index, follow ) => e =>{
     e.preventDefault();
     console.log("checking index: ", index );
+    console.log(follow)
     const userId = this.state.user && this.state.user.userId ? this.state.user.userId : null;
     let data={ 
       category:"Vendor",
       userId:userId,
       action:`${follow ? "Unfollow" : "Follow"}`,
-      followUnfollowId:"1",
+      followUnfollowId:`${follow ? "2" : "1"}`,
       vendorId:id
     };
     console.log("checking followUnfollwProfessionals data: ", data );
@@ -299,114 +304,37 @@ class index extends Component {
                               </div>
                             </div>
                             {
-                            indexPageData && indexPageData.vendorPostPropertiesList &&
-                            indexPageData.vendorPostPropertiesList.length ?
-                            indexPageData.vendorPostPropertiesList.map((data, index) =>
-                            <React.Fragment key={index}>
-                            {index === 0 && 
-                            <div className="explore-our-neighbours">
-                            <div className="row">
-                                <div className="col-md-12 col-lg-12 col-sm-12">
-                                    <div className="container-fluid pxp-props-carousel-right">
-                                        <div className="pxp-props-carousel-right-container">
-                                            <h2 className="explore-our-neighbours-heading">Explore Our Neighbourhoods</h2>
-                                            <div className="pxp-props-carousel-right-stage-3">
-                                                <div>
-                                                <AliceCarousel
-                                                  mouseTracking
-                                                  disableButtonsControls ={true}
-                                                  items={locationItems}
-                                                  responsive={locationResponcive}
-                                                />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                            } 
-                            { data.category && data.category === "Vendor" ?
-                            <Link key={index} to={`/single-vendor-${data && data.object.userId && data.object.userId}`}>
-                              <div className="vendor-box">
-                                {console.log('i am into vendor')}
-                                <div className="row">
-                                  <div className="col-md-9 col-sm-9 col-8">
-                                    <div className="vendor-detail">
-                                      {data && data.object.firstName ?  data.object.firstName : ''} {data && data.object.lastName ? data.object.lastName : ''}
-                                      <p>
-                                        <span>{ data && data.object.professionDesc && data.object.professionDesc !== "null" ? data.object.professionDesc : " " }</span>
-                                      </p>
-                                      <span className="address-span">{ data && data.object.address ? data.object.address : '' }</span>
-                                    </div>
-                                  </div>
-                                  <div className="col-md-3 col-sm-3 col-4">
-                                    <div className="vendor-img" style={{backgroundImage:`url(${data && data.object.profilePictureUrl ? data.object.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
-                                  </div>
-                                </div>
-                                <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.postConatctPopupHanlder}>  
-                                {this.state.postConatctPopup ? <ContactPopup postConatctPopup={this.state.postConatctPopup} /> : null }
-                                   Contact us</Link>
-                                <div className="row custom-row-styles">
-                                  <div className="col-12 post-navbar">
-                                      <span style={{cursor:'pointer'}}
-                                        onClick={ () => this.addLike( 
-                                          data  && data.category,
-                                          index,
-                                          data.object && data.object.isPostLikedByLoggedInUser,
-                                          data && data.object && data.object.postId && data.object.postId,
-                                          0 
-                                          )}
-                                      ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
-                                      <Link className="post-navbar-items" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
-                                      <Link ><img src={require('../../assets/images/ic_timeline_share.svg')} alt="" />  </Link>
-                                      {
-                                        data && data.object && data.object.postLikes && data.object.postLikes.length && data.object.postLikes.length >= 1 ?
-                                        <div className="likedByText"> Liked by { data.object.postLikes[data.object.postLikes.length-1].userName + ( data.object.postLikes.length <= 1 ? "" : 
-                                        `and ${data.object.postLikes.length - 1} others `) } </div> : ""
-                                      }
-                                      {
-                                        data && data.object && data.object.postComments && data.object.postComments.length && data.object.postComments.length >= 1 ?
-                                        <div className="personintroinfo">
-                                        <span className="personSingleName"> {data.object.postComments[data.object.postComments.length-1].userName} &nbsp;</span>
-                                        {data.object.postComments[data.object.postComments.length-1].commentText}  </div>: ""
-                                      }
-                                      {
-                                        data && data.object && data.object.postComments && data.object.postComments.length >= 1 ?
-                                        <Link className="viewCommentLight" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}>
-                                          View all {data.object.postComments.length} comments</Link>
-                                        : ""
-                                      }
-
-                                  <div className="comment-send-btn">
-                                    <span  className={user && user.userTypeId ===  2 ? 
-                                      "news-feed-user-img" : "news-feed-user-imgs"} > 
-                                      <img style={{width: '100%'}} src={user && user.profilePictureUrl ?
-                                        user.profilePictureUrl :
-                                         "assets/images/dashboard/ic_profile_placeholder.png"} /> 
-                                    </span>
-                                    <div className="comment-input-pointer">
-                                      <input className="form-control" placeholder="Write your review here..." style={{height:'35px'}} 
-                                        name="commentText" value={commentText} onChange={this.onChange} />
-                                      
-                                        <span className=""  onClick={() => this.AddComment(
-                                          data && data.object && data.object.postId ,
-                                          data && data.category)} >
-                                          <img src={require('../../assets/images/ic_sent.svg')} alt=""/>
-                                        </span>
+                              indexPageData && indexPageData.vendorPostPropertiesList &&
+                              indexPageData.vendorPostPropertiesList.length ?
+                              indexPageData.vendorPostPropertiesList.map((data, index) =>
+                              <React.Fragment key={index}>
+                              { index === 0 && 
+                                <div className="explore-our-neighbours">
+                              <div className="row">
+                                  <div className="col-md-12 col-lg-12 col-sm-12">
+                                      <div className="container-fluid pxp-props-carousel-right">
+                                          <div className="pxp-props-carousel-right-container">
+                                              <h2 className="explore-our-neighbours-heading">Explore Our Neighbourhoods</h2>
+                                              <div className="pxp-props-carousel-right-stage-3">
+                                                  <div>
+                                                  <AliceCarousel
+                                                    mouseTracking
+                                                    disableButtonsControls ={true}
+                                                    items={locationItems}
+                                                    responsive={locationResponcive}
+                                                  />
+                                                  </div>
+                                              </div>
+                                          </div>
                                       </div>
                                   </div>
-                                  
-
-                                  </div>
-                                </div>
-                                  
-
                               </div>
-                            </Link>
-                            :
-                            ""}
-                            <div className="dashboard-newsfeed">
+                          </div>
+                              } 
+                              
+                                {
+                                  data.category && data.category === "Post" || data && data.category ==="Property" ?
+                                  <div className="dashboard-newsfeed">
                               <div className="dashboard-newsfeed-content">
                                 <ul className="news-feed-user-ul">
                                   <li>
@@ -424,9 +352,12 @@ class index extends Component {
                                   </li>
                                   
                                 </ul>
+
                                 
-                                  {
-                                    data.category && data.category === "Post" ? 
+                              
+                                  
+                                      {
+                                     data.category && data.category === "Post" ? 
                                   <>
                                   <div className="dashboard-newsfeed-img" 
                                   style={{
@@ -444,7 +375,8 @@ class index extends Component {
                                           index,
                                           data.object && data.object.isPostLikedByLoggedInUser,
                                           data && data.object && data.object.postId && data.object.postId,
-                                          0 
+                                          0 ,
+                                          0
                                           )}
                                       ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <Link className="post-navbar-items" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
@@ -528,6 +460,7 @@ class index extends Component {
                                           data.object && data.object.isPropertyLikedByLoggedInUser,
                                           0 ,
                                           data && data.object && data.object.propertId && data.object.propertId,
+                                          0
                                           )}
                                       ><i className={ data.object && data.object.isPropertyLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
                                       <Link className="post-navbar-items" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
@@ -573,11 +506,100 @@ class index extends Component {
                                   </div>
                                 </div>
                                 </>   
-                                  : null }
-                                 
+                                  :   ""
                                   
+                                }
                               </div>
                             </div>
+                            : 
+                            data.category && data.category === "Vendor" ?
+                                    <>
+                                    <div className="vendor-box"> 
+                                  <Link key={index} to={`/single-vendor-${data && data.object.userId && data.object.userId}`}>
+                                      {console.log('i am into vendor')}
+                                      <div className="row">
+                                        <div className="col-md-9 col-sm-9 col-8">
+                                          <div className="vendor-detail">
+                                            <span>{data && data.object.firstName ?  data.object.firstName : ''} {data && data.object.lastName ? data.object.lastName : ''} .
+                                            <Link to=""
+                                      onClick={this.followUnfollwProfessionals( 
+                                        data && data.object && data.object.userId, 
+                                        index,
+                                        data.object && data.object && data.object.isUserFollowedByLoggedInUser  
+                                        )}
+                                      > { data.object && data.object.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
+                                           </span>
+                                            <p>
+                                              <span>{ data && data.object && data.object.professionDesc && data.object.professionDesc !== "null" ? data.object.professionDesc : " " }</span>
+                                            </p>
+                                            <span className="address-span">{ data && data.object.address ? data.object.address : '' }</span>
+                                          </div>
+                                        </div>
+                                        <div className="col-md-3 col-sm-3 col-4">
+                                          <div className="vendor-img" style={{backgroundImage:`url(${data && data.object.profilePictureUrl ? data.object.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
+                                        </div>
+                                      </div>
+                                  </Link>
+                                  <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.postConatctPopupHanlder}>  
+                                  {this.state.postConatctPopup ? <ContactPopup postConatctPopup={this.state.postConatctPopup} /> : null }
+                                     Contact us</Link>
+                                  <div className="row custom-row-styles">
+                                    <div className="col-12 post-navbar">
+                                        <span style={{cursor:'pointer'}}
+                                          onClick={ () => this.addLike( 
+                                            data  && data.category,
+                                            index,
+                                            data.object && data.object.isUserLikedByLoggedInUser,
+                                            0,
+                                            0,
+                                            data && data.object && data.object.userId && data.object.userId,
+                                            )}
+                                        ><i className={ data.object && data.object.isUserLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                        <Link className="post-navbar-items" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
+                                        <Link ><img src={require('../../assets/images/ic_timeline_share.svg')} alt="" />  </Link>
+                                        {
+                                          data && data.object && data.object.vendorLikes && data.object.vendorLikes.length && data.object.vendorLikes.length >= 1 ?
+                                          <div className="likedByText"> Liked by { data.object.vendorLikes[data.object.vendorLikes.length-1].userName + ( data.object.vendorLikes.length <= 1 ? "" : 
+                                          `and ${data.object.vendorLikes.length - 1} others `) } </div> : ""
+                                        }
+                                        {
+                                          data && data.object && data.object.vendorComments && data.object.vendorComments.length && data.object.vendorComments.length >= 1 ?
+                                          <div className="personintroinfo">
+                                          <span className="personSingleName"> {data.object.vendorComments[data.object.vendorComments.length-1].userName} &nbsp;</span>
+                                          {data.object.vendorComments[data.object.vendorComments.length-1].commentText}  </div>: ""
+                                        }
+                                        {
+                                          data && data.object && data.object.vendorComments && data.object.vendorComments.length >= 1 ?
+                                          <Link className="viewCommentLight" to={`/comments-${data && data.object && data.object.userId && data.object.userId}&${data && data.category}&$`}>
+                                            View all {data.object.vendorComments.length} comments</Link>
+                                          : ""
+                                        }
+                                    <div className="comment-send-btn">
+                                      <span  className={user && user.userTypeId ===  2 ? 
+                                        "news-feed-user-img" : "news-feed-user-imgs"} > 
+                                        <img style={{width: '100%'}} src={user && user.profilePictureUrl ?
+                                          user.profilePictureUrl :
+                                           "assets/images/dashboard/ic_profile_placeholder.png"} /> 
+                                      </span>
+                                      <div className="comment-input-pointer">
+                                        <input className="form-control" placeholder="Write your review here..." style={{height:'35px'}} 
+                                          name="commentText" value={commentText} onChange={this.onChange} />
+                                        
+                                          <span className=""  onClick={() => this.AddComment(
+                                            data && data.object && data.object.userId ,
+                                            data && data.category)} >
+                                            <img src={require('../../assets/images/ic_sent.svg')} alt=""/>
+                                          </span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                  </div>
+                                  </div>
+                                  
+                                  </>                          
+                                  : ""
+                         
+                            }
                             </React.Fragment>
                             )
                             :
@@ -645,9 +667,9 @@ class index extends Component {
                                   <Link to="#" onClick={this.followUnfollwProfessionals( 
                                         data && data.userId && data.userId, 
                                         index,
-                                        data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser  
+                                        data && data.isUserFollowedByLoggedInUser  
                                         )}
-                                      > { data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
+                                      > { data && data.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
                                 </div>
                               </div>
                             </div>

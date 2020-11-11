@@ -85,7 +85,7 @@ class App extends Component {
       />
         <Route
         exact 
-        path={'/comments-:id&:category'}
+        path={'/comments-:id&:category&:indexValue'}
         component={Index}
       />
       <Route

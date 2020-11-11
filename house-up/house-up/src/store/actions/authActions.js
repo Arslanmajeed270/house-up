@@ -107,7 +107,7 @@ export const createUser = (userData) => dispatch => {
     console.log("checking i am here: ", userData);
     axios
     .post(
-        backendServerURL+'/registerUser', 
+        backendServerURL+'/registerUser',
         userData
     )
     .then(res => {   

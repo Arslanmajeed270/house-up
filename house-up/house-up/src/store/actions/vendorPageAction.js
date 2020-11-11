@@ -84,7 +84,7 @@ export const getSingleVendorsPropertyData = (userData) => dispatch => {
         dispatch(
 			{
 				type: SET_SINGLE_VENDORS_PROPERTIES,
-				payload: res.data && res.data.data &&  res.data.data.postNdPropertiesList ? res.data.data.postNdPropertiesList : {}
+				payload: res.data && res.data.data &&  res.data.data.postNdPropertiesList ? res.data.data.postNdPropertiesList : []
 			}
 		);
         dispatch(clearErrors());
