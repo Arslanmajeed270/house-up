@@ -94,9 +94,22 @@ export default function (state = initialState, action) {
 				indexPageData.vendorPostPropertiesList &&
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index
 			) {
-				indexPageData.vendorPostPropertiesList[
-					action.payload.index
-				].object.user.isUserFollowedByLoggedInUser = action.payload.like;
+				console.log('action', action);
+				if (action.payload.type === 'PostandProperty') {
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.user.isUserFollowedByLoggedInUser = action.payload.follow;
+				}
+				if (action.payload.type === 'Vendors') {
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.isUserFollowedByLoggedInUser = action.payload.follow;
+				}
+				if (action.payload.type === 'VendorsRight') {
+					indexPageData.vendors[
+						action.payload.index
+					].isUserFollowedByLoggedInUser = action.payload.follow;
+				}
 			}
 			return {
 				...state,
@@ -127,6 +140,12 @@ export default function (state = initialState, action) {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPostLikedByLoggedInUser = action.payload.follow;
+				}
+				if (action.payload.category === 'Vendor') {
+					console.log('i am into post else');
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.isUserLikedByLoggedInUser = action.payload.follow;
 				}
 			}
 			return {

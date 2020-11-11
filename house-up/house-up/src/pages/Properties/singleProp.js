@@ -408,7 +408,10 @@ class singleProp extends Component {
 											) : (
 												''
 											)}
-											{data && data.condoFee ? (
+											{data &&
+											data.propertyType !== 'House' &&
+											data &&
+											data.condoFee ? (
 												<div>
 													<span className='property-details'>
 														Condo fees (/month):{' '}
@@ -418,7 +421,10 @@ class singleProp extends Component {
 											) : (
 												''
 											)}
-											{data && data.parkingSpaces ? (
+											{data &&
+											data.propertyType !== 'House' &&
+											data &&
+											data.parkingSpaces ? (
 												<div>
 													<span className='property-details'>
 														Parking Spaces:{' '}
