@@ -197,15 +197,18 @@ export const AddLike = (data, index ) => dispatch => {
 };
 
 // Follow and Unfollow Professionals
-export const followProfessionals = (data, index) => dispatch => {
+export const followProfessionals = (data, index , type) => dispatch => {
 	axios
     .post( backendServerURL+'/followUnfollowUser' , data )
     .then(res => {
+		console.log("Follow Res ", res);
 		if( res && res.data && res.data.resultCode === "200" ){   
 			const payload = {
 				index: index,
-				follow: res.data.data.followed ? res.data.data.followed : false
+				follow: res.data.data.followed ? res.data.data.followed : false,
+				type: type
 			};
+			console.log("payload in follow function", payload)
 			dispatch({
 				type: FOLLOW_UNFOLLOW_PROFESSIONAL,
 				payload: payload
@@ -228,10 +231,10 @@ export const AddComments = (data, index ) => dispatch => {
     .then(res => {
 		console.log(res);
 		if( res && res.data && res.data.resultCode === "200" ){   
-		// 	const payload = {
-		// 		index: index,
-		// 		category: data.category,
-		// 	};
+			const payload = {
+				index: index,
+				category: data.category,
+			};
 			dispatch({
 				type: ADD_COMMENTS,
 				// payload: payload
