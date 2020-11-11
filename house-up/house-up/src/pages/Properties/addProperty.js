@@ -11,6 +11,7 @@ import Spinner from '../../components/common/Spinner';
 import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
+import { times } from 'lodash';
 
 class addProperty extends Component {
 	constructor(props) {
@@ -205,6 +206,7 @@ class addProperty extends Component {
 						dropDownData={dropDownData}
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form1DataHandler={this.form1DataHandler}
+						form1Data = {this.state.form1Data}
 					/>
 				)}
 				{this.state.formShow === 1 && (
@@ -212,6 +214,7 @@ class addProperty extends Component {
 						dropDownData={dropDownData}
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form2DataHandler={this.form2DataHandler}
+						form2Data = {this.state.form2Data}
 					/>
 				)}
 				{this.state.formShow === 2 && (
@@ -219,6 +222,7 @@ class addProperty extends Component {
 						dropDownData={dropDownData}
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form3DataHandler={this.form3DataHandler}
+						form3Data = {this.state.form3Data}
 						postCLicked={this.state.postCLicked}
 					/>
 				)}

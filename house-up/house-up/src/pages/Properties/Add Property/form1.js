@@ -49,13 +49,19 @@ class form1 extends Component {
 		const contactName = `${firstName} ${lastName}`;
 		const contactNumber = user.msisdn ? user.msisdn : '';
 		const userId = user.userId ? user.userId : '';
-
+		const {form1Data} = this.props;
+		console.log("checking form1Data", form1Data)
 		this.setState({
 			contactEmail,
 			contactName,
 			contactNumber,
 			userId,
+			currencyId: form1Data && form1Data.currencyId ? form1Data.currencyId : "",
+			description: form1Data && form1Data.description ? form1Data.description : "",
+			adTitle: form1Data && form1Data.adTitle ? form1Data.adTitle : "",
+			price: form1Data && form1Data.price ? form1Data.price : ""
 		});
+
 	}
 
 	onChange = (e) => {
@@ -187,7 +193,7 @@ class form1 extends Component {
 									className='input-feilds-property'
 									placeholder='Enter a title for your property...'
 									name='adTitle'
-									vale={adTitle}
+									value={adTitle}
 									onChange={this.onChange}
 									required
 								/>

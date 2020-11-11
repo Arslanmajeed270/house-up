@@ -75,6 +75,14 @@ class form3 extends Component {
 		return null;
 	}
 	componentDidMount() {
+		const { form3Data } = this.props;
+		this.setState({
+			address: form3Data.address ? form3Data.address :'',
+			longitude: form3Data.longitude ? form3Data.longitude : 78.68576,
+			latitude: form3Data.latitude ? form3Data.latitude :32.57698,
+			state: form3Data.state ? form3Data.state :'',
+			city: form3Data.city ? form3Data.city :'',
+		})
 		this.props.onGetCountries();
 	}
 	onChange = (e) => {
