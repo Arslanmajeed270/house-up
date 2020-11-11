@@ -268,12 +268,12 @@ class singleProp extends Component {
                           : ""
                         }
                         {
-                          data && data.condoFee ?
+                          data && data.propertyType !== "House" && data && data.condoFee ?
                           <div><span className="property-details">Condo fees (/month): </span> {data && data.condoFee}</div>
                           : ""
                         }
                         {
-                          data && data.parkingSpaces ?  
+                          data && data.propertyType !== "House" && data && data.parkingSpaces ?  
                           <div><span className="property-details">Parking Spaces: </span> {data && data.parkingSpaces}</div>
                           : ""
                         }

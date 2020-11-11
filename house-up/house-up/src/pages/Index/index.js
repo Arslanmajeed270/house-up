@@ -170,12 +170,10 @@ class index extends Component {
       vendorId:vendorId
   }
     console.log('data pakage of comment api', data);
-  
     this.props.onCommentAdded(data);
-  
   }
 
-    followUnfollwProfessionals = ( id, index, follow ) => e =>{
+    followUnfollwProfessionals = ( id, index, follow , val ) => e =>{
     e.preventDefault();
     console.log("checking index: ", index );
     console.log(follow)
@@ -187,8 +185,10 @@ class index extends Component {
       followUnfollowId:`${follow ? "2" : "1"}`,
       vendorId:id
     };
+    const type = val;
+    console.log("Type of category", type)
     console.log("checking followUnfollwProfessionals data: ", data );
-      this.props.onFollowUnfollowProfessionals(data, index);
+    this.props.onFollowUnfollowProfessionals(data, index , type);
   }
 
   contactUsPopHandler = () =>{
@@ -344,7 +344,8 @@ class index extends Component {
                                       onClick={this.followUnfollwProfessionals( 
                                         data && data.object && data.object.user && data.object.user.userId && data.object.user.userId, 
                                         index,
-                                        data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser  
+                                        data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser,
+                                        "PostandProperty" 
                                         )}
                                       > { data.object && data.object.user && data.object.user.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
                                       <h2 style={{fontSize:'20px'}}>{data && data.object && data.object.city ? data.object.city : " " } . {data && data.object && data.object.createDateAndTime} </h2>
@@ -352,17 +353,18 @@ class index extends Component {
                                   </li>
                                   
                                 </ul>
-
-                                
-                              
-                                  
                                       {
                                      data.category && data.category === "Post" ? 
                                   <>
-                                  <div className="dashboard-newsfeed-img" 
+                                  {
+                                    data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ?
+                                    <div className="dashboard-newsfeed-img" 
                                   style={{
-                                    backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : require("../../assets/images/ic_post_placeholder.png") }  )` }}>
+                                    backgroundImage:  `url( ${ data.object && data.object.postImages[0] && data.object.postImages[0].imageURL ? data.object.postImages[0].imageURL : ""}  )` }}>
                                   </div>
+                                  : ""
+                                  }
+                                  
                                   <div className="dashboard-newsfeed-details">{data && data.category==="Post" ? (data &&data.object && data.object.postText) : (data.object && data.object.description)}</div>
                                   <button onClick={this.contactUsPopHandler} className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="">  
                                    Contact us
@@ -427,7 +429,7 @@ class index extends Component {
                                   <Link to={`/single-prop-${data && data.object && data.object.propertId}`} >
                                     <div className="pxp-prop-card-featured" 
                                       style={{
-                                      backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL :  require("../../assets/images/ic_post_placeholder.png") } )`}}
+                                      backgroundImage: `url(${data && data.object && data.object.imageList[0] &&  data.object.imageList[0].imageURL ? data.object.imageList[0].imageURL : "" } )`}}
                                     >              
                                       <div className="d-table w-100 ">
                                         <div className="d-table-cell va-bottom featured-height">
@@ -507,7 +509,6 @@ class index extends Component {
                                 </div>
                                 </>   
                                   :   ""
-                                  
                                 }
                               </div>
                             </div>
@@ -525,7 +526,8 @@ class index extends Component {
                                       onClick={this.followUnfollwProfessionals( 
                                         data && data.object && data.object.userId, 
                                         index,
-                                        data.object && data.object && data.object.isUserFollowedByLoggedInUser  
+                                        data.object && data.object && data.object.isUserFollowedByLoggedInUser,
+                                        "Vendors" 
                                         )}
                                       > { data.object && data.object.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
                                            </span>
@@ -667,7 +669,8 @@ class index extends Component {
                                   <Link to="#" onClick={this.followUnfollwProfessionals( 
                                         data && data.userId && data.userId, 
                                         index,
-                                        data && data.isUserFollowedByLoggedInUser  
+                                        data && data.isUserFollowedByLoggedInUser,
+                                        "VendorsRight"  
                                         )}
                                       > { data && data.isUserFollowedByLoggedInUser === true ? "Unfollow" : "Follow" } </Link>
                                 </div>
@@ -713,7 +716,7 @@ const mapDispatchToProps = dispatch => {
   return {
     onCommentAdded : (data) => dispatch(actions.AddComments(data)),
     onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
-    onFollowUnfollowProfessionals : (data, index) => dispatch(actions.followProfessionals(data, index)),
+    onFollowUnfollowProfessionals : (data, index, type) => dispatch(actions.followProfessionals(data, index , type)),
     onLikedPostOrProperty : (data , index ) => dispatch(actions.AddLike(data, index)),
     onUpdateCurrentLocaiton: (data) =>  dispatch({type: actionTypes.SET_CURRENT_LOCATION, payload: data})
 
