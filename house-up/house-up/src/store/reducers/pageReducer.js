@@ -11,125 +11,138 @@ import {
 	ADD_LIKE,
 	SET_CURRENT_LOCATION,
 	SET_DEFAULT_ALL_CARDS,
-	LOAD_ALL_CARDS
+	LOAD_ALL_CARDS,
 
 	// ADD_COMMENTS
 } from '../actions/actionTypes';
 
 const initialState = {
 	loading: false,
-	isLike : false,
-	indexPageData :{},
+	isLike: false,
+	indexPageData: {},
 	countries: [],
 	professionList: [],
-	showPopUp:false,
-	homePageData:{},
-	currentLocation:{
-		country: "",
-		province: "",
-		city: ""
+	showPopUp: false,
+	homePageData: {},
+	currentLocation: {
+		country: '',
+		province: '',
+		city: '',
 	},
-	allCards: []
+	allCards: [],
 	// comments
 };
 
 export default function (state = initialState, action) {
 	switch (action.type) {
-
 		case PAGE_LOADING:
 			return {
 				...state,
-				loading: true
+				loading: true,
 			};
 		case PAGE_LOADED:
 			return {
 				...state,
-				loading: false
+				loading: false,
 			};
 		case SET_INDEX_DATA:
 			return {
 				...state,
-				indexPageData : action.payload
+				indexPageData: action.payload,
 			};
 		case GET_COUNTRIES:
 			return {
 				...state,
-				countries : action.payload
-		};
+				countries: action.payload,
+			};
 		case GET_PROFESSIONS:
 			return {
 				...state,
-				professionList : action.payload
-		};
+				professionList: action.payload,
+			};
 		case SHOW_POP_UP:
 			return {
 				...state,
-				showPopUp: true
-			}
+				showPopUp: true,
+			};
 		case HIDE_POP_UP:
 			return {
-				...state,	
-				showPopUp:false
-
-			}
-		case SET_HOME_DATA:
-			return{
 				...state,
-				homePageData:action.payload
-			}
+				showPopUp: false,
+			};
+		case SET_HOME_DATA:
+			return {
+				...state,
+				homePageData: action.payload,
+			};
 
 		case LOAD_ALL_CARDS:
 			return {
 				...state,
-				allCards: action.payload
-			}
+				allCards: action.payload,
+			};
 		case SET_DEFAULT_ALL_CARDS:
 			return {
 				...state,
-				allCards: []
-			}
-			
+				allCards: [],
+			};
+
 		case FOLLOW_UNFOLLOW_PROFESSIONAL: {
 			let indexPageData = Object.assign({}, state.indexPageData);
-			if( indexPageData && indexPageData.vendorPostPropertiesList && 
-				indexPageData.vendorPostPropertiesList.length >= action.payload.index ){
-					indexPageData.vendorPostPropertiesList[action.payload.index].object.user.isUserFollowedByLoggedInUser = action.payload.like;
-			} 
+			if (
+				indexPageData &&
+				indexPageData.vendorPostPropertiesList &&
+				indexPageData.vendorPostPropertiesList.length >= action.payload.index
+			) {
+				indexPageData.vendorPostPropertiesList[
+					action.payload.index
+				].object.user.isUserFollowedByLoggedInUser = action.payload.like;
+			}
 			return {
 				...state,
-				indexPageData
+				indexPageData,
 			};
 		}
 		case ADD_LIKE: {
-			console.log("checking action.payload.index: ", action.payload.index);
+			console.log('checking action.payload.index: ', action.payload.index);
 			let indexPageData = Object.assign({}, state.indexPageData);
-			if( indexPageData && indexPageData.vendorPostPropertiesList && 
-				indexPageData.vendorPostPropertiesList.length >= action.payload.index ){
-					console.log("checking action.payload.category:", action.payload.category);
-					if(action.payload.category === "Property"){
-						console.log("i am into property if");
-						indexPageData.vendorPostPropertiesList[action.payload.index].object.isPropertyLikedByLoggedInUser = action.payload.follow;
-						console.log("checking indexPageData: ", indexPageData);
-					}
-					if(action.payload.category === "Post"){
-						console.log("i am into post else");
-						indexPageData.vendorPostPropertiesList[action.payload.index].object.isPostLikedByLoggedInUser = action.payload.follow;
-					}
-			} 
-			return{
+			if (
+				indexPageData &&
+				indexPageData.vendorPostPropertiesList &&
+				indexPageData.vendorPostPropertiesList.length >= action.payload.index
+			) {
+				console.log(
+					'checking action.payload.category:',
+					action.payload.category
+				);
+				if (action.payload.category === 'Property') {
+					console.log('i am into property if');
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.isPropertyLikedByLoggedInUser = action.payload.follow;
+					console.log('checking indexPageData: ', indexPageData);
+				}
+				if (action.payload.category === 'Post') {
+					console.log('i am into post else');
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.isPostLikedByLoggedInUser = action.payload.follow;
+				}
+			}
+			return {
 				...state,
-				indexPageData
+				indexPageData,
 			};
 		}
-	case SET_CURRENT_LOCATION:{
-		console.log('checking action.payload: ', action.payload)
-		let currentLocation = Object.assign({}, action.payload);
-		return {
-			...state,
-			currentLocation: currentLocation
-		};
+		case SET_CURRENT_LOCATION: {
+			console.log('checking action.payload: ', action.payload);
+			let currentLocation = Object.assign({}, action.payload);
+			return {
+				...state,
+				currentLocation: currentLocation,
+			};
 		}
-	default:
+		default:
 			return state;
 	}
 }

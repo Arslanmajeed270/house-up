@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router , Route,  withRouter} from 'react-router-dom';
+import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
 
 import About from './About/about';
 import AddProperty from './Properties/addProperty';
@@ -20,106 +20,32 @@ import AddCoupon from './wizards/addCoupon';
 import SelectLocation from './selectLocation/selectLocation';
 
 class Routes extends React.Component {
-
-	render(){
+	render() {
 		return (
 			<Router>
-				
-				<Route      
-					exact 
-					path={"/"} 
-					component={Home}
-				/>
-				<Route      
-					exact 
-					path={"/index-:country&:state&:city"} 
-					component={Index}
-				/>
-				<Route      
-					exact 
-					path={"/home"} 
-					component={Home}
-				/>
-				<Route      
-					exact 
-					path={"/about"} 
-					component={About}
-				/>
-				<Route      
-					exact 
-					path={"/add-property"} 
-					component={AddProperty}
-				/>
-				<Route      
-					exact 
-					path={"/add-product"} 
-					component={AddProduct}
-				/>
-				<Route      
-					exact 
-					path={"/add-coupon"} 
-					component={AddCoupon}
-				/>
-				<Route      
-					exact 
-					path={"/single-vendor-:id"} 
-					component={SingleVendor}
-				/>
-				<Route      
-					exact 
-					path={"/blogs"} 
-					component={Blogs}
-				/>
-				<Route      
-					exact 
-					path={"/about"} 
-					component={About}
-				/>
-				<Route      
-					exact 
-					path={"/comming-soon"} 
-					component={ComingSoon}
-				/>
-				<Route      
-					exact 
-					path={"/comments-:id&:category&:indexValue"} 
+				<Route exact path={'/'} component={Home} />
+				<Route exact path={'/index-:country&:state&:city'} component={Index} />
+				<Route exact path={'/home'} component={Home} />
+				<Route exact path={'/about'} component={About} />
+				<Route exact path={'/add-property'} component={AddProperty} />
+				<Route exact path={'/add-product'} component={AddProduct} />
+				<Route exact path={'/add-coupon'} component={AddCoupon} />
+				<Route exact path={'/single-vendor-:id'} component={SingleVendor} />
+				<Route exact path={'/blogs'} component={Blogs} />
+				<Route exact path={'/about'} component={About} />
+				<Route exact path={'/comming-soon'} component={ComingSoon} />
+				<Route
+					exact
+					path={'/comments-:id&:category&:indexValue'}
 					component={Comments}
 				/>
-				<Route      
-					exact 
-					path={"/contact"} 
-					component={Contact}
-				/>
-				<Route      
-					exact 
-					path={"/privacy"} 
-					component={Privacy}
-				/>
-				<Route      
-					exact 
-					path={"/select-location"} 
-					component={SelectLocation}
-				/>
-				<Route      
-					exact 
-					path={"/properties"} 
-					component={Properties}
-				/>
-				<Route      
-					exact 
-					path={"/single-post"} 
-					component={SinglePost}
-				/>
-				<Route      
-					exact 
-					path={"/single-prop-:id"} 
-					component={SingleProp}
-				/>
-				<Route      
-					exact 
-					path={"/professionals"} 
-					component={Professionals}
-				/>
+				<Route exact path={'/contact'} component={Contact} />
+				<Route exact path={'/privacy'} component={Privacy} />
+				<Route exact path={'/select-location'} component={SelectLocation} />
+				<Route exact path={'/properties'} component={Properties} />
+				<Route exact path={'/single-post'} component={SinglePost} />
+				<Route exact path={'/single-prop-:id'} component={SingleProp} />
+				<Route exact path={'/professionals'} component={Professionals} />
 			</Router>
 		);
 	}

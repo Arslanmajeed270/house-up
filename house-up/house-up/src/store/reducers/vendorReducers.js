@@ -1,13 +1,13 @@
 import {
 	SET_VENDORS,
 	SET_SINGLE_VENDOR,
-	SET_SINGLE_VENDORS_PROPERTIES
+	SET_SINGLE_VENDORS_PROPERTIES,
 } from '../actions/actionTypes';
 
 const initialState = {
-	vendorsData:[],
+	vendorsData: [],
 	singleVendorData: {},
-	singleVendorsPropertiesData: {}
+	singleVendorsPropertiesData: {},
 };
 
 export default function (state = initialState, action) {
@@ -15,19 +15,19 @@ export default function (state = initialState, action) {
 		case SET_VENDORS:
 			return {
 				...state,
-				vendorsData : action.payload
+				vendorsData: action.payload,
 			};
 		case SET_SINGLE_VENDOR:
-			return{
+			return {
 				...state,
-				singleVendorData : action.payload
-			}
+				singleVendorData: action.payload,
+			};
 		case SET_SINGLE_VENDORS_PROPERTIES:
-			return{
+			return {
 				...state,
-				singleVendorsPropertiesData:action.payload
-			}
-	default:
+				singleVendorsPropertiesData: action.payload,
+			};
+		default:
 			return state;
 	}
 }

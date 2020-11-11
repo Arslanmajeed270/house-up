@@ -21,30 +21,30 @@ import propertyReducer from './store/reducers/propertyReducer';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  page: pageReducer,
-  vendor: vendorReducer,
-  auth : authReducer,
-  errors : errorsReducer,
-  property : propertyReducer
-
+	page: pageReducer,
+	vendor: vendorReducer,
+	auth: authReducer,
+	errors: errorsReducer,
+	property: propertyReducer,
 });
 
 //const store = createStore(burgerBuilderReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
-const store = createStore(rootReducer, composeEnhancers(
-  applyMiddleware(thunk)
-));
-
-const app = (
-  <Provider store={store}>
-  <React.StrictMode>
-      <BrowserRouter>
-          <App />
-      </BrowserRouter>
-      </React.StrictMode>
-  </Provider>
+const store = createStore(
+	rootReducer,
+	composeEnhancers(applyMiddleware(thunk))
 );
 
-ReactDOM.render(app ,document.getElementById('root'));
+const app = (
+	<Provider store={store}>
+		<React.StrictMode>
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		</React.StrictMode>
+	</Provider>
+);
+
+ReactDOM.render(app, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
