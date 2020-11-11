@@ -94,13 +94,14 @@ export default function (state = initialState, action) {
 				indexPageData.vendorPostPropertiesList &&
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index
 			) {
-				console.log('action', action);
+				console.log('checking action in FOLLOW_UNFOLLOW_PROFESSIONAL', action);
 				if (action.payload.type === 'PostandProperty') {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.user.isUserFollowedByLoggedInUser = action.payload.follow;
 				}
 				if (action.payload.type === 'Vendors') {
+					console.log('i am into Vendors');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isUserFollowedByLoggedInUser = action.payload.follow;

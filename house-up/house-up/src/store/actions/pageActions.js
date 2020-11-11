@@ -213,27 +213,41 @@ export const AddLike = (data, index) => (dispatch) => {
 
 // Follow and Unfollow Professionals
 export const followProfessionals = (data, index, type) => (dispatch) => {
-	axios.post(backendServerURL + '/followUnfollowUser', data).then((res) => {
-		console.log('Follow Res ', res);
-		if (res && res.data && res.data.resultCode === '200') {
-			const payload = {
-				index: index,
-				follow: res.data.data.followed ? res.data.data.followed : false,
-				type: type,
-			};
-			console.log('payload in follow function', payload);
+	axios
+		.post(backendServerURL + '/followUnfollowUser', data)
+		.then((res) => {
+			console.log('Follow Res ', res);
+			if (res && res.data && res.data.resultCode === '200') {
+				const payload = {
+					index: index,
+					follow: res.data.data.followed ? res.data.data.followed : false,
+					type: type,
+				};
+				console.log('payload in follow function', payload);
+				dispatch({
+					type: FOLLOW_UNFOLLOW_PROFESSIONAL,
+					payload: payload,
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
 			dispatch({
 				type: SET_ERRORS,
-				payload: {
-					message: res.data.message
-						? res.data.message
-						: 'Something went wrong!',
-				},
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
 			});
-		}
-	});
+		});
 };
-
 // add Comments to the post and property
 export const AddComments = (data, index) => (dispatch) => {
 	axios.post(backendServerURL + '/addComment', data).then((res) => {

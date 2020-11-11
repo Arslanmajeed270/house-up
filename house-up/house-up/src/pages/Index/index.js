@@ -1443,8 +1443,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
-		onFollowUnfollowProfessionals: (data, index) =>
-			dispatch(actions.followProfessionals(data, index)),
+		onFollowUnfollowProfessionals: (data, index, type) =>
+			dispatch(actions.followProfessionals(data, index, type)),
 		onLikedPostOrProperty: (data, index) =>
 			dispatch(actions.AddLike(data, index)),
 		onUpdateCurrentLocaiton: (data) =>
