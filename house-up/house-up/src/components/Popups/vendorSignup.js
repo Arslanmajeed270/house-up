@@ -197,24 +197,24 @@ class vendorSignup extends Component {
             keywordDescriptYourBusiness, provinceId, cityId, zipCode,streetAddress,
             businessName, websiteLink, qualification, aboutBusiness, businessStartDate, unitOther
         } = this.state;
+        const city = cityId.split(',')[1];
+        const cId = cityId.split(',')[0];
 
+        const province = provinceId.split(',')[1];
+        const pId = provinceId.split(',')[0];
         if(password !== confirmPassword){
             this.props.onErrorSet("Password not matched!");
             return;
         }
-
-        if(!checkValidURL(websiteLink)){
+        else if( profileImage === ''){
+            this.props.onErrorSet("Profile Picture is Missing")
+            return;
+        }
+        else if(!checkValidURL(websiteLink)){
             this.props.onErrorSet("Please Enter Valid URL!");
             return;
         }
-                const city = cityId.split(',')[1];
-                const cId = cityId.split(',')[0];
-
-                const province = provinceId.split(',')[1];
-                const pId = provinceId.split(',')[0];
-
-    //    console.log("**** checking phone number:  ", this.props.phNumber);
-
+    else{
              const userData = {
                 profileImage: profileImage,
                 firstName: firstName,
@@ -253,8 +253,7 @@ class vendorSignup extends Component {
              };
             console.log('i am here: ',userData);
             this.props.onCreateVendor(userData);
-             
- 
+            }
          }
 
     render() { 
@@ -396,6 +395,7 @@ class vendorSignup extends Component {
                             placeholder="Business regigration Document" 
                             onChange={this.onChange} 
                             name="businessRegistrationDocument"
+                            required
                          />
                          <label for="file" className="btn-2"> { imagePreviewForRegister && imagePreviewForRegister.name  ? imagePreviewForRegister.name : 'Business registration document'}
                          <div style={{textAlign:'right',float:'right'}} >
@@ -430,8 +430,7 @@ class vendorSignup extends Component {
                             placeholder="Website lnk (optional)"
                             name="websiteLink" 
                             value={websiteLink}
-                            onChange={this.onChange}  
-                               
+                            onChange={this.onChange}
                         />
                     </div>
                     </div>
@@ -464,10 +463,6 @@ class vendorSignup extends Component {
                             onChange={this.onChange}
                             required  
                         />
-                         {/* <label for="calender" className="btn-2">Business Started 
-                         <img src={require("../../assets/images/icons/ic_calendar.svg")} alt="" /></label> */}
-
-
                     </div>
                     </div>
                     </div>
@@ -510,11 +505,9 @@ class vendorSignup extends Component {
                             onChange={this.onChange}
                             required
                         />
-
                     </div>
                     </div>
                     </div>
-
                     <div className="row" style={{padding:'0px 15px'}}>
                         <div className="col-md-6" style={{padding:'0px' , paddingRight:'12px'}}>
                             <div className="row">
@@ -562,6 +555,7 @@ class vendorSignup extends Component {
                                         name="unitOther"
                                         value={unitOther}
                                         onChange={this.onChange}
+                                        required
                                     />
                                 </div>
                                 <div className="col-md-6">
@@ -587,8 +581,7 @@ class vendorSignup extends Component {
                         />
                     </div>
                     </div>
-                    </div>
-
+                </div>
                 <div className="row" style={{padding:'0px 15px'}}>
                     <div className="col-md-6" style={{padding:'0px',paddingRight:'12px'}}>
                         <div className="form-group">
@@ -628,9 +621,7 @@ class vendorSignup extends Component {
                         </button>
                     </div>               
                     { pageContent }
-                    
              </form>
-
             </Modal.Body>
         </Modal>             
        

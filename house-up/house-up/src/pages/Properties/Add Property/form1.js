@@ -13,7 +13,7 @@ class form1 extends Component {
             contactEmail:'',
             contactName:'',
             contactNumber:'',
-            price:0,
+            price:'',
             user: {},
             userId:'',
             currencyData: []
@@ -158,7 +158,7 @@ class form1 extends Component {
                 <div className="row border-property">
                     <div className="col-md-12">
                         <h6 className="titles-property">Description</h6>
-                        <textarea className="input-feilds-property" name="description" value={description} onChange={this.onChange} required  placeholder="More detail about your property..." style={{height:'120px'}}/>
+                        <textarea className="input-feilds-property" name="description" value={description} onChange={this.onChange}  placeholder="More detail about your property..." style={{height:'120px'}}/>
                     </div>
                 </div>
                 

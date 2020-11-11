@@ -344,6 +344,64 @@ class index extends Component {
                                     <div className="vendor-img" style={{backgroundImage:`url(${data && data.object.profilePictureUrl ? data.object.profilePictureUrl : 'assets/images/ic_profile_placeholder.png'})`}} />
                                   </div>
                                 </div>
+                                <Link to="#" className="dashboard-newsfeed-contact nodecor" data-toggle="modal" data-target="" onClick={this.postConatctPopupHanlder}>  
+                                {this.state.postConatctPopup ? <ContactPopup postConatctPopup={this.state.postConatctPopup} /> : null }
+                                   Contact us</Link>
+                                <div className="row custom-row-styles">
+                                  <div className="col-12 post-navbar">
+                                      <span style={{cursor:'pointer'}}
+                                        onClick={ () => this.addLike( 
+                                          data  && data.category,
+                                          index,
+                                          data.object && data.object.isPostLikedByLoggedInUser,
+                                          data && data.object && data.object.postId && data.object.postId,
+                                          0 
+                                          )}
+                                      ><i className={ data.object && data.object.isPostLikedByLoggedInUser === true ? "fas fa-heart post-navbar-items" : "far fa-heart post-navbar-items"}    /></span>
+                                      <Link className="post-navbar-items" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}  style={{color:'#706666'}} ><img src={require('../../assets/images/ic_timeline_comment.png')} alt="" /></Link>
+                                      <Link ><img src={require('../../assets/images/ic_timeline_share.svg')} alt="" />  </Link>
+                                      {
+                                        data && data.object && data.object.postLikes && data.object.postLikes.length && data.object.postLikes.length >= 1 ?
+                                        <div className="likedByText"> Liked by { data.object.postLikes[data.object.postLikes.length-1].userName + ( data.object.postLikes.length <= 1 ? "" : 
+                                        `and ${data.object.postLikes.length - 1} others `) } </div> : ""
+                                      }
+                                      {
+                                        data && data.object && data.object.postComments && data.object.postComments.length && data.object.postComments.length >= 1 ?
+                                        <div className="personintroinfo">
+                                        <span className="personSingleName"> {data.object.postComments[data.object.postComments.length-1].userName} &nbsp;</span>
+                                        {data.object.postComments[data.object.postComments.length-1].commentText}  </div>: ""
+                                      }
+                                      {
+                                        data && data.object && data.object.postComments && data.object.postComments.length >= 1 ?
+                                        <Link className="viewCommentLight" to={`/comments-${data && data.object && data.object.postId && data.object.postId}&${data && data.category}`}>
+                                          View all {data.object.postComments.length} comments</Link>
+                                        : ""
+                                      }
+
+                                  <div className="comment-send-btn">
+                                    <span  className={user && user.userTypeId ===  2 ? 
+                                      "news-feed-user-img" : "news-feed-user-imgs"} > 
+                                      <img style={{width: '100%'}} src={user && user.profilePictureUrl ?
+                                        user.profilePictureUrl :
+                                         "assets/images/dashboard/ic_profile_placeholder.png"} /> 
+                                    </span>
+                                    <div className="comment-input-pointer">
+                                      <input className="form-control" placeholder="Write your review here..." style={{height:'35px'}} 
+                                        name="commentText" value={commentText} onChange={this.onChange} />
+                                      
+                                        <span className=""  onClick={() => this.AddComment(
+                                          data && data.object && data.object.postId ,
+                                          data && data.category)} >
+                                          <img src={require('../../assets/images/ic_sent.svg')} alt=""/>
+                                        </span>
+                                      </div>
+                                  </div>
+                                  
+
+                                  </div>
+                                </div>
+                                  
+
                               </div>
                             </Link>
                             :
@@ -534,12 +592,12 @@ class index extends Component {
                       <div className="side-bar-user mt-100">
                         <div className="main-user">
                           <div className="row">
-                        {indexPageData && indexPageData.vendors ?
-                            <div className="col-md-3 col-lg-3 col-sm-3">
-                              <div className="min-user-img" style={{ backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}} />
-                            </div>
-                            : null 
-                        }
+                            {indexPageData && indexPageData.vendors ?
+                                <div className="col-md-3 col-lg-3 col-sm-3">
+                                  <div className="min-user-img" style={{ backgroundImage: `url(${ user && user.profilePictureUrl ? user.profilePictureUrl  : 'assets/images/ic_profile_placeholder.png'})`}} />
+                                </div>
+                                : null 
+                            }
                             <div className="col-md-9 col-lg-9 col-sm-9  col-nopadd">
                               <div className="main-user-content">
                                 <p>{ user && user.firstName ? user.firstName : "" } { user && user.lastName ? user.lastName : "" }</p>
@@ -554,8 +612,6 @@ class index extends Component {
                             <div className="col-md-8 col-lg-8 col-sm-8">
                               <div className="suggested-p">
                                 <p>Suggested Professionals For You</p>
-                               
-                             
                               </div>
                             </div>
                             <div className="col-md-4 col-lg-4 col-sm-4">
@@ -569,7 +625,6 @@ class index extends Component {
                         </div>
                         {indexPageData && indexPageData.vendors &&
                           indexPageData.vendors.map( (data , index) =>
-                          // index>0 && index<7 ? 
                           index < 6 &&
                         <div key={index} className="suggested-vendors-list "> 
                           <div className="mb-md-3">

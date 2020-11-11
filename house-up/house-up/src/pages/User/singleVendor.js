@@ -45,7 +45,16 @@ class singleVendor extends Component {
     let userData = {
       userId: id
     }
+    const data={
+      offset: "0",
+      lat: "43.787083",
+      userId: id, 
+      channel: "web",
+      lng: "-79.497369", 
+      limit: "10"
+    }
     this.props.onGetSingleVendorsData(userData);
+    this.props.onGetSingleVendorsPropertiesData(data);
   }
 
 
@@ -61,6 +70,7 @@ class singleVendor extends Component {
 }
     render() { 
       const { singleVendorData } = this.state;
+      console.log('singlevendor data', singleVendorData)
       
         return ( 
             <React.Fragment>
@@ -252,7 +262,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetSingleVendorsData: (userData) => dispatch(actions.getSingleVendorData(userData))
+      onGetSingleVendorsData: (userData) => dispatch(actions.getSingleVendorData(userData)),
+      onGetSingleVendorsPropertiesData : (data) => dispatch(actions.getSingleVendorsPropertyData(data))
   }
 };
  

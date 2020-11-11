@@ -29,7 +29,8 @@ export {
 
 export {
     getVendorsData,
-    getSingleVendorData
+    getSingleVendorData,
+    getSingleVendorsPropertyData
 } from './vendorPageAction';
 
 export {

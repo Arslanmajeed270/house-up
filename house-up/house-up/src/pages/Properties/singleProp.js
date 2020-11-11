@@ -368,7 +368,7 @@ class singleProp extends Component {
                           }
                           </div>
                       </div>
-                      <div className="pxp-single-property-section mt-4 mt-md-5">
+                      {/* <div className="pxp-single-property-section mt-4 mt-md-5">
                         <h3>Explore the Area</h3>
                         <div className="pxp-sp-pois-nav mt-3 mt-md-4">
                           <div className="pxp-sp-pois-nav-transportation text-uppercase">
@@ -481,6 +481,7 @@ class singleProp extends Component {
                           </div>
                         </div>
                       </div>
+                       */}
                       <div className="row mt-100">
                         <div className="col-sm-12 col-lg-12">
                           <div className="pxp-agent-block">

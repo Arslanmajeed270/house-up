@@ -38,7 +38,6 @@ class form3 extends Component {
             cities: [],
         };
       }
-
     static getDerivedStateFromProps(props, state) {
       const errors = props.errors;
       const page = props.page;
@@ -54,32 +53,22 @@ class form3 extends Component {
           states = cloneDeep(changedState.countries[0]);
           changedState.states = states.states;
       }
-    
-    
       if(errors && JSON.stringify(state.errors) !== JSON.stringify(errors)){
           changedState.errors = errors;
           stateChanged = true;
         }
-        
       if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
           changedState.loading = page.loading;
           stateChanged = true;            
       }
-      
       if(stateChanged){
         return changedState;
       }
       return null;
     }
-    
-    
-    
       componentDidMount(){
         this.props.onGetCountries();
     }
-    
-    
-    
     onChange = e => {
     
     if(e.target.name === 'country'){
@@ -114,7 +103,7 @@ class form3 extends Component {
         imagePreviewState.push(imagePreview);
         fileUpload(e)
         .then((data) => {
-           console.log("base64 :",data.base64);
+        //    console.log("base64 :",data.base64);
             images.push({image: data.base64});
             this.setState({
                 imagePreview: imagePreviewState,
@@ -134,13 +123,12 @@ class form3 extends Component {
         },
         zoom: 11
       };
-
       propertyPlanStateHandler = () =>{
           this.setState({
               propertyPlanState : !this.state.propertyPlanState
           })
       }
-
+     
       onSubmit = e => {
         e.preventDefault();
         const { city, address, state, images, longitude, latitude }  = this.state;
@@ -155,13 +143,16 @@ class form3 extends Component {
 
         // this.propertyPlanStateHandler ();
        console.log(dataForm3);
-    if(this.state.images.length !== 0){
-        this.props.form3DataHandler(dataForm3);
+        if(this.state.images.length !== 0 && this.state.images.length >=5){
+            this.props.form3DataHandler(dataForm3);
+        }
+        else{
+            console.log("error picture must be 5 or more");
+            alert("Property Images Must be 5 or more")
+            
         }
 
     }
-
-
     render() { 
         const{ address , city , imagePreview, googleMapKey ,  states , cities  , state , countries , country } = this.state;
         const files = this.state.files.map(file => (
@@ -194,22 +185,22 @@ class form3 extends Component {
                 </div>
                     <div className="row">
                         <div className="col-md-2" >
-                        <div className="form-group">
-                        <select style={{ borderRadius: '0px'}} className="custom-select"
-                              placeholder="City"
-                              name="state"
-                              value={state}
-                              onChange={this.onChange}
-                              >
+                            <div className="form-group">
+                                <select style={{ borderRadius: '0px'}} className="custom-select"
+                                    placeholder="City"
+                                    name="state"
+                                    value={state}
+                                    onChange={this.onChange}
+                                >
                                 <option >Select Province</option>
-                             {
-                                 states && states.length ? states.map( ( province, idx ) => (
-                                     <option key={idx} value={province.name} > { province.name }</option>
-                                 ) )
-                                 : ""
-                             }
-                              </select>
-                              </div>
+                                {
+                                    states && states.length ? states.map( ( province, idx ) => (
+                                        <option key={idx} value={province.name} > { province.name }</option>
+                                    ) )
+                                    : ""
+                                }
+                                </select>
+                            </div>
                         </div>
                         <div className="col-md-2">
                         <div className="form-group">
