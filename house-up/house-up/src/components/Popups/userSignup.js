@@ -143,6 +143,7 @@ class userSignup extends Component {
                 country: this.state.currentLocation.country,
                 state: this.state.currentLocation.province,
                 city: this.state.currentLocation.city,
+                channel: "web"
              };
              console.log("user Data in user Sign up", userData)
              this.props.onCreateUser(userData);

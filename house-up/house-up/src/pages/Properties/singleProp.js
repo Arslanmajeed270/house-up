@@ -494,7 +494,7 @@ class singleProp extends Component {
                                   <div key={index} className="media mt-2 mt-md-3">
                                   <img src={da && da.profilePictureUrl} className="mr-3" alt="..." />
                                   <div className="media-body">
-                              <h5> {da && da.userFullName}</h5>
+                                  <h5> {da && da.userFullName}</h5>
                                     <div className="pxp-agent-comments-date">
                                       {da && da.createDateTime}
                                     </div>

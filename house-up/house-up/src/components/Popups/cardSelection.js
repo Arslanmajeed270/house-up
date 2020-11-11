@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 
-import{ Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
 
 // importing actions
 import { connect } from 'react-redux';
