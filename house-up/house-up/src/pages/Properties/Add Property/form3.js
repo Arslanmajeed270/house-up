@@ -6,7 +6,6 @@ import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import cloneDeep from 'lodash/cloneDeep';
-import { Link } from 'react-router-dom';
 
 import fileUpload from 'fuctbase64';
 import PropertyPlan from '../../../components/Popups/propertyPlan';

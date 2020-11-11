@@ -1,3 +1,4 @@
+/* eslint-disable no-dupe-keys */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import GoogleMapReact from 'google-map-react';
