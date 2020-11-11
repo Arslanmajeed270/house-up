@@ -105,7 +105,7 @@ class index extends Component {
 
   AddComment = ( id , typeCategory) => {
     console.log('called');
-    let { userId , commentText , propertyId , postId , storyImageId , vendorId , category } = this.state;
+    let { userId , commentText , propertyId , postId , storyImageId , vendorId } = this.state;
     if( typeCategory === "Post"){
       postId = id
     }

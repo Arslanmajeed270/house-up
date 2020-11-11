@@ -8,15 +8,17 @@ import Spinner from '../../components/common/Spinner';
 import { connect } from 'react-redux';
 import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/index';
+import{ Alert } from 'react-bootstrap';
+import Spinner from '../common/Spinner';
 
 class cardSelection extends Component {
     constructor(props){
         super(props);
         this.state = {
-            user: {},
+            allCards: [],
             errors: {},
             loading : false,
-            cardId: ''
+            showPopUp: false
         };
     }
 

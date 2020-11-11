@@ -9,7 +9,7 @@ import{ Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 var jwt = require('jsonwebtoken');
 
-class cardSelection extends Component {
+class AddCard extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -18,7 +18,8 @@ class cardSelection extends Component {
             cardNumber : '',
             expiryDate : '',
             cvv: '',
-            user: {}
+            user: {},
+            showPopUp: false
         };
     }
 
@@ -181,4 +182,4 @@ const mapStateToProps = state => {
     }
   };
   
-  export default connect(mapStateToProps,mapDispatchToProps)(cardSelection);
+  export default connect(mapStateToProps,mapDispatchToProps)(AddCard);
