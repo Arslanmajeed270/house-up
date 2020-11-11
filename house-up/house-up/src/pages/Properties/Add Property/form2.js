@@ -101,6 +101,39 @@ class from2 extends Component {
 					? dropDownData1.buildingType
 					: [],
 		});
+		const {form2Data} = this.props;
+		this.setState({
+			yearBuilt: form2Data.yearBuilt ? form2Data.yearBuilt : null,
+			balcony: form2Data.balcony ? form2Data.balcony : false,
+			disposal: form2Data.disposal ? form2Data.disposal : false,
+			finishedSqftArea: form2Data.finishedSqftArea ? form2Data.finishedSqftArea : null,
+			lotDimensionLength: form2Data.lotDimensionLength ? form2Data.lotDimensionLength : 0,
+			noOfBathrooms: form2Data.noOfBathrooms ? form2Data.noOfBathrooms : null,
+			basementId: form2Data.basementId ? form2Data.basementId : null,
+			waterSourceID: form2Data.waterSourceID ? form2Data.waterSourceID : null,
+			propertyTypeId: form2Data.propertyTypeId ? form2Data.propertyTypeId : null,
+			lotDimensionWidth: form2Data.lotDimensionWidth ? form2Data.lotDimensionWidth : 0,
+			storeys: form2Data.storeys ? form2Data.storeys : null,
+			rentalListingYN: form2Data.rentalListingYN ? form2Data.rentalListingYN : '',
+			yearRoofInstalled: form2Data.yearRoofInstalled ? form2Data.yearRoofInstalled : null,
+			parkingSpaces: form2Data.parkingSpaces ? form2Data.parkingSpaces : null,
+			ac: form2Data.ac ? form2Data.ac : false,
+			garageId: form2Data.garageId ? form2Data.garageId  : null,
+			dishWasher: form2Data.dishWasher ? form2Data.dishWasher : false,
+			garage: form2Data.garage ? form2Data.garage : false,
+			noOfBedrooms: form2Data.noOfBedrooms ? form2Data.noOfBedrooms : null,
+			playroom: form2Data.playroom ? form2Data.playroom : false,
+			bar: form2Data.bar ? form2Data.bar : false ,
+			primaryHeatingFuelId: form2Data.primaryHeatingFuelId ? form2Data.primaryHeatingFuelId : null,
+			internet: form2Data.internet ? form2Data.internet : false,
+			buildingTypeId: form2Data.buildingTypeId ? form2Data.buildingTypeId : null,
+			amenites: form2Data.amenites ? form2Data.amenites : '',
+			lotTotalArea: form2Data.lotTotalArea ? form2Data.lotTotalArea : 0,
+			gym: form2Data.gym ? form2Data.gym : false,
+			yearFurnaceBuilt: form2Data.yearFurnaceBuilt ? form2Data.yearFurnaceBuilt : null,
+			areaTypeId: form2Data.areaTypeId ? form2Data.areaTypeId : null,
+			condoFee: form2Data.condoFee ? form2Data.condoFee : '',
+		});
 	}
 	onChange = (e) => {
 		const targetName = e.target.name;
