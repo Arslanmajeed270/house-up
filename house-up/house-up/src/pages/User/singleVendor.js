@@ -15,6 +15,7 @@ class singleVendor extends Component {
 			singleVendorsPropertiesData: {},
 			commentText: '',
 			user: {},
+			hideContact: true
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
@@ -95,6 +96,10 @@ class singleVendor extends Component {
 		});
 	};
 
+	contactHandler = () =>{
+		this.setState({ hideContact : !this.state.hideContact })
+	}
+
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { id, user, commentText, userId } = this.state;
@@ -118,6 +123,7 @@ class singleVendor extends Component {
 			singleVendorData,
 			singleVendorsPropertiesData,
 			commentText,
+			hideContact
 		} = this.state;
 		console.log('singleVendors data', singleVendorData);
 		console.log('singleVendors Properties data', singleVendorsPropertiesData);
@@ -193,7 +199,7 @@ class singleVendor extends Component {
 										<div className='col-md-6'>
 											<p>
 												{singleVendorData &&
-													singleVendorData.keywordsDescribeYourBusiness}
+													singleVendorData.professionDesc}
 											</p>
 										</div>
 										<div className='col-md-6'>
@@ -208,23 +214,34 @@ class singleVendor extends Component {
 											<p>Phone number</p>
 										</div>
 										<div className='col-md-6'>
-											<p>{singleVendorData && singleVendorData.msisdn}</p>
-										</div>
+										{
+											hideContact ?
+											<Link onClick={this.contactHandler}>click to show</Link> :
+											<p>{ singleVendorData && singleVendorData.msisdn}</p>
+											}
+											</div>
 										<div className='col-md-6'>
 											<p>Account status</p>
 										</div>
 										<div className='col-md-6'>
-											<p>
-												{singleVendorData && singleVendorData.userStatusDesc}
-											</p>
+											
+												<p>
+													{singleVendorData && singleVendorData.userStatusDesc}
+												</p>
+											
+											
 										</div>
 									</div>
 								</div>
 							</div>
+							{singleVendorsPropertiesData &&
+								singleVendorsPropertiesData.length ?
 							<h2 className='pxp-section-h2 mt-100'>
 								Listings by {singleVendorData && singleVendorData.firstName}{' '}
 								{singleVendorData && singleVendorData.lastName}{' '}
 							</h2>
+							: ""
+							}
 							<div className='row mt-4 mt-md-5'>
 								{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length
@@ -288,7 +305,7 @@ class singleVendor extends Component {
 									  ))
 									: ''}
 							</div>
-							<ul className='pagination pxp-paginantion mt-3 mt-md-4'>
+							{/* <ul className='pagination pxp-paginantion mt-3 mt-md-4'>
 								<li className='page-item active'>
 									<Link className='page-link' to='#'>
 										1
@@ -309,13 +326,20 @@ class singleVendor extends Component {
 										Next <span className='fa fa-angle-right' />
 									</Link>
 								</li>
-							</ul>
+							</ul> */}
 							<div className='row mt-100'>
 								<div className='col-sm-12 col-lg-1' />
 								<div className='col-sm-12 col-lg-10'>
 									<div className='pxp-agent-block'>
 										<div className='pxp-agent-comments'>
-											<h4>3 Reviews</h4>
+											{singleVendorData &&
+											singleVendorData.vendorComments &&
+											singleVendorData.vendorComments.length ?
+											<h4>{singleVendorData &&
+											singleVendorData.vendorComments &&
+											singleVendorData.vendorComments.length} Reviews</h4>
+											: ""
+											}
 											{singleVendorData &&
 											singleVendorData.vendorComments &&
 											singleVendorData.vendorComments.length

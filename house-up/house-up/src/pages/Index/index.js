@@ -34,6 +34,7 @@ class index extends Component {
 			propertyId: '',
 			category: '',
 			storyToggle: false,
+			imageIndex:''
 		};
 	}
 
@@ -209,7 +210,7 @@ class index extends Component {
 	};
 
 	render() {
-		const {
+		let {
 			errors,
 			loading,
 			indexPageData,
@@ -218,6 +219,7 @@ class index extends Component {
 			propertyId,
 			storyToggle,
 			category,
+			imageIndex
 		} = this.state;
 
 		console.log('checking this.state: ', this.state);
@@ -236,8 +238,10 @@ class index extends Component {
 			indexPageData &&
 			indexPageData.userStories &&
 			indexPageData.userStories.length
-		) {
+		) 
+		{
 			for (let i = 0; i < indexPageData.userStories.length; i++) {
+			imageIndex = i
 				let item = (
 					<Link onClick={this.storyHandler}>
 						<div style={{ width: '80px' }}>
@@ -247,12 +251,10 @@ class index extends Component {
 									backgroundImage: `url(${
 										indexPageData.userStories[i].stories[0].storyImages[0]
 											.storyImageURL
-											? indexPageData.userStories[i].stories[0].storyImages[0]
-													.storyImageURL
-											: 'assets/images/dashboard/slider-4.png'
 									})`,
 								}}
 							/>
+							
 							<span className='dashboard-user-name'>
 								{indexPageData.userStories[i].user.firstName}
 							</span>
@@ -344,12 +346,11 @@ class index extends Component {
 																		show={this.state.storyToggle}
 																		close={this.storyHandler}
 																		storys={
-																			indexPageData && indexPageData.userStories
+																			indexPageData && indexPageData.userStories[imageIndex]
 																		}
 																	/>
-																) : (
-																	''
-																)}
+																) : ''
+																}
 															</div>
 														</div>
 													</div>
@@ -568,7 +569,7 @@ class index extends Component {
 																										data.object &&
 																										data.object.postId &&
 																										data.object.postId
-																									}&${data && data.category}`}
+																									}&${data && data.category}&${index}`}
 																									style={{ color: '#706666' }}
 																								>
 																									<img
@@ -649,7 +650,7 @@ class index extends Component {
 																											data.object &&
 																											data.object.postId &&
 																											data.object.postId
-																										}&${data && data.category}`}
+																										}&${data && data.category}&${index}`}
 																									>
 																										View all{' '}
 																										{
@@ -840,9 +841,9 @@ class index extends Component {
 																									to={`/comments-${
 																										data &&
 																										data.object &&
-																										data.object.postId &&
-																										data.object.postId
-																									}&${data && data.category}`}
+																										data.object.propertId &&
+																										data.object.propertId
+																									}&${data && data.category}&${index}`}
 																									style={{ color: '#706666' }}
 																								>
 																									<img
@@ -924,9 +925,9 @@ class index extends Component {
 																										to={`/comments-${
 																											data &&
 																											data.object &&
-																											data.object.postId &&
-																											data.object.postId
-																										}&${data && data.category}`}
+																											data.object.propertId &&
+																											data.object.propertId
+																										}&${data && data.category}&${index}`}
 																									>
 																										View all{' '}
 																										{
@@ -1131,9 +1132,9 @@ class index extends Component {
 																							to={`/comments-${
 																								data &&
 																								data.object &&
-																								data.object.postId &&
-																								data.object.postId
-																							}&${data && data.category}`}
+																								data.object.userId &&
+																								data.object.userId
+																							}&${data && data.category}&${index}`}
 																							style={{ color: '#706666' }}
 																						>
 																							<img
@@ -1210,7 +1211,7 @@ class index extends Component {
 																									data.object &&
 																									data.object.userId &&
 																									data.object.userId
-																								}&${data && data.category}&$`}
+																								}&${data && data.category}&${index}`}
 																							>
 																								View all{' '}
 																								{
