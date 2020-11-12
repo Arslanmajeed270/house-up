@@ -33,9 +33,10 @@ export const loginUser = (userData, currentLocation, history) => (dispatch) => {
 				dispatch(setCurrentUser(res.data.data.user));
 				dispatch(clearErrors());
 				dispatch({ type: SHOW_POP_UP });
-				history.push(
-					`/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}`
-				);
+				// history.push(
+				// 	`/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}`
+				// );
+				history.push(`/index-Canada&Ontario&Toronto`);
 			} else {
 				dispatch({ type: HIDE_POP_UP });
 				dispatch({
