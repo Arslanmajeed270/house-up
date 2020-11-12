@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
 import ImageGallery from 'react-image-gallery';
 
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
 import { Modal } from 'react-bootstrap';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
@@ -14,6 +10,7 @@ class imagePreview extends Component {
 		super(props);
 		this.state = {
 			storys: [],
+
 		};
 	}
 
@@ -21,20 +18,22 @@ class imagePreview extends Component {
 		this.setState({
 			storys: this.props.storys,
 		});
+		
 	}
-
 	render() {
-		const { storys } = this.state;
+		const { storys , imageIndex } = this.state;
 		console.log('states in image preview', storys);
 
 		const storysImages = [];
 
-		if (storys && storys.length) {
-			for (let i = 0; i < storys.length; i++) {
-				let item = {
-					original: storys[i].imageURL,
-				};
-				storysImages.push(item);
+		if (storys && storys.stories && storys.stories.length) {
+			for (let i = 0; i < storys.stories.length; i++) {
+				for( let j=0;j<storys.stories[i].storyImages.length; j++){
+					let item = {
+						original: storys.stories[i].storyImages[j].storyImageURL,
+					}
+					storysImages.push(item);
+				}
 			}
 		}
 
@@ -47,11 +46,14 @@ class imagePreview extends Component {
 				size='lg'
 				onHide={() => this.props.close()}
 			>
-				{/* <ImageGallery items={storysImages} 
-                    showThumbnails={false}
-                    showPlayButton={false}
-                    showNav={false}
-                />; */}
+				<ImageGallery items={storysImages} 
+					showThumbnails={false}
+					showPlayButton={false}
+					autoPlay={true}
+					slideInterval={10000}
+					showBullets={true}
+					infinite={false}
+			/>
 			</Modal>
 		);
 	}

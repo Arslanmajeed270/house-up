@@ -24,6 +24,7 @@ class comments extends Component {
 			data: [],
 			comments: [],
 			indexValue: '',
+			commentData:{}
 		};
 	}
 
@@ -116,9 +117,14 @@ class comments extends Component {
 		});
 		if (category === 'Post') {
 			this.setState({ postId: id });
-		} else if (category === 'Property') {
+		} 
+		else if (category === 'Property') {
 			this.setState({ propertyId: id });
 		}
+		else if (category === 'Vendor') {
+			this.setState({ vendorId: id });
+		}
+
 	}
 
 	onChange = (e) => {
@@ -138,6 +144,7 @@ class comments extends Component {
 			storyImageId,
 			vendorId,
 			category,
+			commentData
 		} = this.state;
 
 		const data = {
@@ -147,7 +154,7 @@ class comments extends Component {
 			propertyId: Number(propertyId),
 			commentText: commentText,
 			userId: userId,
-			vendorId: vendorId,
+			vendorId: Number(vendorId),
 		};
 		console.log('data pakage of comment api', data);
 
@@ -162,9 +169,8 @@ class comments extends Component {
 			contactName,
 			contactEmail,
 			commentText,
-			category,
-			postId,
-			propertyId,
+			indexValue,
+			commentData
 		} = this.state;
 
 		console.log('checking this.state in comments: ', this.state);
@@ -181,6 +187,11 @@ class comments extends Component {
 		console.log('checking data in comments: ', data);
 
 		console.log('post and property data', data);
+		if(data && data.length ){
+			commentData = data[indexValue];
+		} 
+		console.log(commentData)
+		
 		return (
 			<React.Fragment>
 				<div className='row mt-100'>
@@ -188,23 +199,60 @@ class comments extends Component {
 					<div className='col-sm-12 col-lg-10'>
 						<div className='pxp-agent-block'>
 							<div className='pxp-agent-comments'>
-								{/* {
-                      data && data.length ?
-                      data[2].object.propertyComments.map((da , index) =>
-                    
-                      <div key={index} className="mt-3 mt-md-4">
-                        <div className="media">
-                          <img src={da.profilePictureUrl} className="mr-3" alt="..." />
-                          <div className="media-body">
-                            <h5>{da.userFullName}</h5>
-                            <div className="pxp-agent-comments-date">{da.createDateTime}</div>
-                            <p>{da.commentText}</p>
-                          </div>
-                        </div>
-                      </div>
-                      )
-                      : ""
-                    } */}
+										
+											{
+												commentData && commentData.category === "Vendor" ?
+												commentData && commentData.object && commentData.object.vendorComments && commentData.object.vendorComments.length ?
+												commentData.object.vendorComments.map((da,idx)=>
+													<div key={idx} className="mt-3 mt-md-4">
+														<div className="media">
+															<img src={da.profilePictureUrl} className="mr-3" alt="..." />
+															<div className="media-body">
+																<h5>{da.userFullName}</h5>
+																<div className="pxp-agent-comments-date">{da.createDateTime}</div>
+																<p>{da.commentText}</p>
+															</div>
+														</div>
+													</div>
+												) 
+												: ""
+												:
+												commentData && commentData.category === "Post" ?
+												commentData && commentData.object && commentData.object.postComments && commentData.object.postComments.length ?
+												commentData.object.postComments.map((da,idx)=>
+													<div key={idx} className="mt-3 mt-md-4">
+														<div className="media">
+															<img src={da.profilePictureUrl} className="mr-3" alt="..." />
+															<div className="media-body">
+																<h5>{da.userFullName}</h5>
+																<div className="pxp-agent-comments-date">{da.createDateTime}</div>
+																<p>{da.commentText}</p>
+															</div>
+														</div>
+													</div>
+												)
+												: ""
+												: 
+												commentData && commentData.category === "Property" ?
+												commentData && commentData.object && commentData.object.propertyComments && commentData.object.propertyComments.length ?
+												commentData.object.propertyComments.map((da,idx)=>
+													<div key={idx} className="mt-3 mt-md-4">
+														<div className="media">
+															<img src={da.profilePictureUrl} className="mr-3" alt="..." />
+															<div className="media-body">
+																<h5>{da.userFullName}</h5>
+																<div className="pxp-agent-comments-date">{da.createDateTime}</div>
+																<p>{da.commentText}</p>
+															</div>
+														</div>
+													</div>
+												)
+												: ""
+												: ""
+												 
+											}
+											
+                      
 								<h4 className='mt-4 mt-md-5'>Leave a review</h4>
 								<form
 									className='pxp-agent-comments-form mt-3 mt-md-4'
