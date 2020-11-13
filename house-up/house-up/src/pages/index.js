@@ -45,6 +45,7 @@ class index extends Component {
 			subscriptionPlan: false,
 			cardSelection: false,
 			cardDetails: false,
+			animateHeader: false,
 		};
 	}
 	closeCodelHanlder = (model) => {
@@ -138,7 +139,8 @@ class index extends Component {
 	render() {
 		let animateHeader = false;
 		let hideFooter = false;
-		if (this.props.location.pathname === '/index') {
+
+		if (this.props.location.pathname.indexOf('/index') >= 0) {
 			hideFooter = true;
 		}
 		if (
@@ -147,6 +149,7 @@ class index extends Component {
 		) {
 			animateHeader = true;
 		}
+		console.log('i am here');
 		return (
 			<React.Fragment>
 				{this.state.phoneSignin && (

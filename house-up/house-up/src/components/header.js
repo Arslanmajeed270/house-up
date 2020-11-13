@@ -100,8 +100,9 @@ class header extends Component {
 										src={require('../assets/images/ic_address.svg')}
 										alt=''
 									/>
-									{currentLocation &&
-										`${currentLocation.city && currentLocation.city}`}
+									{currentLocation && currentLocation.city
+										? currentLocation.city
+										: 'Toronto'}
 								</Link>
 							</div>
 							<div className='col-2 col-md-8'>

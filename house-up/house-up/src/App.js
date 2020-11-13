@@ -60,7 +60,7 @@ class App extends Component {
 				<Route exact path={'/privacy'} component={Index} />
 				<Route exact path={'/properties'} component={Index} />
 				<Route exact path={'/single-post'} component={Index} />
-				<Route exact path={'/single-property'} component={Index} />
+				<Route exact path={'/single-prop-:id'} component={Index} />
 				<Route exact path={'/professionals'} component={Index} />
 			</React.Fragment>
 		);
