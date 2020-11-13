@@ -17,6 +17,7 @@ class singleProp extends Component {
 			user: {},
 			userId: '',
 			imageToggle: false,
+			vendorId:''
 		};
 	}
 
@@ -46,9 +47,17 @@ class singleProp extends Component {
 		return null;
 	}
 
-	contactPopupHanlder = () => {
+		modelHanlder = (model, id) => {
+			console.log('opening modal')
+			this.setState({
+				[model]: !this.state[model],
+				vendorId: id
+			 });
+		}
+	closeCodelHanlder = (model) => {
+		console.log('hello close code')
 		this.setState({
-			contactModalState: !this.state.contactModalState,
+			[model]: false,
 		});
 	};
 
@@ -774,20 +783,20 @@ class singleProp extends Component {
 										</div>
 										<div className='clearfix' />
 										<div className='pxp-sp-agent-btns mt-3 mt-md-4'>
-											<Link
-												to=''
+											<button
 												className='pxp-sp-agent-btn-main'
 												data-toggle='modal'
-												onClick={this.contactPopupHanlder}
+												onClick={() =>this.modelHanlder('contactModalState',singlePropertyData.userId)}
 											>
-												{this.state.contactModalState ? (
+												Contact Us
+											</button>
+											{this.state.contactModalState ? (
 													<Contact
 														show={this.state.contactModalState}
-														contactPopupHanlder={this.contactPopupHanlder}
+														closeCodelHanlder={this.closeCodelHanlder}
+														vendorId = {this.state.vendorId}
 													/>
 												) : null}
-												Contact Us
-											</Link>
 										</div>
 									</div>
 								</div>

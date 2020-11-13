@@ -250,7 +250,7 @@ class index extends Component {
 								style={{
 									backgroundImage: `url(${
 										indexPageData.userStories[i].stories[0].storyImages[0]
-											.storyImageURL
+.storyImageURL
 									})`,
 								}}
 							/>
@@ -346,7 +346,7 @@ class index extends Component {
 																		show={this.state.storyToggle}
 																		close={this.storyHandler}
 																		storys={
-																			indexPageData && indexPageData.userStories[imageIndex]
+																			indexPageData && indexPageData.userStories
 																		}
 																	/>
 																) : ''

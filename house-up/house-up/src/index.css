@@ -119,6 +119,13 @@ body {
   margin-left: 30px !important;
   color: #000 !important;
 }
+.country-image-contact-page
+{
+  position: absolute !important;
+top:136px;
+  margin-left: 30px !important;
+  color: #000 !important;
+}
 .country-code-login-page{
   position: absolute !important;
   bottom: 223.5px;

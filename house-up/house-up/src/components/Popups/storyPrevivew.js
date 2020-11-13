@@ -4,6 +4,7 @@ import ImageGallery from 'react-image-gallery';
 import { Modal } from 'react-bootstrap';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
+import { fromPairs } from 'lodash';
 
 class imagePreview extends Component {
 	constructor(props) {
@@ -26,13 +27,15 @@ class imagePreview extends Component {
 
 		const storysImages = [];
 
-		if (storys && storys.stories && storys.stories.length) {
-			for (let i = 0; i < storys.stories.length; i++) {
-				for( let j=0;j<storys.stories[i].storyImages.length; j++){
-					let item = {
-						original: storys.stories[i].storyImages[j].storyImageURL,
+		if (storys && storys.length) {
+			for (let i = 0; i < storys.length; i++) {
+				for( let j=0;j<storys[i].stories.length; j++){
+					for( let k=0; k<storys[i].stories[j].storyImages.length; k++){
+						let item = {
+							original: storys[i].stories[j].storyImages[k].storyImageURL,
+						}
+						storysImages.push(item);
 					}
-					storysImages.push(item);
 				}
 			}
 		}

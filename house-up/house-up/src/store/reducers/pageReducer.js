@@ -12,6 +12,7 @@ import {
 	SET_CURRENT_LOCATION,
 	SET_DEFAULT_ALL_CARDS,
 	LOAD_ALL_CARDS,
+	SET_PACKAGE_DETAILS
 
 	// ADD_COMMENTS
 } from '../actions/actionTypes';
@@ -28,6 +29,7 @@ const initialState = {
 		country: '',
 		province: '',
 		city: '',
+		packageDetails:[]
 	},
 	allCards: [],
 	// comments
@@ -162,6 +164,11 @@ export default function (state = initialState, action) {
 				currentLocation: currentLocation,
 			};
 		}
+		case SET_PACKAGE_DETAILS:
+			return{
+				...state,
+				packageDetails: action.payload
+			}
 		default:
 			return state;
 	}
