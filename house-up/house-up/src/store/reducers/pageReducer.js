@@ -12,9 +12,10 @@ import {
 	SET_CURRENT_LOCATION,
 	SET_DEFAULT_ALL_CARDS,
 	LOAD_ALL_CARDS,
-	SET_PACKAGE_DETAILS
+	SET_PACKAGE_DETAILS,
 
 	// ADD_COMMENTS
+	ADD_COMMENTS,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -29,7 +30,7 @@ const initialState = {
 		country: '',
 		province: '',
 		city: '',
-		packageDetails:[]
+		packageDetails: [],
 	},
 	allCards: [],
 	// comments
@@ -137,18 +138,73 @@ export default function (state = initialState, action) {
 						action.payload.index
 					].object.isPropertyLikedByLoggedInUser = action.payload.follow;
 					console.log('checking indexPageData: ', indexPageData);
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.propertyLikes.push({ userName: action.payload.userName });
 				}
 				if (action.payload.category === 'Post') {
 					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPostLikedByLoggedInUser = action.payload.follow;
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.postLikes.push({ userName: action.payload.userName });
 				}
 				if (action.payload.category === 'Vendor') {
 					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isUserLikedByLoggedInUser = action.payload.follow;
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.vendorLikes.push({ userName: action.payload.userName });
+				}
+			}
+			return {
+				...state,
+				indexPageData,
+			};
+		}
+		case ADD_COMMENTS: {
+			console.log('checking action.payload.index: ', action.payload.index);
+			let indexPageData = Object.assign({}, state.indexPageData);
+			if (
+				indexPageData &&
+				indexPageData.vendorPostPropertiesList &&
+				indexPageData.vendorPostPropertiesList.length >= action.payload.index
+			) {
+				console.log(
+					'checking action.payload.category:',
+					action.payload.category
+				);
+				if (action.payload.category === 'Property') {
+					console.log('i am into property if');
+					console.log('checking indexPageData: ', indexPageData);
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.propertyComments.push({
+						userName: action.payload.userName,
+						commentText: action.payload.comment,
+					});
+				}
+				if (action.payload.category === 'Post') {
+					console.log('i am into post else');
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.postComments.push({
+						userName: action.payload.userName,
+						commentText: action.payload.comment,
+					});
+				}
+				if (action.payload.category === 'Vendor') {
+					console.log('i am into post else');
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.vendorComments.push({
+						userName: action.payload.userName,
+						commentText: action.payload.comment,
+					});
 				}
 			}
 			return {
@@ -165,10 +221,10 @@ export default function (state = initialState, action) {
 			};
 		}
 		case SET_PACKAGE_DETAILS:
-			return{
+			return {
 				...state,
-				packageDetails: action.payload
-			}
+				packageDetails: action.payload,
+			};
 		default:
 			return state;
 	}

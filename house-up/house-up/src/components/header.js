@@ -67,7 +67,11 @@ class header extends Component {
 						<div className='row align-items-center'>
 							<div className='col-5 col-md-3 d-center-element-logo'>
 								<Link
-									to={user && user.profilePictureUrl ? `/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}` : '/'}
+									to={
+										user && user.profilePictureUrl
+											? `/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}`
+											: '/'
+									}
 									className='pxp-logo text-decoration-none'
 								>
 									{animateHeader ? (
@@ -94,10 +98,10 @@ class header extends Component {
 								<Link
 									to='/select-location'
 									className='location-header'
-									style={{ color: '#000' }}
+									style={{ color: '#007bff' }}
 								>
 									<img
-										src={require('../assets/images/ic_address.svg')}
+										src={require('../assets/images/ic_address.f245f826.svg')}
 										alt=''
 									/>
 									{currentLocation && currentLocation.city
@@ -140,9 +144,8 @@ class header extends Component {
 											</div>
 										</li>
 									</ul>
-									{animateHeader ? (
-										''
-									) : ( ""
+									{
+										animateHeader ? '' : ''
 										// <div className='form-group has-search mb-0'>
 										// 	{/* <span className="fa fa-search form-control-feedback" /> */}
 										// 	<input
@@ -155,7 +158,7 @@ class header extends Component {
 										// 		alt=''
 										// 	/>
 										// </div>
-									)}
+									}
 								</div>
 							</div>
 							<div className='col-5 col-md-1 text-right'>
