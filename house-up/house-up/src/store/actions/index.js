@@ -24,6 +24,8 @@ export {
 	contactUs,
 	createCreditCardToken,
 	markCreditCardDefault,
+	chargeCustomerUsingCreditCard,
+	getPackagePlan
 } from './pageActions';
 
 export {

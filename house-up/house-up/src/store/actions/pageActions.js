@@ -17,6 +17,7 @@ import {
 	LOAD_ALL_CARDS,
 	HIDE_POP_UP,
 	SHOW_POP_UP,
+	SET_PACKAGE_DETAILS
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -275,7 +276,12 @@ export const contactUs = (data, index) => (dispatch) => {
 		.post(backendServerURL + '/contactUs', data)
 		.then((res) => {
 			console.log(res);
-			dispatch(clearErrors());
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch({ type: SHOW_POP_UP });
+				dispatch(clearErrors());
+			} else {
+				dispatch({ type: HIDE_POP_UP });
+			}
 		})
 		.catch((err) => {
 			dispatch({
@@ -358,12 +364,8 @@ export const markCreditCardDefault = (userData) => (dispatch) => {
 		.then((res) => {
 			console.log('checking res in markCreditCardDefault: ', res);
 			if (res && res.data && res.data.resultCode === '200') {
-				dispatch({
-					type: SHOW_POP_UP,
-				});
 				dispatch(clearErrors());
 			} else {
-				dispatch({ type: HIDE_POP_UP });
 				dispatch({ type: SET_DEFAULT_ALL_CARDS });
 				dispatch({
 					type: SET_ERRORS,
@@ -438,6 +440,41 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		});
+};
+
+// Get Package plan from backend
+export const getPackagePlan = () => (dispatch) => {
+	axios
+		.post(backendServerURL + '/GetPackagePlanAPI', {	
+			channel:"web"
+	})
+		.then((res) => {
+			console.log('checking GetPackagePlanAPI response: ', res);
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch(clearErrors());
+				dispatch({
+					type: SET_PACKAGE_DETAILS ,
+					payload : res && res.data && res.data.data && res.data.data.packageList 
+				 });
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			console.log('error',err)
 			dispatch({
 				type: SET_ERRORS,
 				payload:

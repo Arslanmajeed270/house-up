@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import WorkPopup from '../../components/Popups/workVendor';
+import Contact from '../../components/Popups/contactUsPopup';
 
 class singleVendor extends Component {
 	constructor(props) {
@@ -11,7 +11,7 @@ class singleVendor extends Component {
 		this.state = {
 			singleVendorData: {},
 			id: null,
-			workModalState: false,
+			contactModalState: false,
 			singleVendorsPropertiesData: {},
 			commentText: '',
 			user: {},
@@ -96,10 +96,19 @@ class singleVendor extends Component {
 		});
 	};
 
-	contactHandler = () =>{
-		this.setState({ hideContact : !this.state.hideContact })
-	}
-
+		modelHanlder = (model, id) => {
+			console.log('opening modal')
+			this.setState({
+				[model]: !this.state[model],
+				vendorId: id
+			 });
+		}
+	closeCodelHanlder = (model) => {
+		console.log('hello close code')
+		this.setState({
+			[model]: false,
+		});
+	};
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { id, user, commentText, userId } = this.state;
@@ -146,21 +155,23 @@ class singleVendor extends Component {
 										<h5>{singleVendorData && singleVendorData.address}</h5>
 									</div>
 									<div className=''>
-										<Link
+										<button
 											to='#pxp-work-with'
 											className='pxp-agent-contact-btn'
 											data-toggle='modal'
 											data-target='#pxp-work-with'
-											onClick={this.workPopupHanlder}
+											onClick={() =>this.modelHanlder('contactModalState',singleVendorData.userId)}
 										>
-											{this.state.workModalState ? (
-												<WorkPopup
-													workModalState={this.state.workModalState}
-													closeCodelHanlder={this.closeCodelHanlder}
-												/>
-											) : null}
+											
 											CONTACTS US{' '}
-										</Link>
+										</button>
+										{this.state.contactModalState ? (
+													<Contact
+														show={this.state.contactModalState}
+														closeCodelHanlder={this.closeCodelHanlder}
+														vendorId = {this.state.vendorId}
+													/>
+												) : null}
 									</div>
 								</div>
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
