@@ -119,7 +119,7 @@ class singleProp extends Component {
 										{singlePropertyData &&
 											singlePropertyData.currency &&
 											singlePropertyData.currency.symbol}{' '}
-										{singlePropertyData && singlePropertyData.price}{' '}
+										{singlePropertyData && singlePropertyData.price ? singlePropertyData.price.toLocaleString() : ""}{' '}
 										{singlePropertyData &&
 											singlePropertyData.currency &&
 											singlePropertyData.currency.lable}
@@ -767,8 +767,8 @@ class singleProp extends Component {
 											<div className='pxp-sp-agent-info-phone'>
 												{singlePropertyData &&
 												singlePropertyData.user &&
-												singlePropertyData.user.provinceDesc
-													? singlePropertyData.user.provinceDesc
+												singlePropertyData.user.professionDesc
+													? singlePropertyData.user.professionDesc
 													: ''}
 											</div>
 										</div>

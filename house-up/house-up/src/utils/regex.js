@@ -19,6 +19,15 @@ export const checkPawwordPattern = (str) => {
 	}
 	return true;
 };
+export const checkDate = (str) => {
+	const today = new Date();
+	const date = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+	if (str > date) {
+		return false;
+	}
+	
+	return true;
+};
 
 export const checkValidURL = (str) => {
 	if (

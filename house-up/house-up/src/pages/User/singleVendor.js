@@ -279,7 +279,7 @@ class singleVendor extends Component {
 																	data.object &&
 																	data.object.currency &&
 																	data.object.currency.symbol}{' '}
-																{data && data.object && data.object.price}
+																{data && data.object && data.object.price.toLocaleString()}
 															</div>
 															<div className='pxp-prop-card-1-details-features text-uppercase'>
 																{data &&

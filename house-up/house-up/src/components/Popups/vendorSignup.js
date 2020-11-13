@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 
-import { checkValidURL } from '../../utils/regex';
+import { checkValidURL , checkDate } from '../../utils/regex';
 
 import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -243,7 +243,12 @@ class vendorSignup extends Component {
 		} else if (!checkValidURL(websiteLink)) {
 			this.props.onErrorSet('Please Enter Valid URL!');
 			return;
-		} else {
+		}
+		else if (!checkDate(businessStartDate)) {
+			this.props.onErrorSet('Please Enter Valid Date Date Must Be In The Past!');
+			return;
+		}
+		 else {
 			const userData = {
 				profileImage: profileImage,
 				firstName: firstName,
@@ -281,7 +286,7 @@ class vendorSignup extends Component {
 				city: city,
 			};
 			console.log('i am here: ', userData);
-			this.props.onCreateVendor(userData);
+			// this.props.onCreateVendor(userData);
 		}
 	};
 
@@ -712,7 +717,6 @@ class vendorSignup extends Component {
 												name='unitOther'
 												value={unitOther}
 												onChange={this.onChange}
-												required
 											/>
 										</div>
 										<div className='col-md-6'>
