@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import cloneDeep from 'lodash/cloneDeep';
 
-import fileUpload from 'fuctbase64';
 import PropertyPlan from '../../../components/Popups/propertyPlan';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -15,16 +14,12 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 class form3 extends Component {
 	constructor() {
 		super();
-		this.onDrop = (files) => {
-			this.setState({ files });
-		};
+
 		this.state = {
-			files: [],
 			address: '',
 			images: [],
 			longitude: 78.68576,
 			latitude: 32.57698,
-			imagePreview: [],
 			googleMapKey:
 				process.env.REACT_APP_GOOGLE_MAP_KEY |
 				'AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk',
@@ -43,7 +38,6 @@ class form3 extends Component {
 		const errors = props.errors;
 		const page = props.page;
 		console.log('checking page data ', page);
-		const auth = props.auth;
 		let stateChanged = false;
 		let changedState = {};
 
@@ -77,14 +71,41 @@ class form3 extends Component {
 	componentDidMount() {
 		const { form3Data } = this.props;
 		this.setState({
-			address: form3Data.address ? form3Data.address :'',
+			address: form3Data.address ? form3Data.address : '',
 			longitude: form3Data.longitude ? form3Data.longitude : 78.68576,
-			latitude: form3Data.latitude ? form3Data.latitude :32.57698,
-			state: form3Data.state ? form3Data.state :'',
-			city: form3Data.city ? form3Data.city :'',
-		})
+			latitude: form3Data.latitude ? form3Data.latitude : 32.57698,
+			state: form3Data.state ? form3Data.state : '',
+			city: form3Data.city ? form3Data.city : '',
+		});
 		this.props.onGetCountries();
 	}
+
+	onDrop = (files) => {
+		console.log('checking images: ', files);
+		this.setState({ images: files });
+	};
+
+	getBase64(file, cb) {
+		let reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function () {
+			cb(reader.result);
+		};
+		reader.onerror = function (error) {
+			console.log('Error: ', error);
+		};
+	}
+
+	imageRemoveHandler = (index) => {
+		const images = this.state.images;
+		if (images && images.length > index) {
+			const filteredImages = images.filter((image, idx) => idx !== index);
+			this.setState({
+				images: filteredImages,
+			});
+		}
+	};
+
 	onChange = (e) => {
 		if (e.target.name === 'country') {
 			let index = 0;
@@ -114,17 +135,12 @@ class form3 extends Component {
 				cities: cities.cities,
 			});
 		} else if (e.target.name === 'images') {
-			const imagePreview = URL.createObjectURL(e.target.files[0]);
-			const imagePreviewState = this.state.imagePreview;
 			const images = this.state.images;
-			imagePreviewState.push(imagePreview);
-			fileUpload(e).then((data) => {
-				//    console.log("base64 :",data.base64);
-				images.push({ image: data.base64 });
-				this.setState({
-					imagePreview: imagePreviewState,
-					images: images,
-				});
+			for (let i = 0; i < e.target.files.length; i++) {
+				images.push(e.target.files[i]);
+			}
+			this.setState({
+				images: images,
 			});
 		} else {
 			this.setState({ [e.target.name]: e.target.value });
@@ -143,10 +159,21 @@ class form3 extends Component {
 			propertyPlanState: !this.state.propertyPlanState,
 		});
 	};
+	imagesHandler = (images) => {
+		let finalImages = [];
+		for (let i = 0; i < images.length; i++) {
+			this.getBase64(images[i], (cb) => {
+				finalImages.push(cb);
+				console.log('checking result: ', cb);
+				if (i === images.length - 1) {
+					this.addPropertyHandler(finalImages);
+				}
+			});
+		}
+	};
 
-	onSubmit = (e) => {
-		e.preventDefault();
-		const { city, address, state, images, longitude, latitude } = this.state;
+	addPropertyHandler = (images) => {
+		const { city, address, state, longitude, latitude } = this.state;
 		const dataForm3 = {
 			city: city,
 			address: address,
@@ -155,8 +182,6 @@ class form3 extends Component {
 			longitude: longitude,
 			latitude: latitude,
 		};
-
-		// this.propertyPlanStateHandler ();
 		console.log(dataForm3);
 		if (this.state.images.length !== 0 && this.state.images.length >= 5) {
 			this.props.form3DataHandler(dataForm3);
@@ -165,23 +190,21 @@ class form3 extends Component {
 			alert('Property Images Must be 5 or more');
 		}
 	};
+	onSubmit = (e) => {
+		e.preventDefault();
+		console.log('before');
+		this.imagesHandler(this.state.images);
+	};
 	render() {
 		const {
 			address,
 			city,
-			imagePreview,
 			googleMapKey,
 			states,
 			cities,
 			state,
-			countries,
-			country,
+			images,
 		} = this.state;
-		const files = this.state.files.map((file) => (
-			<li key={file.name}>
-				{file.name} - {file.size} bytes
-			</li>
-		));
 
 		return (
 			<React.Fragment>
@@ -339,14 +362,15 @@ class form3 extends Component {
 									{({ getRootProps, getInputProps }) => (
 										<section className='container drop-zone'>
 											<aside>
-												{imagePreview && imagePreview.length
-													? imagePreview.map((data, index) => (
+												{images && images.length
+													? images.map((data, index) => (
 															<img
 																key={index}
 																id='data'
+																onClick={() => this.imageRemoveHandler(index)}
 																src={
 																	data
-																		? data
+																		? URL.createObjectURL(data)
 																		: require('../../../assets/images/ic_profile_placeholder.png')
 																}
 																alt=''
@@ -354,7 +378,6 @@ class form3 extends Component {
 															/>
 													  ))
 													: ''}
-												<ul>{files}</ul>
 											</aside>
 											<div
 												{...getRootProps({

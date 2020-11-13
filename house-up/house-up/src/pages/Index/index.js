@@ -34,7 +34,8 @@ class index extends Component {
 			propertyId: '',
 			category: '',
 			storyToggle: false,
-			imageIndex:''
+			imageIndex: '',
+			activeCommentId: '',
 		};
 	}
 
@@ -130,6 +131,10 @@ class index extends Component {
 		console.log('value of propertId', propertId);
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
+		const userName =
+			this.state.user && this.state.user.userName
+				? this.state.user.userName
+				: null;
 		let data = {
 			vendorId: vendorId,
 			postId: postId,
@@ -139,17 +144,35 @@ class index extends Component {
 			action: `${like ? 'Unlike' : 'Like'}`,
 		};
 		console.log(data, index);
-		this.props.onLikedPostOrProperty(data, index);
+		this.props.onLikedPostOrProperty(data, index, userName);
 	};
 
 	onChange = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
+		console.log('checking e.target: ', e.target);
+		if (e.target.name.indexOf('commentText') >= 0) {
+			const targetName = e.target.name.split(',')[0];
+			const activeCommentId = Number(e.target.name.split(',')[1]);
+			console.log('checking name: ', targetName);
+			console.log('checking activeCommentId: ', activeCommentId);
+			this.setState({
+				activeCommentId: activeCommentId,
+				commentText: e.target.value,
+			});
+		} else {
+			this.setState({
+				[e.target.name]: e.target.value,
+			});
+		}
 	};
-
-	AddComment = (id, typeCategory) => {
+	AddComment = (id, typeCategory, index) => {
 		console.log('called');
+		console.log('checking id: ', id);
+		console.log('checking typeCategory: ', typeCategory);
+		console.log('checking index: ', index);
+		const userName =
+			this.state.user && this.state.user.userName
+				? this.state.user.userName
+				: null;
 		let {
 			userId,
 			commentText,
@@ -176,7 +199,11 @@ class index extends Component {
 			vendorId: vendorId,
 		};
 		console.log('data pakage of comment api', data);
-		this.props.onCommentAdded(data);
+		this.setState({
+			commentText: '',
+			activeCommentId: '',
+		});
+		this.props.onCommentAdded(data, index, userName);
 	};
 
 	followUnfollwProfessionals = (id, index, follow, val) => (e) => {
@@ -196,6 +223,19 @@ class index extends Component {
 		console.log('Type of category', type);
 		console.log('checking followUnfollwProfessionals data: ', data);
 		this.props.onFollowUnfollowProfessionals(data, index, type);
+	};
+
+	limitWordHandler = (str) => {
+		const arrayString = str.split(' ');
+		let paragraph = '';
+		const limit = arrayString.length < 30 ? arrayString.length : 30;
+		for (let i = 0; i < limit; i++) {
+			paragraph += arrayString[i] + ' ';
+		}
+		if (arrayString.length >= 30) {
+			paragraph += '...';
+		}
+		return paragraph;
 	};
 
 	contactUsPopHandler = () => {
@@ -219,7 +259,8 @@ class index extends Component {
 			propertyId,
 			storyToggle,
 			category,
-			imageIndex
+			imageIndex,
+			activeCommentId,
 		} = this.state;
 
 		console.log('checking this.state: ', this.state);
@@ -238,23 +279,19 @@ class index extends Component {
 			indexPageData &&
 			indexPageData.userStories &&
 			indexPageData.userStories.length
-		) 
-		{
+		) {
 			for (let i = 0; i < indexPageData.userStories.length; i++) {
-			imageIndex = i
+				imageIndex = i;
 				let item = (
 					<Link onClick={this.storyHandler}>
 						<div style={{ width: '80px' }}>
 							<div
 								className='pxp-prop-card-dashboard'
 								style={{
-									backgroundImage: `url(${
-										indexPageData.userStories[i].stories[0].storyImages[0]
-											.storyImageURL
-									})`,
+									backgroundImage: `url(${indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL})`,
 								}}
 							/>
-							
+
 							<span className='dashboard-user-name'>
 								{indexPageData.userStories[i].user.firstName}
 							</span>
@@ -346,11 +383,13 @@ class index extends Component {
 																		show={this.state.storyToggle}
 																		close={this.storyHandler}
 																		storys={
-																			indexPageData && indexPageData.userStories[imageIndex]
+																			indexPageData &&
+																			indexPageData.userStories[imageIndex]
 																		}
 																	/>
-																) : ''
-																}
+																) : (
+																	''
+																)}
 															</div>
 														</div>
 													</div>
@@ -410,30 +449,41 @@ class index extends Component {
 																			<div className='dashboard-newsfeed-content'>
 																				<ul className='news-feed-user-ul'>
 																					<li>
-																						<Link to={`/single-vendor-${data && data.object && data.object.user && data.object.user.userId}`}>
-																						<span
-																							className={
+																						<Link
+																							to={`/single-vendor-${
 																								data &&
 																								data.object &&
 																								data.object.user &&
-																								data.object.user.userTypeId ===
-																									2
-																									? 'news-feed-user-img'
-																									: 'news-feed-user-imgs'
-																							}
+																								data.object.user.userId
+																							}`}
 																						>
-																							<img style={{height:'60px'}} src={
+																							<span
+																								className={
 																									data &&
 																									data.object &&
 																									data.object.user &&
 																									data.object.user
-																										.profilePictureUrl
-																										? data.object.user
-																												.profilePictureUrl
-																										: 'assets/images/dashboard/ic_profile_placeholder.png'
-																								} alt="" />
-																						</span>
-																						</Link>	
+																										.userTypeId === 2
+																										? 'news-feed-user-img'
+																										: 'news-feed-user-imgs'
+																								}
+																							>
+																								<img
+																									style={{ height: '60px' }}
+																									src={
+																										data &&
+																										data.object &&
+																										data.object.user &&
+																										data.object.user
+																											.profilePictureUrl
+																											? data.object.user
+																													.profilePictureUrl
+																											: 'assets/images/dashboard/ic_profile_placeholder.png'
+																									}
+																									alt=''
+																								/>
+																							</span>
+																						</Link>
 																						<span
 																							style={{
 																								fontSize: '20px',
@@ -520,9 +570,13 @@ class index extends Component {
 																							{data && data.category === 'Post'
 																								? data &&
 																								  data.object &&
-																								  data.object.postText
+																								  this.limitWordHandler(
+																										data.object.postText
+																								  )
 																								: data.object &&
-																								  data.object.description}
+																								  this.limitWordHandler(
+																										data.object.description
+																								  )}
 																						</div>
 																						<button
 																							onClick={this.contactUsPopHandler}
@@ -570,7 +624,9 @@ class index extends Component {
 																										data.object &&
 																										data.object.postId &&
 																										data.object.postId
-																									}&${data && data.category}&${index}`}
+																									}&${
+																										data && data.category
+																									}&${index}`}
 																									style={{ color: '#706666' }}
 																								>
 																									<img
@@ -651,7 +707,9 @@ class index extends Component {
 																											data.object &&
 																											data.object.postId &&
 																											data.object.postId
-																										}&${data && data.category}&${index}`}
+																										}&${
+																											data && data.category
+																										}&${index}`}
 																									>
 																										View all{' '}
 																										{
@@ -665,7 +723,11 @@ class index extends Component {
 																								)}
 
 																								<div className='comment-send-btn'>
-																									<Link to={`/single-vendor-${user && user.userId}`}>
+																									<Link
+																										to={`/single-vendor-${
+																											user && user.userId
+																										}`}
+																									>
 																										<span
 																											className={
 																												user &&
@@ -675,7 +737,9 @@ class index extends Component {
 																											}
 																										>
 																											<img
-																												style={{ width: '100%' }}
+																												style={{
+																													width: '100%',
+																												}}
 																												src={
 																													user &&
 																													user.profilePictureUrl
@@ -690,8 +754,13 @@ class index extends Component {
 																											className='form-control'
 																											placeholder='Write your review here...'
 																											style={{ height: '35px' }}
-																											name='commentText'
-																											value={commentText}
+																											name={`commentText,${index}`}
+																											value={
+																												activeCommentId ===
+																												index
+																													? commentText
+																													: ''
+																											}
 																											onChange={this.onChange}
 																										/>
 
@@ -702,7 +771,8 @@ class index extends Component {
 																													data &&
 																														data.object &&
 																														data.object.postId,
-																													data && data.category
+																													data && data.category,
+																													index
 																												)
 																											}
 																										>
@@ -780,9 +850,7 @@ class index extends Component {
 																																	.currency
 																																	.symbol
 																															: '$'
-																												  }${
-																														data.object.price.toLocaleString()
-																												  }.00`
+																												  }${data.object.price.toLocaleString()}.00`
 																												: '0'}
 																										</b>
 																									</span>
@@ -793,9 +861,13 @@ class index extends Component {
 																							{data && data.category === 'Post'
 																								? data &&
 																								  data.object &&
-																								  data.object.postText
+																								  this.limitWordHandler(
+																										data.object.postText
+																								  )
 																								: data.object &&
-																								  data.object.description}
+																								  this.limitWordHandler(
+																										data.object.description
+																								  )}
 																						</div>
 																						<button
 																							onClick={this.contactUsPopHandler}
@@ -846,7 +918,9 @@ class index extends Component {
 																										data.object &&
 																										data.object.propertId &&
 																										data.object.propertId
-																									}&${data && data.category}&${index}`}
+																									}&${
+																										data && data.category
+																									}&${index}`}
 																									style={{ color: '#706666' }}
 																								>
 																									<img
@@ -930,7 +1004,9 @@ class index extends Component {
 																											data.object &&
 																											data.object.propertId &&
 																											data.object.propertId
-																										}&${data && data.category}&${index}`}
+																										}&${
+																											data && data.category
+																										}&${index}`}
 																									>
 																										View all{' '}
 																										{
@@ -944,33 +1020,44 @@ class index extends Component {
 																								)}
 
 																								<div className='comment-send-btn'>
-																									<Link to={`/single-vendor-${user && user.userId}`}>
-																									<span
-																										className={
-																											user &&
-																											user.userTypeId === 2
-																												? 'news-feed-user-img'
-																												: 'news-feed-user-imgs'
-																										}
+																									<Link
+																										to={`/single-vendor-${
+																											user && user.userId
+																										}`}
 																									>
-																										<img
-																											style={{ width: '100%' }}
-																											src={
+																										<span
+																											className={
 																												user &&
-																												user.profilePictureUrl
-																													? user.profilePictureUrl
-																													: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												user.userTypeId === 2
+																													? 'news-feed-user-img'
+																													: 'news-feed-user-imgs'
 																											}
-																										/>
-																									</span>
+																										>
+																											<img
+																												style={{
+																													width: '100%',
+																												}}
+																												src={
+																													user &&
+																													user.profilePictureUrl
+																														? user.profilePictureUrl
+																														: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												}
+																											/>
+																										</span>
 																									</Link>
 																									<div className='comment-input-pointer'>
 																										<input
 																											className='form-control'
 																											placeholder='Write your review here...'
 																											style={{ height: '35px' }}
-																											name='commentText'
-																											value={`${commentText}`}
+																											name={`commentText,${index}`}
+																											value={
+																												activeCommentId ===
+																												index
+																													? commentText
+																													: ''
+																											}
 																											onChange={this.onChange}
 																										/>
 																										<span
@@ -981,7 +1068,8 @@ class index extends Component {
 																														data.object &&
 																														data.object
 																															.propertId,
-																													data && data.category
+																													data && data.category,
+																													index
 																												)
 																											}
 																										>
@@ -1057,11 +1145,15 @@ class index extends Component {
 																											.professionDesc !== 'null'
 																											? data.object
 																													.professionDesc
-																											: ' '} . 
-																											{
-																												data && data.object && data.object.createDateAndTime ?
-																												data.object.createDateAndTime : ""
-																											}
+																											: ' '}{' '}
+																										.
+																										{data &&
+																										data.object &&
+																										data.object
+																											.createDateAndTime
+																											? data.object
+																													.createDateAndTime
+																											: ''}
 																									</span>
 																								</p>
 																								<span className='address-span'>
@@ -1142,7 +1234,9 @@ class index extends Component {
 																								data.object &&
 																								data.object.userId &&
 																								data.object.userId
-																							}&${data && data.category}&${index}`}
+																							}&${
+																								data && data.category
+																							}&${index}`}
 																							style={{ color: '#706666' }}
 																						>
 																							<img
@@ -1219,7 +1313,9 @@ class index extends Component {
 																									data.object &&
 																									data.object.userId &&
 																									data.object.userId
-																								}&${data && data.category}&${index}`}
+																								}&${
+																									data && data.category
+																								}&${index}`}
 																							>
 																								View all{' '}
 																								{
@@ -1232,32 +1328,41 @@ class index extends Component {
 																							''
 																						)}
 																						<div className='comment-send-btn'>
-																							<Link to={`/single-vendor-${user && user.userId}`}>
-																							<span
-																								className={
-																									user && user.userTypeId === 2
-																										? 'news-feed-user-img'
-																										: 'news-feed-user-imgs'
-																								}
+																							<Link
+																								to={`/single-vendor-${
+																									user && user.userId
+																								}`}
 																							>
-																								<img
-																									style={{ width: '100%' }}
-																									src={
+																								<span
+																									className={
 																										user &&
-																										user.profilePictureUrl
-																											? user.profilePictureUrl
-																											: 'assets/images/dashboard/ic_profile_placeholder.png'
+																										user.userTypeId === 2
+																											? 'news-feed-user-img'
+																											: 'news-feed-user-imgs'
 																									}
-																								/>
-																							</span>
-																								</Link>
+																								>
+																									<img
+																										style={{ width: '100%' }}
+																										src={
+																											user &&
+																											user.profilePictureUrl
+																												? user.profilePictureUrl
+																												: 'assets/images/dashboard/ic_profile_placeholder.png'
+																										}
+																									/>
+																								</span>
+																							</Link>
 																							<div className='comment-input-pointer'>
 																								<input
 																									className='form-control'
 																									placeholder='Write your review here...'
 																									style={{ height: '35px' }}
-																									name='commentText'
-																									value={commentText}
+																									name={`commentText,${index}`}
+																									value={
+																										activeCommentId === index
+																											? commentText
+																											: ''
+																									}
 																									onChange={this.onChange}
 																								/>
 
@@ -1268,7 +1373,8 @@ class index extends Component {
 																											data &&
 																												data.object &&
 																												data.object.userId,
-																											data && data.category
+																											data && data.category,
+																											index
 																										)
 																									}
 																								>
@@ -1452,12 +1558,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
+		onCommentAdded: (data, index, userName) =>
+			dispatch(actions.AddComments(data, index, userName)),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
 		onFollowUnfollowProfessionals: (data, index, type) =>
 			dispatch(actions.followProfessionals(data, index, type)),
-		onLikedPostOrProperty: (data, index) =>
-			dispatch(actions.AddLike(data, index)),
+		onLikedPostOrProperty: (data, index, userName) =>
+			dispatch(actions.AddLike(data, index, userName)),
 		onUpdateCurrentLocaiton: (data) =>
 			dispatch({ type: actionTypes.SET_CURRENT_LOCATION, payload: data }),
 	};

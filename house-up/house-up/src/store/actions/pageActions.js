@@ -175,7 +175,7 @@ export const GetProfessionDetailAPI = () => (dispatch) => {
 };
 
 // Add Like to the post and property
-export const AddLike = (data, index) => (dispatch) => {
+export const AddLike = (data, index, userName) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/addLike', data)
 		.then((res) => {
@@ -185,6 +185,7 @@ export const AddLike = (data, index) => (dispatch) => {
 					index: index,
 					category: data.category,
 					follow: data.action === 'Like' ? true : false,
+					userName: userName,
 				};
 				dispatch({
 					type: ADD_LIKE,
@@ -249,20 +250,28 @@ export const followProfessionals = (data, index, type) => (dispatch) => {
 		});
 };
 // add Comments to the post and property
-export const AddComments = (data, index) => (dispatch) => {
+export const AddComments = (data, index, userName) => (dispatch) => {
 	axios.post(backendServerURL + '/addComment', data).then((res) => {
 		console.log(res);
 		if (res && res.data && res.data.resultCode === '200') {
 			const payload = {
 				index: index,
 				category: data.category,
+				comment: data.commentText,
+				userName: userName,
 			};
+			dispatch({
+				type: ADD_COMMENTS,
+				payload: payload,
+			});
+			dispatch(clearErrors());
+		} else {
 			dispatch({
 				type: SET_ERRORS,
 				payload: {
 					message: res.data.message
 						? res.data.message
-						: 'Something went wrong!',
+						: 'Something went wrong! Please try again.',
 				},
 			});
 		}
