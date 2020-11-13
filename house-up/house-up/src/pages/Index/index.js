@@ -410,6 +410,7 @@ class index extends Component {
 																			<div className='dashboard-newsfeed-content'>
 																				<ul className='news-feed-user-ul'>
 																					<li>
+																						<Link to={`/single-vendor-${data && data.object && data.object.user && data.object.user.userId}`}>
 																						<span
 																							className={
 																								data &&
@@ -420,8 +421,8 @@ class index extends Component {
 																									? 'news-feed-user-img'
 																									: 'news-feed-user-imgs'
 																							}
-																							style={{
-																								backgroundImage: `url(${
+																						>
+																							<img style={{height:'60px'}} src={
 																									data &&
 																									data.object &&
 																									data.object.user &&
@@ -430,9 +431,9 @@ class index extends Component {
 																										? data.object.user
 																												.profilePictureUrl
 																										: 'assets/images/dashboard/ic_profile_placeholder.png'
-																								} )`,
-																							}}
-																						/>
+																								} alt="" />
+																						</span>
+																						</Link>	
 																						<span
 																							style={{
 																								fontSize: '20px',
@@ -664,24 +665,26 @@ class index extends Component {
 																								)}
 
 																								<div className='comment-send-btn'>
-																									<span
-																										className={
-																											user &&
-																											user.userTypeId === 2
-																												? 'news-feed-user-img'
-																												: 'news-feed-user-imgs'
-																										}
-																									>
-																										<img
-																											style={{ width: '100%' }}
-																											src={
+																									<Link to={`/single-vendor-${user && user.userId}`}>
+																										<span
+																											className={
 																												user &&
-																												user.profilePictureUrl
-																													? user.profilePictureUrl
-																													: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												user.userTypeId === 2
+																													? 'news-feed-user-img'
+																													: 'news-feed-user-imgs'
 																											}
-																										/>
-																									</span>
+																										>
+																											<img
+																												style={{ width: '100%' }}
+																												src={
+																													user &&
+																													user.profilePictureUrl
+																														? user.profilePictureUrl
+																														: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												}
+																											/>
+																										</span>
+																									</Link>
 																									<div className='comment-input-pointer'>
 																										<input
 																											className='form-control'
@@ -778,7 +781,7 @@ class index extends Component {
 																																	.symbol
 																															: '$'
 																												  }${
-																														data.object.price
+																														data.object.price.toLocaleString()
 																												  }.00`
 																												: '0'}
 																										</b>
@@ -941,6 +944,7 @@ class index extends Component {
 																								)}
 
 																								<div className='comment-send-btn'>
+																									<Link to={`/single-vendor-${user && user.userId}`}>
 																									<span
 																										className={
 																											user &&
@@ -959,16 +963,16 @@ class index extends Component {
 																											}
 																										/>
 																									</span>
+																									</Link>
 																									<div className='comment-input-pointer'>
 																										<input
 																											className='form-control'
 																											placeholder='Write your review here...'
 																											style={{ height: '35px' }}
 																											name='commentText'
-																											value={`${propertyId}${category}${commentText}`}
+																											value={`${commentText}`}
 																											onChange={this.onChange}
 																										/>
-
 																										<span
 																											className=''
 																											onClick={() =>
@@ -1053,7 +1057,11 @@ class index extends Component {
 																											.professionDesc !== 'null'
 																											? data.object
 																													.professionDesc
-																											: ' '}
+																											: ' '} . 
+																											{
+																												data && data.object && data.object.createDateAndTime ?
+																												data.object.createDateAndTime : ""
+																											}
 																									</span>
 																								</p>
 																								<span className='address-span'>
@@ -1224,6 +1232,7 @@ class index extends Component {
 																							''
 																						)}
 																						<div className='comment-send-btn'>
+																							<Link to={`/single-vendor-${user && user.userId}`}>
 																							<span
 																								className={
 																									user && user.userTypeId === 2
@@ -1241,6 +1250,7 @@ class index extends Component {
 																									}
 																								/>
 																							</span>
+																								</Link>
 																							<div className='comment-input-pointer'>
 																								<input
 																									className='form-control'

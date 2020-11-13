@@ -18,6 +18,7 @@ class properties extends Component {
 			loading: false,
 			indexPageData: {},
 			propertiesData: [],
+			propertyPrice:'',
 			indexPageData: {},
 		};
 	}
@@ -104,15 +105,23 @@ class properties extends Component {
 		this.props.onGetData(data);
 	};
 
+	commaSeprator( price ) {
+		this.setState({ propertyPrice : price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}) ;
+		console.log('property Price',this.state.propertyPrice)
+	}
+
 	state = {};
 	render() {
-		const { errors, loading, indexPageData } = this.state;
+		const { errors, loading, indexPageData ,propertyPrice} = this.state;
 		let { propertiesData } = this.state;
 		console.log('backend data from api ', indexPageData);
+		console.log('property Price ', propertyPrice);
+
 
 		propertiesData =
 			indexPageData && indexPageData.properties ? indexPageData.properties : [];
 		console.log('properties Data ', propertiesData);
+
 
 		let googpleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_KEY;
 
@@ -162,7 +171,7 @@ class properties extends Component {
 					</div>
 					<div className='pxp-content-side pxp-content-left pxp-half'>
 						<div className='pxp-content-side-wrapper'>
-							<div className='d-flex'>
+							{/* <div className='d-flex'>
 								<div className='pxp-content-side-search-form'>
 									<div className='row pxp-content-side-search-form-row'>
 										<div className='col-5 col-sm-5 col-md-4 col-lg-3 pxp-content-side-search-form-col'>
@@ -199,6 +208,7 @@ class properties extends Component {
 									/>
 								</div>
 							</div>
+							 */}
 							<div className='row pb-4'>
 								<div className='col-sm-6'>
 									<h2 className='pxp-content-side-h2'>
@@ -209,7 +219,7 @@ class properties extends Component {
 							<div className='row'>
 								{propertiesData && propertiesData.length
 									? propertiesData.map((data, index) => (
-											<div className='col-sm-12 col-md-6 col-xxxl-4'>
+											<div key={index} className='col-sm-12 col-md-6 col-xxxl-4'>
 												<Link
 													to={`/single-prop-${data && data.propertId}`}
 													className='pxp-results-card-1 rounded-lg'
@@ -244,7 +254,7 @@ class properties extends Component {
 														</div>
 														<div className='pxp-results-card-1-details-price'>
 															{data && data.currency && data.currency.symbol}
-															{data && data.price}
+															{data && data.price ? data.price.toLocaleString() : ""}
 														</div>
 													</div>
 													<div className='pxp-results-card-1-features'>
@@ -271,7 +281,6 @@ class properties extends Component {
 										2
 									</Link>
 								</li>
-								{/* <li className="page-item"><Link className="page-link" to="">3</Link></li> */}
 								<li className='page-item'>
 									<Link className='page-link' to=''>
 										Next <span className='fa fa-angle-right' />
@@ -279,11 +288,6 @@ class properties extends Component {
 								</li>
 							</ul>
 						</div>
-						{/*                 <div className="pxp-footer pxp-content-side-wrapper">
-                          <div className="pxp-footer-bottom">
-                              <div className="pxp-footer-copyright">&copy;  HouseUP All Rights Reserved. 2019</div>
-                          </div>
-                        </div> */}
 					</div>
 				</div>
 				{pageContent}

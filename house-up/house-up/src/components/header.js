@@ -67,7 +67,7 @@ class header extends Component {
 						<div className='row align-items-center'>
 							<div className='col-5 col-md-3 d-center-element-logo'>
 								<Link
-									to={user && user.profilePictureUrl ? '/select-location' : ''}
+									to={user && user.profilePictureUrl ? `/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}` : '/'}
 									className='pxp-logo text-decoration-none'
 								>
 									{animateHeader ? (
@@ -142,19 +142,19 @@ class header extends Component {
 									</ul>
 									{animateHeader ? (
 										''
-									) : (
-										<div className='form-group has-search mb-0'>
-											{/* <span className="fa fa-search form-control-feedback" /> */}
-											<input
-												type='text'
-												className='form-control w-100'
-												placeholder='Search Location'
-											/>
-											<img
-												src={require('../assets/images/ic_search.svg')}
-												alt=''
-											/>
-										</div>
+									) : ( ""
+										// <div className='form-group has-search mb-0'>
+										// 	{/* <span className="fa fa-search form-control-feedback" /> */}
+										// 	<input
+										// 		type='text'
+										// 		className='form-control w-100'
+										// 		placeholder='Search Location'
+										// 	/>
+										// 	<img
+										// 		src={require('../assets/images/ic_search.svg')}
+										// 		alt=''
+										// 	/>
+										// </div>
 									)}
 								</div>
 							</div>
@@ -167,7 +167,7 @@ class header extends Component {
 										<div
 											to='#'
 											className={`pxp-header-user pxp-signin-trigger ${
-												animateHeader ? '' : 'forborder'
+												animateHeader ? 'forborder' : ''
 											}`}
 											style={{
 												width: '44px',
