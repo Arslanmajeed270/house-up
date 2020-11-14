@@ -13,6 +13,7 @@ import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 import ContactPopup from '../../components/Popups/contactUsPopup';
 import StoryPrevivew from '../../components/Popups/storyPrevivew';
+import Contact from '../../components/Popups/contactUsPopup'
 
 class index extends Component {
 	constructor(props) {
@@ -36,6 +37,7 @@ class index extends Component {
 			storyToggle: false,
 			imageIndex: '',
 			activeCommentId: '',
+			contactModalState: false
 		};
 	}
 
@@ -238,13 +240,19 @@ class index extends Component {
 		return paragraph;
 	};
 
-	contactUsPopHandler = () => {
+	modelHanlder = (model, id) => {
+			console.log('opening modal')
+			this.setState({
+				[model]: !this.state[model],
+				vendorId: id
+			 });
+		}
+	closeCodelHanlder = (model) => {
+		console.log('hello close code')
 		this.setState({
-			contactUsPop: !this.state.contactUsPop,
+			[model]: false,
 		});
-		console.log('clicked');
 	};
-
 	storyHandler = () => {
 		this.setState({ storyToggle: !this.state.storyToggle });
 	};
@@ -577,14 +585,7 @@ class index extends Component {
 																										data.object.description
 																								  )}
 																						</div>
-																						<button
-																							onClick={this.contactUsPopHandler}
-																							className='dashboard-newsfeed-contact nodecor'
-																							data-toggle='modal'
-																							data-target=''
-																						>
-																							Contact us
-																						</button>
+																						
 																						<div className='row custom-row-styles'>
 																							<div className='col-12 post-navbar'>
 																								<span
@@ -639,6 +640,20 @@ class index extends Component {
 																										alt=''
 																									/>{' '}
 																								</Link>
+																								<button
+																							className='dashboard-newsfeed-contact nodecor'
+																							data-toggle='modal'
+																							data-target=''
+																							onClick={() =>this.modelHanlder('contactModalState')}
+																						>
+																							Contact us
+																						</button>
+																						{this.state.contactModalState ? (
+																									<Contact
+																										show={this.state.contactModalState}
+																										closeCodelHanlder={this.closeCodelHanlder}
+																									/>
+																								) : null}
 																								{data &&
 																								data.object &&
 																								data.object.postLikes &&
@@ -868,17 +883,7 @@ class index extends Component {
 																										data.object.description
 																								  )}
 																						</div>
-																						<button
-																							onClick={this.contactUsPopHandler}
-																							className='dashboard-newsfeed-contact nodecor'
-																							data-toggle='modal'
-																							data-target=''
-																							onClick={
-																								this.PropertyConatctPopupHanlder
-																							}
-																						>
-																							Contact us
-																						</button>
+																						
 																						<div className='row custom-row-styles'>
 																							<div className='col-12 post-navbar'>
 																								<span
@@ -933,6 +938,20 @@ class index extends Component {
 																										alt=''
 																									/>{' '}
 																								</Link>
+																								<button
+																							className='dashboard-newsfeed-contact nodecor'
+																							data-toggle='modal'
+																							data-target=''
+																							onClick={() =>this.modelHanlder('contactModalState')}
+																						>
+																							Contact us
+																						</button>
+																						{this.state.contactModalState ? (
+																									<Contact
+																										show={this.state.contactModalState}
+																										closeCodelHanlder={this.closeCodelHanlder}
+																									/>
+																								) : null}
 																								{data &&
 																								data.object &&
 																								data.object.propertyLikes &&
@@ -1179,22 +1198,7 @@ class index extends Component {
 																						</div>
 																					</div>
 																				</Link>
-																				<Link
-																					to='#'
-																					className='dashboard-newsfeed-contact nodecor'
-																					data-toggle='modal'
-																					data-target=''
-																					onClick={this.postConatctPopupHanlder}
-																				>
-																					{this.state.postConatctPopup ? (
-																						<ContactPopup
-																							postConatctPopup={
-																								this.state.postConatctPopup
-																							}
-																						/>
-																					) : null}
-																					Contact us
-																				</Link>
+																				
 																				<div className='row custom-row-styles'>
 																					<div className='col-12 post-navbar'>
 																						<span
@@ -1249,6 +1253,20 @@ class index extends Component {
 																								alt=''
 																							/>{' '}
 																						</Link>
+																						<button
+																							className='dashboard-newsfeed-contact nodecor'
+																							data-toggle='modal'
+																							data-target=''
+																							onClick={() =>this.modelHanlder('contactModalState')}
+																						>
+																							Contact us
+																						</button>
+																						{this.state.contactModalState ? (
+																									<Contact
+																										show={this.state.contactModalState}
+																										closeCodelHanlder={this.closeCodelHanlder}
+																									/>
+																								) : null}
 																						{data &&
 																						data.object &&
 																						data.object.vendorLikes &&

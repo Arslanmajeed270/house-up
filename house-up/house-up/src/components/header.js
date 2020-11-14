@@ -187,6 +187,16 @@ class header extends Component {
 											{dropDownShow ? (
 												<div className='profile_header_dropdown'>
 													<ul>
+														<li
+															className='profile_header_dropdown_li'
+														>
+															<Link to={`/single-vendor-${user &&
+																			user.userId 
+																				? user.userId
+														: ''}`}>
+																Profile
+															</Link>
+														</li>
 														<li className='profile_header_dropdown_li'>
 															{user && user.userTypeId === 2 ? (
 																<div

@@ -13,7 +13,7 @@ import {
 	SET_DEFAULT_ALL_CARDS,
 	LOAD_ALL_CARDS,
 	SET_PACKAGE_DETAILS,
-
+CONTACT_US,
 	// ADD_COMMENTS
 	ADD_COMMENTS,
 } from '../actions/actionTypes';
@@ -180,12 +180,13 @@ export default function (state = initialState, action) {
 				);
 				if (action.payload.category === 'Property') {
 					console.log('i am into property if');
-					console.log('checking indexPageData: ', indexPageData);
+					console.log('checking indexPageData: ', action.payload);
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.propertyComments.push({
-						userName: action.payload.userName,
+						contactName: action.payload.contactName,	
 						commentText: action.payload.comment,
+						profilePictureUrl :  action.payload.profilePictureUrl
 					});
 				}
 				if (action.payload.category === 'Post') {

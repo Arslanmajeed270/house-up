@@ -17,7 +17,7 @@ import {
 	LOAD_ALL_CARDS,
 	HIDE_POP_UP,
 	SHOW_POP_UP,
-	SET_PACKAGE_DETAILS
+	SET_PACKAGE_DETAILS,
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -251,7 +251,7 @@ export const followProfessionals = (data, index, type) => (dispatch) => {
 		});
 };
 // add Comments to the post and property
-export const AddComments = (data, index, userName) => (dispatch) => {
+export const AddComments = (data, index, contactName , profilePictureUrl) => (dispatch) => {
 	axios.post(backendServerURL + '/addComment', data).then((res) => {
 		console.log(res);
 		if (res && res.data && res.data.resultCode === '200') {
@@ -259,7 +259,8 @@ export const AddComments = (data, index, userName) => (dispatch) => {
 				index: index,
 				category: data.category,
 				comment: data.commentText,
-				userName: userName,
+				contactName: contactName,
+				profilePictureUrl : profilePictureUrl
 			};
 			dispatch({
 				type: ADD_COMMENTS,
@@ -286,9 +287,11 @@ export const contactUs = (data, index) => (dispatch) => {
 		.then((res) => {
 			console.log(res);
 			if (res && res.data && res.data.resultCode === '200') {
+				console.log('hello')
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
 			} else {
+				console.log('bye')
 				dispatch({ type: HIDE_POP_UP });
 			}
 		})

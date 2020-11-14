@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import { Nav } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
+import PlacesAutocomplete ,  {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from 'react-places-autocomplete';
+
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
@@ -32,12 +38,33 @@ class form3 extends Component {
 			countries: [],
 			states: [],
 			cities: [],
+			address:''
 		};
 	}
+
+
+	
+  handleChange = address => {
+		this.setState({ address });
+		console.log(this.state.address)
+  };
+ 
+  handleSelect = address => {
+		this.setState({ address });
+		console.log(this.state.address)
+
+		geocodeByAddress(address)
+		// console.log('address',address)
+			.then(results => getLatLng(results[0]))
+			// console.log(results[0])
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
+
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const page = props.page;
-		console.log('checking page data ', page);
+		// console.log('checking page data ', page);
 		let stateChanged = false;
 		let changedState = {};
 
@@ -205,6 +232,7 @@ class form3 extends Component {
 			state,
 			images,
 		} = this.state;
+		console.log('address is ',address)
 
 		return (
 			<React.Fragment>
@@ -297,7 +325,7 @@ class form3 extends Component {
 									</select>
 								</div>
 							</div>
-							<div className='col-md-8'>
+							{/* <div className='col-md-8'>
 								<div className='form-group'>
 									<input
 										type='text'
@@ -312,7 +340,46 @@ class form3 extends Component {
 										Search
 									</button>
 								</div>
-							</div>
+							</div> */}
+
+							<PlacesAutocomplete
+								value={this.state.address}
+								onChange={this.handleChange}
+								onSelect={this.handleSelect}
+							>
+								{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+									<div>
+										<input
+											{...getInputProps({
+												placeholder: 'Search Places ...',
+												className: 'location-search-input',
+											})}
+										/>
+										<div className="autocomplete-dropdown-container">
+											{loading && <div>Loading...</div>}
+											{suggestions.map(suggestion => {
+												const className = suggestion.active
+													? 'suggestion-item--active'
+													: 'suggestion-item';
+												const style = suggestion.active
+													? { backgroundColor: '#fafafa', cursor: 'pointer' }
+													: { backgroundColor: '#ffffff', cursor: 'pointer' };
+												return (
+													<div
+														{...getSuggestionItemProps(suggestion, {
+															className,
+															style,
+														})
+														}
+													>
+														<span>{suggestion.description}</span>
+													</div>
+												);
+											})}
+										</div>
+									</div>
+								)}
+							</PlacesAutocomplete>
 
 							<div
 								className='col-md-12'
