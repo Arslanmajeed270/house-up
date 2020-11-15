@@ -142,7 +142,6 @@ class home extends Component {
 													className='form-control pxp-is-address'
 													placeholder='City, neighbourhood...'
 												/>
-												{/* <span className="fa fa-search" /> */}
 												<img
 													class='search'
 													src='assets/images/ic_search.svg'
@@ -200,7 +199,6 @@ class home extends Component {
 											without paying realtor fees
 										</div>
 									</div>
-									{/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
 								</Link>
 								<Link to='/professionals' className='pxp-services-item'>
 									<div className='pxp-services-item-fig'>
@@ -216,7 +214,6 @@ class home extends Component {
 											before approval. 
 										</div>
 									</div>
-									{/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
 								</Link>
 								<Link to='/professionals' className='pxp-services-item'>
 									<div className='pxp-services-item-fig'>
@@ -246,7 +243,6 @@ class home extends Component {
 											architecture, interior design and more{' '}
 										</div>
 									</div>
-									{/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
 								</Link>
 								<div className='clearfix' />
 							</div>

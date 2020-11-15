@@ -6,9 +6,9 @@ import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/common/Spinner';
-import index from '..';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+const AnyReactComponent = () => 
+<div className="map-pointer" ></div>;
 
 class properties extends Component {
 	constructor(props) {
@@ -28,7 +28,7 @@ class properties extends Component {
 			lat: 59.95,
 			lng: 30.33,
 		},
-		zoom: 11,
+		zoom: 15,
 	};
 
 	static getDerivedStateFromProps(props, state) {
@@ -162,7 +162,6 @@ class properties extends Component {
 							<AnyReactComponent
 								lat={59.955413}
 								lng={30.337844}
-								text='My Marker'
 							/>
 						</GoogleMapReact>
 						<Link to='' className='pxp-list-toggle'>
