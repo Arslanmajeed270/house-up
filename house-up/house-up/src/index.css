@@ -31,8 +31,15 @@ body {
 .post-navbar{
   font-size: 30px;
   padding: 5px 15px;
+  margin-top: 20px;
 }
 
+.vendor-navbar
+{
+  font-size: 30px;
+  padding: 5px 15px;
+  margin-top: 40px;
+}
 .modal-header {
   border-bottom: none;
   padding: 15px 15px 0px 15px;

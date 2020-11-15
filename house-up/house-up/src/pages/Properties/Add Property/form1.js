@@ -1,145 +1,234 @@
 import React, { Component } from 'react';
+import Dropzone from 'react-dropzone';
 import { Nav } from 'react-bootstrap';
+import GoogleMapReact from 'google-map-react';
+import PlacesAutocomplete ,  {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from 'react-places-autocomplete';
+
+
 import { connect } from 'react-redux';
+import * as actions from '../../../store/actions/index';
+import cloneDeep from 'lodash/cloneDeep';
+
+
+const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class form1 extends Component {
-	constructor(props) {
-		super(props);
+	constructor() {
+		super();
+
 		this.state = {
-			currencyId: '',
-			description: '',
-			adTitle: '',
-			contactEmail: '',
-			contactName: '',
-			contactNumber: '',
-			price: '',
-			user: {},
-			userId: '',
-			currencyData: [],
+			address: '',
+			images: [],
+			longitude: 78.68576,
+			latitude: 32.57698,
+			googleMapKey:
+				process.env.REACT_APP_GOOGLE_MAP_KEY |
+				'AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk',
+			propertyPlanState: false,
+			errors: {},
+			loading: false,
+			country: '',
+			state: '',
+			city: '',
+			countries: [],
+			states: [],
+			cities: [],
+			address:''
 		};
 	}
 
-	static getDerivedStateFromProps(props, state) {
-		const auth = props.auth ? props.auth : {};
 
+	
+  handleChange = address => {
+    this.setState({ address });
+  };
+ 
+  handleSelect = address => {
+		this.setState({ address });
+		console.log('address', address)
+
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
+
+	static getDerivedStateFromProps(props, state) {
+		const errors = props.errors;
+		const page = props.page;
+		console.log('checking page data ', page);
 		let stateChanged = false;
 		let changedState = {};
 
 		if (
-			auth &&
-			auth.user &&
-			JSON.stringify(state.user) !== JSON.stringify(auth.user)
+			page &&
+			page.countries &&
+			JSON.stringify(state.countries) !== JSON.stringify(page.countries)
 		) {
-			changedState.user = auth.user;
+			changedState.countries = page.countries;
+			stateChanged = true;
+			let states = [];
+			states = cloneDeep(changedState.countries[0]);
+			changedState.states = states.states;
+		}
+		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
+			changedState.errors = errors;
 			stateChanged = true;
 		}
-
+		if (
+			page &&
+			JSON.stringify(state.loading) !== JSON.stringify(page.loading)
+		) {
+			changedState.loading = page.loading;
+			stateChanged = true;
+		}
 		if (stateChanged) {
 			return changedState;
 		}
-
 		return null;
 	}
-
 	componentDidMount() {
-		const { user } = this.state;
-		const contactEmail = user.emailAddress ? user.emailAddress : '';
-		const firstName = user.firstName ? user.firstName : '';
-		const lastName = user.lastName ? user.lastName : '';
-		const contactName = `${firstName} ${lastName}`;
-		const contactNumber = user.msisdn ? user.msisdn : '';
-		const userId = user.userId ? user.userId : '';
-		const {form1Data} = this.props;
-		console.log("checking form1Data", form1Data)
+		const { form1Data } = this.props;
 		this.setState({
-			contactEmail,
-			contactName,
-			contactNumber,
-			userId,
-			currencyId: form1Data && form1Data.currencyId ? form1Data.currencyId : "",
-			description: form1Data && form1Data.description ? form1Data.description : "",
-			adTitle: form1Data && form1Data.adTitle ? form1Data.adTitle : "",
-			price: form1Data && form1Data.price ? form1Data.price : ""
+			address: form1Data.address ? form1Data.address : '',
+			longitude: form1Data.longitude ? form1Data.longitude : 78.68576,
+			latitude: form1Data.latitude ? form1Data.latitude : 32.57698,
+			state: form1Data.state ? form1Data.state : '',
+			city: form1Data.city ? form1Data.city : '',
 		});
-
+		this.props.onGetCountries();
 	}
 
-	onChange = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
-		console.log(e.target.value);
+	onDrop = (files) => {
+		console.log('checking images: ', files);
+		this.setState({ images: files });
 	};
 
-	dropDownDatahandler = (currencyData) => {
+	getBase64(file, cb) {
+		let reader = new FileReader();
+		reader.readAsDataURL(file);
+		reader.onload = function () {
+			cb(reader.result);
+		};
+		reader.onerror = function (error) {
+			console.log('Error: ', error);
+		};
+	}
+
+	imageRemoveHandler = (index) => {
+		const images = this.state.images;
+		if (images && images.length > index) {
+			const filteredImages = images.filter((image, idx) => idx !== index);
+			this.setState({
+				images: filteredImages,
+			});
+		}
+	};
+
+	onChange = (e) => {
+		if (e.target.name === 'country') {
+			let index = 0;
+			let states = [];
+			if (e.target.value !== '') {
+				index =
+					this.state.countries &&
+					this.state.countries.findIndex((x) => `${x.name}` === e.target.value);
+				states = cloneDeep(this.state.countries[index]);
+			}
+			this.setState({
+				[e.target.name]: e.target.value,
+				states: states.states,
+			});
+		} else if (e.target.name === 'state') {
+			let ind = 0;
+			let cities = [];
+			if (e.target.value !== '') {
+				ind =
+					this.state.states &&
+					this.state.states.findIndex((x) => `${x.name}` === e.target.value);
+				cities = cloneDeep(this.state.states[ind]);
+			}
+			console.log('checking e.target.value in state: ', e.target.value);
+			this.setState({
+				[e.target.name]: e.target.value,
+				cities: cities.cities,
+			});
+		} else if (e.target.name === 'images') {
+			const images = this.state.images;
+			for (let i = 0; i < e.target.files.length; i++) {
+				images.push(e.target.files[i]);
+			}
+			this.setState({
+				images: images,
+			});
+		} else {
+			this.setState({ [e.target.name]: e.target.value });
+		}
+	};
+
+	static defaultProps = {
+		center: {
+			lat: 59.95,
+			lng: 30.33,
+		},
+		zoom: 11,
+	};
+	propertyPlanStateHandler = () => {
 		this.setState({
-			currencyData,
+			propertyPlanState: !this.state.propertyPlanState,
 		});
-		console.log(currencyData);
+	};
+	imagesHandler = (images) => {
+		let finalImages = [];
+		for (let i = 0; i < images.length; i++) {
+			this.getBase64(images[i], (cb) => {
+				finalImages.push(cb);
+				console.log('checking result: ', cb);
+				if (i === images.length - 1) {
+					this.addPropertyHandler(finalImages);
+				}
+			});
+		}
+	};
+
+	addPropertyHandler = (images) => {
+		const { city, address, state, longitude, latitude } = this.state;
+		const dataform1 = {
+			city: city,
+			address: address,
+			state: state,
+			images: images,
+			longitude: longitude,
+			latitude: latitude,
+		};
+		console.log(dataform1);
+		if (this.state.images.length !== 0 && this.state.images.length >= 5) {
+			this.props.form1DataHandler(dataform1);
+		this.props.formShowHandler(1);
+		} else {
+			console.log('error picture must be 5 or more');
+			alert('Property Images Must be 5 or more');
+		}
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
-		const {
-			description,
-			currencyId,
-			adTitle,
-			contactEmail,
-			contactName,
-			contactNumber,
-			price,
-			userId,
-			currencyData,
-		} = this.state;
-		console.log('checking contactEmail: ', contactEmail);
-		console.log('checking contactName: ', contactName);
-		console.log('checking contactNumber: ', contactNumber);
-		console.log(currencyData);
-		const form1Data = {
-			description,
-			currencyId:
-				currencyId === ''
-					? currencyData && currencyData.length && currencyData[0].id
-					: currencyId,
-			adTitle,
-			contactName,
-			contactEmail,
-			contactNumber,
-			price: Number(price),
-			userId,
-		};
-		// console.log('checking form1 data ', form1Data);
-
-		this.props.form1DataHandler(form1Data);
-
-		this.props.formShowHandler(1);
+		console.log('before');
+		this.imagesHandler(this.state.images);
 	};
-
 	render() {
-		let {
-			description,
-			contactName,
-			currencyId,
-			contactEmail,
-			contactNumber,
-			adTitle,
-			price,
-			currencyData,
+		const {
+			address,
+			city,
+			googleMapKey,
+			states,
+			cities,
+			state,
+			images,
 		} = this.state;
-		const dropDownData1 = this.props.dropDownData;
-		console.log('checking drop: ', dropDownData1);
-		if (
-			dropDownData1 &&
-			dropDownData1.currencies &&
-			dropDownData1.currencies.length &&
-			currencyData.length === 0
-		) {
-			console.log('i am here');
-			this.dropDownDatahandler(
-				dropDownData1 && dropDownData1.currencies
-					? dropDownData1.currencies
-					: []
-			);
-		}
 
 		return (
 			<React.Fragment>
@@ -187,112 +276,138 @@ class form1 extends Component {
 							</div>
 						</div>
 						<div className='row'>
-							<div className='col-md-6'>
-								<h6 className='titles-property'>*Ad title</h6>
-								<input
-									className='input-feilds-property'
-									placeholder='Enter a title for your property...'
-									name='adTitle'
-									value={adTitle}
-									onChange={this.onChange}
-									required
-								/>
-							</div>
-							<div className='col-md-6'>
-								<div className='row'>
-									<div className='col-md-4'>
-										<h6 className='titles-property'>Currency</h6>
-										<select
-											className='input-feilds-property'
-											onChange={this.onChange}
-											name='currencyId'
-											value={currencyId}
-											required
-										>
-											{currencyData && currencyData.length
-												? currencyData.map((currency, idx) => (
-														<option key={idx} value={currency.id}>
-															{' '}
-															{currency.lable}
-														</option>
-												  ))
-												: ''}
-										</select>
-									</div>
-									<div className='col-md-8'>
-										<h6 className='titles-property'>*Price</h6>
+							<PlacesAutocomplete
+								value={this.state.address}
+								onChange={this.handleChange}
+								onSelect={this.handleSelect}
+							>
+								{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+									<div>
 										<input
-											type='number'
-											className='input-feilds-property'
-											onChange={this.onChange}
-											placeholder='$'
-											name='price'
-											value={price}
-											required
+											{...getInputProps({
+												placeholder: 'Search Places ...',
+												className: 'location-search-input',
+											})}
 										/>
+										<div className="autocomplete-dropdown-container">
+											{loading && <div>Loading...</div>}
+											{suggestions.map(suggestion => {
+												const className = suggestion.active
+													? 'suggestion-item--active'
+													: 'suggestion-item';
+												// inline style for demonstration purpose
+												const style = suggestion.active
+													? { backgroundColor: '#fafafa', cursor: 'pointer' }
+													: { backgroundColor: '#ffffff', cursor: 'pointer' };
+												return (
+													<div
+														{...getSuggestionItemProps(suggestion, {
+															className,
+															style,
+														})}
+													>
+														<span>{suggestion.description}</span>
+													</div>
+												);
+											})}
+										</div>
 									</div>
-								</div>
+								)}
+							</PlacesAutocomplete>
+
+							<div
+								className='col-md-12'
+								style={{ height: '300px', width: '100%' }}
+							>
+								<GoogleMapReact
+									bootstrapURLKeys={{ key: googleMapKey }}
+									defaultCenter={this.props.center}
+									defaultZoom={this.props.zoom}
+								>
+									<AnyReactComponent
+										lat={59.955413}
+										lng={30.337844}
+										text='My Marker'
+									/>
+								</GoogleMapReact>
 							</div>
 						</div>
 						<div className='row border-property'>
-							<div className='col-md-12'>
-								<h6 className='titles-property'>Description</h6>
-								<textarea
-									className='input-feilds-property'
-									name='description'
-									value={description}
-									onChange={this.onChange}
-									placeholder='More detail about your property...'
-									style={{ height: '120px' }}
-								/>
+							<h1
+								className='col-md-6 titles-property'
+								style={{ fontFamily: 'light', marginTop: '50px' }}
+							>
+								Property photos
+							</h1>
+							<div className='col-md-6' style={{ textAlign: 'right' }}>
+								<label
+									className='btn btn-lg btn-primary'
+									htmlFor='pictures'
+									style={{
+										marginTop: '15px',
+										backgroundColor: '#00B0E9',
+										borderRadius: '0px',
+										border: 'none',
+									}}
+								>
+									Upload images
+								</label>
 							</div>
-						</div>
+							<h6 className='col-md-12 text-danger titles-property'>
+								WARNING: Any images with HouseUp.ca watermarks are a violation
+								of copyright. If these images are uploaded your listing will be
+								removed and your account may be suspended.
+							</h6>
+							<div className='col-12'>
+								<Dropzone onDrop={this.onDrop} className='drop-zone'>
+									{({ getRootProps, getInputProps }) => (
+										<section className='container drop-zone'>
+											<aside>
+												{images && images.length
+													? images.map((data, index) => (
+															<img
+																key={index}
+																id='data'
+																onClick={() => this.imageRemoveHandler(index)}
+																src={
+																	data
+																		? URL.createObjectURL(data)
+																		: require('../../../assets/images/ic_profile_placeholder.png')
+																}
+																alt=''
+																style={{ height: '98px' }}
+															/>
+													  ))
+													: ''}
+											</aside>
+											<div
+												{...getRootProps({
+													className: 'dropzone , drop-zone-inner',
+												})}
+											>
+												<input
+													type='file'
+													{...getInputProps()}
+													id='pictures'
+													name='images'
+													onChange={this.onChange}
+												/>
+												<p>
+													Drag 'n' drop some files here, or click to select
+													files
+												</p>
+											</div>
+										</section>
+									)}
+								</Dropzone>
 
-						<h1 className='titles-property' style={{ fontFamily: 'light' }}>
-							Contact info
-						</h1>
-						<p className='titles-property'>
-							You can edit your contact info anytime in your profile settings.
-						</p>
-						<div className='row'>
-							<div className='col-md-4'>
-								<h6 className='titles-property'>Contact email</h6>
-								<input
-									type='text'
-									className='input-feilds-property'
-									onChange={this.onChange}
-									placeholder='email'
-									name='contactEmail'
-									value={contactEmail}
-									required
-								/>
-								<span className='title-property'>
-									Your email will not be shared.
-								</span>
-							</div>
-							<div className='col-md-4'>
-								<h6 className='titles-property'>Contact name</h6>
-								<input
-									type='text'
-									className='input-feilds-property'
-									value={contactName}
-									onChange={this.onChange}
-									placeholder='name'
-									name='contactName'
-									required
-								/>
-							</div>
-							<div className='col-md-4'>
-								<h6 className='titles-property'>Contact number</h6>
-								<input
-									type='text'
-									className='input-feilds-property'
-									placeholder='Contact number'
-									onChange={this.onChange}
-									name='contactNumber'
-									value={contactNumber}
-									required
-								/>
+								<h6
+									className='titles-property'
+									style={{ color: '#8E8E93', marginTop: '40px' }}
+								>
+									Upload a maximum of 25 photos. Click on a picture to select a
+									cover photo, otherwise the first picture will be used.
+								</h6>
 							</div>
 						</div>
 						<div className='row'>
@@ -302,12 +417,12 @@ class form1 extends Component {
 									<button
 										type='submit'
 										className='btn btn-lg btn-primary btn-property'
-										onChange={this.onChange}
 									>
-										NEXT
+										Next
 									</button>
 								</div>
 							</div>
+							
 						</div>
 					</div>
 				</form>
@@ -318,8 +433,14 @@ class form1 extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		auth: state.auth,
+		page: state.page,
 	};
 };
 
-export default connect(mapStateToProps, null)(form1);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onGetCountries: () => dispatch(actions.GetCountries()),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(form1);

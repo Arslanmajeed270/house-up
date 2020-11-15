@@ -97,75 +97,75 @@ class addProperty extends Component {
 		const form3Data = this.state.form3Data;
 
 		const formData = {
-			currencyId: form1Data.currencyId ? form1Data.currencyId : 2,
-			description: form1Data.description ? form1Data.description : '',
-			contactEmail: form1Data.contactEmail ? form1Data.contactEmail : '',
-			adTitle: form1Data.adTitle ? form1Data.adTitle : '',
-			contactName: form1Data.contactName ? form1Data.contactName : '',
-			contactNumber: form1Data.contactNumber ? form1Data.contactNumber : 0,
-			userId: form1Data.userId ? form1Data.userId : 0,
-			price: form1Data.price ? form1Data.price : 0,
+			currencyId: form2Data.currencyId ? form2Data.currencyId : 2,
+			description: form2Data.description ? form2Data.description : '',
+			contactEmail: form2Data.contactEmail ? form2Data.contactEmail : '',
+			adTitle: form2Data.adTitle ? form2Data.adTitle : '',
+			contactName: form2Data.contactName ? form2Data.contactName : '',
+			contactNumber: form2Data.contactNumber ? form2Data.contactNumber : 0,
+			userId: form2Data.userId ? form2Data.userId : 0,
+			price: form2Data.price ? form1Data.price : 0,
 
-			yearBuilt: form2Data.yearBuilt ? form2Data.yearBuilt : 0,
-			balcony: form2Data.balcony ? form2Data.balcony : false,
-			disposal: form2Data.disposal ? form2Data.disposal : false,
-			finishedSqftArea: form2Data.finishedSqftArea
-				? form2Data.finishedSqftArea
+			yearBuilt: form3Data.yearBuilt ? form3Data.yearBuilt : 0,
+			balcony: form3Data.balcony ? form3Data.balcony : false,
+			disposal: form3Data.disposal ? form3Data.disposal : false,
+			finishedSqftArea: form3Data.finishedSqftArea
+				? form3Data.finishedSqftArea
 				: 0,
-			lotDimensionLength: form2Data.lotDimensionLength
-				? form2Data.lotDimensionLength
+			lotDimensionLength: form3Data.lotDimensionLength
+				? form3Data.lotDimensionLength
 				: 0,
-			noOfBathrooms: form2Data.noOfBathrooms ? form2Data.noOfBathrooms : 1,
-			basementId: form2Data.basementId ? form2Data.basementId : 1,
-			waterSourceID: form2Data.waterSourceID ? form2Data.waterSourceID : 1,
-			storeys: form2Data.storeys ? form2Data.storeys : 1,
-			propertyTypeId: form2Data.propertyTypeId ? form2Data.propertyTypeId : 1,
-			rentalListingYN: form2Data.rentalListingYN
-				? form2Data.rentalListingYN
+			noOfBathrooms: form3Data.noOfBathrooms ? form3Data.noOfBathrooms : 1,
+			basementId: form3Data.basementId ? form3Data.basementId : 1,
+			waterSourceID: form3Data.waterSourceID ? form3Data.waterSourceID : 1,
+			storeys: form3Data.storeys ? form3Data.storeys : 1,
+			propertyTypeId: form3Data.propertyTypeId ? form3Data.propertyTypeId : 1,
+			rentalListingYN: form3Data.rentalListingYN
+				? form3Data.rentalListingYN
 				: 'Y',
-			yearRoofInstalled: form2Data.yearRoofInstalled
-				? form2Data.yearRoofInstalled
+			yearRoofInstalled: form3Data.yearRoofInstalled
+				? form3Data.yearRoofInstalled
 				: 0,
-			lotDimensionWidth: form2Data.lotDimensionWidth
-				? form2Data.lotDimensionWidth
+			lotDimensionWidth: form3Data.lotDimensionWidth
+				? form3Data.lotDimensionWidth
 				: 0,
-			parkingSpaces: form2Data.parkingSpaces ? form2Data.parkingSpaces : 1,
-			ac: form2Data.ac ? form2Data.ac : false,
-			garageId: form2Data.garageId ? form2Data.garageId : 1,
-			dishWasher: form2Data.dishWasher ? form2Data.dishWasher : false,
-			garage: form2Data.garage ? form2Data.garage : false,
-			noOfBedrooms: form2Data.noOfBedrooms ? form2Data.noOfBedrooms : 1,
-			playroom: form2Data.playroom ? form2Data.playroom : false,
-			bar: form2Data.bar ? form2Data.bar : false,
-			primaryHeatingFuelId: form2Data.primaryHeatingFuelId
-				? form2Data.primaryHeatingFuelId
+			parkingSpaces: form3Data.parkingSpaces ? form3Data.parkingSpaces : 1,
+			ac: form3Data.ac ? form3Data.ac : false,
+			garageId: form3Data.garageId ? form3Data.garageId : 1,
+			dishWasher: form3Data.dishWasher ? form3Data.dishWasher : false,
+			garage: form3Data.garage ? form3Data.garage : false,
+			noOfBedrooms: form3Data.noOfBedrooms ? form3Data.noOfBedrooms : 1,
+			playroom: form3Data.playroom ? form3Data.playroom : false,
+			bar: form3Data.bar ? form3Data.bar : false,
+			primaryHeatingFuelId: form3Data.primaryHeatingFuelId
+				? form3Data.primaryHeatingFuelId
 				: 1,
-			internet: form2Data.internet ? form2Data.internet : false,
-			buildingTypeId: form2Data.buildingTypeId ? form2Data.buildingTypeId : 1,
-			lotTotalArea: form2Data.lotTotalArea ? form2Data.lotTotalArea : 0,
-			gym: form2Data.gym ? form2Data.gym : false,
-			areaTypeId: form2Data.areaTypeId ? form2Data.areaTypeId : 1,
-			yearFurnaceBuilt: form2Data.yearFurnaceBuilt
-				? form2Data.yearFurnaceBuilt
+			internet: form3Data.internet ? form3Data.internet : false,
+			buildingTypeId: form3Data.buildingTypeId ? form3Data.buildingTypeId : 1,
+			lotTotalArea: form3Data.lotTotalArea ? form3Data.lotTotalArea : 0,
+			gym: form3Data.gym ? form3Data.gym : false,
+			areaTypeId: form3Data.areaTypeId ? form3Data.areaTypeId : 1,
+			yearFurnaceBuilt: form3Data.yearFurnaceBuilt
+				? form3Data.yearFurnaceBuilt
 				: 0,
-			condoFee: `${form2Data.condoFee ? form2Data.condoFee : 0}`,
+			condoFee: `${form3Data.condoFee ? form3Data.condoFee : 0}`,
 
-			latitude: form3Data.latitude ? form3Data.latitude : 0,
-			longitude: form3Data.longitude ? form3Data.longitude : 0,
-			city: form3Data.city ? form3Data.city : '',
-			address: form3Data.address ? form3Data.address : '',
-			propertyImages: form3Data.images,
+			latitude: form1Data.latitude ? form1Data.latitude : 0,
+			longitude: form1Data.longitude ? form1Data.longitude : 0,
+			city: form1Data.city ? form1Data.city : '',
+			address: form1Data.address ? form1Data.address : '',
+			propertyImages: form1Data.images,
 			cityId: 0,
 			amenites: '',
 			channel: 'web',
 			action: 'add',
 			propertyId: 0,
 			country: 'Canada',
-			state: form3Data.state ? form3Data.state : '',
+			state: form1Data.state ? form1Data.state : '',
 		};
 		console.log('checking formData: ', formData);
 
-		this.props.onAddProperty(formData, this.props.history);
+		// this.props.onAddProperty(formData, this.props.history);
 	};
 
 	formShowHandler = (num) => {
