@@ -71,10 +71,11 @@ export const clearCurrentUser = () => {
 };
 
 // Log user out (Verified)
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (history) => (dispatch) => {
 	localStorage.removeItem('jwtToken');
 	setAuthToken(false);
 	dispatch(clearCurrentUser());
+	history.push(`/home`);
 };
 
 export const resetUserPassword = (userData) => (dispatch) => {

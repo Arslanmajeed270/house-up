@@ -46,17 +46,17 @@ class index extends Component {
 			cardSelection: false,
 			cardDetails: false,
 			animateHeader: false,
-			packageId:'',
-			message: ''
+			packageId: '',
+			message: '',
 		};
 	}
-	
+
 	closeCodelHanlder = (model) => {
 		this.setState({
 			[model]: false,
 		});
 	};
-	modelHanlder = (model , data) => {
+	modelHanlder = (model, data) => {
 		// console.log("checking model: ", model);
 		if (model === 'phoneSignin') {
 			this.setState({ emailSignin: false, [model]: !this.state[model] });
@@ -71,7 +71,7 @@ class index extends Component {
 			this.setState({
 				subscriptionPlan: false,
 				[model]: !this.state[model],
-				packageId: data
+				packageId: data,
 			});
 		} else if (model === 'cardDetails') {
 			console.log('clicked');
@@ -116,13 +116,13 @@ class index extends Component {
 		} else if (model === 'vendorSignupModel') {
 			this.setState({ optUserModelVendor: false, [model]: !this.state[model] });
 		} else if (model === 'congratulationModel') {
-			console.log('congratulationModel')
+			console.log('congratulationModel');
 			this.setState({
 				userSignupModel: false,
 				vendorSignupModel: false,
 				cardSelection: false,
 				[model]: !this.state[model],
-				message : data
+				message: data,
 			});
 		} else if (model === 'vendorCongrats') {
 			this.setState({
@@ -142,7 +142,7 @@ class index extends Component {
 			phNumber: num,
 		});
 	};
-	
+
 	render() {
 		let animateHeader = false;
 		let hideFooter = false;
@@ -172,13 +172,13 @@ class index extends Component {
 				{this.state.subscriptionPlan && (
 					<SubscriptionPlan
 						show={this.state.subscriptionPlan}
-						modelHanlder = {this.modelHanlder}
+						modelHanlder={this.modelHanlder}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
 				{this.state.cardSelection && (
 					<CardSelection
-						packageId = { this.state.packageId }
+						packageId={this.state.packageId}
 						show={this.state.cardSelection}
 						closeCodelHanlder={this.closeCodelHanlder}
 						cardDetailsHandler={this.modelHanlder}
@@ -290,7 +290,7 @@ class index extends Component {
 				{this.state.congratulationModel && (
 					<Congratulation
 						show={this.state.congratulationModel}
-						message = { this.state.message}
+						message={this.state.message}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
@@ -301,6 +301,7 @@ class index extends Component {
 					/>
 				)}
 				<Header
+					history={this.props.history}
 					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>

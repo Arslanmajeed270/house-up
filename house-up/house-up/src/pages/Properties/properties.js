@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/common/Spinner';
 
-const AnyReactComponent = () => 
-<div className="map-pointer" ></div>;
+const AnyReactComponent = () => <div className='map-pointer'></div>;
 
 class properties extends Component {
 	constructor(props) {
@@ -18,7 +17,7 @@ class properties extends Component {
 			loading: false,
 			indexPageData: {},
 			propertiesData: [],
-			propertyPrice:'',
+			propertyPrice: '',
 			indexPageData: {},
 		};
 	}
@@ -105,23 +104,23 @@ class properties extends Component {
 		this.props.onGetData(data);
 	};
 
-	commaSeprator( price ) {
-		this.setState({ propertyPrice : price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}) ;
-		console.log('property Price',this.state.propertyPrice)
+	commaSeprator(price) {
+		this.setState({
+			propertyPrice: price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+		});
+		console.log('property Price', this.state.propertyPrice);
 	}
 
 	state = {};
 	render() {
-		const { errors, loading, indexPageData ,propertyPrice} = this.state;
+		const { errors, loading, indexPageData, propertyPrice } = this.state;
 		let { propertiesData } = this.state;
 		console.log('backend data from api ', indexPageData);
 		console.log('property Price ', propertyPrice);
 
-
 		propertiesData =
 			indexPageData && indexPageData.properties ? indexPageData.properties : [];
 		console.log('properties Data ', propertiesData);
-
 
 		let googpleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_KEY;
 
@@ -159,10 +158,7 @@ class properties extends Component {
 							defaultCenter={this.props.center}
 							defaultZoom={this.props.zoom}
 						>
-							<AnyReactComponent
-								lat={59.955413}
-								lng={30.337844}
-							/>
+							<AnyReactComponent lat={59.955413} lng={30.337844} />
 						</GoogleMapReact>
 						<Link to='' className='pxp-list-toggle'>
 							<span className='fa fa-list' />
@@ -218,7 +214,10 @@ class properties extends Component {
 							<div className='row'>
 								{propertiesData && propertiesData.length
 									? propertiesData.map((data, index) => (
-											<div key={index} className='col-sm-12 col-md-6 col-xxxl-4'>
+											<div
+												key={index}
+												className='col-sm-12 col-md-6 col-xxxl-4'
+											>
 												<Link
 													to={`/single-prop-${data && data.propertId}`}
 													className='pxp-results-card-1 rounded-lg'
@@ -253,7 +252,9 @@ class properties extends Component {
 														</div>
 														<div className='pxp-results-card-1-details-price'>
 															{data && data.currency && data.currency.symbol}
-															{data && data.price ? data.price.toLocaleString() : ""}
+															{data && data.price
+																? data.price.toLocaleString()
+																: ''}
 														</div>
 													</div>
 													<div className='pxp-results-card-1-features'>

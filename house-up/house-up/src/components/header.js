@@ -187,18 +187,17 @@ class header extends Component {
 											{dropDownShow ? (
 												<div className='profile_header_dropdown'>
 													<ul>
-														<li
-															className='profile_header_dropdown_li'
-														>
-															<Link to={`/single-vendor-${user &&
-																			user.userId 
-																				? user.userId
-														: ''}`}>
+														<li className='profile_header_dropdown_li'>
+															<Link
+																to={`/single-vendor-${
+																	user && user.userId ? user.userId : ''
+																}`}
+															>
 																Profile
 															</Link>
 														</li>
-														<li className='profile_header_dropdown_li'>
-															{user && user.userTypeId === 2 ? (
+														{user && user.userTypeId === 2 ? (
+															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={() =>
 																		this.props.modelHanlder('subscriptionPlan')
@@ -211,10 +210,10 @@ class header extends Component {
 																	/>
 																	upgrade
 																</div>
-															) : (
-																''
-															)}
-														</li>
+															</li>
+														) : (
+															''
+														)}
 														<li
 															onClick={() =>
 																this.props.onLogout(this.props.history)
