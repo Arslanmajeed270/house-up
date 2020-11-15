@@ -93,6 +93,7 @@ class comments extends Component {
 
 	componentDidMount() {
 		const { user } = this.state;
+		console.log('user',user)
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -132,9 +133,13 @@ class comments extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const userName =
-			this.state.user && this.state.user.userName
-				? this.state.user.userName
+		// const userName =
+		// 	this.state.user && this.state.user.userName
+		// 		? this.state.user.userName
+		// 		: null;
+		const profilePictureUrl =
+			this.state.user && this.state.user.profilePictureUrl
+				? this.state.user.profilePictureUrl
 				: null;
 
 		const {
@@ -147,7 +152,9 @@ class comments extends Component {
 			vendorId,
 			category,
 			commentData,
+			contactName
 		} = this.state;
+		console.log('conatct name', contactName)
 
 		const data = {
 			postId: Number(postId),
@@ -160,7 +167,7 @@ class comments extends Component {
 		};
 		console.log('data pakage of comment api', data);
 
-		this.props.onCommentAdded(data, indexValue, userName);
+		this.props.onCommentAdded(data, indexValue, contactName , profilePictureUrl);
 	};
 
 	render() {
@@ -275,45 +282,10 @@ class comments extends Component {
 										: ''
 									: ''}
 
-								<h4 className='mt-4 mt-md-5'>Leave a review</h4>
 								<form
 									className='pxp-agent-comments-form mt-3 mt-md-4'
 									onSubmit={this.onSubmit}
 								>
-									<div className='row'>
-										<div className='col-sm-12 col-md-6'>
-											<div className='form-group'>
-												<label htmlFor='pxp-agent-comments-name'>
-													You Name
-												</label>
-												<input
-													type='text'
-													className='form-control'
-													id='pxp-agent-comments-name'
-													nmae='contactName'
-													value={contactName}
-													placeholder='Enter your full name'
-													onChange={this.onChange}
-												/>
-											</div>
-										</div>
-										<div className='col-sm-12 col-md-6'>
-											<div className='form-group'>
-												<label htmlFor='pxp-agent-comments-email'>
-													You Email
-												</label>
-												<input
-													type='text'
-													className='form-control'
-													id='pxp-agent-comments-email'
-													nmae='contactEmail'
-													value={contactEmail}
-													placeholder='Enter your email address'
-													onChange={this.onChange}
-												/>
-											</div>
-										</div>
-									</div>
 									<div className='form-group comment-send-btn'>
 										<input
 											className='form-control'
@@ -353,8 +325,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data, index, userName) =>
-			dispatch(actions.AddComments(data, index, userName)),
+		onCommentAdded: (data, index, contactName , profilePictureUrl) =>
+			dispatch(actions.AddComments(data, index, contactName , profilePictureUrl)),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
 	};
 };

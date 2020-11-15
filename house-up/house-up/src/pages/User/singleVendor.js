@@ -96,6 +96,10 @@ class singleVendor extends Component {
 		});
 	};
 
+	contactHandler = () =>{
+		this.setState({ hideContact : !this.state.hideContact })
+
+	}	
 		modelHanlder = (model, id) => {
 			console.log('opening modal')
 			this.setState({
@@ -149,11 +153,33 @@ class singleVendor extends Component {
 										{singleVendorData && singleVendorData.lastName}{' '}
 									</h1>
 									<div className='clearfix' />
-
-									<div className=''>
-										<h5>{singleVendorData && singleVendorData.businessName}</h5>
-										<h5>{singleVendorData && singleVendorData.address}</h5>
+									{
+										singleVendorData && singleVendorData.userTypeId ===2 ?
+										<div >
+											<h5>{singleVendorData && singleVendorData.businessName}</h5>
+											<h5>{singleVendorData && singleVendorData.address}</h5>
+										</div>
+									: 
+									<div className="row">
+										<div className='col-md-6'>
+											<p>Phone number</p>
+										</div>
+										<div className='col-md-6'>
+										{
+											hideContact ?
+											<Link onClick={this.contactHandler}>click to show</Link> :
+											<p>{ singleVendorData && singleVendorData.msisdn}</p>
+											}
+											</div>
+											<div className='col-md-6'>
+											<p>Email address</p>
+										</div>
+										<div className='col-md-6'>
+										<p>{singleVendorData && singleVendorData.emailAddress}</p>
+										</div>
 									</div>
+									}
+									
 									<div className=''>
 										<button
 											to='#pxp-work-with'
@@ -176,7 +202,7 @@ class singleVendor extends Component {
 								</div>
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
 									<div
-										className='pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0'
+										className={singleVendorData && singleVendorData.userTypeId ===1 ? 'pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0 user-Profile' : 'pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0'}
 										style={{
 											backgroundImage: `url(${
 												singleVendorData && singleVendorData.profilePictureUrl
@@ -188,8 +214,12 @@ class singleVendor extends Component {
 									/>
 								</div>
 							</div>
+							{
+									singleVendorData && singleVendorData.userTypeId === 2 ?
 							<div className='row'>
-								<div className='col-sm-12 col-lg-8'>
+								
+									 
+									<div className='col-sm-12 col-lg-8'>
 									<div className='pxp-agent-section'>
 										<h3>
 											About {singleVendorData && singleVendorData.firstName}{' '}
@@ -202,6 +232,8 @@ class singleVendor extends Component {
 										</div>
 									</div>
 								</div>
+								 
+							
 								<div className='col-sm-12 col-lg-3 offset-lg-1'>
 									<div className='pxp-agent-section mt-4 mt-md-5 row'>
 										<div className='col-md-6'>
@@ -245,6 +277,8 @@ class singleVendor extends Component {
 									</div>
 								</div>
 							</div>
+							: ""
+								}
 							{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length ?
 							<h2 className='pxp-section-h2 mt-100'>
@@ -257,6 +291,7 @@ class singleVendor extends Component {
 								{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length
 									? singleVendorsPropertiesData.map((data, idx) => (
+										data && data.category === "Property" ?
 											<>
 												<div key={idx} className='col-sm-12 col-md-6 col-lg-4'>
 													<Link
@@ -290,7 +325,7 @@ class singleVendor extends Component {
 																	data.object &&
 																	data.object.currency &&
 																	data.object.currency.symbol}{' '}
-																{data && data.object && data.object.price.toLocaleString()}
+																{data && data.object && data.object.price && data.object.price.toLocaleString()}
 															</div>
 															<div className='pxp-prop-card-1-details-features text-uppercase'>
 																{data &&
@@ -313,7 +348,8 @@ class singleVendor extends Component {
 													</Link>
 												</div>
 											</>
-									  ))
+										: ""
+										))
 									: ''}
 							</div>
 							{/* <ul className='pagination pxp-paginantion mt-3 mt-md-4'>
@@ -343,14 +379,6 @@ class singleVendor extends Component {
 								<div className='col-sm-12 col-lg-10'>
 									<div className='pxp-agent-block'>
 										<div className='pxp-agent-comments'>
-											{singleVendorData &&
-											singleVendorData.vendorComments &&
-											singleVendorData.vendorComments.length ?
-											<h4>{singleVendorData &&
-											singleVendorData.vendorComments &&
-											singleVendorData.vendorComments.length} Reviews</h4>
-											: ""
-											}
 											{singleVendorData &&
 											singleVendorData.vendorComments &&
 											singleVendorData.vendorComments.length

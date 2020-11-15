@@ -829,3 +829,7 @@ h1.titles-property {
 .comment-send-btn{
   position: relative;
 }
+
+.user-Profile{
+  border-radius: 50% !important;
+}
