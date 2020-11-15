@@ -833,3 +833,10 @@ h1.titles-property {
 .user-Profile{
   border-radius: 50% !important;
 }
+
+.map-pointer{
+  background-image: url('./assets/images/ic_address.svg');
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+}
