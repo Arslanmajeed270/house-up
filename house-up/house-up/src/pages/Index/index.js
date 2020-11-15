@@ -13,7 +13,7 @@ import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 import ContactPopup from '../../components/Popups/contactUsPopup';
 import StoryPrevivew from '../../components/Popups/storyPrevivew';
-import Contact from '../../components/Popups/contactUsPopup'
+import Contact from '../../components/Popups/contactUsPopup';
 
 class index extends Component {
 	constructor(props) {
@@ -37,7 +37,7 @@ class index extends Component {
 			storyToggle: false,
 			imageIndex: '',
 			activeCommentId: '',
-			contactModalState: false
+			contactModalState: false,
 		};
 	}
 
@@ -241,14 +241,14 @@ class index extends Component {
 	};
 
 	modelHanlder = (model, id) => {
-			console.log('opening modal')
-			this.setState({
-				[model]: !this.state[model],
-				vendorId: id
-			 });
-		}
+		console.log('opening modal');
+		this.setState({
+			[model]: !this.state[model],
+			vendorId: id,
+		});
+	};
 	closeCodelHanlder = (model) => {
-		console.log('hello close code')
+		console.log('hello close code');
 		this.setState({
 			[model]: false,
 		});
@@ -359,18 +359,16 @@ class index extends Component {
 		}
 		return (
 			<React.Fragment>
-				{ 
-				 this.state.contactModalState ?
+				{this.state.contactModalState ? (
 					<Contact
 						show={this.state.contactModalState}
 						closeCodelHanlder={this.closeCodelHanlder}
-						vendorId = {this.state.vendorId}
+						vendorId={this.state.vendorId}
 					/>
-					: ""
-				}
-					
-			
-				
+				) : (
+					''
+				)}
+
 				{!loading && (
 					<main>
 						<div className='container'>
@@ -593,7 +591,7 @@ class index extends Component {
 																										data.object.description
 																								  )}
 																						</div>
-																						
+
 																						<div className='row custom-row-styles'>
 																							<div className='col-12 post-navbar'>
 																								<span
@@ -649,14 +647,22 @@ class index extends Component {
 																									/>{' '}
 																								</Link>
 																								<button
-																							className='dashboard-newsfeed-contact nodecor'
-																							data-toggle='modal'
-																							data-target=''
-																							onClick={() =>this.modelHanlder('contactModalState', data && data.object && data.object.user && data.object.user.userId)}
-																						>
-																							Contact us
-																						</button>
-																						
+																									className='dashboard-newsfeed-contact nodecor'
+																									data-toggle='modal'
+																									data-target=''
+																									onClick={() =>
+																										this.modelHanlder(
+																											'contactModalState',
+																											data &&
+																												data.object &&
+																												data.object.user &&
+																												data.object.user.userId
+																										)
+																									}
+																								>
+																									Contact us
+																								</button>
+
 																								{data &&
 																								data.object &&
 																								data.object.postLikes &&
@@ -741,7 +747,7 @@ class index extends Component {
 
 																								<div className='comment-send-btn'>
 																									<Link
-																									style={{width:'36px'}}
+																										style={{ width: '36px' }}
 																										to={`/single-vendor-${
 																											user && user.userId
 																										}`}
@@ -887,7 +893,7 @@ class index extends Component {
 																										data.object.description
 																								  )}
 																						</div>
-																						
+
 																						<div className='row custom-row-styles'>
 																							<div className='col-12 post-navbar'>
 																								<span
@@ -943,14 +949,22 @@ class index extends Component {
 																									/>{' '}
 																								</Link>
 																								<button
-																							className='dashboard-newsfeed-contact nodecor'
-																							data-toggle='modal'
-																							data-target=''
-																							onClick={() =>this.modelHanlder('contactModalState' , data && data.object && data.object.user && data.object.user.userId)}
-																						>
-																							Contact us
-																						</button>
-																					
+																									className='dashboard-newsfeed-contact nodecor'
+																									data-toggle='modal'
+																									data-target=''
+																									onClick={() =>
+																										this.modelHanlder(
+																											'contactModalState',
+																											data &&
+																												data.object &&
+																												data.object.user &&
+																												data.object.user.userId
+																										)
+																									}
+																								>
+																									Contact us
+																								</button>
+
 																								{data &&
 																								data.object &&
 																								data.object.propertyLikes &&
@@ -1038,7 +1052,7 @@ class index extends Component {
 
 																								<div className='comment-send-btn'>
 																									<Link
-																									style={{width:'36px'}}
+																										style={{ width: '36px' }}
 																										to={`/single-vendor-${
 																											user && user.userId
 																										}`}
@@ -1198,7 +1212,7 @@ class index extends Component {
 																						</div>
 																					</div>
 																				</Link>
-																				
+
 																				<div className='row custom-row-styles'>
 																					<div className='col-12 vendor-navbar'>
 																						<span
@@ -1257,11 +1271,18 @@ class index extends Component {
 																							className='dashboard-newsfeed-contact nodecor'
 																							data-toggle='modal'
 																							data-target=''
-																							onClick={() =>this.modelHanlder('contactModalState' , data && data.object && data.object.userId)}
+																							onClick={() =>
+																								this.modelHanlder(
+																									'contactModalState',
+																									data &&
+																										data.object &&
+																										data.object.userId
+																								)
+																							}
 																						>
 																							Contact us
 																						</button>
-																						
+
 																						{data &&
 																						data.object &&
 																						data.object.vendorLikes &&
@@ -1278,7 +1299,7 @@ class index extends Component {
 																									(data.object.vendorLikes
 																										.length <= 1
 																										? ''
-																										: `and ${
+																										: ` and ${
 																												data.object.vendorLikes
 																													.length - 1
 																										  } others `)}{' '}
@@ -1341,7 +1362,7 @@ class index extends Component {
 																						)}
 																						<div className='comment-send-btn'>
 																							<Link
-																							 style={{width:'36px'}}
+																								style={{ width: '36px' }}
 																								to={`/single-vendor-${
 																									user && user.userId
 																								}`}

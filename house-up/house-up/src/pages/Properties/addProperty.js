@@ -104,7 +104,7 @@ class addProperty extends Component {
 			contactName: form2Data.contactName ? form2Data.contactName : '',
 			contactNumber: form2Data.contactNumber ? form2Data.contactNumber : 0,
 			userId: form2Data.userId ? form2Data.userId : 0,
-			price: form2Data.price ? form1Data.price : 0,
+			price: form2Data.price ? form2Data.price : 0,
 
 			yearBuilt: form3Data.yearBuilt ? form3Data.yearBuilt : 0,
 			balcony: form3Data.balcony ? form3Data.balcony : false,
@@ -161,11 +161,11 @@ class addProperty extends Component {
 			action: 'add',
 			propertyId: 0,
 			country: 'Canada',
-			state: form1Data.state ? form1Data.state : '',
+			state: form1Data.state ? form1Data.state : 'Ontario',
 		};
 		console.log('checking formData: ', formData);
 
-		// this.props.onAddProperty(formData, this.props.history);
+		this.props.onAddProperty(formData, this.props.history);
 	};
 
 	formShowHandler = (num) => {

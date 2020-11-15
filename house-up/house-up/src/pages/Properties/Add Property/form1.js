@@ -2,17 +2,15 @@ import React, { Component } from 'react';
 import Dropzone from 'react-dropzone';
 import { Nav } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
-import PlacesAutocomplete ,  {
-  geocodeByAddress,
-  geocodeByPlaceId,
-  getLatLng,
+import PlacesAutocomplete, {
+	geocodeByAddress,
+	geocodeByPlaceId,
+	getLatLng,
 } from 'react-places-autocomplete';
-
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import cloneDeep from 'lodash/cloneDeep';
-
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -37,25 +35,23 @@ class form1 extends Component {
 			countries: [],
 			states: [],
 			cities: [],
-			address:''
+			address: '',
 		};
 	}
 
-
-	
-  handleChange = address => {
-    this.setState({ address });
-  };
- 
-  handleSelect = address => {
+	handleChange = (address) => {
 		this.setState({ address });
-		console.log('address', address)
+	};
 
-    geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => console.log('Success', latLng))
-      .catch(error => console.error('Error', error));
-  };
+	handleSelect = (address) => {
+		this.setState({ address });
+		console.log('address', address);
+
+		geocodeByAddress(address)
+			.then((results) => getLatLng(results[0]))
+			.then((latLng) => console.log('Success', latLng))
+			.catch((error) => console.error('Error', error));
+	};
 
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
@@ -186,7 +182,8 @@ class form1 extends Component {
 		let finalImages = [];
 		for (let i = 0; i < images.length; i++) {
 			this.getBase64(images[i], (cb) => {
-				finalImages.push(cb);
+				let image = cb.split(',')[1];
+				finalImages.push({ image: image });
 				console.log('checking result: ', cb);
 				if (i === images.length - 1) {
 					this.addPropertyHandler(finalImages);
@@ -197,8 +194,10 @@ class form1 extends Component {
 
 	addPropertyHandler = (images) => {
 		const { city, address, state, longitude, latitude } = this.state;
+		let updateCity = address ? address.split(', ')[1] : 'Toronto';
+		console.log('checking city: ', updateCity);
 		const dataform1 = {
-			city: city,
+			city: updateCity,
 			address: address,
 			state: state,
 			images: images,
@@ -208,7 +207,7 @@ class form1 extends Component {
 		console.log(dataform1);
 		if (this.state.images.length !== 0 && this.state.images.length >= 5) {
 			this.props.form1DataHandler(dataform1);
-		this.props.formShowHandler(1);
+			this.props.formShowHandler(1);
 		} else {
 			console.log('error picture must be 5 or more');
 			alert('Property Images Must be 5 or more');
@@ -276,45 +275,56 @@ class form1 extends Component {
 							</div>
 						</div>
 						<div className='row'>
-							<PlacesAutocomplete
-								value={this.state.address}
-								onChange={this.handleChange}
-								onSelect={this.handleSelect}
-							>
-								{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-									<div>
-										<input
-											{...getInputProps({
-												placeholder: 'Search Places ...',
-												className: 'location-search-input',
-											})}
-										/>
-										<div className="autocomplete-dropdown-container">
-											{loading && <div>Loading...</div>}
-											{suggestions.map(suggestion => {
-												const className = suggestion.active
-													? 'suggestion-item--active'
-													: 'suggestion-item';
-												// inline style for demonstration purpose
-												const style = suggestion.active
-													? { backgroundColor: '#fafafa', cursor: 'pointer' }
-													: { backgroundColor: '#ffffff', cursor: 'pointer' };
-												return (
-													<div
-														{...getSuggestionItemProps(suggestion, {
-															className,
-															style,
-														})}
-													>
-														<span>{suggestion.description}</span>
-													</div>
-												);
-											})}
+							<div className='col-md-12'>
+								<PlacesAutocomplete
+									value={this.state.address}
+									onChange={this.handleChange}
+									onSelect={this.handleSelect}
+								>
+									{({
+										getInputProps,
+										suggestions,
+										getSuggestionItemProps,
+										loading,
+									}) => (
+										<div className='form-group'>
+											<input
+												{...getInputProps({
+													placeholder: 'Search Places ...',
+													className:
+														'location-search-input input-feilds-property',
+												})}
+											/>
+											<div className='autocomplete-dropdown-container'>
+												{loading && <div>Loading...</div>}
+												{suggestions.map((suggestion) => {
+													const className = suggestion.active
+														? 'suggestion-item--active'
+														: 'suggestion-item';
+													// inline style for demonstration purpose
+													const style = suggestion.active
+														? {
+																position: 'relative',
+																backgroundColor: '#fafafa',
+																cursor: 'pointer',
+														  }
+														: { backgroundColor: '#ffffff', cursor: 'pointer' };
+													return (
+														<div
+															{...getSuggestionItemProps(suggestion, {
+																className,
+																style,
+															})}
+														>
+															<span>{suggestion.description}</span>
+														</div>
+													);
+												})}
+											</div>
 										</div>
-									</div>
-								)}
-							</PlacesAutocomplete>
-
+									)}
+								</PlacesAutocomplete>
+							</div>
 							<div
 								className='col-md-12'
 								style={{ height: '300px', width: '100%' }}
@@ -422,7 +432,6 @@ class form1 extends Component {
 									</button>
 								</div>
 							</div>
-							
 						</div>
 					</div>
 				</form>

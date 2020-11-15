@@ -835,6 +835,7 @@ h1.titles-property {
 }
 .comment-send-btn{
   position: relative;
+  width: 100%;
 }
 
 .user-Profile{
