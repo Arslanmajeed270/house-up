@@ -15,7 +15,7 @@ class singleVendor extends Component {
 			singleVendorsPropertiesData: {},
 			commentText: '',
 			user: {},
-			hideContact: true
+			hideContact: true,
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
@@ -96,15 +96,15 @@ class singleVendor extends Component {
 		});
 	};
 
-		modelHanlder = (model, id) => {
-			console.log('opening modal')
-			this.setState({
-				[model]: !this.state[model],
-				vendorId: id
-			 });
-		}
+	modelHanlder = (model, id) => {
+		console.log('opening modal');
+		this.setState({
+			[model]: !this.state[model],
+			vendorId: id,
+		});
+	};
 	closeCodelHanlder = (model) => {
-		console.log('hello close code')
+		console.log('hello close code');
 		this.setState({
 			[model]: false,
 		});
@@ -132,7 +132,7 @@ class singleVendor extends Component {
 			singleVendorData,
 			singleVendorsPropertiesData,
 			commentText,
-			hideContact
+			hideContact,
 		} = this.state;
 		console.log('singleVendors data', singleVendorData);
 		console.log('singleVendors Properties data', singleVendorsPropertiesData);
@@ -160,18 +160,22 @@ class singleVendor extends Component {
 											className='pxp-agent-contact-btn'
 											data-toggle='modal'
 											data-target='#pxp-work-with'
-											onClick={() =>this.modelHanlder('contactModalState',singleVendorData.userId)}
+											onClick={() =>
+												this.modelHanlder(
+													'contactModalState',
+													singleVendorData.userId
+												)
+											}
 										>
-											
 											CONTACTS US{' '}
 										</button>
 										{this.state.contactModalState ? (
-													<Contact
-														show={this.state.contactModalState}
-														closeCodelHanlder={this.closeCodelHanlder}
-														vendorId = {this.state.vendorId}
-													/>
-												) : null}
+											<Contact
+												show={this.state.contactModalState}
+												closeCodelHanlder={this.closeCodelHanlder}
+												vendorId={this.state.vendorId}
+											/>
+										) : null}
 									</div>
 								</div>
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
@@ -209,8 +213,7 @@ class singleVendor extends Component {
 										</div>
 										<div className='col-md-6'>
 											<p>
-												{singleVendorData &&
-													singleVendorData.professionDesc}
+												{singleVendorData && singleVendorData.professionDesc}
 											</p>
 										</div>
 										<div className='col-md-6'>
@@ -225,34 +228,32 @@ class singleVendor extends Component {
 											<p>Phone number</p>
 										</div>
 										<div className='col-md-6'>
-										{
-											hideContact ?
-											<Link onClick={this.contactHandler}>click to show</Link> :
-											<p>{ singleVendorData && singleVendorData.msisdn}</p>
-											}
-											</div>
+											{hideContact ? (
+												<Link onClick={this.contactHandler}>click to show</Link>
+											) : (
+												<p>{singleVendorData && singleVendorData.msisdn}</p>
+											)}
+										</div>
 										<div className='col-md-6'>
 											<p>Account status</p>
 										</div>
 										<div className='col-md-6'>
-											
-												<p>
-													{singleVendorData && singleVendorData.userStatusDesc}
-												</p>
-											
-											
+											<p>
+												{singleVendorData && singleVendorData.userStatusDesc}
+											</p>
 										</div>
 									</div>
 								</div>
 							</div>
 							{singleVendorsPropertiesData &&
-								singleVendorsPropertiesData.length ?
-							<h2 className='pxp-section-h2 mt-100'>
-								Listings by {singleVendorData && singleVendorData.firstName}{' '}
-								{singleVendorData && singleVendorData.lastName}{' '}
-							</h2>
-							: ""
-							}
+							singleVendorsPropertiesData.length ? (
+								<h2 className='pxp-section-h2 mt-100'>
+									Listings by {singleVendorData && singleVendorData.firstName}{' '}
+									{singleVendorData && singleVendorData.lastName}{' '}
+								</h2>
+							) : (
+								''
+							)}
 							<div className='row mt-4 mt-md-5'>
 								{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length
@@ -290,7 +291,7 @@ class singleVendor extends Component {
 																	data.object &&
 																	data.object.currency &&
 																	data.object.currency.symbol}{' '}
-																{data && data.object && data.object.price.toLocaleString()}
+																{data && data.object && data.object.price}
 															</div>
 															<div className='pxp-prop-card-1-details-features text-uppercase'>
 																{data &&
@@ -345,12 +346,16 @@ class singleVendor extends Component {
 										<div className='pxp-agent-comments'>
 											{singleVendorData &&
 											singleVendorData.vendorComments &&
-											singleVendorData.vendorComments.length ?
-											<h4>{singleVendorData &&
-											singleVendorData.vendorComments &&
-											singleVendorData.vendorComments.length} Reviews</h4>
-											: ""
-											}
+											singleVendorData.vendorComments.length ? (
+												<h4>
+													{singleVendorData &&
+														singleVendorData.vendorComments &&
+														singleVendorData.vendorComments.length}{' '}
+													Reviews
+												</h4>
+											) : (
+												''
+											)}
 											{singleVendorData &&
 											singleVendorData.vendorComments &&
 											singleVendorData.vendorComments.length
