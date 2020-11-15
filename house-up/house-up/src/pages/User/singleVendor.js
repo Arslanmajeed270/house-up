@@ -96,6 +96,9 @@ class singleVendor extends Component {
 		});
 	};
 
+	contactHandler = () => {
+		this.setState({ hideContact: !this.state.hideContact });
+	};
 	modelHanlder = (model, id) => {
 		console.log('opening modal');
 		this.setState({
@@ -149,11 +152,38 @@ class singleVendor extends Component {
 										{singleVendorData && singleVendorData.lastName}{' '}
 									</h1>
 									<div className='clearfix' />
+									{singleVendorData && singleVendorData.userTypeId === 2 ? (
+										<div>
+											<h5>
+												{singleVendorData && singleVendorData.businessName}
+											</h5>
+											<h5>{singleVendorData && singleVendorData.address}</h5>
+										</div>
+									) : (
+										<div className='row'>
+											<div className='col-md-6'>
+												<p>Phone number</p>
+											</div>
+											<div className='col-md-6'>
+												{hideContact ? (
+													<Link onClick={this.contactHandler}>
+														click to show
+													</Link>
+												) : (
+													<p>{singleVendorData && singleVendorData.msisdn}</p>
+												)}
+											</div>
+											<div className='col-md-6'>
+												<p>Email address</p>
+											</div>
+											<div className='col-md-6'>
+												<p>
+													{singleVendorData && singleVendorData.emailAddress}
+												</p>
+											</div>
+										</div>
+									)}
 
-									<div className=''>
-										<h5>{singleVendorData && singleVendorData.businessName}</h5>
-										<h5>{singleVendorData && singleVendorData.address}</h5>
-									</div>
 									<div className=''>
 										<button
 											to='#pxp-work-with'
@@ -180,7 +210,11 @@ class singleVendor extends Component {
 								</div>
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
 									<div
-										className='pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0'
+										className={
+											singleVendorData && singleVendorData.userTypeId === 1
+												? 'pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0 user-Profile'
+												: 'pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0'
+										}
 										style={{
 											backgroundImage: `url(${
 												singleVendorData && singleVendorData.profilePictureUrl
@@ -192,59 +226,67 @@ class singleVendor extends Component {
 									/>
 								</div>
 							</div>
-							<div className='row'>
-								<div className='col-sm-12 col-lg-8'>
-									<div className='pxp-agent-section'>
-										<h3>
-											About {singleVendorData && singleVendorData.firstName}{' '}
-											{singleVendorData && singleVendorData.lastName}{' '}
-										</h3>
-										<div className='mt-3 mt-md-4'>
-											<p>
-												{singleVendorData && singleVendorData.aboutBusiness}
-											</p>
+							{singleVendorData && singleVendorData.userTypeId === 2 ? (
+								<div className='row'>
+									<div className='col-sm-12 col-lg-8'>
+										<div className='pxp-agent-section'>
+											<h3>
+												About {singleVendorData && singleVendorData.firstName}{' '}
+												{singleVendorData && singleVendorData.lastName}{' '}
+											</h3>
+											<div className='mt-3 mt-md-4'>
+												<p>
+													{singleVendorData && singleVendorData.aboutBusiness}
+												</p>
+											</div>
+										</div>
+									</div>
+
+									<div className='col-sm-12 col-lg-3 offset-lg-1'>
+										<div className='pxp-agent-section mt-4 mt-md-5 row'>
+											<div className='col-md-6'>
+												<p>Specialities</p>
+											</div>
+											<div className='col-md-6'>
+												<p>
+													{singleVendorData && singleVendorData.professionDesc}
+												</p>
+											</div>
+											<div className='col-md-6'>
+												<p>Busniess start</p>
+											</div>
+											<div className='col-md-6'>
+												<p>
+													{singleVendorData &&
+														singleVendorData.businessStartDate}
+												</p>
+											</div>
+											<div className='col-md-6'>
+												<p>Phone number</p>
+											</div>
+											<div className='col-md-6'>
+												{hideContact ? (
+													<Link onClick={this.contactHandler}>
+														click to show
+													</Link>
+												) : (
+													<p>{singleVendorData && singleVendorData.msisdn}</p>
+												)}
+											</div>
+											<div className='col-md-6'>
+												<p>Account status</p>
+											</div>
+											<div className='col-md-6'>
+												<p>
+													{singleVendorData && singleVendorData.userStatusDesc}
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>
-								<div className='col-sm-12 col-lg-3 offset-lg-1'>
-									<div className='pxp-agent-section mt-4 mt-md-5 row'>
-										<div className='col-md-6'>
-											<p>Specialities</p>
-										</div>
-										<div className='col-md-6'>
-											<p>
-												{singleVendorData && singleVendorData.professionDesc}
-											</p>
-										</div>
-										<div className='col-md-6'>
-											<p>Busniess start</p>
-										</div>
-										<div className='col-md-6'>
-											<p>
-												{singleVendorData && singleVendorData.businessStartDate}
-											</p>
-										</div>
-										<div className='col-md-6'>
-											<p>Phone number</p>
-										</div>
-										<div className='col-md-6'>
-											{hideContact ? (
-												<Link onClick={this.contactHandler}>click to show</Link>
-											) : (
-												<p>{singleVendorData && singleVendorData.msisdn}</p>
-											)}
-										</div>
-										<div className='col-md-6'>
-											<p>Account status</p>
-										</div>
-										<div className='col-md-6'>
-											<p>
-												{singleVendorData && singleVendorData.userStatusDesc}
-											</p>
-										</div>
-									</div>
-								</div>
-							</div>
+							) : (
+								''
+							)}
 							{singleVendorsPropertiesData &&
 							singleVendorsPropertiesData.length ? (
 								<h2 className='pxp-section-h2 mt-100'>
@@ -257,64 +299,74 @@ class singleVendor extends Component {
 							<div className='row mt-4 mt-md-5'>
 								{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length
-									? singleVendorsPropertiesData.map((data, idx) => (
-											<>
-												<div key={idx} className='col-sm-12 col-md-6 col-lg-4'>
-													<Link
-														to={`/single-prop-${
-															data && data.object && data.object.propertId
-														}`}
-														className='pxp-prop-card-1 rounded-lg mb-4'
+									? singleVendorsPropertiesData.map((data, idx) =>
+											data && data.category === 'Property' ? (
+												<>
+													<div
+														key={idx}
+														className='col-sm-12 col-md-6 col-lg-4'
 													>
-														<div
-															className='pxp-prop-card-1-fig pxp-cover'
-															style={{
-																backgroundImage: `url(${
-																	data &&
-																	data.object.imageList &&
-																	data &&
-																	data.object.imageList.length
-																		? data.object.imageList[0] &&
-																		  data.object.imageList[0].imageURL
-																		: ''
-																})`,
-															}}
-														/>
-														<div className='pxp-prop-card-1-gradient pxp-animate' />
-														<div className='pxp-prop-card-1-details'>
-															<div className='pxp-prop-card-1-details-title'>
-																{data && data.object && data.object.adTitle}
+														<Link
+															to={`/single-prop-${
+																data && data.object && data.object.propertId
+															}`}
+															className='pxp-prop-card-1 rounded-lg mb-4'
+														>
+															<div
+																className='pxp-prop-card-1-fig pxp-cover'
+																style={{
+																	backgroundImage: `url(${
+																		data &&
+																		data.object.imageList &&
+																		data &&
+																		data.object.imageList.length
+																			? data.object.imageList[0] &&
+																			  data.object.imageList[0].imageURL
+																			: ''
+																	})`,
+																}}
+															/>
+															<div className='pxp-prop-card-1-gradient pxp-animate' />
+															<div className='pxp-prop-card-1-details'>
+																<div className='pxp-prop-card-1-details-title'>
+																	{data && data.object && data.object.adTitle}
+																</div>
+																<div className='pxp-prop-card-1-details-price'>
+																	{' '}
+																	{data &&
+																		data.object &&
+																		data.object.currency &&
+																		data.object.currency.symbol}{' '}
+																	{data &&
+																		data.object &&
+																		data.object.price &&
+																		data.object.price.toLocaleString()}
+																</div>
+																<div className='pxp-prop-card-1-details-features text-uppercase'>
+																	{data &&
+																		data.object &&
+																		data.object.noOfBedrooms}{' '}
+																	BD <span>|</span>{' '}
+																	{data &&
+																		data.object &&
+																		data.object.noOfBathroomsValue}{' '}
+																	BA <span>|</span>{' '}
+																	{data &&
+																		data.object &&
+																		data.object.finishedSqftArea}{' '}
+																	SF
+																</div>
 															</div>
-															<div className='pxp-prop-card-1-details-price'>
-																{' '}
-																{data &&
-																	data.object &&
-																	data.object.currency &&
-																	data.object.currency.symbol}{' '}
-																{data && data.object && data.object.price}
+															<div className='pxp-prop-card-1-details-cta text-uppercase'>
+																View Details
 															</div>
-															<div className='pxp-prop-card-1-details-features text-uppercase'>
-																{data &&
-																	data.object &&
-																	data.object.noOfBedrooms}{' '}
-																BD <span>|</span>{' '}
-																{data &&
-																	data.object &&
-																	data.object.noOfBathroomsValue}{' '}
-																BA <span>|</span>{' '}
-																{data &&
-																	data.object &&
-																	data.object.finishedSqftArea}{' '}
-																SF
-															</div>
-														</div>
-														<div className='pxp-prop-card-1-details-cta text-uppercase'>
-															View Details
-														</div>
-													</Link>
-												</div>
-											</>
-									  ))
+														</Link>
+													</div>
+												</>
+											) : (
+												''
+											)
+									  )
 									: ''}
 							</div>
 							{/* <ul className='pagination pxp-paginantion mt-3 mt-md-4'>
@@ -344,18 +396,6 @@ class singleVendor extends Component {
 								<div className='col-sm-12 col-lg-10'>
 									<div className='pxp-agent-block'>
 										<div className='pxp-agent-comments'>
-											{singleVendorData &&
-											singleVendorData.vendorComments &&
-											singleVendorData.vendorComments.length ? (
-												<h4>
-													{singleVendorData &&
-														singleVendorData.vendorComments &&
-														singleVendorData.vendorComments.length}{' '}
-													Reviews
-												</h4>
-											) : (
-												''
-											)}
 											{singleVendorData &&
 											singleVendorData.vendorComments &&
 											singleVendorData.vendorComments.length

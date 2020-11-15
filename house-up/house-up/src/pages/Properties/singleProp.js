@@ -17,13 +17,16 @@ class singleProp extends Component {
 			user: {},
 			userId: '',
 			imageToggle: false,
-			vendorId:''
+			vendorId:'',
+			comments: [],
+
 		};
 	}
 
 	static getDerivedStateFromProps(props, state) {
 		let property = props.property;
 		let auth = props.auth;
+		let page = props.page;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -32,6 +35,27 @@ class singleProp extends Component {
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
+			if (
+				changedState.indexPageData &&
+				changedState.indexPageData &&
+				changedState.indexPageData.vendorPostPropertiesList.length
+			) {
+				changedState.comments = changedState.indexPageData.vendorPostPropertiesList.map(
+					(data) => {
+						if (
+							state.category === 'Property' &&
+							data.category === state.category &&
+							data.object &&
+							data.object.propertId &&
+							data.object.propertId === state.propertId
+						) {
+							changedState.comments = data.object.propertyComments
+								? data.object.propertyComments
+								: [];
+						}
+					}
+				);
+			}
 		if (
 			property &&
 			JSON.stringify(state.singlePropertyData) !==
@@ -67,6 +91,7 @@ class singleProp extends Component {
 		console.log('checking id in sigle property: ', id);
 
 		const userId = user.userId ? user.userId : '';
+		const profilePictureUrl = user.profilePictureUrl ? user.profilePictureUrl : ''
 
 		this.setState({
 			id,
@@ -80,7 +105,7 @@ class singleProp extends Component {
 		console.log('user', this.state.user);
 
 		console.log(userData);
-		this.props.onGetSinglePropertyData(userData);
+		this.props.onGetSinglePropertyData(userData , profilePictureUrl);
 	}
 
 	onChange = (e) => {
@@ -690,7 +715,7 @@ class singleProp extends Component {
 																		key={index}
 																		className='media mt-2 mt-md-3'
 																	>
-																		<img
+																		<img 
 																			src={da && da.profilePictureUrl}
 																			className='mr-3'
 																			alt='...'
@@ -707,7 +732,6 @@ class singleProp extends Component {
 														  )
 														: ''}
 												</div>
-												<h4 className='mt-4 mt-md-5'>Leave a review</h4>
 												<form
 													action='/single-vendor'
 													className='pxp-agent-comments-form mt-3 mt-md-4'
@@ -745,8 +769,12 @@ class singleProp extends Component {
 									<h3>Listed By</h3>
 									<div className='pxp-sp-agent mt-3 mt-md-4'>
 										<Link
-											to='/single-vendor'
-											className='pxp-sp-agent-fig pxp-cover rounded-lg'
+											to={`/single-vendor-${singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.userId
+														? singlePropertyData.user.userId
+														: ''}`}
+											className='pxp-sp-agent-fig pxp-cover rounded-lg user-profile'
 											style={{
 												backgroundImage: `url(${
 													singlePropertyData &&
@@ -759,7 +787,11 @@ class singleProp extends Component {
 										/>
 										<div className='pxp-sp-agent-info'>
 											<div className='pxp-sp-agent-info-name'>
-												<Link to='/single-vendor'>
+												<Link to={`/single-vendor-${singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.userId
+														? singlePropertyData.user.userId
+														: ''}`}>
 													{singlePropertyData &&
 													singlePropertyData.user &&
 													singlePropertyData.user.firstName
@@ -818,7 +850,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
+		onCommentAdded: (data , profilePictureUrl) => dispatch(actions.AddComments(data, profilePictureUrl)),
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
 	};

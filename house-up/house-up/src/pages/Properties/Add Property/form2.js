@@ -400,8 +400,8 @@ class from2 extends Component {
 									onChange={this.onChange}
 									value={rentalListingYN}
 								>
-									<option value='Yes'>Yes</option>
 									<option value='No'>No </option>
+									<option value='Yes'>Yes</option>
 								</select>
 							</div>
 						</div>
