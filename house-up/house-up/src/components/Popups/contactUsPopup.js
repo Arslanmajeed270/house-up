@@ -70,7 +70,7 @@ class contacUsPopup extends Component {
 	}
 
 	componentDidMount() {
-		const { user, email, phoneNumber, name, userId } = this.state;
+		const { user, email, phoneNumber, name, userId , vendorId} = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -90,7 +90,7 @@ class contacUsPopup extends Component {
 		console.log('checking values:', name);
 		console.log('checking values:', phoneNumber);
 		console.log('checking values:', userId);
-		console.log('vendor id', this.props.vendorId)
+		console.log('vendor id', vendorId)
 	}
 
 	onChange = (e) => {
