@@ -30,7 +30,6 @@ class OptUser extends Component {
 		let stateChanged = false;
 		let changedState = {};
 
-		// console.log('checking otpAuthenticate: ', otpAuthenticate);
 
 		if (
 			(otpAuthenticate || otpAuthenticate === false) &&
@@ -84,7 +83,6 @@ class OptUser extends Component {
 	};
 	render() {
 		const { errors, loading } = this.state;
-		// console.log('checking value of otp: ', this.state.otp);
 		let pageContent = '';
 
 		if (loading) {
@@ -177,7 +175,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	// console.log('mapDispatchToProps in HomePage ' );
 	return {
 		onFalseOtpAutheticate: () =>
 			dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),

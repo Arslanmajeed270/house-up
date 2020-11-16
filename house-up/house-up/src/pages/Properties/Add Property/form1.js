@@ -4,7 +4,6 @@ import { Nav } from 'react-bootstrap';
 import GoogleMapReact from 'google-map-react';
 import PlacesAutocomplete, {
 	geocodeByAddress,
-	geocodeByPlaceId,
 	getLatLng,
 } from 'react-places-autocomplete';
 
@@ -35,7 +34,6 @@ class form1 extends Component {
 			countries: [],
 			states: [],
 			cities: [],
-			address: '',
 		};
 	}
 
@@ -45,7 +43,6 @@ class form1 extends Component {
 
 	handleSelect = (address) => {
 		this.setState({ address });
-		console.log('address', address);
 
 		geocodeByAddress(address)
 			.then((results) => getLatLng(results[0]))
@@ -56,7 +53,6 @@ class form1 extends Component {
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const page = props.page;
-		console.log('checking page data ', page);
 		let stateChanged = false;
 		let changedState = {};
 
@@ -100,7 +96,6 @@ class form1 extends Component {
 	}
 
 	onDrop = (files) => {
-		console.log('checking images: ', files);
 		this.setState({ images: files });
 	};
 
@@ -148,7 +143,6 @@ class form1 extends Component {
 					this.state.states.findIndex((x) => `${x.name}` === e.target.value);
 				cities = cloneDeep(this.state.states[ind]);
 			}
-			console.log('checking e.target.value in state: ', e.target.value);
 			this.setState({
 				[e.target.name]: e.target.value,
 				cities: cities.cities,
@@ -184,7 +178,6 @@ class form1 extends Component {
 			this.getBase64(images[i], (cb) => {
 				let image = cb.split(',')[1];
 				finalImages.push({ image: image });
-				console.log('checking result: ', cb);
 				if (i === images.length - 1) {
 					this.addPropertyHandler(finalImages);
 				}
@@ -193,9 +186,8 @@ class form1 extends Component {
 	};
 
 	addPropertyHandler = (images) => {
-		const { city, address, state, longitude, latitude } = this.state;
+		const { address, state, longitude, latitude } = this.state;
 		let updateCity = address ? address.split(', ')[1] : 'Toronto';
-		console.log('checking city: ', updateCity);
 		const dataform1 = {
 			city: updateCity,
 			address: address,
@@ -204,28 +196,20 @@ class form1 extends Component {
 			longitude: longitude,
 			latitude: latitude,
 		};
-		console.log(dataform1);
 		if (this.state.images.length !== 0 && this.state.images.length >= 5) {
 			this.props.form1DataHandler(dataform1);
 			this.props.formShowHandler(1);
 		} else {
-			console.log('error picture must be 5 or more');
 			alert('Property Images Must be 5 or more');
 		}
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
-		console.log('before');
 		this.imagesHandler(this.state.images);
 	};
 	render() {
 		const {
-			address,
-			city,
 			googleMapKey,
-			states,
-			cities,
-			state,
 			images,
 		} = this.state;
 

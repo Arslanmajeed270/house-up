@@ -26,7 +26,6 @@ class singleProp extends Component {
 	static getDerivedStateFromProps(props, state) {
 		let property = props.property;
 		let auth = props.auth;
-		let page = props.page;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -72,23 +71,20 @@ class singleProp extends Component {
 	}
 
 		modelHanlder = (model, id) => {
-			console.log('opening modal')
 			this.setState({
 				[model]: !this.state[model],
 				vendorId: id
 			 });
 		}
 	closeCodelHanlder = (model) => {
-		console.log('hello close code')
 		this.setState({
 			[model]: false,
 		});
 	};
 
 	componentDidMount() {
-		const { singlePropertyData, user } = this.state;
+		const { user } = this.state;
 		const id = this.props.match.params.id;
-		console.log('checking id in sigle property: ', id);
 
 		const userId = user.userId ? user.userId : '';
 		const profilePictureUrl = user.profilePictureUrl ? user.profilePictureUrl : ''
@@ -101,10 +97,6 @@ class singleProp extends Component {
 		let userData = {
 			propertyId: id,
 		};
-
-		console.log('user', this.state.user);
-
-		console.log(userData);
 		this.props.onGetSinglePropertyData(userData , profilePictureUrl);
 	}
 
@@ -116,7 +108,7 @@ class singleProp extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, user, commentText, userId } = this.state;
+		const { id, commentText, userId } = this.state;
 
 		const data = {
 			postId: 0,
@@ -127,8 +119,6 @@ class singleProp extends Component {
 			userId: userId,
 			vendorId: 0,
 		};
-		console.log('data pakage of comment api', data);
-
 		this.props.onCommentAdded(data);
 	};
 
@@ -138,7 +128,6 @@ class singleProp extends Component {
 
 	render() {
 		const { singlePropertyData, commentText, imageToggle } = this.state;
-		console.log('single property data :', singlePropertyData);
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>

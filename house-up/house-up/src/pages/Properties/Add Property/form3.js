@@ -57,7 +57,6 @@ class form3 extends Component {
 		this.setState({ moreInfo: !this.state.moreInfo });
 	};
 	componentDidMount() {
-		console.log('BOSS', this.props.dropDownData);
 		const dropDownData1 = this.props.dropDownData;
 		this.setState({
 			propertyType:
@@ -278,7 +277,6 @@ class form3 extends Component {
 				buildingTypeId: buildingType[0].id,
 			});
 		}
-		// console.log('checking form3 Data', dataform3);
 		this.props.form3DataHandler(dataform3);
 	};
 
@@ -310,7 +308,6 @@ class form3 extends Component {
 			yearFurnaceBuilt,
 			areaTypeId,
 			lotTotalArea,
-			dropDownData,
 			propertyType,
 			parkingSpace,
 			bedroomCount,

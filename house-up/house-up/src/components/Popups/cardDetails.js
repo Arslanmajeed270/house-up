@@ -72,9 +72,7 @@ class AddCard extends Component {
 	onChange = (e) => {
 		const targetName = e.target.name;
 		const targetvalue = e.target.value;
-		console.log(
-			`checking targetName: ${targetName} , targetvalue: ${targetvalue}`
-		);
+		
 		this.setState({ [targetName]: targetvalue });
 	};
 
@@ -84,7 +82,6 @@ class AddCard extends Component {
 		const jwtSecretKey = process.env.REACT_APP_JWT_SECRET_KEY;
 		const now = new Date();
 		const expTime = Math.round(now.getTime() / 1000) + 2000;
-		console.log('checking expTime: ', expTime);
 		var token = jwt.sign(
 			{
 				cardNumber: cardNumber,
@@ -94,7 +91,6 @@ class AddCard extends Component {
 			},
 			jwtSecretKey
 		);
-		console.log('checking token: ', token);
 		const data = {
 			channel: 'web',
 			token: token,
@@ -105,7 +101,6 @@ class AddCard extends Component {
 
 	render() {
 		const { cardNumber, expiryDate, cvv, errors, loading } = this.state;
-		console.log('checking this.state: ', this.state);
 		let pageData = '';
 		if (loading) {
 			pageData = <Spinner />;

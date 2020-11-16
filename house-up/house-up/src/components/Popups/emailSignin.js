@@ -83,7 +83,6 @@ class emailSignin extends Component {
 	};
 
 	onSubmit = (e) => {
-		console.log('checking click handler');
 		e.preventDefault();
 
 		if (this.state.password.length < 6) {
@@ -97,8 +96,6 @@ class emailSignin extends Component {
 			channel: 'HouseUp',
 			loginBy: 'emailAddress',
 		};
-		//    console.log(userData);
-
 		this.props.onLogin(
 			userData,
 			this.state.currentLocation,
@@ -107,7 +104,6 @@ class emailSignin extends Component {
 	};
 	render() {
 		const { viewPass, emailAddress, password, errors, loading } = this.state;
-		// console.log("checking this.props.show: ", this.props.show);
 		return (
 			<Modal
 				show={this.props.show}

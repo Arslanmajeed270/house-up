@@ -11,7 +11,6 @@ import Spinner from '../../components/common/Spinner';
 import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
-import { times } from 'lodash';
 
 class addProperty extends Component {
 	constructor(props) {
@@ -29,16 +28,13 @@ class addProperty extends Component {
 	}
 
 	form1DataHandler = (form1Data) => {
-		// console.log('checking form 2 data in add property paren page',form1Data);
 		this.setState({ form1Data: form1Data });
 	};
 
 	form2DataHandler = (form2Data) => {
-		// console.log('checking form2 data in add property paren page',form2Data);
 		this.setState({ form2Data: form2Data });
 	};
 	form3DataHandler = (form3Data) => {
-		// console.log('checking form3 data in add property paren page',form3Data);
 		this.setState({ form3Data: form3Data }, () => this.addProperty());
 	};
 
@@ -163,13 +159,11 @@ class addProperty extends Component {
 			country: 'Canada',
 			state: form1Data.state ? form1Data.state : 'Ontario',
 		};
-		console.log('checking formData: ', formData);
 
 		this.props.onAddProperty(formData, this.props.history);
 	};
 
 	formShowHandler = (num) => {
-		// console.log("checking number: ", num);
 		this.setState({
 			formShow: num,
 		});
@@ -179,14 +173,9 @@ class addProperty extends Component {
 			dropDownData,
 			loading,
 			errors,
-			form1Data,
-			form2Data,
 			form3Data,
 		} = this.state;
 		let pageContent = '';
-		console.log('checking form1Data: ', form1Data);
-		console.log('checking form2Data: ', form2Data);
-		// console.log("checking form3Data: ",form3Data );
 
 		if (loading) {
 			pageContent = <Spinner />;

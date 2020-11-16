@@ -4,14 +4,12 @@ import ImageGallery from 'react-image-gallery';
 import { Modal } from 'react-bootstrap';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { fromPairs } from 'lodash';
 
 class imagePreview extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			storys: [],
-
 		};
 	}
 
@@ -22,8 +20,7 @@ class imagePreview extends Component {
 		
 	}
 	render() {
-		const { storys , imageIndex } = this.state;
-		console.log('states in image preview', storys);
+		const { storys } = this.state;
 
 		const storysImages = [];
 

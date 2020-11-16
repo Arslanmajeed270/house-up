@@ -69,7 +69,6 @@ class vendorSignup extends Component {
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const page = props.page;
-		console.log('checking page data ', page);
 		const auth = props.auth;
 		let stateChanged = false;
 		let changedState = {};
@@ -98,7 +97,6 @@ class vendorSignup extends Component {
 			states = cloneDeep(changedState.countries[0]);
 			changedState.states = states.states;
 		}
-		// console.log('checking page: ', page);
 		if (
 			page &&
 			page.professionList &&
@@ -106,7 +104,6 @@ class vendorSignup extends Component {
 				JSON.stringify(page.professionList)
 		) {
 			changedState.professionList = page.professionList;
-			// console.log('checking changedState.professionList: ', changedState.professionList);
 			stateChanged = true;
 		}
 		if (
@@ -146,7 +143,6 @@ class vendorSignup extends Component {
 		if (e.target.name === 'profileImage') {
 			let imagePreview = URL.createObjectURL(e.target.files[0]);
 			fileUpload(e).then((data) => {
-				// console.log("base64 :",data.base64);
 				this.setState({
 					imagePreview: imagePreview,
 					profileImage: data.base64,
@@ -155,7 +151,6 @@ class vendorSignup extends Component {
 		} else if (e.target.name === 'businessSupportingDocument') {
 			let imagePreviewForSupport = e.target.files[0];
 			fileUpload(e).then((data) => {
-				// console.log("base64 :",data.base64);
 				this.setState({
 					imagePreviewForSupport: imagePreviewForSupport,
 					businessSupportingDocument: data.base64,
@@ -164,7 +159,6 @@ class vendorSignup extends Component {
 		} else if (e.target.name === 'businessRegistrationDocument') {
 			let imagePreviewForRegister = e.target.files[0];
 			fileUpload(e).then((data) => {
-				// console.log("base64 :",data.base64);
 				this.setState({
 					imagePreviewForRegister: imagePreviewForRegister,
 					businessRegistrationDocument: data.base64,
@@ -184,7 +178,6 @@ class vendorSignup extends Component {
 				states: states.states,
 			});
 		} else if (e.target.name === 'provinceId') {
-			console.log('checking e.target: ', e.target.value);
 			let ind = 0;
 			let cities = [];
 			let prId = '';
@@ -205,7 +198,6 @@ class vendorSignup extends Component {
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
-		// console.log('checking click handler');
 		const {
 			profileImage,
 			firstName,
@@ -285,8 +277,7 @@ class vendorSignup extends Component {
 				state: province,
 				city: city,
 			};
-			console.log('i am here: ', userData);
-			// this.props.onCreateVendor(userData);
+			this.props.onCreateVendor(userData);
 		}
 	};
 
@@ -321,7 +312,6 @@ class vendorSignup extends Component {
 			imagePreviewForSupport,
 			unitOther,
 		} = this.state;
-		console.log('checking this.state: ', this.state);
 
 		let pageContent = '';
 

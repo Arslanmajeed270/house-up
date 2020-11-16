@@ -50,7 +50,6 @@ class form2 extends Component {
 		const contactNumber = user.msisdn ? user.msisdn : '';
 		const userId = user.userId ? user.userId : '';
 		const {form2Data} = this.props;
-		console.log("checking form2Data", form2Data)
 		this.setState({
 			contactEmail,
 			contactName,
@@ -68,14 +67,12 @@ class form2 extends Component {
 		this.setState({
 			[e.target.name]: e.target.value,
 		});
-		console.log(e.target.value);
 	};
 
 	dropDownDatahandler = (currencyData) => {
 		this.setState({
 			currencyData,
 		});
-		console.log(currencyData);
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
@@ -90,10 +87,6 @@ class form2 extends Component {
 			userId,
 			currencyData,
 		} = this.state;
-		console.log('checking contactEmail: ', contactEmail);
-		console.log('checking contactName: ', contactName);
-		console.log('checking contactNumber: ', contactNumber);
-		console.log(currencyData);
 		const form2Data = {
 			description,
 			currencyId:
@@ -107,7 +100,6 @@ class form2 extends Component {
 			price: Number(price),
 			userId,
 		};
-		// console.log('checking form2 data ', form2Data);
 
 		this.props.form2DataHandler(form2Data);
 
@@ -126,14 +118,12 @@ class form2 extends Component {
 			currencyData,
 		} = this.state;
 		const dropDownData1 = this.props.dropDownData;
-		console.log('checking drop: ', dropDownData1);
 		if (
 			dropDownData1 &&
 			dropDownData1.currencies &&
 			dropDownData1.currencies.length &&
 			currencyData.length === 0
 		) {
-			console.log('i am here');
 			this.dropDownDatahandler(
 				dropDownData1 && dropDownData1.currencies
 					? dropDownData1.currencies

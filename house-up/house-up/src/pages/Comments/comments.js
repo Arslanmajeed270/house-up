@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 class comments extends Component {
 	constructor(props) {
@@ -93,7 +91,6 @@ class comments extends Component {
 
 	componentDidMount() {
 		const { user } = this.state;
-		console.log('user',user)
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -109,7 +106,6 @@ class comments extends Component {
 		const id = this.props.match.params.id;
 		const category = this.props.match.params.category;
 		const indexValue = this.props.match.params.indexValue;
-		console.log('index', indexValue);
 
 		this.setState({
 			id: id,
@@ -133,10 +129,6 @@ class comments extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		// const userName =
-		// 	this.state.user && this.state.user.userName
-		// 		? this.state.user.userName
-		// 		: null;
 		const profilePictureUrl =
 			this.state.user && this.state.user.profilePictureUrl
 				? this.state.user.profilePictureUrl
@@ -151,10 +143,8 @@ class comments extends Component {
 			storyImageId,
 			vendorId,
 			category,
-			commentData,
 			contactName
 		} = this.state;
-		console.log('conatct name', contactName)
 
 		const data = {
 			postId: Number(postId),
@@ -165,7 +155,6 @@ class comments extends Component {
 			userId: userId,
 			vendorId: Number(vendorId),
 		};
-		console.log('data pakage of comment api', data);
 
 		this.props.onCommentAdded(data, indexValue, contactName , profilePictureUrl);
 	};
@@ -175,14 +164,11 @@ class comments extends Component {
 			loading,
 			data,
 			indexPageData,
-			contactName,
-			contactEmail,
 			commentText,
 			indexValue,
 			commentData,
 		} = this.state;
 
-		console.log('checking this.state in comments: ', this.state);
 
 		let pageContent = '';
 
@@ -193,14 +179,10 @@ class comments extends Component {
 		}
 
 		data = indexPageData && indexPageData.vendorPostPropertiesList;
-		console.log('checking data in comments: ', data);
 
-		console.log('post and property data', data);
 		if (data && data.length) {
 			commentData = data[indexValue];
 		}
-		console.log(commentData);
-
 		return (
 			<React.Fragment>
 				<div className='row mt-100'>

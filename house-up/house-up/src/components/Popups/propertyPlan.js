@@ -3,13 +3,6 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-import * as actions from '../../store/actions/authActions';
-import * as actionTypes from '../../store/actions/actionTypes';
-
-import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
-
 import CardSelection from './cardSelection';
 
 class propertyPlan extends Component {
