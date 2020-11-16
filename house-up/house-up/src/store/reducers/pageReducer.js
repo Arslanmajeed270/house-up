@@ -13,8 +13,6 @@ import {
 	SET_DEFAULT_ALL_CARDS,
 	LOAD_ALL_CARDS,
 	SET_PACKAGE_DETAILS,
-CONTACT_US,
-	// ADD_COMMENTS
 	ADD_COMMENTS,
 } from '../actions/actionTypes';
 
@@ -97,14 +95,12 @@ export default function (state = initialState, action) {
 				indexPageData.vendorPostPropertiesList &&
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index
 			) {
-				console.log('checking action in FOLLOW_UNFOLLOW_PROFESSIONAL', action);
 				if (action.payload.type === 'PostandProperty') {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.user.isUserFollowedByLoggedInUser = action.payload.follow;
 				}
 				if (action.payload.type === 'Vendors') {
-					console.log('i am into Vendors');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isUserFollowedByLoggedInUser = action.payload.follow;
@@ -121,29 +117,21 @@ export default function (state = initialState, action) {
 			};
 		}
 		case ADD_LIKE: {
-			console.log('checking action.payload.index: ', action.payload.index);
 			let indexPageData = Object.assign({}, state.indexPageData);
 			if (
 				indexPageData &&
 				indexPageData.vendorPostPropertiesList &&
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index
 			) {
-				console.log(
-					'checking action.payload.category:',
-					action.payload.category
-				);
 				if (action.payload.category === 'Property') {
-					console.log('i am into property if');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPropertyLikedByLoggedInUser = action.payload.follow;
-					console.log('checking indexPageData: ', indexPageData);
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.propertyLikes.push({ userName: action.payload.userName });
 				}
 				if (action.payload.category === 'Post') {
-					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPostLikedByLoggedInUser = action.payload.follow;
@@ -152,7 +140,6 @@ export default function (state = initialState, action) {
 					].object.postLikes.push({ userName: action.payload.userName });
 				}
 				if (action.payload.category === 'Vendor') {
-					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isUserLikedByLoggedInUser = action.payload.follow;
@@ -167,20 +154,14 @@ export default function (state = initialState, action) {
 			};
 		}
 		case ADD_COMMENTS: {
-			console.log('checking action.payload.index: ', action.payload.index);
 			let indexPageData = Object.assign({}, state.indexPageData);
 			if (
 				indexPageData &&
 				indexPageData.vendorPostPropertiesList &&
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index
 			) {
-				console.log(
-					'checking action.payload.category:',
-					action.payload.category
-				);
+				
 				if (action.payload.category === 'Property') {
-					console.log('i am into property if');
-					console.log('checking indexPageData: ', action.payload);
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.propertyComments.push({
@@ -190,7 +171,6 @@ export default function (state = initialState, action) {
 					});
 				}
 				if (action.payload.category === 'Post') {
-					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.postComments.push({
@@ -199,7 +179,6 @@ export default function (state = initialState, action) {
 					});
 				}
 				if (action.payload.category === 'Vendor') {
-					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.vendorComments.push({
@@ -214,7 +193,6 @@ export default function (state = initialState, action) {
 			};
 		}
 		case SET_CURRENT_LOCATION: {
-			console.log('checking action.payload: ', action.payload);
 			let currentLocation = Object.assign({}, action.payload);
 			return {
 				...state,

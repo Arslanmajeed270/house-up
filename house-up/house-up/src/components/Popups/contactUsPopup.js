@@ -16,7 +16,6 @@ class contacUsPopup extends Component {
 			user: {},
 			propertyId: 0,
 			postId: 0,
-			vendorId: 0,
 			userId: 0,
 			name: '',
 			phoneNumber: 0,
@@ -70,7 +69,7 @@ class contacUsPopup extends Component {
 	}
 
 	componentDidMount() {
-		const { user, email, phoneNumber, name, userId , vendorId} = this.state;
+		const { user} = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -86,11 +85,7 @@ class contacUsPopup extends Component {
 			vendorId : this.props.vendorId
 		});
 
-		console.log('checking values:', email);
-		console.log('checking values:', name);
-		console.log('checking values:', phoneNumber);
-		console.log('checking values:', userId);
-		console.log('vendor id', vendorId)
+		
 	}
 
 	onChange = (e) => {
@@ -110,7 +105,6 @@ class contacUsPopup extends Component {
 		} = this.state;
 
 		if (!checkDateFuture(meetingDate)) {
-			console.log('hello')
 			this.props.onErrorSet('Please Enter Valid Date Date Must Be In The Future!');
 			return;
 		}
@@ -127,7 +121,6 @@ class contacUsPopup extends Component {
 			subject,
 			detail,
 		};
-		console.log(userData)
 		this.props.onContactUs(userData);
 	};
 

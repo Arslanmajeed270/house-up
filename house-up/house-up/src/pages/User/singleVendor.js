@@ -55,7 +55,6 @@ class singleVendor extends Component {
 
 	componentDidMount() {
 		const id = this.props.match.params.id;
-		// console.log('checking id in sigle vendero: ', id);
 		this.setState({
 			id: id,
 		});
@@ -100,21 +99,19 @@ class singleVendor extends Component {
 		this.setState({ hideContact: !this.state.hideContact });
 	};
 	modelHanlder = (model, id) => {
-		console.log('opening modal');
 		this.setState({
 			[model]: !this.state[model],
 			vendorId: id,
 		});
 	};
 	closeCodelHanlder = (model) => {
-		console.log('hello close code');
 		this.setState({
 			[model]: false,
 		});
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, user, commentText, userId } = this.state;
+		const { id, commentText, userId } = this.state;
 
 		const data = {
 			postId: 0,
@@ -125,7 +122,6 @@ class singleVendor extends Component {
 			userId: userId,
 			vendorId: Number(id),
 		};
-		console.log('data pakage of comment api', data);
 
 		this.props.onCommentAdded(data);
 	};
@@ -137,8 +133,6 @@ class singleVendor extends Component {
 			commentText,
 			hideContact,
 		} = this.state;
-		console.log('singleVendors data', singleVendorData);
-		console.log('singleVendors Properties data', singleVendorsPropertiesData);
 
 		return (
 			<React.Fragment>

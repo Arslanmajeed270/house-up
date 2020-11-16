@@ -87,7 +87,6 @@ class OptUserVendor extends Component {
 		} else {
 			pageContent = '';
 		}
-		// console.log('checking value of otp: ', this.state.otp);
 		let phoneNumber = '';
 		if (this.props.phNumber) {
 			phoneNumber = this.props.phNumber;
@@ -171,7 +170,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	// console.log('mapDispatchToProps in HomePage ' );
 	return {
 		onFalseOtpAutheticate: () =>
 			dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),

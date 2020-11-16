@@ -11,7 +11,7 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
-import ContactPopup from '../../components/Popups/contactUsPopup';
+
 import StoryPrevivew from '../../components/Popups/storyPrevivew';
 import Contact from '../../components/Popups/contactUsPopup';
 
@@ -42,25 +42,18 @@ class index extends Component {
 	}
 
 	componentDidMount() {
-		console.log('indexPage componenet did mount');
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
 		const country = this.props.match.params.country;
 		const state = this.props.match.params.state;
 		const city = this.props.match.params.city;
 
-		console.log('checking country: ', country);
-		console.log('checking state: ', state);
-		console.log('checking city: ', city);
 		this.setState({
 			countryName: country,
 			stateName: state,
 			cityName: city,
 			userId: userId,
 		});
-		console.log('country from params', country);
-		console.log('state from params', state);
-		console.log('city from params', city);
 
 		const data = {
 			state: state,
@@ -74,7 +67,6 @@ class index extends Component {
 			country: country,
 		};
 
-		console.log('checking data pakage', data);
 		const userData = {
 			country: country,
 			city: city,
@@ -126,11 +118,6 @@ class index extends Component {
 		return null;
 	}
 	addLike = (type, index, like, postId, propertId, vendorId) => {
-		console.log('value of type', type);
-		console.log('value of index', index);
-		console.log('checking index: ', like);
-		console.log('value of postId', postId);
-		console.log('value of propertId', propertId);
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
 		const userName =
@@ -145,17 +132,12 @@ class index extends Component {
 			userId: userId,
 			action: `${like ? 'Unlike' : 'Like'}`,
 		};
-		console.log(data, index);
 		this.props.onLikedPostOrProperty(data, index, userName);
 	};
 
 	onChange = (e) => {
-		console.log('checking e.target: ', e.target);
 		if (e.target.name.indexOf('commentText') >= 0) {
-			const targetName = e.target.name.split(',')[0];
 			const activeCommentId = Number(e.target.name.split(',')[1]);
-			console.log('checking name: ', targetName);
-			console.log('checking activeCommentId: ', activeCommentId);
 			this.setState({
 				activeCommentId: activeCommentId,
 				commentText: e.target.value,
@@ -167,10 +149,6 @@ class index extends Component {
 		}
 	};
 	AddComment = (id, typeCategory, index) => {
-		console.log('called');
-		console.log('checking id: ', id);
-		console.log('checking typeCategory: ', typeCategory);
-		console.log('checking index: ', index);
 		const userName =
 			this.state.user && this.state.user.userName
 				? this.state.user.userName
@@ -200,7 +178,6 @@ class index extends Component {
 			userId: userId,
 			vendorId: vendorId,
 		};
-		console.log('data pakage of comment api', data);
 		this.setState({
 			commentText: '',
 			activeCommentId: '',
@@ -210,8 +187,6 @@ class index extends Component {
 
 	followUnfollwProfessionals = (id, index, follow, val) => (e) => {
 		e.preventDefault();
-		console.log('checking index: ', index);
-		console.log(follow);
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
 		let data = {
@@ -222,8 +197,6 @@ class index extends Component {
 			vendorId: id,
 		};
 		const type = val;
-		console.log('Type of category', type);
-		console.log('checking followUnfollwProfessionals data: ', data);
 		this.props.onFollowUnfollowProfessionals(data, index, type);
 	};
 
@@ -241,14 +214,12 @@ class index extends Component {
 	};
 
 	modelHanlder = (model, id) => {
-		console.log('opening modal');
 		this.setState({
 			[model]: !this.state[model],
 			vendorId: id,
 		});
 	};
 	closeCodelHanlder = (model) => {
-		console.log('hello close code');
 		this.setState({
 			[model]: false,
 		});
@@ -264,14 +235,9 @@ class index extends Component {
 			indexPageData,
 			user,
 			commentText,
-			propertyId,
 			storyToggle,
-			category,
-			imageIndex,
 			activeCommentId,
 		} = this.state;
-
-		console.log('checking this.state: ', this.state);
 
 		let pageContent = '';
 
@@ -289,9 +255,8 @@ class index extends Component {
 			indexPageData.userStories.length
 		) {
 			for (let i = 0; i < indexPageData.userStories.length; i++) {
-				imageIndex = i;
 				let item = (
-					<Link onClick={this.storyHandler}>
+					<Link to="#" onClick={this.storyHandler}>
 						<div style={{ width: '80px' }}>
 							<div
 								className='pxp-prop-card-dashboard'
@@ -299,7 +264,6 @@ class index extends Component {
 									backgroundImage: `url(${indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL})`,
 								}}
 							/>
-
 							<span className='dashboard-user-name'>
 								{indexPageData.userStories[i].user.firstName}
 							</span>
@@ -764,6 +728,7 @@ class index extends Component {
 																												style={{
 																													width: '100%',
 																												}}
+																												alt=""
 																												src={
 																													user &&
 																													user.profilePictureUrl
@@ -1069,6 +1034,7 @@ class index extends Component {
 																												style={{
 																													width: '100%',
 																												}}
+																												alt=""
 																												src={
 																													user &&
 																													user.profilePictureUrl
@@ -1132,7 +1098,6 @@ class index extends Component {
 																						data.object.userId
 																					}`}
 																				>
-																					{console.log('i am into vendor')}
 																					<div className='row'>
 																						<div className='col-md-9 col-sm-9 col-8'>
 																							<div className='vendor-detail'>
@@ -1377,6 +1342,7 @@ class index extends Component {
 																								>
 																									<img
 																										style={{ width: '100%' }}
+																										alt=""
 																										src={
 																											user &&
 																											user.profilePictureUrl

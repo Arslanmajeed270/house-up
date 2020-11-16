@@ -20,7 +20,6 @@ export const getVendorsData = () => (dispatch) => {
 			userTypeId: 2,
 		})
 		.then((res) => {
-			// console.log('checking getVendorData: ', res);
 			dispatch({
 				type: SET_VENDORS,
 				payload:
@@ -43,12 +42,9 @@ export const getVendorsData = () => (dispatch) => {
 //SingleVendor  - Get SingleVendor data from backend
 export const getSingleVendorData = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-	// console.log('checking backendServerURL: ', backendServerURL);
-
 	axios
 		.post(backendServerURL + '/getUser', userData)
 		.then((res) => {
-			// console.log('checking getSingleVendorsData: ', res);
 			dispatch({
 				type: SET_SINGLE_VENDOR,
 				payload:
@@ -59,8 +55,6 @@ export const getSingleVendorData = (userData) => (dispatch) => {
 			dispatch(clearErrors());
 		})
 		.catch((err) => {
-			// console.log("error: ", err);
-			// console.log('checking error');
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -73,12 +67,10 @@ export const getSingleVendorData = (userData) => (dispatch) => {
 //SingleVendorsProperty  - Get SingleVendorsProperty data from backend
 export const getSingleVendorsPropertyData = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-	// console.log('checking backendServerURL: ', backendServerURL);
 
 	axios
 		.post(backendServerURL + '/getVendorPostsNdProperties', userData)
 		.then((res) => {
-			console.log('checking getSingleVendorsPropertiesData: ', res);
 			dispatch({
 				type: SET_SINGLE_VENDORS_PROPERTIES,
 				payload:
@@ -89,8 +81,6 @@ export const getSingleVendorsPropertyData = (userData) => (dispatch) => {
 			dispatch(clearErrors());
 		})
 		.catch((err) => {
-			// console.log("error: ", err);
-			// console.log('checking error');
 			dispatch({
 				type: SET_ERRORS,
 				payload:

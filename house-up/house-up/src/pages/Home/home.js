@@ -44,13 +44,11 @@ class home extends Component {
 	}
 
 	componentDidMount() {
-		console.log('homePage componenet did mount');
 		this.props.onGetHomePageData();
 	}
 
 	render() {
 		const { homePageData, loading } = this.state;
-		console.log('checking homePageData in HomePage: ', homePageData);
 
 		let pageContent = '';
 		if (loading) {
@@ -458,7 +456,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	console.log('mapDispatchToProps in HomePage ');
 	return {
 		onGetHomePageData: () => dispatch(actions.getHomePageData()),
 	};

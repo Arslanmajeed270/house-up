@@ -4,11 +4,7 @@ import { Link } from 'react-router-dom'
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/index';
-import Spinner from '../common/Spinner';
-
-
 class subscriptionPlan extends Component {
 		constructor(props) {
 		super(props);
@@ -41,7 +37,6 @@ class subscriptionPlan extends Component {
 
 	render() {
 		const { packageDetails } = this.state;
-		console.log("this.state", this.state);
 
 		return (
 			<React.Fragment>

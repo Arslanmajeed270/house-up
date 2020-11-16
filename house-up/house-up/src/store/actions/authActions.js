@@ -27,7 +27,6 @@ export const loginUser = (userData, currentLocation, history) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/authenticateUser', userData)
 		.then((res) => {
-			console.log('res from backend while login', res);
 			if (res.data && res.data.data && res.data.data.user) {
 				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
 				dispatch(setCurrentUser(res.data.data.user));
@@ -46,7 +45,6 @@ export const loginUser = (userData, currentLocation, history) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error: ', err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -84,7 +82,6 @@ export const resetUserPassword = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/forgotPassword', userData)
 		.then((res) => {
-			console.log('checking response in resetUserPassword: ', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch(clearErrors());
 			} else {
@@ -105,11 +102,9 @@ export const resetUserPassword = (userData) => (dispatch) => {
 // signupUser - signupUser from the web page
 export const createUser = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log('checking i am here: ', userData);
 	axios
 		.post(backendServerURL + '/registerUser', userData)
 		.then((res) => {
-			console.log('res from backend after signup', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: REGISTER_USER_SUCCESS });
 				dispatch(clearErrors());
@@ -126,7 +121,6 @@ export const createUser = (userData) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error: ', err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -139,11 +133,9 @@ export const createUser = (userData) => (dispatch) => {
 // signupVendor - signupvendor from the web page
 export const createVendor = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log('checking userData: ', userData);
 	axios
 		.post(backendServerURL + '/registerUser', userData)
 		.then((res) => {
-			console.log('res from backend after signup', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: REGISTER_VENDOR_SUCCESS });
 				dispatch(clearErrors());
@@ -160,7 +152,6 @@ export const createVendor = (userData) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error: ', err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -173,17 +164,13 @@ export const createVendor = (userData) => (dispatch) => {
 // signupVendor - signupvendor from the web page
 export const generatePin = (data) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log('checking data: ', data);
 	axios
 		.post(backendServerURL + '/generatePin', data)
 		.then((res) => {
-			console.log('checking response in generatePin', res);
 			if (res && res.data && res.data.resultCode === '200') {
-				console.log('i am into if');
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
 			} else {
-				console.log('checking i am into else');
 				dispatch({ type: HIDE_POP_UP });
 				dispatch({
 					type: SET_ERRORS,
@@ -196,7 +183,6 @@ export const generatePin = (data) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error: ', err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -209,18 +195,14 @@ export const generatePin = (data) => (dispatch) => {
 // signupVendor - signupvendor from the web page
 export const verifyPin = (data) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log('checking data: ', data);
 
 	axios
 		.post(backendServerURL + '/verifyPin', data)
 		.then((res) => {
-			console.log('checking res: ', res);
 			if (res && res.data && res.data.resultCode === '200') {
-				console.log('i am into if');
 				dispatch({ type: OTP_AUTHENTICATE_SUCCESS });
 				dispatch(clearErrors());
 			} else {
-				console.log('checking i am into else');
 				dispatch({ type: OTP_AUTHENTICATE_FAIL });
 				dispatch({
 					type: SET_ERRORS,
@@ -233,7 +215,6 @@ export const verifyPin = (data) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error: ', err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -246,12 +227,10 @@ export const verifyPin = (data) => (dispatch) => {
 // signupVendor - signupvendor from the web page
 export const getUserDeatils = (data) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log('checking data: ', data);
 	axios
 		.post(backendServerURL + '/getUserDetails', data)
 		.then((res) => {
 			dispatch(clearErrors());
-			console.log('checking response in getUserDeatils', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({
 					type: SET_USER_DETAIL,
@@ -263,7 +242,6 @@ export const getUserDeatils = (data) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error: ', err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:

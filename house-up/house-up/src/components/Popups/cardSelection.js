@@ -77,14 +77,12 @@ class cardSelection extends Component {
 	}
 
 	onChange = (cardId) => {
-		console.log('checking cardId: ', cardId);
 		this.setState({ cardId: cardId });
 		const { user } = this.state;
 		const data = {
 			cardId: cardId,
 			userId: user.userId,
 		};
-		console.log('checking data: ', data);
 		this.props.onMarkCreditCardDefault(data);
 	};
 
@@ -97,15 +95,11 @@ class cardSelection extends Component {
 			packageId:pkgId,
 			currency:"cad"
 		}
-		console.log('data package',data)
 		this.props.onChargeCustomerUsingCreditCard(data);
 	};
 
 	render() {
-		const { user, errors, loading, cardId } = this.state;
-
-		console.log('checking this.state: ', this.state);
-
+		const { user, loading, cardId } = this.state;
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;
@@ -221,6 +215,7 @@ class cardSelection extends Component {
 						</button>
 					</Modal.Body>
 				</Modal>
+				{pageContent}
 			</React.Fragment>
 		);
 	}

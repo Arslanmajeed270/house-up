@@ -51,9 +51,6 @@ class addProduct extends Component {
 	onChangeTableContent = (idx) => (e) => {
 		if (idx) {
 			let tableContent = _.cloneDeep(this.state.tableContent);
-			// console.log("checking e.target.name: ", e.target.name);
-			// console.log("checking e.target.value: ", e.target.value);
-			// console.log("checking idx: ", idx);
 			if (e.target.name === 'varient') {
 				tableContent[idx].varient = e.target.value;
 			} else if (e.target.name === 'quantity') {
@@ -74,8 +71,6 @@ class addProduct extends Component {
 
 	render() {
 		const { tableContent, productType } = this.state;
-
-		// console.log('checking this.state :',this.state);
 
 		const files = this.state.files.map((file) => (
 			<li key={file.name}>

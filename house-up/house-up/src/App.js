@@ -22,11 +22,9 @@ class App extends Component {
 		this.props.onSetCurrentLocation(lat, lon);
 	}
 	showPosition(position) {
-		console.log('i am here');
 		const latitude = position.coords.latitude;
 		const longitude = position.coords.longitude;
-		console.log('checking latitude: ', latitude);
-		console.log('checking latitude: ', longitude);
+	
 		this.setCurrentLocation(latitude, longitude);
 	}
 

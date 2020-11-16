@@ -57,24 +57,19 @@ class index extends Component {
 		});
 	};
 	modelHanlder = (model, data) => {
-		// console.log("checking model: ", model);
 		if (model === 'phoneSignin') {
 			this.setState({ emailSignin: false, [model]: !this.state[model] });
 		} else if (model === 'emailSignin') {
-			// console.log('clicked');
 			this.setState({ phoneSignin: false, [model]: !this.state[model] });
 		} else if (model === 'subscriptionPlan') {
-			// console.log('clicked');
 			this.setState({ [model]: !this.state[model] });
 		} else if (model === 'cardSelection') {
-			// console.log('clicked');
 			this.setState({
 				subscriptionPlan: false,
 				[model]: !this.state[model],
 				packageId: data,
 			});
 		} else if (model === 'cardDetails') {
-			console.log('clicked');
 			this.setState({ cardSelection: false, [model]: !this.state[model] });
 		} else if (model === 'phoneNoForgotPass') {
 			this.setState({
@@ -88,7 +83,6 @@ class index extends Component {
 			this.setState({ optForgotPass: false, [model]: !this.state[model] });
 		} else if (model === 'forgotPassCongrats') {
 			this.setState({ forgotPass: false, [model]: !this.state[model] });
-			// console.log(this.state.forgotPassCongrats)
 		} else if (model === 'signupSelectionModel') {
 			this.setState({
 				phoneSignin: false,
@@ -111,12 +105,10 @@ class index extends Component {
 				[model]: !this.state[model],
 			});
 		} else if (model === 'userSignupModel') {
-			// console.log('i am into userSignupModel if else');
 			this.setState({ optUserModel: false, [model]: !this.state[model] });
 		} else if (model === 'vendorSignupModel') {
 			this.setState({ optUserModelVendor: false, [model]: !this.state[model] });
 		} else if (model === 'congratulationModel') {
-			console.log('congratulationModel');
 			this.setState({
 				userSignupModel: false,
 				vendorSignupModel: false,
@@ -156,7 +148,6 @@ class index extends Component {
 		) {
 			animateHeader = true;
 		}
-		console.log('i am here');
 		return (
 			<React.Fragment>
 				{this.state.phoneSignin && (

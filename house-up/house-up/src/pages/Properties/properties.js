@@ -64,7 +64,6 @@ class properties extends Component {
 	}
 
 	componentDidMount() {
-		console.log('indexPage componenet did mount');
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
 
@@ -79,7 +78,6 @@ class properties extends Component {
 			loggedInuserId: userId,
 			country: '',
 		};
-		console.log('data ', data);
 
 		this.props.onGetData(data);
 	}
@@ -99,7 +97,6 @@ class properties extends Component {
 			loggedInuserId: userId,
 			country: '',
 		};
-		console.log('data ', data);
 
 		this.props.onGetData(data);
 	};
@@ -108,19 +105,15 @@ class properties extends Component {
 		this.setState({
 			propertyPrice: price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
 		});
-		console.log('property Price', this.state.propertyPrice);
 	}
 
 	state = {};
 	render() {
-		const { errors, loading, indexPageData, propertyPrice } = this.state;
+		const { loading, indexPageData } = this.state;
 		let { propertiesData } = this.state;
-		console.log('backend data from api ', indexPageData);
-		console.log('property Price ', propertyPrice);
 
 		propertiesData =
 			indexPageData && indexPageData.properties ? indexPageData.properties : [];
-		console.log('properties Data ', propertiesData);
 
 		let googpleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_KEY;
 
