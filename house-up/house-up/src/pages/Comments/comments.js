@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
 class comments extends Component {
 	constructor(props) {
@@ -24,6 +22,7 @@ class comments extends Component {
 			data: [],
 			comments: [],
 			indexValue: '',
+			commentData: {},
 		};
 	}
 
@@ -107,7 +106,6 @@ class comments extends Component {
 		const id = this.props.match.params.id;
 		const category = this.props.match.params.category;
 		const indexValue = this.props.match.params.indexValue;
-		console.log('index', indexValue);
 
 		this.setState({
 			id: id,
@@ -118,6 +116,8 @@ class comments extends Component {
 			this.setState({ postId: id });
 		} else if (category === 'Property') {
 			this.setState({ propertyId: id });
+		} else if (category === 'Vendor') {
+			this.setState({ vendorId: id });
 		}
 	}
 
@@ -129,15 +129,21 @@ class comments extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
+		const profilePictureUrl =
+			this.state.user && this.state.user.profilePictureUrl
+				? this.state.user.profilePictureUrl
+				: null;
 
 		const {
 			userId,
 			commentText,
 			propertyId,
 			postId,
+			indexValue,
 			storyImageId,
 			vendorId,
 			category,
+			contactName
 		} = this.state;
 
 		const data = {
@@ -147,11 +153,10 @@ class comments extends Component {
 			propertyId: Number(propertyId),
 			commentText: commentText,
 			userId: userId,
-			vendorId: vendorId,
+			vendorId: Number(vendorId),
 		};
-		console.log('data pakage of comment api', data);
 
-		this.props.onCommentAdded(data);
+		this.props.onCommentAdded(data, indexValue, contactName , profilePictureUrl);
 	};
 
 	render() {
@@ -159,15 +164,11 @@ class comments extends Component {
 			loading,
 			data,
 			indexPageData,
-			contactName,
-			contactEmail,
 			commentText,
-			category,
-			postId,
-			propertyId,
+			indexValue,
+			commentData,
 		} = this.state;
 
-		console.log('checking this.state in comments: ', this.state);
 
 		let pageContent = '';
 
@@ -178,9 +179,10 @@ class comments extends Component {
 		}
 
 		data = indexPageData && indexPageData.vendorPostPropertiesList;
-		console.log('checking data in comments: ', data);
 
-		console.log('post and property data', data);
+		if (data && data.length) {
+			commentData = data[indexValue];
+		}
 		return (
 			<React.Fragment>
 				<div className='row mt-100'>
@@ -188,62 +190,84 @@ class comments extends Component {
 					<div className='col-sm-12 col-lg-10'>
 						<div className='pxp-agent-block'>
 							<div className='pxp-agent-comments'>
-								{/* {
-                      data && data.length ?
-                      data[2].object.propertyComments.map((da , index) =>
-                    
-                      <div key={index} className="mt-3 mt-md-4">
-                        <div className="media">
-                          <img src={da.profilePictureUrl} className="mr-3" alt="..." />
-                          <div className="media-body">
-                            <h5>{da.userFullName}</h5>
-                            <div className="pxp-agent-comments-date">{da.createDateTime}</div>
-                            <p>{da.commentText}</p>
-                          </div>
-                        </div>
-                      </div>
-                      )
-                      : ""
-                    } */}
-								<h4 className='mt-4 mt-md-5'>Leave a review</h4>
+								{commentData && commentData.category === 'Vendor'
+									? commentData &&
+									  commentData.object &&
+									  commentData.object.vendorComments &&
+									  commentData.object.vendorComments.length
+										? commentData.object.vendorComments.map((da, idx) => (
+												<div key={idx} className='mt-3 mt-md-4'>
+													<div className='media'>
+														<img
+															src={da.profilePictureUrl}
+															className='mr-3'
+															alt='...'
+														/>
+														<div className='media-body'>
+															<h5>{da.userFullName}</h5>
+															<div className='pxp-agent-comments-date'>
+																{da.createDateTime}
+															</div>
+															<p>{da.commentText}</p>
+														</div>
+													</div>
+												</div>
+										  ))
+										: ''
+									: commentData && commentData.category === 'Post'
+									? commentData &&
+									  commentData.object &&
+									  commentData.object.postComments &&
+									  commentData.object.postComments.length
+										? commentData.object.postComments.map((da, idx) => (
+												<div key={idx} className='mt-3 mt-md-4'>
+													<div className='media'>
+														<img
+															src={da.profilePictureUrl}
+															className='mr-3'
+															alt='...'
+														/>
+														<div className='media-body'>
+															<h5>{da.userFullName}</h5>
+															<div className='pxp-agent-comments-date'>
+																{da.createDateTime}
+															</div>
+															<p>{da.commentText}</p>
+														</div>
+													</div>
+												</div>
+										  ))
+										: ''
+									: commentData && commentData.category === 'Property'
+									? commentData &&
+									  commentData.object &&
+									  commentData.object.propertyComments &&
+									  commentData.object.propertyComments.length
+										? commentData.object.propertyComments.map((da, idx) => (
+												<div key={idx} className='mt-3 mt-md-4'>
+													<div className='media'>
+														<img
+															src={da.profilePictureUrl}
+															className='mr-3'
+															alt='...'
+														/>
+														<div className='media-body'>
+															<h5>{da.userFullName}</h5>
+															<div className='pxp-agent-comments-date'>
+																{da.createDateTime}
+															</div>
+															<p>{da.commentText}</p>
+														</div>
+													</div>
+												</div>
+										  ))
+										: ''
+									: ''}
+
 								<form
 									className='pxp-agent-comments-form mt-3 mt-md-4'
 									onSubmit={this.onSubmit}
 								>
-									<div className='row'>
-										<div className='col-sm-12 col-md-6'>
-											<div className='form-group'>
-												<label htmlFor='pxp-agent-comments-name'>
-													You Name
-												</label>
-												<input
-													type='text'
-													className='form-control'
-													id='pxp-agent-comments-name'
-													nmae='contactName'
-													value={contactName}
-													placeholder='Enter your full name'
-													onChange={this.onChange}
-												/>
-											</div>
-										</div>
-										<div className='col-sm-12 col-md-6'>
-											<div className='form-group'>
-												<label htmlFor='pxp-agent-comments-email'>
-													You Email
-												</label>
-												<input
-													type='text'
-													className='form-control'
-													id='pxp-agent-comments-email'
-													nmae='contactEmail'
-													value={contactEmail}
-													placeholder='Enter your email address'
-													onChange={this.onChange}
-												/>
-											</div>
-										</div>
-									</div>
 									<div className='form-group comment-send-btn'>
 										<input
 											className='form-control'
@@ -283,7 +307,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
+		onCommentAdded: (data, index, contactName , profilePictureUrl) =>
+			dispatch(actions.AddComments(data, index, contactName , profilePictureUrl)),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
 	};
 };

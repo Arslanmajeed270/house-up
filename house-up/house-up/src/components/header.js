@@ -67,7 +67,11 @@ class header extends Component {
 						<div className='row align-items-center'>
 							<div className='col-5 col-md-3 d-center-element-logo'>
 								<Link
-									to={user && user.profilePictureUrl ? '/select-location' : ''}
+									to={
+										user && user.profilePictureUrl
+											? `/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}`
+											: '/'
+									}
 									className='pxp-logo text-decoration-none'
 								>
 									{animateHeader ? (
@@ -94,14 +98,15 @@ class header extends Component {
 								<Link
 									to='/select-location'
 									className='location-header'
-									style={{ color: '#000' }}
+									style={{ color: '#007bff' }}
 								>
 									<img
-										src={require('../assets/images/ic_address.svg')}
+										src={require('../assets/images/ic_address.f245f826.svg')}
 										alt=''
 									/>
-									{currentLocation &&
-										`${currentLocation.city && currentLocation.city}`}
+									{currentLocation && currentLocation.city
+										? currentLocation.city
+										: 'Toronto'}
 								</Link>
 							</div>
 							<div className='col-2 col-md-8'>
@@ -139,22 +144,21 @@ class header extends Component {
 											</div>
 										</li>
 									</ul>
-									{animateHeader ? (
-										''
-									) : (
-										<div className='form-group has-search mb-0'>
-											{/* <span className="fa fa-search form-control-feedback" /> */}
-											<input
-												type='text'
-												className='form-control w-100'
-												placeholder='Search Location'
-											/>
-											<img
-												src={require('../assets/images/ic_search.svg')}
-												alt=''
-											/>
-										</div>
-									)}
+									{
+										animateHeader ? '' : ''
+										// <div className='form-group has-search mb-0'>
+										// 	{/* <span className="fa fa-search form-control-feedback" /> */}
+										// 	<input
+										// 		type='text'
+										// 		className='form-control w-100'
+										// 		placeholder='Search Location'
+										// 	/>
+										// 	<img
+										// 		src={require('../assets/images/ic_search.svg')}
+										// 		alt=''
+										// 	/>
+										// </div>
+									}
 								</div>
 							</div>
 							<div className='col-5 col-md-1 text-right'>
@@ -166,7 +170,7 @@ class header extends Component {
 										<div
 											to='#'
 											className={`pxp-header-user pxp-signin-trigger ${
-												animateHeader ? '' : 'forborder'
+												animateHeader ? 'forborder' : ''
 											}`}
 											style={{
 												width: '44px',
@@ -184,7 +188,16 @@ class header extends Component {
 												<div className='profile_header_dropdown'>
 													<ul>
 														<li className='profile_header_dropdown_li'>
-															{user && user.userTypeId === 2 ? (
+															<Link
+																to={`/single-vendor-${
+																	user && user.userId ? user.userId : ''
+																}`}
+															>
+																Profile
+															</Link>
+														</li>
+														{user && user.userTypeId === 2 ? (
+															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={() =>
 																		this.props.modelHanlder('subscriptionPlan')
@@ -197,10 +210,10 @@ class header extends Component {
 																	/>
 																	upgrade
 																</div>
-															) : (
-																''
-															)}
-														</li>
+															</li>
+														) : (
+															''
+														)}
 														<li
 															onClick={() =>
 																this.props.onLogout(this.props.history)

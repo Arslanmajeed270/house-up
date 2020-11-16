@@ -17,6 +17,9 @@ class singleProp extends Component {
 			user: {},
 			userId: '',
 			imageToggle: false,
+			vendorId:'',
+			comments: [],
+
 		};
 	}
 
@@ -31,6 +34,27 @@ class singleProp extends Component {
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
+			if (
+				changedState.indexPageData &&
+				changedState.indexPageData &&
+				changedState.indexPageData.vendorPostPropertiesList.length
+			) {
+				changedState.comments = changedState.indexPageData.vendorPostPropertiesList.map(
+					(data) => {
+						if (
+							state.category === 'Property' &&
+							data.category === state.category &&
+							data.object &&
+							data.object.propertId &&
+							data.object.propertId === state.propertId
+						) {
+							changedState.comments = data.object.propertyComments
+								? data.object.propertyComments
+								: [];
+						}
+					}
+				);
+			}
 		if (
 			property &&
 			JSON.stringify(state.singlePropertyData) !==
@@ -46,18 +70,24 @@ class singleProp extends Component {
 		return null;
 	}
 
-	contactPopupHanlder = () => {
+		modelHanlder = (model, id) => {
+			this.setState({
+				[model]: !this.state[model],
+				vendorId: id
+			 });
+		}
+	closeCodelHanlder = (model) => {
 		this.setState({
-			contactModalState: !this.state.contactModalState,
+			[model]: false,
 		});
 	};
 
 	componentDidMount() {
-		const { singlePropertyData, user } = this.state;
+		const { user } = this.state;
 		const id = this.props.match.params.id;
-		console.log('checking id in sigle property: ', id);
 
 		const userId = user.userId ? user.userId : '';
+		const profilePictureUrl = user.profilePictureUrl ? user.profilePictureUrl : ''
 
 		this.setState({
 			id,
@@ -67,14 +97,7 @@ class singleProp extends Component {
 		let userData = {
 			propertyId: id,
 		};
-
-		console.log(singlePropertyData);
-		console.log('property Id', singlePropertyData);
-
-		console.log('user', this.state.user);
-
-		console.log(userData);
-		this.props.onGetSinglePropertyData(userData);
+		this.props.onGetSinglePropertyData(userData , profilePictureUrl);
 	}
 
 	onChange = (e) => {
@@ -85,7 +108,7 @@ class singleProp extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, user, commentText, userId } = this.state;
+		const { id, commentText, userId } = this.state;
 
 		const data = {
 			postId: 0,
@@ -96,8 +119,6 @@ class singleProp extends Component {
 			userId: userId,
 			vendorId: 0,
 		};
-		console.log('data pakage of comment api', data);
-
 		this.props.onCommentAdded(data);
 	};
 
@@ -107,8 +128,6 @@ class singleProp extends Component {
 
 	render() {
 		const { singlePropertyData, commentText, imageToggle } = this.state;
-		console.log('single property data :', singlePropertyData);
-		const data = singlePropertyData;
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -116,11 +135,17 @@ class singleProp extends Component {
 						<div className='wrapper'>
 							<div className='row'>
 								<div className='col-sm-12 col-md-12'>
-									<h2 className='pxp-sp-top-title'>{data && data.adTitle}</h2>
+									<h2 className='pxp-sp-top-title'>
+										{singlePropertyData && singlePropertyData.adTitle}
+									</h2>
 									<p className='pxp-sp-top-address pxp-text-light'>
-										{data && data.currency && data.currency.symbol}{' '}
-										{data && data.price}{' '}
-										{data && data.currency && data.currency.lable}
+										{singlePropertyData &&
+											singlePropertyData.currency &&
+											singlePropertyData.currency.symbol}{' '}
+										{singlePropertyData && singlePropertyData.price ? singlePropertyData.price.toLocaleString() : ""}{' '}
+										{singlePropertyData &&
+											singlePropertyData.currency &&
+											singlePropertyData.currency.lable}
 									</p>
 								</div>
 							</div>
@@ -145,11 +170,11 @@ class singleProp extends Component {
 									className='pxp-cover'
 									style={{
 										backgroundImage: `url(${
-											data &&
-											data.imageList &&
-											data.imageList.length &&
-											data.imageList[0] &&
-											data.imageList[0].imageURL
+											singlePropertyData &&
+											singlePropertyData.imageList &&
+											singlePropertyData.imageList.length &&
+											singlePropertyData.imageList[0] &&
+											singlePropertyData.imageList[0].imageURL
 										})`,
 									}}
 								/>
@@ -157,8 +182,10 @@ class singleProp extends Component {
 									Image caption
 								</figcaption>
 							</figure>
-							{data && data.imageList && data.imageList.length
-								? data.imageList.map((img, index) =>
+							{singlePropertyData &&
+							singlePropertyData.imageList &&
+							singlePropertyData.imageList.length
+								? singlePropertyData.imageList.map((img, index) =>
 										index > 0 && index < 5 ? (
 											<figure
 												key={index}
@@ -188,7 +215,9 @@ class singleProp extends Component {
 								<ImagePreview
 									show={this.state.imageToggle}
 									close={this.ImagePreviewHandler}
-									propertyImg={data && data.imageList}
+									propertyImg={
+										singlePropertyData && singlePropertyData.imageList
+									}
 								/>
 							) : (
 								''
@@ -205,7 +234,7 @@ class singleProp extends Component {
 					<div className='container mt-4'>
 						<div className='row'>
 							<div className='col-lg-8'>
-								{data && data.address ? (
+								{singlePropertyData && singlePropertyData.address ? (
 									<div
 										style={{
 											color: '#000',
@@ -215,12 +244,12 @@ class singleProp extends Component {
 									>
 										{' '}
 										<span className='property-details'>Address:</span>{' '}
-										{data && data.address}
+										{singlePropertyData && singlePropertyData.address}
 									</div>
 								) : (
 									''
 								)}
-								{data && data.propertyType ? (
+								{singlePropertyData && singlePropertyData.propertyType ? (
 									<div
 										style={{
 											color: '#000',
@@ -232,12 +261,12 @@ class singleProp extends Component {
 										<span className='property-details'>
 											Property type:
 										</span>{' '}
-										{data && data.propertyType}{' '}
+										{singlePropertyData && singlePropertyData.propertyType}{' '}
 									</div>
 								) : (
 									''
 								)}
-								{data && data.rentalListingYN ? (
+								{singlePropertyData && singlePropertyData.rentalListingYN ? (
 									<div
 										style={{
 											color: '#000',
@@ -246,12 +275,12 @@ class singleProp extends Component {
 										}}
 									>
 										<span className='property-details'>Rental:</span>
-										{data && data.rentalListingYN}
+										{singlePropertyData && singlePropertyData.rentalListingYN}
 									</div>
 								) : (
 									''
 								)}
-								{data && data.createdDate ? (
+								{singlePropertyData && singlePropertyData.createdDate ? (
 									<div
 										style={{
 											color: '#000',
@@ -260,17 +289,17 @@ class singleProp extends Component {
 										}}
 									>
 										<span className='property-details'>Date listed:</span>{' '}
-										{data && data.createdDate}
+										{singlePropertyData && singlePropertyData.createdDate}
 									</div>
 								) : (
 									''
 								)}
 								<div className='pxp-single-property-section mt-4 mt-md-5'>
 									<div className='mt-3 mt-md-4'>
-										{data && data.description ? (
+										{singlePropertyData && singlePropertyData.description ? (
 											<>
 												<h3>Description</h3>
-												<p>{data.description}</p>
+												<p>{singlePropertyData.description}</p>
 											</>
 										) : (
 											''
@@ -280,156 +309,176 @@ class singleProp extends Component {
 									<div>
 										<h3>Details</h3>
 										<div className='mt-3 mt-md-4'>
-											{data && data.buildingType ? (
+											{singlePropertyData && singlePropertyData.buildingType ? (
 												<div>
 													{' '}
 													<span className='property-details'>
 														Building type:{' '}
 													</span>
-													{data && data.buildingType}{' '}
+													{singlePropertyData &&
+														singlePropertyData.buildingType}{' '}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.noOfBathroomsValue ? (
+											{singlePropertyData &&
+											singlePropertyData.noOfBathroomsValue ? (
 												<div>
 													<span className='property-details'>Bathrooms: </span>
-													{data && data.noOfBathroomsValue}
+													{singlePropertyData &&
+														singlePropertyData.noOfBathroomsValue}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.noOfBedrooms ? (
+											{singlePropertyData && singlePropertyData.noOfBedrooms ? (
 												<div>
 													<span className='property-details'>Bedrooms: </span>
-													{data && data.noOfBedrooms}
+													{singlePropertyData &&
+														singlePropertyData.noOfBedrooms}
 												</div>
 											) : (
 												''
 											)}
-											{data &&
-											data.lotDimensionLength &&
-											data.lotDimensionWidth ? (
+											{singlePropertyData &&
+											singlePropertyData.lotDimensionLength &&
+											singlePropertyData.lotDimensionWidth ? (
 												<div>
 													<span className='property-details'>
 														Lot dimensions:{' '}
 													</span>{' '}
-													{data && data.lotDimensionLength} x{' '}
-													{data && data.lotDimensionWidth}{' '}
+													{singlePropertyData &&
+														singlePropertyData.lotDimensionLength}{' '}
+													x{' '}
+													{singlePropertyData &&
+														singlePropertyData.lotDimensionWidth}{' '}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.lotTotalArea ? (
+											{singlePropertyData && singlePropertyData.lotTotalArea ? (
 												<div>
 													<span className='property-details'>Lot area: </span>{' '}
-													{data && data.lotTotalArea}
+													{singlePropertyData &&
+														singlePropertyData.lotTotalArea}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.basementType ? (
+											{singlePropertyData && singlePropertyData.basementType ? (
 												<div>
 													<span className='property-details'>Basement: </span>{' '}
-													{data && data.basementType}
+													{singlePropertyData &&
+														singlePropertyData.basementType}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.garageType ? (
+											{singlePropertyData && singlePropertyData.garageType ? (
 												<div>
 													<span className='property-details'>Garage: </span>{' '}
-													{data && data.garageType}
+													{singlePropertyData && singlePropertyData.garageType}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.finishedSqftArea ? (
+											{singlePropertyData &&
+											singlePropertyData.finishedSqftArea ? (
 												<div>
 													<span className='property-details'>Sqrt Area: </span>{' '}
-													{data && data.finishedSqftArea}
+													{singlePropertyData &&
+														singlePropertyData.finishedSqftArea}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.primaryHeatingFuel ? (
+											{singlePropertyData &&
+											singlePropertyData.primaryHeatingFuel ? (
 												<div>
 													<span className='property-details'>
 														Primary heating fuel:{' '}
 													</span>{' '}
-													{data && data.primaryHeatingFuel}
+													{singlePropertyData &&
+														singlePropertyData.primaryHeatingFuel}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.yearBuilt ? (
+											{singlePropertyData && singlePropertyData.yearBuilt ? (
 												<div>
 													<span className='property-details'>yearBuilt: </span>{' '}
-													{data && data.yearBuilt}
+													{singlePropertyData && singlePropertyData.yearBuilt}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.yearFurnaceBuilt ? (
+											{singlePropertyData &&
+											singlePropertyData.yearFurnaceBuilt ? (
 												<div>
 													<span className='property-details'>
 														Year furnace installed:{' '}
 													</span>{' '}
-													{data && data.yearFurnaceBuilt}
+													{singlePropertyData &&
+														singlePropertyData.yearFurnaceBuilt}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.yearRoofInstalled ? (
+											{singlePropertyData &&
+											singlePropertyData.yearRoofInstalled ? (
 												<div>
 													<span className='property-details'>
 														Year roof installed:{' '}
 													</span>{' '}
-													{data && data.yearRoofInstalled}
+													{singlePropertyData &&
+														singlePropertyData.yearRoofInstalled}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.storeys ? (
+											{singlePropertyData && singlePropertyData.storeys ? (
 												<div>
 													<span className='property-details'>Storeys: </span>{' '}
-													{data && data.storeys}
+													{singlePropertyData && singlePropertyData.storeys}
 												</div>
 											) : (
 												''
 											)}
-											{data && data.waterSourceType ? (
+											{singlePropertyData &&
+											singlePropertyData.waterSourceType ? (
 												<div>
 													<span className='property-details'>
 														Water source:{' '}
 													</span>{' '}
-													{data && data.waterSourceType}
+													{singlePropertyData &&
+														singlePropertyData.waterSourceType}
 												</div>
 											) : (
 												''
 											)}
-											{data &&
-											data.propertyType !== 'House' &&
-											data &&
-											data.condoFee ? (
+											{singlePropertyData &&
+											singlePropertyData.propertyType !== 'House' &&
+											singlePropertyData &&
+											singlePropertyData.condoFee ? (
 												<div>
 													<span className='property-details'>
 														Condo fees (/month):{' '}
 													</span>{' '}
-													{data && data.condoFee}
+													{singlePropertyData && singlePropertyData.condoFee}
 												</div>
 											) : (
 												''
 											)}
-											{data &&
-											data.propertyType !== 'House' &&
-											data &&
-											data.parkingSpaces ? (
+											{singlePropertyData &&
+											singlePropertyData.propertyType !== 'House' &&
+											singlePropertyData &&
+											singlePropertyData.parkingSpaces ? (
 												<div>
 													<span className='property-details'>
 														Parking Spaces:{' '}
 													</span>{' '}
-													{data && data.parkingSpaces}
+													{singlePropertyData &&
+														singlePropertyData.parkingSpaces}
 												</div>
 											) : (
 												''
@@ -440,7 +489,9 @@ class singleProp extends Component {
 								<div className='pxp-single-property-section mt-4 mt-md-5'>
 									<h3>Amenities</h3>
 									<div className='row mt-3 mt-md-4'>
-										{data && data.amenites && data.amenites.internet ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.internet ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Internet</div>
 											</div>
@@ -448,14 +499,18 @@ class singleProp extends Component {
 											''
 										)}
 
-										{data && data.amenites && data.amenites.garage ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.garage ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Garage</div>
 											</div>
 										) : (
 											''
 										)}
-										{data && data.amenites && data.amenites.ac ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.ac ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>
 													Air Conditioning
@@ -464,42 +519,54 @@ class singleProp extends Component {
 										) : (
 											''
 										)}
-										{data && data.amenites && data.amenites.dishWasher ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.dishWasher ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Dishwasher</div>
 											</div>
 										) : (
 											''
 										)}
-										{data && data.amenites && data.amenites.disposal ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.disposal ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Disposal</div>
 											</div>
 										) : (
 											''
 										)}
-										{data && data.amenites && data.amenites.balcony ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.balcony ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Balcony</div>
 											</div>
 										) : (
 											''
 										)}
-										{data && data.amenites && data.amenites.gym ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.gym ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Gym</div>
 											</div>
 										) : (
 											''
 										)}
-										{data && data.amenites && data.amenites.playroom ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.playroom ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Playroom</div>
 											</div>
 										) : (
 											''
 										)}
-										{data && data.amenites && data.amenites.bar ? (
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.bar ? (
 											<div className='col-sm-6 col-lg-4'>
 												<div className='pxp-sp-amenities-item'>Bar</div>
 											</div>
@@ -628,28 +695,32 @@ class singleProp extends Component {
 											<div className='pxp-agent-comments'>
 												{/* <h4>3 Reviews</h4> */}
 												<div className='mt-3 mt-md-4'>
-													{data &&
-													data.propertyComments &&
-													data.propertyComments.length
-														? data.propertyComments.map((da, index) => (
-																<div key={index} className='media mt-2 mt-md-3'>
-																	<img
-																		src={da && da.profilePictureUrl}
-																		className='mr-3'
-																		alt='...'
-																	/>
-																	<div className='media-body'>
-																		<h5> {da && da.userFullName}</h5>
-																		<div className='pxp-agent-comments-date'>
-																			{da && da.createDateTime}
+													{singlePropertyData &&
+													singlePropertyData.propertyComments &&
+													singlePropertyData.propertyComments.length
+														? singlePropertyData.propertyComments.map(
+																(da, index) => (
+																	<div
+																		key={index}
+																		className='media mt-2 mt-md-3'
+																	>
+																		<img 
+																			src={da && da.profilePictureUrl}
+																			className='mr-3'
+																			alt='...'
+																		/>
+																		<div className='media-body'>
+																			<h5> {da && da.userFullName}</h5>
+																			<div className='pxp-agent-comments-date'>
+																				{da && da.createDateTime}
+																			</div>
+																			<p> {da && da.commentText} </p>
 																		</div>
-																		<p> {da && da.commentText} </p>
 																	</div>
-																</div>
-														  ))
+																)
+														  )
 														: ''}
 												</div>
-												<h4 className='mt-4 mt-md-5'>Leave a review</h4>
 												<form
 													action='/single-vendor'
 													className='pxp-agent-comments-form mt-3 mt-md-4'
@@ -687,44 +758,66 @@ class singleProp extends Component {
 									<h3>Listed By</h3>
 									<div className='pxp-sp-agent mt-3 mt-md-4'>
 										<Link
-											to='/single-vendor'
-											className='pxp-sp-agent-fig pxp-cover rounded-lg'
+											to={`/single-vendor-${singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.userId
+														? singlePropertyData.user.userId
+														: ''}`}
+											className='pxp-sp-agent-fig pxp-cover rounded-lg user-profile'
 											style={{
 												backgroundImage: `url(${
-													data && data.user && data.user.profilePictureUrl
-														? data.user.profilePictureUrl
+													singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.profilePictureUrl
+														? singlePropertyData.user.profilePictureUrl
 														: 'assets/images/ic_profile_placeholder.png'
 												})`,
 											}}
 										/>
 										<div className='pxp-sp-agent-info'>
 											<div className='pxp-sp-agent-info-name'>
-												<Link to='/single-vendor'>
-													{data && data.user && data.user.firstName}{' '}
-													{data && data.user && data.user.lastName}{' '}
+												<Link to={`/single-vendor-${singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.userId
+														? singlePropertyData.user.userId
+														: ''}`}>
+													{singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.firstName
+														? singlePropertyData.user.firstName
+														: ''}{' '}
+													{singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.lastName
+														? singlePropertyData.user.lastName
+														: ''}{' '}
 												</Link>
 											</div>
 											<div className='pxp-sp-agent-info-rating'></div>
 											<div className='pxp-sp-agent-info-phone'>
-												{data && data.user && data.user.provinceDesc}
+												{singlePropertyData &&
+												singlePropertyData.user &&
+												singlePropertyData.user.professionDesc
+													? singlePropertyData.user.professionDesc
+													: ''}
 											</div>
 										</div>
 										<div className='clearfix' />
 										<div className='pxp-sp-agent-btns mt-3 mt-md-4'>
-											<Link
-												to=''
+											<button
 												className='pxp-sp-agent-btn-main'
 												data-toggle='modal'
-												onClick={this.contactPopupHanlder}
+												onClick={() =>this.modelHanlder('contactModalState',singlePropertyData.userId)}
 											>
-												{this.state.contactModalState ? (
+												Contact Us
+											</button>
+											{this.state.contactModalState ? (
 													<Contact
 														show={this.state.contactModalState}
-														contactPopupHanlder={this.contactPopupHanlder}
+														closeCodelHanlder={this.closeCodelHanlder}
+														vendorId = {this.state.vendorId}
 													/>
 												) : null}
-												Contact Us
-											</Link>
 										</div>
 									</div>
 								</div>
@@ -746,7 +839,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
+		onCommentAdded: (data , profilePictureUrl) => dispatch(actions.AddComments(data, profilePictureUrl)),
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
 	};

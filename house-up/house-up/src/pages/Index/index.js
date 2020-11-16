@@ -11,8 +11,9 @@ import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
-import ContactPopup from '../../components/Popups/contactUsPopup';
+
 import StoryPrevivew from '../../components/Popups/storyPrevivew';
+import Contact from '../../components/Popups/contactUsPopup';
 
 class index extends Component {
 	constructor(props) {
@@ -34,29 +35,25 @@ class index extends Component {
 			propertyId: '',
 			category: '',
 			storyToggle: false,
+			imageIndex: '',
+			activeCommentId: '',
+			contactModalState: false,
 		};
 	}
 
 	componentDidMount() {
-		console.log('indexPage componenet did mount');
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
 		const country = this.props.match.params.country;
 		const state = this.props.match.params.state;
 		const city = this.props.match.params.city;
 
-		console.log('checking country: ', country);
-		console.log('checking state: ', state);
-		console.log('checking city: ', city);
 		this.setState({
 			countryName: country,
 			stateName: state,
 			cityName: city,
 			userId: userId,
 		});
-		console.log('country from params', country);
-		console.log('state from params', state);
-		console.log('city from params', city);
 
 		const data = {
 			state: state,
@@ -70,7 +67,6 @@ class index extends Component {
 			country: country,
 		};
 
-		console.log('checking data pakage', data);
 		const userData = {
 			country: country,
 			city: city,
@@ -122,13 +118,12 @@ class index extends Component {
 		return null;
 	}
 	addLike = (type, index, like, postId, propertId, vendorId) => {
-		console.log('value of type', type);
-		console.log('value of index', index);
-		console.log('checking index: ', like);
-		console.log('value of postId', postId);
-		console.log('value of propertId', propertId);
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
+		const userName =
+			this.state.user && this.state.user.userName
+				? this.state.user.userName
+				: null;
 		let data = {
 			vendorId: vendorId,
 			postId: postId,
@@ -137,18 +132,27 @@ class index extends Component {
 			userId: userId,
 			action: `${like ? 'Unlike' : 'Like'}`,
 		};
-		console.log(data, index);
-		this.props.onLikedPostOrProperty(data, index);
+		this.props.onLikedPostOrProperty(data, index, userName);
 	};
 
 	onChange = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
+		if (e.target.name.indexOf('commentText') >= 0) {
+			const activeCommentId = Number(e.target.name.split(',')[1]);
+			this.setState({
+				activeCommentId: activeCommentId,
+				commentText: e.target.value,
+			});
+		} else {
+			this.setState({
+				[e.target.name]: e.target.value,
+			});
+		}
 	};
-
-	AddComment = (id, typeCategory) => {
-		console.log('called');
+	AddComment = (id, typeCategory, index) => {
+		const userName =
+			this.state.user && this.state.user.userName
+				? this.state.user.userName
+				: null;
 		let {
 			userId,
 			commentText,
@@ -174,14 +178,15 @@ class index extends Component {
 			userId: userId,
 			vendorId: vendorId,
 		};
-		console.log('data pakage of comment api', data);
-		this.props.onCommentAdded(data);
+		this.setState({
+			commentText: '',
+			activeCommentId: '',
+		});
+		this.props.onCommentAdded(data, index, userName);
 	};
 
 	followUnfollwProfessionals = (id, index, follow, val) => (e) => {
 		e.preventDefault();
-		console.log('checking index: ', index);
-		console.log(follow);
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
 		let data = {
@@ -192,35 +197,47 @@ class index extends Component {
 			vendorId: id,
 		};
 		const type = val;
-		console.log('Type of category', type);
-		console.log('checking followUnfollwProfessionals data: ', data);
 		this.props.onFollowUnfollowProfessionals(data, index, type);
 	};
 
-	contactUsPopHandler = () => {
-		this.setState({
-			contactUsPop: !this.state.contactUsPop,
-		});
-		console.log('clicked');
+	limitWordHandler = (str) => {
+		const arrayString = str.split(' ');
+		let paragraph = '';
+		const limit = arrayString.length < 30 ? arrayString.length : 30;
+		for (let i = 0; i < limit; i++) {
+			paragraph += arrayString[i] + ' ';
+		}
+		if (arrayString.length >= 30) {
+			paragraph += '...';
+		}
+		return paragraph;
 	};
 
+	modelHanlder = (model, id) => {
+		this.setState({
+			[model]: !this.state[model],
+			vendorId: id,
+		});
+	};
+	closeCodelHanlder = (model) => {
+		this.setState({
+			[model]: false,
+		});
+	};
 	storyHandler = () => {
 		this.setState({ storyToggle: !this.state.storyToggle });
 	};
 
 	render() {
-		const {
+		let {
 			errors,
 			loading,
 			indexPageData,
 			user,
 			commentText,
-			propertyId,
 			storyToggle,
-			category,
+			activeCommentId,
 		} = this.state;
-
-		console.log('checking this.state: ', this.state);
 
 		let pageContent = '';
 
@@ -239,18 +256,12 @@ class index extends Component {
 		) {
 			for (let i = 0; i < indexPageData.userStories.length; i++) {
 				let item = (
-					<Link onClick={this.storyHandler}>
+					<Link to="#" onClick={this.storyHandler}>
 						<div style={{ width: '80px' }}>
 							<div
 								className='pxp-prop-card-dashboard'
 								style={{
-									backgroundImage: `url(${
-										indexPageData.userStories[i].stories[0].storyImages[0]
-											.storyImageURL
-											? indexPageData.userStories[i].stories[0].storyImages[0]
-													.storyImageURL
-											: 'assets/images/dashboard/slider-4.png'
-									})`,
+									backgroundImage: `url(${indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL})`,
 								}}
 							/>
 							<span className='dashboard-user-name'>
@@ -312,10 +323,16 @@ class index extends Component {
 		}
 		return (
 			<React.Fragment>
-				<ContactPopup
-					show={this.state.contactUsPop}
-					contactUsPopHandler={this.contactUsPopHandler}
-				/>
+				{this.state.contactModalState ? (
+					<Contact
+						show={this.state.contactModalState}
+						closeCodelHanlder={this.closeCodelHanlder}
+						vendorId={this.state.vendorId}
+					/>
+				) : (
+					''
+				)}
+
 				{!loading && (
 					<main>
 						<div className='container'>
@@ -409,29 +426,41 @@ class index extends Component {
 																			<div className='dashboard-newsfeed-content'>
 																				<ul className='news-feed-user-ul'>
 																					<li>
-																						<span
-																							className={
+																						<Link
+																							to={`/single-vendor-${
 																								data &&
 																								data.object &&
 																								data.object.user &&
-																								data.object.user.userTypeId ===
-																									2
-																									? 'news-feed-user-img'
-																									: 'news-feed-user-imgs'
-																							}
-																							style={{
-																								backgroundImage: `url(${
+																								data.object.user.userId
+																							}`}
+																						>
+																							<span
+																								className={
 																									data &&
 																									data.object &&
 																									data.object.user &&
 																									data.object.user
-																										.profilePictureUrl
-																										? data.object.user
-																												.profilePictureUrl
-																										: 'assets/images/dashboard/ic_profile_placeholder.png'
-																								} )`,
-																							}}
-																						/>
+																										.userTypeId === 2
+																										? 'news-feed-user-img'
+																										: 'news-feed-user-imgs'
+																								}
+																							>
+																								<img
+																									style={{ height: '60px' }}
+																									src={
+																										data &&
+																										data.object &&
+																										data.object.user &&
+																										data.object.user
+																											.profilePictureUrl
+																											? data.object.user
+																													.profilePictureUrl
+																											: 'assets/images/dashboard/ic_profile_placeholder.png'
+																									}
+																									alt=''
+																								/>
+																							</span>
+																						</Link>
 																						<span
 																							style={{
 																								fontSize: '20px',
@@ -518,18 +547,15 @@ class index extends Component {
 																							{data && data.category === 'Post'
 																								? data &&
 																								  data.object &&
-																								  data.object.postText
+																								  this.limitWordHandler(
+																										data.object.postText
+																								  )
 																								: data.object &&
-																								  data.object.description}
+																								  this.limitWordHandler(
+																										data.object.description
+																								  )}
 																						</div>
-																						<button
-																							onClick={this.contactUsPopHandler}
-																							className='dashboard-newsfeed-contact nodecor'
-																							data-toggle='modal'
-																							data-target=''
-																						>
-																							Contact us
-																						</button>
+
 																						<div className='row custom-row-styles'>
 																							<div className='col-12 post-navbar'>
 																								<span
@@ -568,7 +594,9 @@ class index extends Component {
 																										data.object &&
 																										data.object.postId &&
 																										data.object.postId
-																									}&${data && data.category}`}
+																									}&${
+																										data && data.category
+																									}&${index}`}
 																									style={{ color: '#706666' }}
 																								>
 																									<img
@@ -582,6 +610,23 @@ class index extends Component {
 																										alt=''
 																									/>{' '}
 																								</Link>
+																								<button
+																									className='dashboard-newsfeed-contact nodecor'
+																									data-toggle='modal'
+																									data-target=''
+																									onClick={() =>
+																										this.modelHanlder(
+																											'contactModalState',
+																											data &&
+																												data.object &&
+																												data.object.user &&
+																												data.object.user.userId
+																										)
+																									}
+																								>
+																									Contact us
+																								</button>
+
 																								{data &&
 																								data.object &&
 																								data.object.postLikes &&
@@ -649,7 +694,9 @@ class index extends Component {
 																											data.object &&
 																											data.object.postId &&
 																											data.object.postId
-																										}&${data && data.category}`}
+																										}&${
+																											data && data.category
+																										}&${index}`}
 																									>
 																										View all{' '}
 																										{
@@ -663,31 +710,46 @@ class index extends Component {
 																								)}
 
 																								<div className='comment-send-btn'>
-																									<span
-																										className={
-																											user &&
-																											user.userTypeId === 2
-																												? 'news-feed-user-img'
-																												: 'news-feed-user-imgs'
-																										}
+																									<Link
+																										style={{ width: '36px' }}
+																										to={`/single-vendor-${
+																											user && user.userId
+																										}`}
 																									>
-																										<img
-																											style={{ width: '100%' }}
-																											src={
+																										<span
+																											className={
 																												user &&
-																												user.profilePictureUrl
-																													? user.profilePictureUrl
-																													: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												user.userTypeId === 2
+																													? 'news-feed-user-img'
+																													: 'news-feed-user-imgs'
 																											}
-																										/>
-																									</span>
+																										>
+																											<img
+																												style={{
+																													width: '100%',
+																												}}
+																												alt=""
+																												src={
+																													user &&
+																													user.profilePictureUrl
+																														? user.profilePictureUrl
+																														: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												}
+																											/>
+																										</span>
+																									</Link>
 																									<div className='comment-input-pointer'>
 																										<input
 																											className='form-control'
 																											placeholder='Write your review here...'
 																											style={{ height: '35px' }}
-																											name='commentText'
-																											value={commentText}
+																											name={`commentText,${index}`}
+																											value={
+																												activeCommentId ===
+																												index
+																													? commentText
+																													: ''
+																											}
 																											onChange={this.onChange}
 																										/>
 
@@ -698,7 +760,8 @@ class index extends Component {
 																													data &&
 																														data.object &&
 																														data.object.postId,
-																													data && data.category
+																													data && data.category,
+																													index
 																												)
 																											}
 																										>
@@ -776,9 +839,7 @@ class index extends Component {
 																																	.currency
 																																	.symbol
 																															: '$'
-																												  }${
-																														data.object.price
-																												  }.00`
+																												  }${data.object.price.toLocaleString()}.00`
 																												: '0'}
 																										</b>
 																									</span>
@@ -789,21 +850,15 @@ class index extends Component {
 																							{data && data.category === 'Post'
 																								? data &&
 																								  data.object &&
-																								  data.object.postText
+																								  this.limitWordHandler(
+																										data.object.postText
+																								  )
 																								: data.object &&
-																								  data.object.description}
+																								  this.limitWordHandler(
+																										data.object.description
+																								  )}
 																						</div>
-																						<button
-																							onClick={this.contactUsPopHandler}
-																							className='dashboard-newsfeed-contact nodecor'
-																							data-toggle='modal'
-																							data-target=''
-																							onClick={
-																								this.PropertyConatctPopupHanlder
-																							}
-																						>
-																							Contact us
-																						</button>
+
 																						<div className='row custom-row-styles'>
 																							<div className='col-12 post-navbar'>
 																								<span
@@ -840,9 +895,11 @@ class index extends Component {
 																									to={`/comments-${
 																										data &&
 																										data.object &&
-																										data.object.postId &&
-																										data.object.postId
-																									}&${data && data.category}`}
+																										data.object.propertId &&
+																										data.object.propertId
+																									}&${
+																										data && data.category
+																									}&${index}`}
 																									style={{ color: '#706666' }}
 																								>
 																									<img
@@ -856,6 +913,23 @@ class index extends Component {
 																										alt=''
 																									/>{' '}
 																								</Link>
+																								<button
+																									className='dashboard-newsfeed-contact nodecor'
+																									data-toggle='modal'
+																									data-target=''
+																									onClick={() =>
+																										this.modelHanlder(
+																											'contactModalState',
+																											data &&
+																												data.object &&
+																												data.object.user &&
+																												data.object.user.userId
+																										)
+																									}
+																								>
+																									Contact us
+																								</button>
+
 																								{data &&
 																								data.object &&
 																								data.object.propertyLikes &&
@@ -924,9 +998,11 @@ class index extends Component {
 																										to={`/comments-${
 																											data &&
 																											data.object &&
-																											data.object.postId &&
-																											data.object.postId
-																										}&${data && data.category}`}
+																											data.object.propertId &&
+																											data.object.propertId
+																										}&${
+																											data && data.category
+																										}&${index}`}
 																									>
 																										View all{' '}
 																										{
@@ -940,34 +1016,48 @@ class index extends Component {
 																								)}
 
 																								<div className='comment-send-btn'>
-																									<span
-																										className={
-																											user &&
-																											user.userTypeId === 2
-																												? 'news-feed-user-img'
-																												: 'news-feed-user-imgs'
-																										}
+																									<Link
+																										style={{ width: '36px' }}
+																										to={`/single-vendor-${
+																											user && user.userId
+																										}`}
 																									>
-																										<img
-																											style={{ width: '100%' }}
-																											src={
+																										<span
+																											className={
 																												user &&
-																												user.profilePictureUrl
-																													? user.profilePictureUrl
-																													: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												user.userTypeId === 2
+																													? 'news-feed-user-img'
+																													: 'news-feed-user-imgs'
 																											}
-																										/>
-																									</span>
+																										>
+																											<img
+																												style={{
+																													width: '100%',
+																												}}
+																												alt=""
+																												src={
+																													user &&
+																													user.profilePictureUrl
+																														? user.profilePictureUrl
+																														: 'assets/images/dashboard/ic_profile_placeholder.png'
+																												}
+																											/>
+																										</span>
+																									</Link>
 																									<div className='comment-input-pointer'>
 																										<input
 																											className='form-control'
 																											placeholder='Write your review here...'
 																											style={{ height: '35px' }}
-																											name='commentText'
-																											value={`${propertyId}${category}${commentText}`}
+																											name={`commentText,${index}`}
+																											value={
+																												activeCommentId ===
+																												index
+																													? commentText
+																													: ''
+																											}
 																											onChange={this.onChange}
 																										/>
-
 																										<span
 																											className=''
 																											onClick={() =>
@@ -976,7 +1066,8 @@ class index extends Component {
 																														data.object &&
 																														data.object
 																															.propertId,
-																													data && data.category
+																													data && data.category,
+																													index
 																												)
 																											}
 																										>
@@ -1007,7 +1098,6 @@ class index extends Component {
 																						data.object.userId
 																					}`}
 																				>
-																					{console.log('i am into vendor')}
 																					<div className='row'>
 																						<div className='col-md-9 col-sm-9 col-8'>
 																							<div className='vendor-detail'>
@@ -1052,7 +1142,15 @@ class index extends Component {
 																											.professionDesc !== 'null'
 																											? data.object
 																													.professionDesc
-																											: ' '}
+																											: ' '}{' '}
+																										.
+																										{data &&
+																										data.object &&
+																										data.object
+																											.createDateAndTime
+																											? data.object
+																													.createDateAndTime
+																											: ''}
 																									</span>
 																								</p>
 																								<span className='address-span'>
@@ -1079,24 +1177,9 @@ class index extends Component {
 																						</div>
 																					</div>
 																				</Link>
-																				<Link
-																					to='#'
-																					className='dashboard-newsfeed-contact nodecor'
-																					data-toggle='modal'
-																					data-target=''
-																					onClick={this.postConatctPopupHanlder}
-																				>
-																					{this.state.postConatctPopup ? (
-																						<ContactPopup
-																							postConatctPopup={
-																								this.state.postConatctPopup
-																							}
-																						/>
-																					) : null}
-																					Contact us
-																				</Link>
+
 																				<div className='row custom-row-styles'>
-																					<div className='col-12 post-navbar'>
+																					<div className='col-12 vendor-navbar'>
 																						<span
 																							style={{ cursor: 'pointer' }}
 																							onClick={() =>
@@ -1131,9 +1214,11 @@ class index extends Component {
 																							to={`/comments-${
 																								data &&
 																								data.object &&
-																								data.object.postId &&
-																								data.object.postId
-																							}&${data && data.category}`}
+																								data.object.userId &&
+																								data.object.userId
+																							}&${
+																								data && data.category
+																							}&${index}`}
 																							style={{ color: '#706666' }}
 																						>
 																							<img
@@ -1147,6 +1232,22 @@ class index extends Component {
 																								alt=''
 																							/>{' '}
 																						</Link>
+																						<button
+																							className='dashboard-newsfeed-contact nodecor'
+																							data-toggle='modal'
+																							data-target=''
+																							onClick={() =>
+																								this.modelHanlder(
+																									'contactModalState',
+																									data &&
+																										data.object &&
+																										data.object.userId
+																								)
+																							}
+																						>
+																							Contact us
+																						</button>
+
 																						{data &&
 																						data.object &&
 																						data.object.vendorLikes &&
@@ -1163,7 +1264,7 @@ class index extends Component {
 																									(data.object.vendorLikes
 																										.length <= 1
 																										? ''
-																										: `and ${
+																										: ` and ${
 																												data.object.vendorLikes
 																													.length - 1
 																										  } others `)}{' '}
@@ -1210,7 +1311,9 @@ class index extends Component {
 																									data.object &&
 																									data.object.userId &&
 																									data.object.userId
-																								}&${data && data.category}&$`}
+																								}&${
+																									data && data.category
+																								}&${index}`}
 																							>
 																								View all{' '}
 																								{
@@ -1223,30 +1326,43 @@ class index extends Component {
 																							''
 																						)}
 																						<div className='comment-send-btn'>
-																							<span
-																								className={
-																									user && user.userTypeId === 2
-																										? 'news-feed-user-img'
-																										: 'news-feed-user-imgs'
-																								}
+																							<Link
+																								style={{ width: '36px' }}
+																								to={`/single-vendor-${
+																									user && user.userId
+																								}`}
 																							>
-																								<img
-																									style={{ width: '100%' }}
-																									src={
+																								<span
+																									className={
 																										user &&
-																										user.profilePictureUrl
-																											? user.profilePictureUrl
-																											: 'assets/images/dashboard/ic_profile_placeholder.png'
+																										user.userTypeId === 2
+																											? 'news-feed-user-img'
+																											: 'news-feed-user-imgs'
 																									}
-																								/>
-																							</span>
+																								>
+																									<img
+																										style={{ width: '100%' }}
+																										alt=""
+																										src={
+																											user &&
+																											user.profilePictureUrl
+																												? user.profilePictureUrl
+																												: 'assets/images/dashboard/ic_profile_placeholder.png'
+																										}
+																									/>
+																								</span>
+																							</Link>
 																							<div className='comment-input-pointer'>
 																								<input
 																									className='form-control'
 																									placeholder='Write your review here...'
 																									style={{ height: '35px' }}
-																									name='commentText'
-																									value={commentText}
+																									name={`commentText,${index}`}
+																									value={
+																										activeCommentId === index
+																											? commentText
+																											: ''
+																									}
 																									onChange={this.onChange}
 																								/>
 
@@ -1257,7 +1373,8 @@ class index extends Component {
 																											data &&
 																												data.object &&
 																												data.object.userId,
-																											data && data.category
+																											data && data.category,
+																											index
 																										)
 																									}
 																								>
@@ -1441,12 +1558,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
+		onCommentAdded: (data, index, userName) =>
+			dispatch(actions.AddComments(data, index, userName)),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
-		onFollowUnfollowProfessionals: (data, index) =>
-			dispatch(actions.followProfessionals(data, index)),
-		onLikedPostOrProperty: (data, index) =>
-			dispatch(actions.AddLike(data, index)),
+		onFollowUnfollowProfessionals: (data, index, type) =>
+			dispatch(actions.followProfessionals(data, index, type)),
+		onLikedPostOrProperty: (data, index, userName) =>
+			dispatch(actions.AddLike(data, index, userName)),
 		onUpdateCurrentLocaiton: (data) =>
 			dispatch({ type: actionTypes.SET_CURRENT_LOCATION, payload: data }),
 	};

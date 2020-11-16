@@ -47,16 +47,11 @@ class userSignup extends Component {
 		const auth = props.auth;
 		let stateChanged = false;
 		let changedState = {};
-
-		// console.log("checkig auth.regiserUser: ", auth);
-		// console.log("checkig state.regiserUser: ", state.regiserUser);
-
 		if (
 			auth &&
 			JSON.stringify(state.regiserUser) !== JSON.stringify(auth.regiserUser)
 		) {
 			changedState.regiserUser = auth.regiserUser;
-			// console.log("checkig changedState.regiserUser: ", changedState.regiserUser);
 			if (changedState.regiserUser === true) {
 				props.onFalseRegisterUser();
 				props.congratulationHandler('congratulationModel');
@@ -97,7 +92,6 @@ class userSignup extends Component {
 		if (e.target.name === 'profileImage') {
 			let imagePreview = URL.createObjectURL(e.target.files[0]);
 			fileUpload(e).then((data) => {
-				// console.log("base64 :",data.base64);
 				this.setState({
 					imagePreview: imagePreview,
 					profileImage: data.base64,
@@ -111,15 +105,9 @@ class userSignup extends Component {
 		e.preventDefault();
 		const {
 			profileImage,
-			firstName,
-			lastName,
-			userName,
-			emailAddress,
 			password,
 			confirmPassword,
 		} = this.state;
-		console.log('checking this.state: ', this.state);
-		console.log('checking i am into submit');
 		if (password !== confirmPassword) {
 			this.props.onErrorSet('Password not matched!');
 			return;
@@ -128,20 +116,7 @@ class userSignup extends Component {
 			this.props.onErrorSet('Profile Picture is Missing');
 			return;
 		}
-		// else if( firstName === '' ) {
-		//   this.props.onErrorSet("First Name is Missing");
-		// }
-		// else if( lastName === '' ){
-		//   this.props.onErrorSet("Last Name is Missing");
-		// }
-		// else if( userName === '' ){
-		//   this.props.onErrorSet("User Name is Missing");
-		// }
-		// else if ( emailAddress === '' ){
-		//   this.props.onErrorSet("Email Address is Missing")
-		// }
 		else {
-			//  console.log("checking phoneNumber: ", this.props.phNumber);
 			const userData = {
 				profileImage: this.state.profileImage,
 				firstName: this.state.firstName,
@@ -160,7 +135,6 @@ class userSignup extends Component {
 				city: this.state.currentLocation.city,
 				channel: 'web',
 			};
-			console.log('user Data in user Sign up', userData);
 			this.props.onCreateUser(userData);
 		}
 	};
@@ -178,7 +152,6 @@ class userSignup extends Component {
 			password,
 			confirmPassword,
 		} = this.state;
-		console.log('checking this.state: ', this.state);
 		let pageContent = '';
 
 		if (loading) {

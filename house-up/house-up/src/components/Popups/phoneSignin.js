@@ -98,7 +98,6 @@ class phoneSignIn extends Component {
 			channel: 'HouseUp',
 			loginBy: 'msisdn',
 		};
-		// console.log(userData);
 		this.props.onLogin(
 			userData,
 			this.state.currentLocation,
@@ -108,7 +107,6 @@ class phoneSignIn extends Component {
 
 	render() {
 		const { errors, loading, viewPass, msisdn, password } = this.state;
-		// console.log("checking this.props.history: ", this.props.history);
 		return (
 			<Modal
 				show={this.props.show}

@@ -44,13 +44,11 @@ class home extends Component {
 	}
 
 	componentDidMount() {
-		console.log('homePage componenet did mount');
 		this.props.onGetHomePageData();
 	}
 
 	render() {
 		const { homePageData, loading } = this.state;
-		console.log('checking homePageData in HomePage: ', homePageData);
 
 		let pageContent = '';
 		if (loading) {
@@ -92,7 +90,7 @@ class home extends Component {
 								</div>
 								<div className='pxp-prop-card-1-details-price'>
 									{homePageData.properties[i].currency.symbol}
-									{homePageData.properties[i].price}
+									{homePageData.properties[i].price.toLocaleString()}
 								</div>
 								<div className='pxp-prop-card-1-details-features text-uppercase'>
 									{homePageData.properties[i].noOfBedrooms} BD <span>|</span>{' '}
@@ -142,7 +140,6 @@ class home extends Component {
 													className='form-control pxp-is-address'
 													placeholder='City, neighbourhood...'
 												/>
-												{/* <span className="fa fa-search" /> */}
 												<img
 													class='search'
 													src='assets/images/ic_search.svg'
@@ -187,20 +184,19 @@ class home extends Component {
 						</p>
 						<div className='container'>
 							<div className='pxp-services-container rounded-lg mt-4 mt-md-5'>
-								<Link to='/properties' className='pxp-services-item'>
+								<Link to='/add-property' className='pxp-services-item'>
 									<div className='pxp-services-item-fig'>
 										<img src='assets/images/service-icon-1.svg' alt='...' />
 									</div>
 									<div className='pxp-services-item-text text-center'>
 										<div className='pxp-services-item-text-title'>
-											Find a Home
+											List Your Home
 										</div>
 										<div className='pxp-services-item-text-sub'>
 											Sell or rent your property <br />
 											without paying realtor fees
 										</div>
 									</div>
-									{/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
 								</Link>
 								<Link to='/professionals' className='pxp-services-item'>
 									<div className='pxp-services-item-fig'>
@@ -208,16 +204,16 @@ class home extends Component {
 									</div>
 									<div className='pxp-services-item-text text-center'>
 										<div className='pxp-services-item-text-title'>
-											Find a Home
+											Become a Professional
 										</div>
 										<div className='pxp-services-item-text-sub'>
-											A smarter, easier way to <br />
-											search homes and rentals
+											Register Your Local Business. <br />
+											HouseUp reviews all business <br />
+											before approval. 
 										</div>
 									</div>
-									{/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
 								</Link>
-								<Link to='/properties' className='pxp-services-item'>
+								<Link to='/professionals' className='pxp-services-item'>
 									<div className='pxp-services-item-fig'>
 										<img src='assets/images/service-icon-3.svg' alt='...' />
 									</div>
@@ -231,21 +227,20 @@ class home extends Component {
 									</div>
 									{/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
 								</Link>
-								<Link to='/add-new-prop' className='pxp-services-item'>
+								<Link to='/blogs' className='pxp-services-item'>
 									<div className='pxp-services-item-fig'>
 										<img src='assets/images/service-icon-4.svg' alt='...' />
 									</div>
 									<div className='pxp-services-item-text text-center'>
 										<div className='pxp-services-item-text-title'>
-											Buy Or Rent Homes
+											Resources
 										</div>
 										<div className='pxp-services-item-text-sub'>
-											Search thousands of house
+											Read our latest articles on real estate,
 											<br />
-											and apartments in your area{' '}
+											architecture, interior design and more{' '}
 										</div>
 									</div>
-									{/* <div className="pxp-services-item-cta text-uppercase text-center">Learn More</div> */}
 								</Link>
 								<div className='clearfix' />
 							</div>
@@ -325,9 +320,9 @@ class home extends Component {
 						</div>
 					</div>
 					<div className='container mt-100'>
-						<h2 className='pxp-section'>Find a Professionals</h2>
+						<h2 className='pxp-section'>Find a Professional</h2>
 						<p className='pxp-text-light'>
-							Search for a qualified professional in your area
+							Search for qualified professionals in your area
 						</p>
 						<div className='row mt-4 mt-md-5'>
 							{homePageData && homePageData.vendors
@@ -461,7 +456,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	console.log('mapDispatchToProps in HomePage ');
 	return {
 		onGetHomePageData: () => dispatch(actions.getHomePageData()),
 	};
