@@ -45,6 +45,7 @@ export const getSingleVendorData = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/getUser', userData)
 		.then((res) => {
+			console.log('sinle vendir data',res)
 			dispatch({
 				type: SET_SINGLE_VENDOR,
 				payload:

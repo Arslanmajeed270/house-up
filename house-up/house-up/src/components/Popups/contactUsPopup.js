@@ -24,13 +24,14 @@ class contacUsPopup extends Component {
 			subject: '',
 			detail: '',
 			vendorId:'',
-			contactPopup:false
+			showPopUp: false
 		};
 	}
 
 	static getDerivedStateFromProps(props, state) {
 		const auth = props.auth ? props.auth : {};
 		const errors = props.errors;
+		const page = props.page;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -43,18 +44,19 @@ class contacUsPopup extends Component {
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
+
 		if (
-			auth &&
-			JSON.stringify(state.contactPopup) !==
-				JSON.stringify(auth.contactPopup)
+			page &&
+			JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp)
 		) {
-			changedState.contactPopup = auth.contactPopup;
-			if (changedState.contactPopup === true) {
-				props.onFalseRegisterVendor();
+			changedState.showPopUp = page.showPopUp;
+			if (changedState.showPopUp === true) {
+				props.onHidePopUp();
 				props.closeCodelHanlder('contactModalState');
 			}
 			stateChanged = true;
 		}
+
 			if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
 			changedState.errors = errors;
 			stateChanged = true;
@@ -240,7 +242,9 @@ class contacUsPopup extends Component {
 const mapStateToProps = (state) => { 
 	return {
 		auth: state.auth,
-		errors:state.errors
+		errors:state.errors,
+		page: state.page,
+
 	};
 };
 
@@ -249,6 +253,8 @@ const mapDispatchToProps = (dispatch) => {
 		onContactUs: (data) => dispatch(actions.contactUs(data)),
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
+		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
+
 	};
 };
 

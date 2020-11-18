@@ -275,6 +275,14 @@ class singleVendor extends Component {
 													{singleVendorData && singleVendorData.userStatusDesc}
 												</p>
 											</div>
+											<div className='col-md-6'>
+												<p>Package</p>
+											</div>
+											<div className='col-md-6'>
+												<p>
+													{singleVendorData && singleVendorData.packageSubscribed && singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName}
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>

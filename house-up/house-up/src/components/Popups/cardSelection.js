@@ -88,7 +88,8 @@ class cardSelection extends Component {
 
 	onSubmit = () => {
 		const{user} = this.state;
-		const pkgId = this.props.packageId
+		const pkgId = this.props.packageId;
+		console.log('checking packaging id: ', pkgId)
 		
 		const data ={
 			userId:user.userId,
@@ -100,6 +101,8 @@ class cardSelection extends Component {
 
 	render() {
 		const { user, loading, cardId } = this.state;
+		console.log('checking packaging id: ', this.props.packageId)
+
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;
