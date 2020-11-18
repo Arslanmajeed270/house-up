@@ -449,7 +449,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .alice-carousel__stage-item{
   /* width: 309.833px !important; */
-  margin-right: 30px !important;
+  margin-right: 20px !important;
 }
 .pxp-prop-card-1-fig .pxp-cover{
   width: 280px !important;
@@ -473,6 +473,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-size: 35px;
   background-position-y: center;
   background-position-x: center;
+  left: 50px;
 }
 [data-area="<"],[data-area=">"] {
   display: none;
@@ -558,14 +559,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 .pxp-nav > li > a {
-	font-size:15px;
-  font-family:Condensed, sans-serif;
+	font-size:14px;
+  font-family:Light, sans-serif;
   color: #fff;
 }
 
 .pxp-hero-caption h1 {
   font-size: 69px;
-  padding-bottom: 19px;
+  padding-bottom: 15px;
 }
 
 .pxp-hero-search .custom-select, .pxp-hero-search .form-control.pxp-is-address {
@@ -576,17 +577,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .pxp-section-h2 {
 	color:#000000;
-	font-size:37px;
+  font-size:36px;
+  padding-left: 10px;
 	font-family:Condensed, sans-serif;
-	margin-bottom:10px;
 }
 
 .pxp-text-light {
-	color:#4D4D4D;
+	color:#8c8c8c;
 	font-family:Condensed, sans-serif;
   font-size:16px;
   padding-top:4px;
+  padding-left: 10px;
 }
+
 
 .container-fluid.pxp-props-carousel-right.mt-100 {
 	padding-left: 0 !important;
@@ -599,13 +602,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .pxp-prop-card-1-details-price {
-	font-size: 21px;
+	font-size: 20px;
   font-family: Regular, sans-serif;
-  padding: 7px 0 7px 0;
+  padding: 7px 0 8px 0;
 }
 
 .pxp-prop-card-1-details-features {
-	font-size:13px;
+	font-size:12px;
 	font-family:Condensed, sans-serif;
 }
 
@@ -661,11 +664,11 @@ padding: 10px 15px 0 15px;
   margin: 0 auto;
 }
 .pxp-hero-caption h1 {
-  font-size:74px;
+  font-size:75px;
 }
 .pxp-hero-caption .title {
-  text-decoration:underline;
-  margin-bottom:30px;
+  margin-bottom:40px;
+  font-family: "Light", sans-serif;
 }
 .pxp-hero-caption-select-location .title-select-location {
   text-decoration:underline;
@@ -679,15 +682,20 @@ padding: 10px 15px 0 15px;
 .pxp-section {
   font-size: 40px;
 }
+
+.pxp-content {
+  padding-bottom: 100px;
+}
+
 p.pxp-text-light {
-  color: #393939;
-  font-size:18px;
+  color: #333;
+  font-size:16px;
 }
 .pxp-prop-card-1-details-titles {
   font-size:17px;
 }
 .pxp-primary-cta.text-uppercase.mt-4.mt-md-5.pxp-animate {
-  margin-top:20px !important;
+  margin-top:10px !important;
 }
 .pxp-services-item-text-title {
   color:#000000;
