@@ -31,8 +31,15 @@ body {
 .post-navbar{
   font-size: 30px;
   padding: 5px 15px;
+  margin-top: 20px;
 }
 
+.vendor-navbar
+{
+  font-size: 30px;
+  padding: 5px 15px;
+  margin-top: 40px;
+}
 .modal-header {
   border-bottom: none;
   padding: 15px 15px 0px 15px;
@@ -116,6 +123,13 @@ body {
 {
   position: absolute !important;
   bottom: 31px;
+  margin-left: 30px !important;
+  color: #000 !important;
+}
+.country-image-contact-page
+{
+  position: absolute !important;
+top:136px;
   margin-left: 30px !important;
   color: #000 !important;
 }
@@ -829,4 +843,16 @@ h1.titles-property {
 }
 .comment-send-btn{
   position: relative;
+  width: 100%;
+}
+
+.user-Profile{
+  border-radius: 50% !important;
+}
+
+.map-pointer{
+  background-image: url('./assets/images/ic_address.svg');
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
 }

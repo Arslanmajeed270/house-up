@@ -1,7 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import Dropzone from 'react-dropzone';
+import React, { Component} from 'react';
 import RichTextEditor from 'react-rte';
-import _ from 'lodash';
+// import _ from 'lodash';
 
 class addProduct extends Component {
 	constructor() {
@@ -23,15 +22,8 @@ class addProduct extends Component {
 	};
 
 	render() {
-		const { tableContent, discountType } = this.state;
+		const {  discountType } = this.state;
 
-		// console.log('checking this.state :',this.state);
-
-		const files = this.state.files.map((file) => (
-			<li key={file.name}>
-				{file.name} - {file.size} bytes
-			</li>
-		));
 		return (
 			<React.Fragment>
 				<div

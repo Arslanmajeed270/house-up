@@ -36,7 +36,6 @@ export const dropDwonMenu = () => (dispatch) => {
 			channel: 'web',
 		})
 		.then((res) => {
-			console.log('checking dropDwon data in store', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({
 					type: PROPERTY_DROP_DWON,
@@ -55,7 +54,6 @@ export const dropDwonMenu = () => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('checking error on homepage');
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -71,7 +69,6 @@ export const addProperty = (userData, history) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/AddProperty', userData)
 		.then((res) => {
-			console.log('checking Add Property res in store', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				history.push(
 					`/index-${userData.country}&${userData.state}&${userData.city}`
@@ -89,7 +86,6 @@ export const addProperty = (userData, history) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('checking error on homepage');
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -102,12 +98,10 @@ export const addProperty = (userData, history) => (dispatch) => {
 //Get Singel Property
 export const getSingleProperty = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log('checking backendServerURL: ', backendServerURL);
 
 	axios
 		.post(backendServerURL + '/getProperty', userData)
 		.then((res) => {
-			console.log('checking getSinglePropertyData: ', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({
 					type: GET_SINGLE_PROPERTY,
@@ -132,8 +126,6 @@ export const getSingleProperty = (userData) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error: ', err);
-			console.log('checking error');
 			dispatch({
 				type: SET_ERRORS,
 				payload:

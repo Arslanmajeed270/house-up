@@ -17,7 +17,7 @@ class cardSelection extends Component {
 			showPopUp: false,
 		};
 	}
-
+	
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const page = props.page;
@@ -51,9 +51,8 @@ class cardSelection extends Component {
 		) {
 			changedState.showPopUp = page.showPopUp;
 			if (changedState.showPopUp === true) {
-				console.log('i am here in showpopif');
 				props.onHidePopUp();
-				props.closeCodelHanlder('congratulationModel');
+				props.cardDetailsHandler('congratulationModel','Your Account has been successfully Upgraded');
 			}
 			stateChanged = true;
 		}
@@ -78,24 +77,29 @@ class cardSelection extends Component {
 	}
 
 	onChange = (cardId) => {
-		console.log('checking cardId: ', cardId);
 		this.setState({ cardId: cardId });
 		const { user } = this.state;
 		const data = {
 			cardId: cardId,
 			userId: user.userId,
 		};
-		console.log('checking data: ', data);
 		this.props.onMarkCreditCardDefault(data);
 	};
 
-	onSubmit = () => {};
+	onSubmit = () => {
+		const{user} = this.state;
+		const pkgId = this.props.packageId
+		
+		const data ={
+			userId:user.userId,
+			packageId:pkgId,
+			currency:"cad"
+		}
+		this.props.onChargeCustomerUsingCreditCard(data);
+	};
 
 	render() {
-		const { user, errors, loading, cardId } = this.state;
-
-		console.log('checking this.statee: ', this.state);
-
+		const { user, loading, cardId } = this.state;
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;
@@ -211,6 +215,7 @@ class cardSelection extends Component {
 						</button>
 					</Modal.Body>
 				</Modal>
+				{pageContent}
 			</React.Fragment>
 		);
 	}
@@ -231,6 +236,8 @@ const mapDispatchToProps = (dispatch) => {
 		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
 		onMarkCreditCardDefault: (data) =>
 			dispatch(actions.markCreditCardDefault(data)),
+			onChargeCustomerUsingCreditCard: (data) =>
+			dispatch(actions.chargeCustomerUsingCreditCard(data)),
 	};
 };
 

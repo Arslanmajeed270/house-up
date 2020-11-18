@@ -19,6 +19,31 @@ export const checkPawwordPattern = (str) => {
 	}
 	return true;
 };
+export const checkDate = (date) => {
+	console.log('checking date: ', date);
+	const current = Date.now()/1000;
+	const dateIs = new Date(date);
+	const futureData = dateIs.getTime()/1000;
+	console.log('checking current: ', current);
+	console.log('checking futureData: ', futureData);
+	if( current < futureData ){
+		return false;
+	}
+	return true;
+};
+
+export const checkDateFuture = (date) => {
+	console.log('checking date: ', date);
+	const current = Date.now()/1000;
+	const dateIs = new Date(date);
+	const futureData = dateIs.getTime()/1000;
+	console.log('checking current: ', current);
+	console.log('checking futureData: ', futureData);
+	if( current > futureData ){
+		return false;
+	}
+	return true;
+};
 
 export const checkValidURL = (str) => {
 	if (

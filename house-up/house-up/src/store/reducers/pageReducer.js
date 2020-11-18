@@ -12,8 +12,8 @@ import {
 	SET_CURRENT_LOCATION,
 	SET_DEFAULT_ALL_CARDS,
 	LOAD_ALL_CARDS,
-
-	// ADD_COMMENTS
+	SET_PACKAGE_DETAILS,
+	ADD_COMMENTS,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -28,6 +28,7 @@ const initialState = {
 		country: '',
 		province: '',
 		city: '',
+		packageDetails: [],
 	},
 	allCards: [],
 	// comments
@@ -94,7 +95,6 @@ export default function (state = initialState, action) {
 				indexPageData.vendorPostPropertiesList &&
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index
 			) {
-				console.log('action', action);
 				if (action.payload.type === 'PostandProperty') {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
@@ -117,35 +117,74 @@ export default function (state = initialState, action) {
 			};
 		}
 		case ADD_LIKE: {
-			console.log('checking action.payload.index: ', action.payload.index);
 			let indexPageData = Object.assign({}, state.indexPageData);
 			if (
 				indexPageData &&
 				indexPageData.vendorPostPropertiesList &&
 				indexPageData.vendorPostPropertiesList.length >= action.payload.index
 			) {
-				console.log(
-					'checking action.payload.category:',
-					action.payload.category
-				);
 				if (action.payload.category === 'Property') {
-					console.log('i am into property if');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPropertyLikedByLoggedInUser = action.payload.follow;
-					console.log('checking indexPageData: ', indexPageData);
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.propertyLikes.push({ userName: action.payload.userName });
 				}
 				if (action.payload.category === 'Post') {
-					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPostLikedByLoggedInUser = action.payload.follow;
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.postLikes.push({ userName: action.payload.userName });
 				}
 				if (action.payload.category === 'Vendor') {
-					console.log('i am into post else');
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isUserLikedByLoggedInUser = action.payload.follow;
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.vendorLikes.push({ userName: action.payload.userName });
+				}
+			}
+			return {
+				...state,
+				indexPageData,
+			};
+		}
+		case ADD_COMMENTS: {
+			let indexPageData = Object.assign({}, state.indexPageData);
+			if (
+				indexPageData &&
+				indexPageData.vendorPostPropertiesList &&
+				indexPageData.vendorPostPropertiesList.length >= action.payload.index
+			) {
+				
+				if (action.payload.category === 'Property') {
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.propertyComments.push({
+						contactName: action.payload.contactName,	
+						commentText: action.payload.comment,
+						profilePictureUrl :  action.payload.profilePictureUrl
+					});
+				}
+				if (action.payload.category === 'Post') {
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.postComments.push({
+						userName: action.payload.userName,
+						commentText: action.payload.comment,
+					});
+				}
+				if (action.payload.category === 'Vendor') {
+					indexPageData.vendorPostPropertiesList[
+						action.payload.index
+					].object.vendorComments.push({
+						userName: action.payload.userName,
+						commentText: action.payload.comment,
+					});
 				}
 			}
 			return {
@@ -154,13 +193,17 @@ export default function (state = initialState, action) {
 			};
 		}
 		case SET_CURRENT_LOCATION: {
-			console.log('checking action.payload: ', action.payload);
 			let currentLocation = Object.assign({}, action.payload);
 			return {
 				...state,
 				currentLocation: currentLocation,
 			};
 		}
+		case SET_PACKAGE_DETAILS:
+			return {
+				...state,
+				packageDetails: action.payload,
+			};
 		default:
 			return state;
 	}

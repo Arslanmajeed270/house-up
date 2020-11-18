@@ -26,7 +26,6 @@ class optForgotPass extends Component {
 		let stateChanged = false;
 		let changedState = {};
 
-		// console.log('checking otpAuthenticate: ', otpAuthenticate);
 
 		if (
 			(otpAuthenticate || otpAuthenticate === false) &&
@@ -73,7 +72,6 @@ class optForgotPass extends Component {
 
 	render() {
 		const { errors } = this.state;
-		// console.log('checking value of otp: ', this.state.otp);
 
 		let phoneNumber = '';
 		if (this.props.phNumber) {
@@ -161,7 +159,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-	// console.log('mapDispatchToProps in HomePage ' );
 	return {
 		onFalseOtpAutheticate: () =>
 			dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),

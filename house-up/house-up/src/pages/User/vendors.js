@@ -32,13 +32,11 @@ class vendor extends Component {
 	}
 
 	componentDidMount() {
-		// console.log('professionals componenet did mount');
 		this.props.onGetVendorsData();
 	}
 
 	render() {
 		const { vendorsData } = this.state;
-		console.log('checking vendorsData in professionals: ', vendorsData);
 
 		return (
 			<React.Fragment>
@@ -63,7 +61,7 @@ class vendor extends Component {
 									backgroundPosition: '50% 50%',
 								}}
 							/>
-							<div className='pxp-agents-hero-search-container'>
+							{/* <div className='pxp-agents-hero-search-container'>
 								<div className='container'>
 									<div className='pxp-agents-hero-search'>
 										<h2 className='pxp-section-h2'>Find an Professional</h2>
@@ -113,6 +111,7 @@ class vendor extends Component {
 									</div>
 								</div>
 							</div>
+						 */}
 						</div>
 						<div className='container'>
 							<div className='row mt-200'>

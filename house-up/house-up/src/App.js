@@ -22,11 +22,9 @@ class App extends Component {
 		this.props.onSetCurrentLocation(lat, lon);
 	}
 	showPosition(position) {
-		console.log('i am here');
 		const latitude = position.coords.latitude;
 		const longitude = position.coords.longitude;
-		console.log('checking latitude: ', latitude);
-		console.log('checking latitude: ', longitude);
+	
 		this.setCurrentLocation(latitude, longitude);
 	}
 
@@ -60,7 +58,7 @@ class App extends Component {
 				<Route exact path={'/privacy'} component={Index} />
 				<Route exact path={'/properties'} component={Index} />
 				<Route exact path={'/single-post'} component={Index} />
-				<Route exact path={'/single-property'} component={Index} />
+				<Route exact path={'/single-prop-:id'} component={Index} />
 				<Route exact path={'/professionals'} component={Index} />
 			</React.Fragment>
 		);

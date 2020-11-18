@@ -43,22 +43,18 @@ class home extends Component {
     return null;
   }
 
-  componentDidMount() {
-    console.log('homePage componenet did mount');
-    this.props.onGetHomePageData();
-  }
+	componentDidMount() {
+		this.props.onGetHomePageData();
+	}
 
-  render() {
-    const { homePageData, loading } = this.state;
-    console.log('checking homePageData in HomePage: ', homePageData);
-
+	render() {
+		const { homePageData, loading } = this.state;
     let pageContent = '';
     if (loading) {
       pageContent = <Spinner />;
     } else {
       pageContent = '';
     }
-
     const items = [];
     if (
       homePageData &&
@@ -461,9 +457,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  console.log('mapDispatchToProps in HomePage ');
-  return {
-    onGetHomePageData: () => dispatch(actions.getHomePageData()),
-  };
+	return {
+		onGetHomePageData: () => dispatch(actions.getHomePageData()),
+	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(home);

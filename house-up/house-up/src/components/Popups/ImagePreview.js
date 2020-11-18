@@ -21,7 +21,6 @@ class imagePreview extends Component {
 
 	render() {
 		const { propertyImg } = this.state;
-		console.log('states in image preview', propertyImg);
 
 		const propertyImages = [];
 

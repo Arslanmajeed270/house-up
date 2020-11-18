@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 
+import { checkDateFuture } from '../../utils/regex';
+
+import * as actionTypes from '../../store/actions/actionTypes';
 import { connect } from 'react-redux';
+import { Alert } from 'react-bootstrap';
 import * as actions from '../../store/actions/pageActions';
 
 class contacUsPopup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			errors: {},
 			user: {},
 			propertyId: 0,
 			postId: 0,
-			vendorId: 0,
 			userId: 0,
 			name: '',
 			phoneNumber: 0,
@@ -19,11 +23,14 @@ class contacUsPopup extends Component {
 			meetingDate: '',
 			subject: '',
 			detail: '',
+			vendorId:'',
+			contactPopup:false
 		};
 	}
 
 	static getDerivedStateFromProps(props, state) {
 		const auth = props.auth ? props.auth : {};
+		const errors = props.errors;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -36,6 +43,23 @@ class contacUsPopup extends Component {
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
+		if (
+			auth &&
+			JSON.stringify(state.contactPopup) !==
+				JSON.stringify(auth.contactPopup)
+		) {
+			changedState.contactPopup = auth.contactPopup;
+			if (changedState.contactPopup === true) {
+				props.onFalseRegisterVendor();
+				props.closeCodelHanlder('contactModalState');
+			}
+			stateChanged = true;
+		}
+			if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
+			changedState.errors = errors;
+			stateChanged = true;
+		}
+
 
 		if (stateChanged) {
 			return changedState;
@@ -45,7 +69,7 @@ class contacUsPopup extends Component {
 	}
 
 	componentDidMount() {
-		const { user, email, phoneNumber, name, userId } = this.state;
+		const { user} = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -58,18 +82,17 @@ class contacUsPopup extends Component {
 			name: contactName,
 			phoneNumber: contactNumber,
 			userId: id,
+			vendorId : this.props.vendorId
 		});
 
-		console.log('checking values:', email);
-		console.log('checking values:', name);
-		console.log('checking values:', phoneNumber);
-		console.log('checking values:', userId);
+		
 	}
 
 	onChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 	onSubmit = (e) => {
+	e.preventDefault();
 		const {
 			name,
 			phoneNumber,
@@ -78,14 +101,18 @@ class contacUsPopup extends Component {
 			detail,
 			meetingDate,
 			userId,
+			vendorId
 		} = this.state;
 
-		e.preventDefault();
+		if (!checkDateFuture(meetingDate)) {
+			this.props.onErrorSet('Please Enter Valid Date Date Must Be In The Future!');
+			return;
+		}
 
 		const userData = {
 			propertyId: 0,
 			postId: 0,
-			vendorId: 0,
+			vendorId,
 			userId,
 			name,
 			phoneNumber,
@@ -94,6 +121,7 @@ class contacUsPopup extends Component {
 			subject,
 			detail,
 		};
+		this.props.onContactUs(userData);
 	};
 
 	render() {
@@ -104,18 +132,24 @@ class contacUsPopup extends Component {
 			subject,
 			detail,
 			meetingDate,
+			errors
 		} = this.state;
 		return (
 			<Modal
 				show={this.props.show}
 				aria-labelledby='contained-modal-title-vcenter'
 				dialogClassName='modal-width'
-				centere
-				onHide={this.props.contactUsPopHandler}
+				centered
+				onHide={() =>this.props.closeCodelHanlder('contactModalState')}
 			>
 				<Modal.Body>
 					<h5 className='modal-title'>Share your Details</h5>
-					<form className='mt-4'>
+					<form onSubmit={this.onSubmit} className='mt-4'>
+						{errors && errors.message && (
+								<Alert variant='danger'>
+									<strong>Error!</strong> {errors.message}
+								</Alert>
+							)}
 						<div className='form-group'>
 							<input
 								type='text'
@@ -135,6 +169,17 @@ class contacUsPopup extends Component {
 								onChange={this.onChange}
 								required
 							/>
+							<span className='country-image-contact-page'>
+								<img
+									src='assets/images/053-canada.svg'
+									alt=''
+									style={{
+										// marginLeft: '-23px',
+										// marginBottom: '192px',
+										// height: '25px',
+									}}
+								/>
+							</span>
 						</div>
 						<div className='form-group'>
 							<input
@@ -158,16 +203,17 @@ class contacUsPopup extends Component {
 							/>
 						</div>
 						<div className='form-group'>
-							<input
-								type='text'
-								placeholder='Set Time & Date'
-								className='form-control'
-								name='meetingDate'
-								value={meetingDate}
-								onChange={this.onChange}
-								required
-							/>
-						</div>
+										<input
+											type='date'
+											className='form-control'
+											id='calender'
+											placeholder='Business Start Date'
+											name='meetingDate'
+											value={meetingDate}
+											onChange={this.onChange}
+											required
+										/>
+									</div>
 						<div className='form-group'>
 							<textarea
 								className='form-control'
@@ -191,15 +237,18 @@ class contacUsPopup extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state) => { 
 	return {
 		auth: state.auth,
+		errors:state.errors
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onContactUs: (data) => dispatch(actions.contactUs(data)),
+		onErrorSet: (msg) =>
+			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 	};
 };
 

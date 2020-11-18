@@ -45,31 +45,31 @@ class index extends Component {
 			subscriptionPlan: false,
 			cardSelection: false,
 			cardDetails: false,
+			animateHeader: false,
+			packageId: '',
+			message: '',
 		};
 	}
+
 	closeCodelHanlder = (model) => {
 		this.setState({
 			[model]: false,
 		});
 	};
-	modelHanlder = (model) => {
-		// console.log("checking model: ", model);
+	modelHanlder = (model, data) => {
 		if (model === 'phoneSignin') {
 			this.setState({ emailSignin: false, [model]: !this.state[model] });
 		} else if (model === 'emailSignin') {
-			// console.log('clicked');
 			this.setState({ phoneSignin: false, [model]: !this.state[model] });
 		} else if (model === 'subscriptionPlan') {
-			// console.log('clicked');
 			this.setState({ [model]: !this.state[model] });
 		} else if (model === 'cardSelection') {
-			// console.log('clicked');
 			this.setState({
 				subscriptionPlan: false,
 				[model]: !this.state[model],
+				packageId: data,
 			});
 		} else if (model === 'cardDetails') {
-			console.log('clicked');
 			this.setState({ cardSelection: false, [model]: !this.state[model] });
 		} else if (model === 'phoneNoForgotPass') {
 			this.setState({
@@ -83,7 +83,6 @@ class index extends Component {
 			this.setState({ optForgotPass: false, [model]: !this.state[model] });
 		} else if (model === 'forgotPassCongrats') {
 			this.setState({ forgotPass: false, [model]: !this.state[model] });
-			// console.log(this.state.forgotPassCongrats)
 		} else if (model === 'signupSelectionModel') {
 			this.setState({
 				phoneSignin: false,
@@ -106,7 +105,6 @@ class index extends Component {
 				[model]: !this.state[model],
 			});
 		} else if (model === 'userSignupModel') {
-			// console.log('i am into userSignupModel if else');
 			this.setState({ optUserModel: false, [model]: !this.state[model] });
 		} else if (model === 'vendorSignupModel') {
 			this.setState({ optUserModelVendor: false, [model]: !this.state[model] });
@@ -116,6 +114,7 @@ class index extends Component {
 				vendorSignupModel: false,
 				cardSelection: false,
 				[model]: !this.state[model],
+				message: data,
 			});
 		} else if (model === 'vendorCongrats') {
 			this.setState({
@@ -135,10 +134,12 @@ class index extends Component {
 			phNumber: num,
 		});
 	};
+
 	render() {
 		let animateHeader = false;
 		let hideFooter = false;
-		if (this.props.location.pathname === '/index') {
+
+		if (this.props.location.pathname.indexOf('/index') >= 0) {
 			hideFooter = true;
 		}
 		if (
@@ -162,12 +163,13 @@ class index extends Component {
 				{this.state.subscriptionPlan && (
 					<SubscriptionPlan
 						show={this.state.subscriptionPlan}
+						modelHanlder={this.modelHanlder}
 						closeCodelHanlder={this.closeCodelHanlder}
-						cardSelectionHandler={this.modelHanlder}
 					/>
 				)}
 				{this.state.cardSelection && (
 					<CardSelection
+						packageId={this.state.packageId}
 						show={this.state.cardSelection}
 						closeCodelHanlder={this.closeCodelHanlder}
 						cardDetailsHandler={this.modelHanlder}
@@ -279,6 +281,7 @@ class index extends Component {
 				{this.state.congratulationModel && (
 					<Congratulation
 						show={this.state.congratulationModel}
+						message={this.state.message}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
@@ -289,6 +292,7 @@ class index extends Component {
 					/>
 				)}
 				<Header
+					history={this.props.history}
 					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>

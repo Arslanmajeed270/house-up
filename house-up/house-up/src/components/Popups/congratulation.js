@@ -28,6 +28,17 @@ class congrationPopup extends Component {
 							CONGRATULATIONS!
 						</div>
 					</div>
+					{
+						this.props.message ?
+					<div className='form-group'>
+						<div
+							class='text-center'
+							style={{ fontSize: '18px', color: '#000000' }}
+						>
+							{this.props.message}
+						</div>
+						</div>
+						:
 					<div className='form-group'>
 						<div
 							class='text-center'
@@ -43,6 +54,8 @@ class congrationPopup extends Component {
 							successfully created.
 						</div>
 					</div>
+					
+					}
 					<div className='form-group'>
 						<button
 							style={{ fontSize: '16px' }}

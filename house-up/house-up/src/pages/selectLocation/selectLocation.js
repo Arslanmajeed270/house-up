@@ -25,7 +25,6 @@ class selectLocation extends Component {
 		const page = props.page;
 		const auth = props.auth;
 
-		console.log('checking page data ', page);
 		let stateChanged = false;
 		let changedState = {};
 
@@ -116,7 +115,6 @@ class selectLocation extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		// console.log('checking click handler');
 		const { city, state, country, user } = this.state;
 
 		if (user && user.userId) {
@@ -125,11 +123,9 @@ class selectLocation extends Component {
 				city: city,
 				province: state,
 			};
-			console.log('checking data in onsubmit ', userData);
 			this.props.onUpdateCurrentLocaiton(userData);
 			this.props.history.push(`/index-${country}&${state}&${city}`);
 		} else {
-			console.log('i am into else');
 			this.props.history.goBack();
 		}
 	};
@@ -142,10 +138,8 @@ class selectLocation extends Component {
 			state,
 			countries,
 			country,
-			user,
 		} = this.state;
 
-		console.log('checking the value of state : ', user);
 
 		return (
 			<React.Fragment>

@@ -1,179 +1,326 @@
 import React, { Component } from 'react';
-import Dropzone from 'react-dropzone';
+import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
-import GoogleMapReact from 'google-map-react';
-
-import { connect } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-import cloneDeep from 'lodash/cloneDeep';
-
-import fileUpload from 'fuctbase64';
 import PropertyPlan from '../../../components/Popups/propertyPlan';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class form3 extends Component {
-	constructor() {
-		super();
-		this.onDrop = (files) => {
-			this.setState({ files });
-		};
+	constructor(props) {
+		super(props);
 		this.state = {
-			files: [],
-			address: '',
-			images: [],
-			longitude: 78.68576,
-			latitude: 32.57698,
-			imagePreview: [],
-			googleMapKey:
-				process.env.REACT_APP_GOOGLE_MAP_KEY |
-				'AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk',
-			propertyPlanState: false,
-			errors: {},
-			loading: false,
-			country: '',
-			state: '',
-			city: '',
-			countries: [],
-			states: [],
-			cities: [],
+			moreInfo: false,
+			dropDownData: {},
+			yearBuilt: null,
+			balcony: false,
+			disposal: false,
+			finishedSqftArea: null,
+			lotDimensionLength: 0,
+			noOfBathrooms: null,
+			basementId: null,
+			waterSourceID: null,
+			propertyTypeId: null,
+			lotDimensionWidth: 0,
+			storeys: null,
+			rentalListingYN: '',
+			yearRoofInstalled: null,
+			parkingSpaces: null,
+			ac: false,
+			garageId: null,
+			dishWasher: false,
+			garage: false,
+			noOfBedrooms: null,
+			playroom: false,
+			bar: false,
+			primaryHeatingFuelId: null,
+			internet: false,
+			buildingTypeId: null,
+			amenites: '',
+			lotTotalArea: 0,
+			gym: false,
+			yearFurnaceBuilt: null,
+			areaTypeId: null,
+			propertyType: [],
+			parkingSpace: [],
+			bedroomCount: [],
+			bathroomCount: [],
+			basementType: [],
+			garageType: [],
+			primaryHeatingFuel: [],
+			waterSource: [],
+			storeysCount: [],
+			areaType: [],
+			buildingType: [],
+			condoFee: '',
 		};
 	}
-	static getDerivedStateFromProps(props, state) {
-		const errors = props.errors;
-		const page = props.page;
-		console.log('checking page data ', page);
-		const auth = props.auth;
-		let stateChanged = false;
-		let changedState = {};
-
-		if (
-			page &&
-			page.countries &&
-			JSON.stringify(state.countries) !== JSON.stringify(page.countries)
-		) {
-			changedState.countries = page.countries;
-			stateChanged = true;
-			let states = [];
-			states = cloneDeep(changedState.countries[0]);
-			changedState.states = states.states;
-		}
-		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
-			changedState.errors = errors;
-			stateChanged = true;
-		}
-		if (
-			page &&
-			JSON.stringify(state.loading) !== JSON.stringify(page.loading)
-		) {
-			changedState.loading = page.loading;
-			stateChanged = true;
-		}
-		if (stateChanged) {
-			return changedState;
-		}
-		return null;
-	}
+	moreOptionToggle = () => {
+		this.setState({ moreInfo: !this.state.moreInfo });
+	};
 	componentDidMount() {
-		this.props.onGetCountries();
+		const dropDownData1 = this.props.dropDownData;
+		this.setState({
+			propertyType:
+				dropDownData1 && dropDownData1.propertyType
+					? dropDownData1.propertyType
+					: [],
+			parkingSpace:
+				dropDownData1 && dropDownData1.parkingSpaces
+					? dropDownData1.parkingSpaces
+					: [],
+			bedroomCount:
+				dropDownData1 && dropDownData1.bedroomCount
+					? dropDownData1.bedroomCount
+					: [],
+			bathroomCount:
+				dropDownData1 && dropDownData1.bathroomCount
+					? dropDownData1.bathroomCount
+					: [],
+			basementType:
+				dropDownData1 && dropDownData1.basementType
+					? dropDownData1.basementType
+					: [],
+			garageType:
+				dropDownData1 && dropDownData1.garageType
+					? dropDownData1.garageType
+					: [],
+			primaryHeatingFuel:
+				dropDownData1 && dropDownData1.primaryHeatingFuel
+					? dropDownData1.primaryHeatingFuel
+					: [],
+			waterSource:
+				dropDownData1 && dropDownData1.waterSource
+					? dropDownData1.waterSource
+					: [],
+			storeysCount:
+				dropDownData1 && dropDownData1.storeysCount
+					? dropDownData1.storeysCount
+					: [],
+			areaType:
+				dropDownData1 && dropDownData1.areaType ? dropDownData1.areaType : [],
+			buildingType:
+				dropDownData1 && dropDownData1.buildingType
+					? dropDownData1.buildingType
+					: [],
+		});
+		const {form3Data} = this.props;
+		this.setState({
+			yearBuilt: form3Data.yearBuilt ? form3Data.yearBuilt : null,
+			balcony: form3Data.balcony ? form3Data.balcony : false,
+			disposal: form3Data.disposal ? form3Data.disposal : false,
+			finishedSqftArea: form3Data.finishedSqftArea ? form3Data.finishedSqftArea : null,
+			lotDimensionLength: form3Data.lotDimensionLength ? form3Data.lotDimensionLength : 0,
+			noOfBathrooms: form3Data.noOfBathrooms ? form3Data.noOfBathrooms : null,
+			basementId: form3Data.basementId ? form3Data.basementId : null,
+			waterSourceID: form3Data.waterSourceID ? form3Data.waterSourceID : null,
+			propertyTypeId: form3Data.propertyTypeId ? form3Data.propertyTypeId : null,
+			lotDimensionWidth: form3Data.lotDimensionWidth ? form3Data.lotDimensionWidth : 0,
+			storeys: form3Data.storeys ? form3Data.storeys : null,
+			rentalListingYN: form3Data.rentalListingYN ? form3Data.rentalListingYN : '',
+			yearRoofInstalled: form3Data.yearRoofInstalled ? form3Data.yearRoofInstalled : null,
+			parkingSpaces: form3Data.parkingSpaces ? form3Data.parkingSpaces : null,
+			ac: form3Data.ac ? form3Data.ac : false,
+			garageId: form3Data.garageId ? form3Data.garageId  : null,
+			dishWasher: form3Data.dishWasher ? form3Data.dishWasher : false,
+			garage: form3Data.garage ? form3Data.garage : false,
+			noOfBedrooms: form3Data.noOfBedrooms ? form3Data.noOfBedrooms : null,
+			playroom: form3Data.playroom ? form3Data.playroom : false,
+			bar: form3Data.bar ? form3Data.bar : false ,
+			primaryHeatingFuelId: form3Data.primaryHeatingFuelId ? form3Data.primaryHeatingFuelId : null,
+			internet: form3Data.internet ? form3Data.internet : false,
+			buildingTypeId: form3Data.buildingTypeId ? form3Data.buildingTypeId : null,
+			amenites: form3Data.amenites ? form3Data.amenites : '',
+			lotTotalArea: form3Data.lotTotalArea ? form3Data.lotTotalArea : 0,
+			gym: form3Data.gym ? form3Data.gym : false,
+			yearFurnaceBuilt: form3Data.yearFurnaceBuilt ? form3Data.yearFurnaceBuilt : null,
+			areaTypeId: form3Data.areaTypeId ? form3Data.areaTypeId : null,
+			condoFee: form3Data.condoFee ? form3Data.condoFee : '',
+		});
 	}
 	onChange = (e) => {
-		if (e.target.name === 'country') {
-			let index = 0;
-			let states = [];
-			if (e.target.value !== '') {
-				index =
-					this.state.countries &&
-					this.state.countries.findIndex((x) => `${x.name}` === e.target.value);
-				states = cloneDeep(this.state.countries[index]);
-			}
+		const targetName = e.target.name;
+		if (e.target.type === 'checkbox') {
+			const value = !this.state[targetName];
 			this.setState({
-				[e.target.name]: e.target.value,
-				states: states.states,
+				[targetName]: value,
 			});
-		} else if (e.target.name === 'state') {
-			let ind = 0;
-			let cities = [];
-			if (e.target.value !== '') {
-				ind =
-					this.state.states &&
-					this.state.states.findIndex((x) => `${x.name}` === e.target.value);
-				cities = cloneDeep(this.state.states[ind]);
-			}
-			console.log('checking e.target.value in state: ', e.target.value);
+		} else if (
+			targetName === 'lotDimensionLength' ||
+			targetName === 'lotDimensionWidth'
+		) {
 			this.setState({
-				[e.target.name]: e.target.value,
-				cities: cities.cities,
-			});
-		} else if (e.target.name === 'images') {
-			const imagePreview = URL.createObjectURL(e.target.files[0]);
-			const imagePreviewState = this.state.imagePreview;
-			const images = this.state.images;
-			imagePreviewState.push(imagePreview);
-			fileUpload(e).then((data) => {
-				//    console.log("base64 :",data.base64);
-				images.push({ image: data.base64 });
-				this.setState({
-					imagePreview: imagePreviewState,
-					images: images,
-				});
+				[targetName]: e.target.value,
+				lotTotalArea:
+					targetName === 'lotDimensionLength'
+						? e.target.value * this.state.lotDimensionWidth
+						: e.target.value * this.state.lotDimensionLength,
 			});
 		} else {
-			this.setState({ [e.target.name]: e.target.value });
+			this.setState({
+				[targetName]: e.target.value,
+			});
 		}
 	};
-
-	static defaultProps = {
-		center: {
-			lat: 59.95,
-			lng: 30.33,
-		},
-		zoom: 11,
-	};
-	propertyPlanStateHandler = () => {
-		this.setState({
-			propertyPlanState: !this.state.propertyPlanState,
-		});
-	};
-
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { city, address, state, images, longitude, latitude } = this.state;
-		const dataForm3 = {
-			city: city,
-			address: address,
-			state: state,
-			images: images,
-			longitude: longitude,
-			latitude: latitude,
+		const dataform3 = {
+			yearBuilt: Number(this.state.yearBuilt),
+			balcony: this.state.balcony,
+			disposal: this.state.disposal,
+			finishedSqftArea: Number(this.state.finishedSqftArea),
+			lotDimensionLength: Number(this.state.lotDimensionLength),
+			noOfBathrooms: Number(this.state.noOfBathrooms),
+			basementId: Number(this.state.basementId),
+			waterSourceID: Number(this.state.waterSourceID),
+			propertyTypeId: Number(this.state.propertyTypeId),
+			lotDimensionWidth: Number(this.state.lotDimensionWidth),
+			storeys: Number(this.state.storeys),
+			rentalListingYN: this.state.rentalListingYN,
+			yearRoofInstalled: Number(this.state.yearRoofInstalled),
+			parkingSpaces: Number(this.state.parkingSpaces),
+			ac: this.state.ac,
+			garageId: Number(this.state.garageId),
+			dishWasher: this.state.dishWasher,
+			garage: this.state.garage,
+			noOfBedrooms: Number(this.state.noOfBedrooms),
+			playroom: this.state.playroom,
+			bar: this.state.bar,
+			primaryHeatingFuelId: Number(this.state.primaryHeatingFuelId),
+			internet: this.state.internet,
+			buildingTypeId: Number(this.state.buildingTypeId),
+			amenites: this.state.amenites,
+			lotTotalArea: Number(this.state.lotTotalArea),
+			gym: this.state.gym,
+			yearFurnaceBuilt: Number(this.state.yearFurnaceBuilt),
+			areaTypeId: Number(this.state.areaTypeId),
+			condoFee: Number(this.state.condoFee),
 		};
+		const {
+			noOfBathrooms,
+			basementId,
+			waterSourceID,
+			propertyTypeId,
+			storeys,
+			garageId,
+			noOfBedrooms,
+			primaryHeatingFuelId,
+			buildingTypeId,
+			areaTypeId,
+			propertyType,
+			parkingSpace,
+			bedroomCount,
+			bathroomCount,
+			basementType,
+			garageType,
+			primaryHeatingFuel,
+			waterSource,
+			storeysCount,
+			areaType,
+			buildingType,
+		} = this.state;
 
-		// this.propertyPlanStateHandler ();
-		console.log(dataForm3);
-		if (this.state.images.length !== 0 && this.state.images.length >= 5) {
-			this.props.form3DataHandler(dataForm3);
-		} else {
-			console.log('error picture must be 5 or more');
-			alert('Property Images Must be 5 or more');
+		if (propertyType && propertyType.length && !propertyTypeId) {
+			this.setState({
+				propertyTypeId: propertyType[0].id,
+			});
 		}
+		if (parkingSpace && parkingSpace.length && !noOfBedrooms) {
+			this.setState({
+				noOfBedrooms: parkingSpace[0].id,
+			});
+		}
+		if (bedroomCount && bedroomCount.length && !bedroomCount) {
+			this.setState({
+				propertyTypeId: bedroomCount[0].id,
+			});
+		}
+		if (bathroomCount && bathroomCount.length && !noOfBathrooms) {
+			this.setState({
+				noOfBathrooms: bathroomCount[0].id,
+			});
+		}
+		if (basementType && basementType.length && !basementId) {
+			this.setState({
+				basementId: basementType[0].id,
+			});
+		}
+		if (garageType && garageType.length && !garageId) {
+			this.setState({
+				garageId: garageType[0].id,
+			});
+		}
+		if (
+			primaryHeatingFuel &&
+			primaryHeatingFuel.length &&
+			!primaryHeatingFuelId
+		) {
+			this.setState({
+				primaryHeatingFuelId: primaryHeatingFuel[0].id,
+			});
+		}
+		if (waterSource && waterSource.length && !waterSourceID) {
+			this.setState({
+				waterSourceID: waterSource[0].id,
+			});
+		}
+		if (storeysCount && storeysCount.length && !storeys) {
+			this.setState({
+				storeys: storeysCount[0].id,
+			});
+		}
+		if (areaType && areaType.length && !areaTypeId) {
+			this.setState({
+				areaTypeId: areaType[0].id,
+			});
+		}
+		if (buildingType && buildingType.length && !buildingTypeId) {
+			this.setState({
+				buildingTypeId: buildingType[0].id,
+			});
+		}
+		this.props.form3DataHandler(dataform3);
 	};
+
 	render() {
 		const {
-			address,
-			city,
-			imagePreview,
-			googleMapKey,
-			states,
-			cities,
-			state,
-			countries,
-			country,
+			yearBuilt,
+			disposal,
+			finishedSqftArea,
+			lotDimensionLength,
+			noOfBathrooms,
+			basementId,
+			waterSourceID,
+			propertyTypeId,
+			lotDimensionWidth,
+			storeys,
+			rentalListingYN,
+			yearRoofInstalled,
+			parkingSpaces,
+			ac,
+			garageId,
+			dishWasher,
+			garage,
+			noOfBedrooms,
+			playroom,
+			primaryHeatingFuelId,
+			internet,
+			buildingTypeId,
+			gym,
+			yearFurnaceBuilt,
+			areaTypeId,
+			lotTotalArea,
+			propertyType,
+			parkingSpace,
+			bedroomCount,
+			bathroomCount,
+			basementType,
+			garageType,
+			primaryHeatingFuel,
+			waterSource,
+			storeysCount,
+			areaType,
+			buildingType,
+			condoFee,
 		} = this.state;
-		const files = this.state.files.map((file) => (
-			<li key={file.name}>
-				{file.name} - {file.size} bytes
-			</li>
-		));
 
 		return (
 			<React.Fragment>
@@ -220,173 +367,562 @@ class form3 extends Component {
 								</Nav>
 							</div>
 						</div>
-						<div className='row'>
-							<div className='col-md-2'>
-								<div className='form-group'>
-									<select
-										style={{ borderRadius: '0px' }}
-										className='custom-select'
-										placeholder='City'
-										name='state'
-										value={state}
-										onChange={this.onChange}
-									>
-										<option>Select Province</option>
-										{states && states.length
-											? states.map((province, idx) => (
-													<option key={idx} value={province.name}>
-														{' '}
-														{province.name}
-													</option>
-											  ))
-											: ''}
-									</select>
-								</div>
-							</div>
-							<div className='col-md-2'>
-								<div className='form-group'>
-									<select
-										style={{ borderRadius: '0px' }}
-										className='custom-select'
-										placeholder='Prov/State'
-										name='city'
-										required
-										value={city}
-										onChange={this.onChange}
-									>
-										<option>Select City</option>
-										{cities && cities.length
-											? cities.map((city, idx) => (
-													<option key={idx} value={city.name}>
-														{' '}
-														{city.name}
-													</option>
-											  ))
-											: ''}
-									</select>
-								</div>
-							</div>
-							<div className='col-md-8'>
-								<div className='form-group'>
-									<input
-										type='text'
-										style={{ width: '88%' }}
-										placeholder='Enter an address'
-										className='input-feilds-property'
-										name='address'
-										value={address}
-										onChange={this.onChange}
-									/>
-									<button className='btn btn-primary form-three-search'>
-										Search
-									</button>
-								</div>
-							</div>
 
-							<div
-								className='col-md-12'
-								style={{ height: '300px', width: '100%' }}
-							>
-								<GoogleMapReact
-									bootstrapURLKeys={{ key: googleMapKey }}
-									defaultCenter={this.props.center}
-									defaultZoom={this.props.zoom}
+						<div className='row border-property'>
+							<div className='col-md-4'>
+								<h6 className='titles-property'>*Property type</h6>
+								<select
+									className='input-feilds-property'
+									name='propertyTypeId'
+									onChange={this.onChange}
+									value={propertyTypeId}
+									required
 								>
-									<AnyReactComponent
-										lat={59.955413}
-										lng={30.337844}
-										text='My Marker'
-									/>
-								</GoogleMapReact>
+									{propertyType && propertyType.length
+										? propertyType.map((propertyTypeId, idx) => (
+												<option key={idx} value={propertyTypeId.id}>
+													{' '}
+													{propertyTypeId.value}
+												</option>
+										  ))
+										: ''}
+								</select>
+							</div>
+							<div className='col-md-4'>
+								<h6 className='titles-property' required>
+									Rental listing
+								</h6>
+								<select
+									className='input-feilds-property'
+									name='rentalListingYN'
+									onChange={this.onChange}
+									value={rentalListingYN}
+								>
+									<option value='No'>No </option>
+								</select>
 							</div>
 						</div>
-						<div className='row border-property'>
-							<h1
-								className='col-md-6 titles-property'
-								style={{ fontFamily: 'light', marginTop: '50px' }}
-							>
-								Property photos
-							</h1>
-							<div className='col-md-6' style={{ textAlign: 'right' }}>
-								<label
-									className='btn btn-lg btn-primary'
-									htmlFor='pictures'
-									style={{
-										marginTop: '15px',
-										backgroundColor: '#00B0E9',
-										borderRadius: '0px',
-										border: 'none',
-									}}
-								>
-									Upload images
-								</label>
+						{this.state.propertyTypeId === '2' ? (
+							<div className='row border-property'>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Bedrooms</h6>
+									<select
+										className='input-feilds-property'
+										name='noOfBedrooms'
+										onChange={this.onChange}
+										value={noOfBedrooms}
+										required
+									>
+										{bedroomCount && bedroomCount.length
+											? bedroomCount.map((noOfBedrooms, idx) => (
+													<option key={idx} value={noOfBedrooms.id}>
+														{' '}
+														{noOfBedrooms.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Bathrooms</h6>
+									<select
+										className='input-feilds-property'
+										name='noOfBathrooms'
+										onChange={this.onChange}
+										value={noOfBathrooms}
+										required
+									>
+										{bathroomCount && bathroomCount.length
+											? bathroomCount.map((noOfBathrooms, idx) => (
+													<option key={idx} value={noOfBathrooms.id}>
+														{' '}
+														{noOfBathrooms.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>*Finishes square feet</h6>
+									<input
+										className='input-feilds-property'
+										name='finishedSqftArea'
+										onChange={this.onChange}
+										value={finishedSqftArea}
+										required
+									/>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Year built</h6>
+									<input
+										className='input-feilds-property'
+										name='yearBuilt'
+										onChange={this.onChange}
+										value={yearBuilt}
+										type='number'
+										required
+									/>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Parking spaces</h6>
+									<select
+										className='input-feilds-property'
+										name='parkingSpaces'
+										onChange={this.onChange}
+										value={parkingSpaces}
+										required
+									>
+										{parkingSpace && parkingSpace.length
+											? parkingSpace.map((parkingSpaces, idx) => (
+													<option key={idx} value={parkingSpaces.value}>
+														{' '}
+														{parkingSpaces.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Condo fees (/month)</h6>
+									<input
+										className='input-feilds-property'
+										name='condoFee'
+										value={condoFee}
+										type='text'
+										onChange={this.onChange}
+										required
+									/>
+								</div>
 							</div>
-							<h6 className='col-md-12 text-danger titles-property'>
-								WARNING: Any images with HouseUp.ca watermarks are a violation
-								of copyright. If these images are uploaded your listing will be
-								removed and your account may be suspended.
-							</h6>
-							<div className='col-12'>
-								<Dropzone onDrop={this.onDrop} className='drop-zone'>
-									{({ getRootProps, getInputProps }) => (
-										<section className='container drop-zone'>
-											<aside>
-												{imagePreview && imagePreview.length
-													? imagePreview.map((data, index) => (
-															<img
-																key={index}
-																id='data'
-																src={
-																	data
-																		? data
-																		: require('../../../assets/images/ic_profile_placeholder.png')
-																}
-																alt=''
-																style={{ height: '98px' }}
-															/>
+						) : (
+							<div className='row border-property'>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Building type</h6>
+									<select
+										className='input-feilds-property'
+										name='buildingTypeId'
+										onChange={this.onChange}
+										value={buildingTypeId}
+										required
+									>
+										{buildingType && buildingType.length
+											? buildingType.map((buildingTypeId, idx) => (
+													<option key={idx} value={buildingTypeId.id}>
+														{' '}
+														{buildingTypeId.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Bedrooms</h6>
+									<select
+										className='input-feilds-property'
+										name='noOfBedrooms'
+										onChange={this.onChange}
+										value={noOfBedrooms}
+										required
+									>
+										{bedroomCount && bedroomCount.length
+											? bedroomCount.map((noOfBedrooms, idx) => (
+													<option key={idx} value={noOfBedrooms.id}>
+														{' '}
+														{noOfBedrooms.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Bathrooms</h6>
+									<select
+										className='input-feilds-property'
+										name='noOfBathrooms'
+										onChange={this.onChange}
+										value={noOfBathrooms}
+										required
+									>
+										{bathroomCount && bathroomCount.length
+											? bathroomCount.map((noOfBathrooms, idx) => (
+													<option key={idx} value={noOfBathrooms.id}>
+														{' '}
+														{noOfBathrooms.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>*Finishes square feet</h6>
+									<input
+										className='input-feilds-property'
+										name='finishedSqftArea'
+										onChange={this.onChange}
+										value={finishedSqftArea}
+										required
+									/>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Lot dimensions (feet)</h6>
+									<input
+										className='multiply-input'
+										name='lotDimensionLength'
+										value={lotDimensionLength}
+										onChange={this.onChange}
+										required
+									/>
+									<span className='multiply'>x</span>
+									<input
+										className='multiply-input'
+										name='lotDimensionWidth'
+										value={lotDimensionWidth}
+										onChange={this.onChange}
+										required
+									/>
+								</div>
+								<div className='col-md-2'>
+									<h6 className='titles-property'>Lot area</h6>
+									<input
+										className='input-feilds-property'
+										name='lotTotalArea'
+										value={
+											lotTotalArea === ''
+												? this.setState({
+														lotTotalArea:
+															this.state.lotDimensionLength *
+															this.state.lotDimensionWidth,
+												  })
+												: lotTotalArea
+										}
+										onChange={this.onChange}
+									/>
+								</div>
+								<div className='col-md-2'>
+									<h6 className='titles-property'>* Sqft/Acres</h6>
+									<select
+										className='input-feilds-property'
+										name='areaTypeId'
+										value={areaTypeId}
+										onChange={this.onChange}
+										required
+									>
+										{areaType && areaType.length
+											? areaType.map((areaTypeId, idx) => (
+													<option key={idx} value={areaTypeId.id}>
+														{' '}
+														{areaTypeId.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Year built</h6>
+									<input
+										className='input-feilds-property'
+										type='number'
+										name='yearBuilt'
+										value={yearBuilt}
+										onChange={this.onChange}
+										required
+									/>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Basement</h6>
+									<select
+										className='input-feilds-property'
+										name='basementId'
+										value={basementId}
+										onChange={this.onChange}
+										required
+									>
+										{basementType && basementType.length
+											? basementType.map((basementId, idx) => (
+													<option key={idx} value={basementId.id}>
+														{' '}
+														{basementId.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-4'>
+									<h6 className='titles-property'>Garage</h6>
+									<select
+										className='input-feilds-property'
+										name='garageId'
+										value={garageId}
+										onChange={this.onChange}
+										required
+									>
+										{garageType && garageType.length
+											? garageType.map((garageId, idx) => (
+													<option key={idx} value={garageId.id}>
+														{' '}
+														{garageId.value}
+													</option>
+											  ))
+											: ''}
+									</select>
+								</div>
+								<div className='col-md-12'>
+									<Link
+										to='#'
+										className='more-options'
+										onClick={this.moreOptionToggle}
+									>
+										More Options
+									</Link>
+								</div>
+								{this.state.moreInfo ? (
+									<>
+										<div className='col-md-4'>
+											<h6 className='titles-property'>Primary heating fuel</h6>
+											<select
+												className='input-feilds-property'
+												name='primaryHeatingFuelId'
+												required
+												value={primaryHeatingFuelId}
+												onChange={this.onChange}
+											>
+												{primaryHeatingFuel && primaryHeatingFuel.length
+													? primaryHeatingFuel.map(
+															(primaryHeatingFuelId, idx) => (
+																<option
+																	key={idx}
+																	value={primaryHeatingFuelId.id}
+																>
+																	{' '}
+																	{primaryHeatingFuelId.value}
+																</option>
+															)
+													  )
+													: ''}
+											</select>
+										</div>
+										<div className='col-md-4'>
+											<h6 className='titles-property'>
+												Year furnace installed
+											</h6>
+											<input
+												className='input-feilds-property'
+												type='number'
+												required
+												name='yearFurnaceBuilt'
+												value={yearFurnaceBuilt}
+												onChange={this.onChange}
+											/>
+										</div>
+										<div className='col-md-4'>
+											<h6 className='titles-property'>Year roof installed</h6>
+											<input
+												className='input-feilds-property'
+												type='number'
+												required
+												name='yearRoofInstalled'
+												value={yearRoofInstalled}
+												onChange={this.onChange}
+											/>
+										</div>
+										<div className='col-md-6'>
+											<h6 className='titles-property'>Storeys</h6>
+											<select
+												className='input-feilds-property'
+												name='storeys'
+												value={storeys}
+												onChange={this.onChange}
+												required
+											>
+												{storeysCount && storeysCount.length
+													? storeysCount.map((storeys, idx) => (
+															<option key={idx} value={storeys.id}>
+																{' '}
+																{storeys.value}
+															</option>
 													  ))
 													: ''}
-												<ul>{files}</ul>
-											</aside>
-											<div
-												{...getRootProps({
-													className: 'dropzone , drop-zone-inner',
-												})}
+											</select>
+										</div>
+										<div className='col-md-6'>
+											<h6 className='titles-property'>Water source</h6>
+											<select
+												className='input-feilds-property'
+												name='waterSourceID'
+												value={waterSourceID}
+												onChange={this.onChange}
+												required
 											>
+												{waterSource && waterSource.length
+													? waterSource.map((waterSourceID, idx) => (
+															<option key={idx} value={waterSourceID.id}>
+																{' '}
+																{waterSourceID.value}
+															</option>
+													  ))
+													: ''}
+											</select>
+										</div>
+									</>
+								) : (
+									''
+								)}
+							</div>
+						)}
+						<div>
+							<h3
+								style={{
+									color: '#000000',
+									fontFamily: 'light',
+									fontSize: '32px',
+								}}
+							>
+								Amenities
+							</h3>
+							<div className='row mt-3 mt-md-4'>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
 												<input
-													type='file'
-													{...getInputProps()}
-													id='pictures'
-													name='images'
+													type='checkbox'
+													name='internet'
+													value={internet}
 													onChange={this.onChange}
 												/>
-												<p>
-													Drag 'n' drop some files here, or click to select
-													files
-												</p>
-											</div>
-										</section>
-									)}
-								</Dropzone>
-
-								<h6
-									className='titles-property'
-									style={{ color: '#8E8E93', marginTop: '40px' }}
-								>
-									Upload a maximum of 25 photos. Click on a picture to select a
-									cover photo, otherwise the first picture will be used.
-								</h6>
+												<span className='fa fa-wifi' /> Internet
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='garage'
+													value={garage}
+													onChange={this.onChange}
+												/>
+												<span className='fa fa-car' /> Garage
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='ac'
+													value={ac}
+													onChange={this.onChange}
+												/>
+												<span className='fa fa-sun-o' /> Air Conditioning
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='dishWasher'
+													value={dishWasher}
+													onChange={this.onChange}
+												/>
+												<span className='fa fa-bullseye' /> Dishwasher
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='disposal'
+													value={disposal}
+													onChange={this.onChange}
+												/>
+												<span className='fa fa-recycle' /> Disposal
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='balcony'
+													onClick={this.onChange}
+												/>
+												<span className='fa fa-clone' /> Balcony
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='gym'
+													value={gym}
+													onChange={this.onChange}
+												/>
+												<span className='fa fa-futbol-o' /> Gym
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='playroom'
+													value={playroom}
+													onChange={this.onChange}
+												/>
+												<span className='fa fa-smile-o' /> Playroom
+											</label>
+										</div>
+									</div>
+								</div>
+								<div className='col-sm-6 col-md-4'>
+									<div className='form-group'>
+										<div className='checkbox custom-checkbox'>
+											<label>
+												<input
+													type='checkbox'
+													name='bar'
+													onChange={this.onChange}
+												/>
+												<span className='fa fa-glass' /> Bar
+											</label>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className='row'>
 							<div className='col-md-6'>
 								<div className='btn-div-prev'>
 									<button
-										type='submit'
 										className='btn btn-lg btn-primary btn-property'
 										onClick={() => this.props.formShowHandler(1)}
 									>
-										Prevsious
+										Back
 									</button>
 								</div>
 							</div>
@@ -416,16 +952,4 @@ class form3 extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		page: state.page,
-	};
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		onGetCountries: () => dispatch(actions.GetCountries()),
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(form3);
+export default form3;
