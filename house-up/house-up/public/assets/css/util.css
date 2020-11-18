@@ -3097,9 +3097,9 @@ img.search {
 	bottom: 10px !important;
 }
 
-.pxp-props-carousel-right-container .alice-carousel .alice-carousel__stage-item {
-	width: 213px !important;
-}
+/* .pxp-props-carousel-right-container .alice-carousel .alice-carousel__stage-item {
+	width: 213px;
+} */
 
 .properties-search-icon {
 	position: absolute;
