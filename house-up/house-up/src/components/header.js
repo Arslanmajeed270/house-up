@@ -113,7 +113,11 @@ class header extends Component {
                 </Link>
               </div>
               <div className="col-2 col-md-8">
-                <div className="flex-center-nav pr-8">
+                <div
+                  className={`flex-center-nav ${
+                    animateHeader ? 'pr-8 veTop' : ''
+                  }`}
+                >
                   <ul
                     className={`pxp-nav list-inline for-pad ${
                       showNav ? 'nav-active' : ''
@@ -134,6 +138,24 @@ class header extends Component {
                     <li className="list-inline-item">
                       <Link to="/blogs">Resources</Link>
                     </li>
+                    {animateHeader ? (
+                      ''
+                    ) : (
+                      <li className="list-inline-item">
+                        <div className="form-group has-search mb-0">
+                          {/* <span className="fa fa-search form-control-feedback" /> */}
+                          <input
+                            type="text"
+                            className="form-control w-100"
+                            placeholder="Search Location"
+                          />
+                          <img
+                            src={require('../assets/images/ic_search.svg')}
+                            alt=""
+                          />
+                        </div>
+                      </li>
+                    )}
                     <li className="list-inline-item pxp-has-btns">
                       <div className="pxp-user-btns">
                         <Link
@@ -151,22 +173,6 @@ class header extends Component {
                       </div>
                     </li>
                   </ul>
-                  {animateHeader ? (
-                    ''
-                  ) : (
-                    <div className="form-group has-search mb-0">
-                      {/* <span className="fa fa-search form-control-feedback" /> */}
-                      <input
-                        type="text"
-                        className="form-control w-100"
-                        placeholder="Search Location"
-                      />
-                      <img
-                        src={require('../assets/images/ic_search.svg')}
-                        alt=""
-                      />
-                    </div>
-                  )}
                 </div>
               </div>
               <div className="col-5 col-md-1 text-right">

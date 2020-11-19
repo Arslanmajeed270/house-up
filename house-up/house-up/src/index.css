@@ -318,7 +318,7 @@ top:136px;
 
 .add-property-conatiner{
   margin-top: 70px;
-    padding: 70px 180px;
+    padding: 50px 180px 70px;
 }
 
 .input-feilds-property{
@@ -326,6 +326,7 @@ top:136px;
   padding: 5px 10px;
   height: 34px;
   border: 1px solid #CCCCCC;
+  font-size: 14px;
 }
 .text-feilds-property{
   width: 100%;
@@ -343,7 +344,7 @@ top:136px;
   margin: 10px 0px;
 }
 .border-property{
-    padding-bottom: 40px;
+    padding-bottom: 25px;
 }
 .btn-div{
   text-align: right;
@@ -574,7 +575,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .pxp-nav > li > a {
 	font-size:14px;
-  font-family:Light, sans-serif;
+  font-family:Condensed, sans-serif;
   color: #fff;
 }
 
@@ -809,6 +810,9 @@ h6.titles-property {
   font-family:condensed, sans-serif;
   color:#000000;
   font-size:16px;
+}
+h6.text-danger.titles-property {
+  font-size:12px;
 }
 h1.titles-property {
   font-family:condensed, sans-serif;
