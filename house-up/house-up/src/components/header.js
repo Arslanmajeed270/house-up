@@ -62,7 +62,6 @@ class header extends Component {
 	render() {
 		const animateHeader = this.props.animateHeader;
 		const { user, dropDownShow, currentLocation, showNav } = this.state;
-		console.log('user data', user);
 		return (
 			<React.Fragment>
 				<div
@@ -119,7 +118,11 @@ class header extends Component {
 								</Link>
 							</div>
 							<div className='col-2 col-md-8'>
-								<div className='flex-center-nav pr-8'>
+								<div
+									className={`flex-center-nav ${
+										animateHeader ? 'pr-8 veTop' : ''
+									}`}
+								>
 									<ul
 										className={`pxp-nav list-inline for-pad ${
 											showNav ? 'nav-active' : ''

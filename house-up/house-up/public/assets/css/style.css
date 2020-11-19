@@ -233,7 +233,10 @@ textarea.form-control {
     padding-top: 10px;
 }
 .pb-10 {
-    padding-bottom: 10x;
+    padding-bottom: 10px;
+}
+.mb-10 {
+    margin-bottom: 10px;
 }
 .pt-200 {
     padding-top: 200px;
@@ -1620,7 +1623,7 @@ h1.pxp-page-header {
     left: 20px;
     right: 20px;
     bottom: 0;
-    padding: 20px;
+    padding: 15px;
     z-index: 2;
     overflow: hidden;
     box-shadow: 0px 15px 30px rgba(0,0,0,0.10);
@@ -4913,6 +4916,9 @@ fieldset[disabled] .checkbox.custom-checkbox input:checked+span {
         left: 30px;
         top: 18px;
     }
+    .add-property-conatiner {
+        padding: 50px 70px 70px !important;
+    }
     .pxp-header-nav-trigger.pxp-active {
         position: fixed;
         top: 30px;
@@ -5558,6 +5564,10 @@ fieldset[disabled] .checkbox.custom-checkbox input:checked+span {
     .pxp-nav > li {
         padding-left: 15px;
     }
+    
+    .add-property-conatiner {
+        padding: 30px 30px 100px !important;
+    }
     .pxp-single-property-section > .row > div:nth-last-child(2) > .pxp-sp-key-details-item {
         padding-bottom: 10px;
         margin-bottom: 10px;
@@ -5722,6 +5732,10 @@ main{
 .flex-center-nav{
     display: flex;
     justify-content: flex-end;
+
+}
+
+.veTop {
     position: relative;
     top: -20px;
 }
@@ -6091,7 +6105,7 @@ i.grey{
 .suggested-p p {
     margin-bottom: 0;
     color: #000;
-    font-size: 16px;
+    font-size: 14px;
     font-family: "Condensed", sans-serif;
 }
 
@@ -6492,7 +6506,7 @@ i.grey{
 .pairing-industry {
     color: #393939;
     font-family: 'Condensed', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 10px;
 }
 
@@ -6514,6 +6528,9 @@ i.grey{
     border-bottom: 1px solid #00B0E9 !important;
     background:none;
     color: #393939 !important;
+    font-size: 18px;
+    position: relative;
+    top: -2px;
 }
 
 .btn-div .btn-property {
@@ -6615,7 +6632,7 @@ i.grey{
 
 h1.titles-property {
     font-family: light;
-    font-size: 40px !important;
+    font-size: 38px !important;
 }
 
 .add-property-conatiner .nav-item .nav-link {
@@ -6632,18 +6649,21 @@ h1.titles-property {
 
 p.titles-property {
     color: #393939;
-    font-size: 18px;
+    font-size: 16px;
     font-family: Condensed;
 }
 
 span.title-property {
-    margin-top: 5px;
+    margin: 5px 0px 15px;
     display: inline-block;
+    font-size: 12px;
 }
 
-.btn-div .btn-property {
-    font-size: 15px !important;
+.btn-div .btn-property, .btn-div-prev .btn-property {
+    font-size: 14px !important;
     height: 33px;
+    line-height: 20px;
+    min-width: 120px;
 }
 
 .checkbox.custom-checkbox {
