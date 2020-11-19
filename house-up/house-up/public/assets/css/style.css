@@ -6779,16 +6779,23 @@ span.title-property {
     padding-right: 0;
 }
 
-.logo-modal img {
-    width: 30px;
-    height: 60px;
-    line-height: 60px;
+.logo-modal {
+    text-align: center;
+    margin: 0px auto;
+    background: transparent;
+    width: auto;
 }
 
-.user {
+.logo-modal img {
+    /* width: 30px;
+    height: 60px;
+    line-height: 60px; */
+}
+
+/* .user {
     font-size: 18px !important;
     padding: 8px 0px 0px 0px !important;
-}
+} */
  
 .visa-card-selection {
     display: flex;

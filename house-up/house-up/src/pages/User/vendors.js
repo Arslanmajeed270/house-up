@@ -66,57 +66,56 @@ class vendor extends Component {
                   backgroundPosition: '50% 50%',
                 }}
               />
-              {/* <div className='pxp-agents-hero-search-container'>
-								<div className='container'>
-									<div className='pxp-agents-hero-search'>
-										<h2 className='pxp-section-h2'>Find an Professional</h2>
-										<div className='pxp-agents-hero-search-form mt-3 mt-md-4'>
-											<div className='row'>
-												<div className='col-sm-12 col-md-4'>
-													<div className='form-group'>
-														<label htmlFor='pxp-agents-search-location'>
-															Location
-														</label>
-														<input
-															type='text'
-															className='form-control'
-															id='pxp-agents-search-location'
-															placeholder='Neighborhood/City/Zip'
-														/>
-													</div>
-												</div>
-												<div className='col-sm-12 col-md-4'>
-													<div className='form-group'>
-														<label htmlFor='pxp-agents-search-name'>Name</label>
-														<input
-															type='text'
-															className='form-control'
-															id='pxp-agents-search-name'
-															placeholder='Agent name'
-														/>
-													</div>
-												</div>
-												<div className='col-sm-12 col-md-4'>
-													<div className='form-group'>
-														<label htmlFor='pxp-agents-search-service'>
-															Service Needed
-														</label>
-														<select
-															className='custom-select'
-															id='pxp-agents-search-service'
-														>
-															<option value={1}>Buying or selling</option>
-															<option value={2}>Buying a home</option>
-															<option value={3}>Selling a home</option>
-														</select>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						 */}
+              <div className="pxp-agents-hero-search-container">
+                <div className="container">
+                  <div className="pxp-agents-hero-search">
+                    <h2 className="pxp-section-h2">Find an Professional</h2>
+                    <div className="pxp-agents-hero-search-form mt-3 mt-md-4">
+                      <div className="row">
+                        <div className="col-sm-12 col-md-4">
+                          <div className="form-group">
+                            <label htmlFor="pxp-agents-search-location">
+                              Location
+                            </label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="pxp-agents-search-location"
+                              placeholder="Neighborhood/City/Zip"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-sm-12 col-md-4">
+                          <div className="form-group">
+                            <label htmlFor="pxp-agents-search-name">Name</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              id="pxp-agents-search-name"
+                              placeholder="Agent name"
+                            />
+                          </div>
+                        </div>
+                        <div className="col-sm-12 col-md-4">
+                          <div className="form-group">
+                            <label htmlFor="pxp-agents-search-service">
+                              Service Needed
+                            </label>
+                            <select
+                              className="custom-select"
+                              id="pxp-agents-search-service"
+                            >
+                              <option value={1}>Buying or selling</option>
+                              <option value={2}>Buying a home</option>
+                              <option value={3}>Selling a home</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="container">
               <div className="row mt-100">

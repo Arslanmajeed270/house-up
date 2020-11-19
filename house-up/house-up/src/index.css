@@ -114,7 +114,7 @@ body {
 
 .country-code{
   position: absolute !important;
-  bottom: 155px;
+  bottom: 159px;
   margin-left: 30px !important;
   color: #000 !important;
   margin-right: 4px;
@@ -122,8 +122,8 @@ body {
 .country-image-login-page
 {
   position: absolute !important;
-  bottom: 31px;
-  margin-left: 30px !important;
+  bottom: 36px;
+  margin-left: 32px !important;
   color: #000 !important;
 }
 .country-image-contact-page
@@ -135,7 +135,7 @@ top:136px;
 }
 .country-code-login-page{
   position: absolute !important;
-  bottom: 223.5px;
+  bottom: 228.5px;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
@@ -149,7 +149,7 @@ top:136px;
 }
 .country-code-user-page{
   position: absolute !important;
-  bottom: 118.5px;
+  bottom: 123.5px;
   margin-left: 30px !important;
   color: #000 !important;
   padding-left: 10px;
@@ -542,12 +542,12 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 .password-forgotPass{
   position: absolute;
   right: 25px;
-  bottom: 167px;
+  bottom: 162px !important;
 }
 .confirmPass-forgotPass{
   position: absolute;
     right: 25px;
-    bottom: 107px;
+    bottom: 100px !important;
 }
 .confirmPass-userSignup{
   position: absolute;
@@ -703,6 +703,15 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
 {
   width: 350px;
 }
+
+.modal-content .phone-number {
+      padding: .8rem 4rem !important;
+}
+
+.modal-content .form-control {
+      padding: .8rem .75rem !important;
+}
+
 /* .text-center{
   font-family: "Regular", sans-serif;
   color: #000;
@@ -793,10 +802,10 @@ h1.pxp-page-header, .pxp-blog-posts-carousel-1-caption-title, pxp-blog-post-bloc
   bottom:167px;
 }
 .country-code-forgotPass {
-  bottom:128px;
+  bottom:173px;
 }
 .country-code-forgot-page {
-  bottom:84.75px;
+  bottom:130.75px;
 }
 .pi-200{
   padding-left: 200px !important;
