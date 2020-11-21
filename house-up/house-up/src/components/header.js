@@ -55,6 +55,7 @@ class header extends Component {
 	render() {
 		const animateHeader = this.props.animateHeader;
 		const { user, dropDownShow, currentLocation } = this.state;
+		console.log('user data',user)
 		return (
 			<React.Fragment>
 				<div
@@ -196,13 +197,13 @@ class header extends Component {
 																Profile
 															</Link>
 														</li>
-														{user && user.userTypeId === 2 ? (
+														{user && user.userTypeId === 2 && !(user && user.packageSubscribed)  ? (
 															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={() =>
-																		this.props.modelHanlder('subscriptionPlan')
+																		this.props.modelHanlder('subscriptionPlan','upgradeBoth')
 																	}
-																	style={{ cursor: 'pointer' }}
+																	style={{ cursor: 'pointer'}}
 																>
 																	<img
 																		src={require('../assets/images/icons/ic_upgrade.svg')}
@@ -211,9 +212,33 @@ class header extends Component {
 																	upgrade
 																</div>
 															</li>
-														) : (
-															''
-														)}
+														) : 
+															(user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName === "Monthly") ? 
+															<li className='profile_header_dropdown_li'>
+																<div
+																	onClick={() =>
+																		this.props.modelHanlder('subscriptionPlan','annual')
+																	}
+																	style={{ cursor: 'pointer' }}
+																>
+																	<img
+																		src={require('../assets/images/icons/ic_upgrade.svg')}
+																		alt='upgradeIcon'
+																	/>
+																	{user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName}
+																</div>
+															</li>
+															:
+															(user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName === "Annual") ?
+															<li className='profile_header_dropdown_li'>
+																<div
+																	style={{ cursor: 'pointer' }}
+																>
+																	{user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName}
+																</div>
+															</li> 
+															: ""
+														 }
 														<li
 															onClick={() =>
 																this.props.onLogout(this.props.history)
@@ -244,6 +269,14 @@ class header extends Component {
 										/>
 									</Link>
 								)}
+								<Link style={{color:'black'}}
+								to={`/single-vendor-${
+									user && user.userId ? user.userId : ''
+								}`} >
+								{
+									user && user.firstName
+								}
+								</Link>
 							</div>
 						</div>
 					</div>

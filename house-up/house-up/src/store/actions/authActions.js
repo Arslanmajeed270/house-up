@@ -161,6 +161,74 @@ export const createVendor = (userData) => (dispatch) => {
 		.finally(() => dispatch(clearPageLoading()));
 };
 
+// UpdateVendor - updateVendor from the web page
+export const updateVendor = (userData , history) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+		.post(backendServerURL + '/updateUser', userData)
+		.then((res) => {
+			console.log('res',res)
+			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.removeItem('jwtToken');
+				setAuthToken(false);
+				dispatch(clearCurrentUser());
+				history.push(`/home`);
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
+// UpdateUser - updateUser from the web page
+export const updateUser = (userData , history) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+		.post(backendServerURL + '/updateUser', userData)
+		.then((res) => {
+			console.log('res',res)
+			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.removeItem('jwtToken');
+				setAuthToken(false);
+				dispatch(clearCurrentUser());
+				history.push(`/home`);
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
 // signupVendor - signupvendor from the web page
 export const generatePin = (data) => (dispatch) => {
 	dispatch(setPageLoading());

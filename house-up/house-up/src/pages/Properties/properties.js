@@ -87,7 +87,7 @@ class properties extends Component {
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
 
 		const data = {
-			state: '',
+			state: 'Ontario',
 			channel: 'web',
 			lat: 43.787083,
 			lng: -79.497369,
@@ -95,7 +95,7 @@ class properties extends Component {
 			limit: 10,
 			offset: 0,
 			loggedInuserId: userId,
-			country: '',
+			country: 'Canada',
 		};
 
 		this.props.onGetData(data);
@@ -127,7 +127,7 @@ class properties extends Component {
 		return (
 			<React.Fragment>
 				<div className='pxp-content pxp-full-height'>
-					<div className='row'>
+					<div className='row' style={{marginTop:'110px'}}>
 						{indexPageData &&
 						indexPageData.propertyCounts &&
 						indexPageData.propertyCounts.length

@@ -35,9 +35,6 @@ class selectLocation extends Component {
 		) {
 			changedState.countries = page.countries;
 			stateChanged = true;
-			let states = [];
-			states = cloneDeep(changedState.countries[0]);
-			changedState.states = states.states;
 		}
 
 		if (
@@ -93,7 +90,7 @@ class selectLocation extends Component {
 			}
 			this.setState({
 				[e.target.name]: e.target.value,
-				states: states.states,
+				states: states && states.states,
 			});
 		} else if (e.target.name === 'state') {
 			let ind = 0;
@@ -106,8 +103,9 @@ class selectLocation extends Component {
 			}
 			this.setState({
 				[e.target.name]: e.target.value,
-				cities: cities.cities,
+				cities: cities && cities.cities,
 			});
+			console.log('cities data',cities)
 		} else {
 			this.setState({ [e.target.name]: e.target.value });
 		}
@@ -119,7 +117,7 @@ class selectLocation extends Component {
 
 		if (user && user.userId) {
 			const userData = {
-				country: country,
+				country: country ,
 				city: city,
 				province: state,
 			};
@@ -139,6 +137,7 @@ class selectLocation extends Component {
 			countries,
 			country,
 		} = this.state;
+		console.log('checking this.state', this.state)
 
 
 		return (

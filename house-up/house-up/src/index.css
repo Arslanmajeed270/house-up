@@ -210,7 +210,29 @@ top:136px;
     overflow: hidden;
     position: absolute;
 }
+.input-file input[type="file"] , .input-file input[type="datetime-local"] {
+  font-size: 0;
+    border: 0;
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+}
 .input-file input[type="file"] + label,.input-file input[type="date"] + label {
+  border: none;
+  color: #878f97;
+  cursor: pointer;
+  display: block;
+  font-size: 14px;
+ /* font-weight: 500; */
+  outline: none;
+  padding: 10px 10px 8px;
+  position: relative;
+  transition: all 0.3s;
+  vertical-align: middle;
+}
+.input-file input[type="file"] + label,.input-file input[type="datetime-local"] + label {
   border: none;
   color: #878f97;
   cursor: pointer;
@@ -244,6 +266,16 @@ top:136px;
 }
 
 
+.input-file input[type="file"] + label.btn-2:before , .input-file input[type="datetime-local"] + label.btn-2:before {
+  color: #fff;
+  content: "\f382";
+  font-family: "Font Awesome 5 Pro";
+  font-size: 100%;
+  right: 20%;
+  position: absolute;
+  top: 0px;
+  transition: all 0.3s;
+}
 .input-file input[type="file"] + label.btn-2:before , .input-file input[type="date"] + label.btn-2:before {
   color: #fff;
   content: "\f382";
@@ -436,6 +468,15 @@ top:136px;
   padding: 0px 7px;
 }
 input[type="date"]::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url('./assets/images/icons/ic_calendar.svg') no-repeat;
+  width: 20px;
+  height: 20px;
+  border-width: thin;
+}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   color: rgba(0, 0, 0, 0);
   opacity: 1;
   display: block;

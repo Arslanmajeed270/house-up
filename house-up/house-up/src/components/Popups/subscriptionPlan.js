@@ -9,7 +9,8 @@ class subscriptionPlan extends Component {
 		constructor(props) {
 		super(props);
 		this.state = {
-			packageDetails: []
+			packageDetails: [],
+			message:''
 		};
 	}
 
@@ -32,11 +33,14 @@ class subscriptionPlan extends Component {
 
 
 	componentDidMount () {
+		this.setState({message : this.props.message})
 		this.props.onGetPackagePlan();
 	}
 
 	render() {
-		const { packageDetails } = this.state;
+		const { packageDetails , message } = this.state;
+		console.log(message)
+		console.log('package details', packageDetails)
 
 		return (
 			<React.Fragment>
@@ -47,7 +51,8 @@ class subscriptionPlan extends Component {
 					centered
 				>
 					<Modal.Body style={{ paddingTop: '0px' }}>
-						{
+						{ 
+							message === 'upgradeBoth' && 
 							packageDetails && packageDetails.length ?
 							packageDetails.map((data, index) =>
 								<Link key={index}>
@@ -82,7 +87,47 @@ class subscriptionPlan extends Component {
 									</div>
 							</Link>
 							)
+							: 
+							message === 'annual' && 
+							packageDetails && packageDetails.length ?
+							packageDetails.map((data, index) =>
+							 data && data.packageName === "Monthly" ?
+							  " " : 
+								<Link key={index}>
+									<div
+										className='subscription-card'
+										style={{ borderBottom: '1px solid #DEE2F2' }}
+									>
+										<div
+											className='dashboard-newsfeed-content'
+											onClick={() =>
+												this.props.modelHanlder('cardSelection' , `${data && data.packageId}`)
+											}
+										>
+											<Link to='#'>
+												<div className='row'>
+													<div className='col-md-3 logo-modal'>
+														<img
+															src={data && data.packageIconURL}
+															alt=''
+															style={{ height: '60px' }}
+														/>
+													</div>
+													<div className='col-md-9'>
+														<div class='user '>{data && data.packageName}</div>
+														<div class='user-description'>
+															{data && data.packageDetail}
+														</div>
+													</div>
+												</div>
+											</Link>
+										</div>
+									</div>
+							</Link>
+							)
+							  
 							: ""
+
 						}
 						</Modal.Body>
 				</Modal>

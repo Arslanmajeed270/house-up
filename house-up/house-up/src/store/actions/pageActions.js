@@ -403,6 +403,7 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/chargeCustomerUsingCreditCard', userData)
 		.then((res) => {
+			console.log('heelo ',res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
@@ -435,6 +436,7 @@ export const getPackagePlan = () => (dispatch) => {
 			channel:"web"
 	})
 		.then((res) => {
+			console.log('bye,',res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch(clearErrors());
 				dispatch({
