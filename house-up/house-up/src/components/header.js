@@ -201,9 +201,9 @@ class header extends Component {
 															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={() =>
-																		this.props.modelHanlder('subscriptionPlan')
+																		this.props.modelHanlder('subscriptionPlan','upgradeBoth')
 																	}
-																	style={{ cursor: 'pointer' }}
+																	style={{ cursor: 'pointer'}}
 																>
 																	<img
 																		src={require('../assets/images/icons/ic_upgrade.svg')}
@@ -217,7 +217,7 @@ class header extends Component {
 															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={() =>
-																		this.props.modelHanlder('subscriptionPlan')
+																		this.props.modelHanlder('subscriptionPlan','annual')
 																	}
 																	style={{ cursor: 'pointer' }}
 																>
@@ -230,7 +230,14 @@ class header extends Component {
 															</li>
 															:
 															(user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName === "Annual") ?
-															'' : ""
+															<li className='profile_header_dropdown_li'>
+																<div
+																	style={{ cursor: 'pointer' }}
+																>
+																	{user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName}
+																</div>
+															</li> 
+															: ""
 														 }
 														<li
 															onClick={() =>
@@ -262,6 +269,14 @@ class header extends Component {
 										/>
 									</Link>
 								)}
+								<Link style={{color:'black'}}
+								to={`/single-vendor-${
+									user && user.userId ? user.userId : ''
+								}`} >
+								{
+									user && user.firstName
+								}
+								</Link>
 							</div>
 						</div>
 					</div>

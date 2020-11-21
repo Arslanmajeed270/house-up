@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import cloneDeep from 'lodash/cloneDeep';
 import fileUpload from 'fuctbase64';
+import moment from 'moment';
+
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
@@ -52,6 +54,10 @@ class vendorSignup extends Component {
 			viewConfirmPass: false,
 			currentLocation: {},
 			unitOther: '',
+			user:{},
+			profileImageDefault:'',
+			businessSupportingDocumentDefault:'',
+			businessRegistrationDocumentDefault:''
 		};
 	}
 
@@ -72,6 +78,15 @@ class vendorSignup extends Component {
 		const auth = props.auth;
 		let stateChanged = false;
 		let changedState = {};
+
+		if (
+			auth &&
+			auth.user &&
+			JSON.stringify(state.user) !== JSON.stringify(auth.user)
+		) {
+			changedState.user = auth.user;
+			stateChanged = true;
+		}
 
 		if (
 			auth &&
@@ -135,9 +150,59 @@ class vendorSignup extends Component {
 	}
 
 	componentDidMount() {
+
+		const userData = cloneDeep(this.props.userData)
+
+		console.log('checking props data,', userData)
+		const date = userData && userData.businessStartDate.split('/')
+		const businessDate = date[2] + "-" + date[1] + "-" + date[0]
+		// console.log(moment(businessDate).format("YYYY-MM-DD")); 
+		// console.log('date',businessDate) 
+		this.setState({
+			profileImage: userData ? userData.profilePictureUrl : this.state.profileImage,
+			profileImageDefault : userData ? userData.profilePictureUrl : this.state.profileImageDefault,
+			firstName: userData ? userData.firstName : this.state.firstName,
+			lastName: userData ? userData.lastName : this.state.lastName,
+			userName: userData ? userData.userName : this.state.userName,
+			emailAddress: userData ? userData.emailAddress : this.state.emailAddress,
+			confirmPassword: this.state.confirmPassword,
+			password:  this.state.password,
+			professionId: userData ? userData.professionId : this.state.professionId,
+			businessSupportingDocument: userData ? userData.businessSupportingDocURL : this.state.businessSupportingDocURL,
+			businessSupportingDocumentDefault: userData ? userData.businessSupportingDocURL : this.state.businessSupportingDocURLDefault,
+			businessRegistrationDocumentDefault: userData ? userData.businessRegistrationDocURL : this.state.businessRegistrationDocURLDefault,
+			businessRegistrationDocument: userData ? userData.businessRegistrationDocURL : this.state.businessRegistrationDocURL,
+			keywordDescriptYourBusiness: userData ? userData.keywordsDescribeYourBusiness : this.state.keywordDescriptYourBusiness,
+			countryId: userData ? userData.countryId : this.state.countryId,
+			provinceId: userData ? userData.stateId : this.state.provinceId,
+			websiteLink: userData ? userData.websiteLink : this.state.websiteLink,
+			cityId: userData ? userData.cityId : this.state.cityId,
+			unit: userData ? userData.unit : this.state.unit,
+			businessName: userData ? userData.businessName : this.state.businessName,
+			qualification: userData ? userData.qualification : this.state.qualification,
+			zipCode: userData ? userData.zipCode : this.state.zipCode,
+			streetAddress: userData ? userData.streetAddress : this.state.streetAddress,
+			aboutBusiness: userData ? userData.aboutBusiness : this.state.aboutBusiness,
+			businessStartDate: userData ? moment(businessDate).format("YYYY-MM-DD") : this.state.businessStartDate,
+			unitOther: userData ? this.props.userData.unitOther : this.state.unitOther,
+		});
 		this.props.onGetCountries();
 		this.props.onGetProfessionDetailAPI();
 	}
+
+	limitWordHandler = (str) => {
+		console.log('string ',str)
+		const arrayString = str.split('');
+		let paragraph = '';
+		const limit = arrayString.length < 20 ? arrayString.length : 20;
+		for (let i = 0; i < limit; i++) {
+			paragraph += arrayString[i] + ' ';
+		}
+		if (arrayString.length >= 30) {
+			paragraph += '...';
+		}
+		return paragraph;
+	};
 
 	onChange = (e) => {
 		if (e.target.name === 'profileImage') {
@@ -148,7 +213,8 @@ class vendorSignup extends Component {
 					profileImage: data.base64,
 				});
 			});
-		} else if (e.target.name === 'businessSupportingDocument') {
+		} 
+		else if (e.target.name === 'businessSupportingDocument') {
 			let imagePreviewForSupport = e.target.files[0];
 			fileUpload(e).then((data) => {
 				this.setState({
@@ -194,6 +260,89 @@ class vendorSignup extends Component {
 			});
 		} else {
 			this.setState({ [e.target.name]: e.target.value });
+		}
+	};
+		updateProfile = (e) => {
+		e.preventDefault();
+		const {
+			profileImage,
+			firstName,
+			lastName,
+			confirmPassword,
+			password,
+			professionId,
+			businessSupportingDocument,
+			businessRegistrationDocument,
+			keywordDescriptYourBusiness,
+			provinceId,
+			cityId,
+			zipCode,
+			streetAddress,
+			businessName,
+			websiteLink,
+			qualification,
+			aboutBusiness,
+			businessStartDate,
+			businessRegistrationDocumentDefault,
+			businessSupportingDocumentDefault,
+			profileImageDefault,
+			user
+		} = this.state;
+		console.log('eelo',provinceId)
+		const city = cityId.split(',')[1];
+		const cId = cityId.split(',')[0];
+
+		const province = provinceId.split(',')[1];
+		const pId = provinceId.split(',')[0];
+		if (password !== confirmPassword) {
+			this.props.onErrorSet('Password not matched!');
+			return;
+		} else if (profileImage === '') {
+			this.props.onErrorSet('Profile Picture is Missing');
+			return;
+		} else if (!checkValidURL(websiteLink)) {
+			this.props.onErrorSet('Please Enter Valid URL!');
+			return;
+		}
+		else if (!checkDate(businessStartDate)) {
+			this.props.onErrorSet('Please Enter Valid Date Date Must Be In The Past!');
+			return;
+		}
+		 else {
+			const userData = {
+				userId:user && user.userId,
+				firstName: firstName,
+				lastName: lastName,
+				phoneNumber: user && user.msisdn,
+				address: streetAddress,
+				currencyId: 1,
+				aboutBusiness:aboutBusiness,
+				aboutYourSelf: aboutBusiness,
+				professionId: Number(professionId),
+				businessName: businessName,
+				websiteLink: websiteLink,
+				qualification: qualification,
+				businessStartDate: businessStartDate,
+				keywordsDescribeYourBusiness: keywordDescriptYourBusiness,
+				houseAppartmentSuiteNumber: "",
+				countryId: 39,
+				provinceId: Number(pId),
+				stateId: Number(pId),
+				cityId: Number(cId),
+				city: city,
+				state: province,
+				country: "Canada",
+				streetAddress: streetAddress,
+				streetAddress1: streetAddress,
+				postalCode: zipCode,
+				zipCode: zipCode,
+				businessRegistrationDocument: businessRegistrationDocument === businessRegistrationDocumentDefault ? "": businessRegistrationDocument,
+				businessSupportingDocument: businessSupportingDocument === businessSupportingDocumentDefault ? "" : businessSupportingDocument ,
+				profileImage: profileImage !== profileImageDefault ? "": profileImage,
+				userTypeId: 2
+			};
+			console.log(userData)
+			this.props.onUpdateVendor(userData , this.props.history);
 		}
 	};
 	onSubmit = (e) => {
@@ -277,7 +426,8 @@ class vendorSignup extends Component {
 				state: province,
 				city: city,
 			};
-			this.props.onCreateVendor(userData);
+			console.log('user data for vendor sign up', userData)
+			// this.props.onCreateVendor(userData);
 		}
 	};
 
@@ -354,10 +504,11 @@ class vendorSignup extends Component {
 								<label for='profileImage' className='profile-pic-professional'>
 									<img
 										id='imagePreviewVendor'
+										
 										src={
-											imagePreview
+													imagePreview
 												? imagePreview
-												: require('../../assets/images/ic_profile_placeholder.png')
+												: this.props.userData ? this.state.profileImage : require('../../assets/images/ic_profile_placeholder.png')
 										}
 										alt=''
 										style={{ height: '98px', borderRadius: '5px' }}
@@ -449,6 +600,7 @@ class vendorSignup extends Component {
 											onChange={this.onChange}
 											name='professionId'
 											value={professionId}
+											defaultValue={professionId}
 											required
 										>
 											<option value=''> Please select profession </option>
@@ -482,10 +634,9 @@ class vendorSignup extends Component {
 											required
 										/>
 										<label for='file' className='btn-2'>
-											{' '}
 											{imagePreviewForRegister && imagePreviewForRegister.name
 												? imagePreviewForRegister.name
-												: 'Business registration document'}
+												: this.props.userData ? this.limitWordHandler(this.state.businessRegistrationDocument) : 'Business registration document'}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
 													src={require('../../assets/images/icons/ic_upload.svg')}
@@ -595,7 +746,7 @@ class vendorSignup extends Component {
 											{' '}
 											{imagePreviewForSupport && imagePreviewForSupport.name
 												? imagePreviewForSupport.name
-												: 'Support document (optional)'}{' '}
+												: this.props.userData && this.state.businessSupportingDocument ? this.limitWordHandler(this.state.businessSupportingDocument) : 'Support document (optional)'}{' '}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
 													src={require('../../assets/images/icons/ic_upload.svg')}
@@ -652,6 +803,7 @@ class vendorSignup extends Component {
 													placeholder='City'
 													name='provinceId'
 													value={provinceId}
+													// defaultValue={provinceId}
 													onChange={this.onChange}
 												>
 													<option value=''> Province / state </option>
@@ -681,6 +833,7 @@ class vendorSignup extends Component {
 													name='cityId'
 													required
 													value={cityId}
+													// defaultValue={cityId}
 													onChange={this.onChange}
 												>
 													<option value=''> City </option>
@@ -801,9 +954,17 @@ class vendorSignup extends Component {
 							className='form-group'
 							style={{ paddingTop: '15px', height: '56px' }}
 						>
+							{
+								this.props.userData ?
+								<button className='pxp-agent-contact-modal-btn' onClick={this.updateProfile}>
+									Update Profile
+								</button>
+							: 
 							<button className='pxp-agent-contact-modal-btn' type='submit'>
 								Sign up
 							</button>
+							}
+							
 						</div>
 						{pageContent}
 					</form>
@@ -830,6 +991,8 @@ const mapDispatchToProps = (dispatch) => {
 		onCreateVendor: (userData) => dispatch(actions.createVendor(userData)),
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
+		onUpdateVendor: (userData , history) => dispatch(actions.updateVendor(userData , history)),
+			
 	};
 };
 

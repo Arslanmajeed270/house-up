@@ -25,12 +25,13 @@ class Routes extends React.Component {
 			<Router>
 				<Route exact path={'/'} component={Home} />
 				<Route exact path={'/index-:country&:state&:city'} component={Index} />
-				<Route exact path={'/home'} component={Home} />
+				<Route exact path={'/home'} component={() => <Home modelHanlder={this.props.modelHanlder}  />} />
 				<Route exact path={'/about'} component={About} />
 				<Route exact path={'/add-property'} component={AddProperty} />
 				<Route exact path={'/add-product'} component={AddProduct} />
 				<Route exact path={'/add-coupon'} component={AddCoupon} />
-				<Route exact path={'/single-vendor-:id'} component={SingleVendor} />
+				<Route exact path={'/single-vendor-:id'} 
+					component={(route) => <SingleVendor match={route.match} modelHanlder={this.props.modelHanlder} />} />
 				<Route exact path={'/blogs'} component={Blogs} />
 				<Route exact path={'/about'} component={About} />
 				<Route exact path={'/comming-soon'} component={ComingSoon} />

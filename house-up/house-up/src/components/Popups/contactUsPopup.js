@@ -206,10 +206,10 @@ class contacUsPopup extends Component {
 						</div>
 						<div className='form-group'>
 										<input
-											type='date'
+											type='datetime-local'
 											className='form-control'
 											id='calender'
-											placeholder='Business Start Date'
+											placeholder='Request Call Back'
 											name='meetingDate'
 											value={meetingDate}
 											onChange={this.onChange}

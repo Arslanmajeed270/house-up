@@ -62,7 +62,7 @@ class index extends Component {
 		} else if (model === 'emailSignin') {
 			this.setState({ phoneSignin: false, [model]: !this.state[model] });
 		} else if (model === 'subscriptionPlan') {
-			this.setState({ [model]: !this.state[model] });
+			this.setState({ [model]: !this.state[model] , message:data });
 		} else if (model === 'cardSelection') {
 			this.setState({
 				subscriptionPlan: false,
@@ -105,9 +105,10 @@ class index extends Component {
 				[model]: !this.state[model],
 			});
 		} else if (model === 'userSignupModel') {
-			this.setState({ optUserModel: false, [model]: !this.state[model] });
+			this.setState({ optUserModel: false, [model]: !this.state[model] , message: data });
 		} else if (model === 'vendorSignupModel') {
-			this.setState({ optUserModelVendor: false, [model]: !this.state[model] });
+			console.log('heelo',data)
+			this.setState({ optUserModelVendor: false, [model]: !this.state[model] , message: data });
 		} else if (model === 'congratulationModel') {
 			this.setState({
 				userSignupModel: false,
@@ -165,6 +166,7 @@ class index extends Component {
 						show={this.state.subscriptionPlan}
 						modelHanlder={this.modelHanlder}
 						closeCodelHanlder={this.closeCodelHanlder}
+						message = {this.state.message}
 					/>
 				)}
 				{this.state.cardSelection && (
@@ -265,17 +267,21 @@ class index extends Component {
 				{this.state.userSignupModel && (
 					<UserSignup
 						show={this.state.userSignupModel}
+						history={this.props.history}
 						closeCodelHanlder={this.closeCodelHanlder}
 						congratulationHandler={this.modelHanlder}
 						phNumber={this.state.phNumber}
+						userData={this.state.message}
 					/>
 				)}
 				{this.state.vendorSignupModel && (
 					<VendorSignup
 						show={this.state.vendorSignupModel}
+						history={this.props.history}
 						closeCodelHanlder={this.closeCodelHanlder}
 						congratulationHandler={this.modelHanlder}
 						phNumber={this.state.phNumber}
+						userData={this.state.message}
 					/>
 				)}
 				{this.state.congratulationModel && (
@@ -296,7 +302,9 @@ class index extends Component {
 					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>
-				<Routes />
+				<Routes 
+					modelHanlder={this.modelHanlder}
+				/>
 				{hideFooter === true ? ' ' : <Footer />}
 			</React.Fragment>
 		);

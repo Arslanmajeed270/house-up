@@ -7,6 +7,8 @@ export {
 	generatePin,
 	getUserDeatils,
 	resetUserPassword,
+	updateVendor,
+	updateUser
 } from './authActions';
 
 export {

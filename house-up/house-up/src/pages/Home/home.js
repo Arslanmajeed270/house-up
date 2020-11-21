@@ -198,7 +198,11 @@ class home extends Component {
 										</div>
 									</div>
 								</Link>
-								<Link to='/professionals' className='pxp-services-item'>
+								<Link to="#" className='pxp-services-item'>
+									<div 
+									onClick={() =>
+									this.props.modelHanlder('phoneNumberVendorModel')
+								}>
 									<div className='pxp-services-item-fig'>
 										<img src='assets/images/service-icon-2.svg' alt='...' />
 									</div>
@@ -210,6 +214,8 @@ class home extends Component {
 											Register Your Local Business. <br />
 											HouseUp reviews all business <br />
 											before approval. 
+									
+									</div>
 										</div>
 									</div>
 								</Link>

@@ -132,6 +132,7 @@ class singleVendor extends Component {
 			singleVendorsPropertiesData,
 			commentText,
 			hideContact,
+			user
 		} = this.state;
 
 		return (
@@ -202,7 +203,23 @@ class singleVendor extends Component {
 										) : null}
 									</div>
 								</div>
+							
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
+								{
+									user && user.userTypeId === 2 ?
+									(user && user.userId === singleVendorData.userId ?
+									<div>
+										<button className="btn btn-primary" onClick={() =>this.props.modelHanlder('vendorSignupModel', user )} >edit Profile</button>
+									</div>
+									: "")
+									:
+									(user && user.userId === singleVendorData.userId ?
+									<div>
+										<button className="btn btn-primary" onClick={() =>this.props.modelHanlder('userSignupModel', user)} >edit Profile</button>
+									</div>
+									: "")
+								}
+								
 									<div
 										className={
 											singleVendorData && singleVendorData.userTypeId === 1
@@ -275,14 +292,20 @@ class singleVendor extends Component {
 													{singleVendorData && singleVendorData.userStatusDesc}
 												</p>
 											</div>
-											<div className='col-md-6'>
-												<p>Package</p>
-											</div>
-											<div className='col-md-6'>
-												<p>
-													{singleVendorData && singleVendorData.packageSubscribed && singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName}
-												</p>
-											</div>
+											{singleVendorData && singleVendorData.packageSubscribed ?
+											<>
+												<div className='col-md-6'>
+													<p>Package</p>
+												</div>
+												<div className='col-md-6'>
+													<p>
+														{singleVendorData && singleVendorData.packageSubscribed && singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName}
+													</p>
+												</div>
+											</>
+											: ''
+											}
+											
 										</div>
 									</div>
 								</div>

@@ -261,7 +261,7 @@ class index extends Component {
 							<div
 								className='pxp-prop-card-dashboard'
 								style={{
-									backgroundImage: `url(${indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL})`,
+									backgroundImage: `url(${indexPageData && indexPageData.userStories[i] && indexPageData.userStories[i].stories[0] && indexPageData.userStories[i].stories[0].storyImages[0] &&indexPageData.userStories[i].stories[0].storyImages[0].storyImageURL})`,
 								}}
 							/>
 							<span className='dashboard-user-name'>
@@ -426,7 +426,7 @@ class index extends Component {
 																			<div className='dashboard-newsfeed-content'>
 																				<ul className='news-feed-user-ul'>
 																					<li>
-																						<Link
+																						<Link 
 																							to={`/single-vendor-${
 																								data &&
 																								data.object &&
@@ -435,6 +435,7 @@ class index extends Component {
 																							}`}
 																						>
 																							<span
+																							
 																								className={
 																									data &&
 																									data.object &&
@@ -460,7 +461,7 @@ class index extends Component {
 																									alt=''
 																								/>
 																							</span>
-																						</Link>
+																						</Link >
 																						<span
 																							style={{
 																								fontSize: '20px',
@@ -468,6 +469,15 @@ class index extends Component {
 																							}}
 																							className='news-feed-user-name'
 																						>
+																							<Link 
+																								style={{color:'black'}}
+																								to={`/single-vendor-${
+																								data &&
+																								data.object &&
+																								data.object.user &&
+																								data.object.user.userId
+																							}`} >
+																							<span>
 																							{data &&
 																								data.object &&
 																								data.object.user &&
@@ -476,6 +486,8 @@ class index extends Component {
 																								data.object &&
 																								data.object.user &&
 																								data.object.user.lastName}{' '}
+																							</span>
+																							</Link>
 																							.
 																							<Link
 																								to=''
