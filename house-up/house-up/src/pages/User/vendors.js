@@ -66,10 +66,10 @@ class vendor extends Component {
                   backgroundPosition: '50% 50%',
                 }}
               />
-              <div className="pxp-agents-hero-search-container">
+              <div className="pxp-agents-hero-search-container mb-60">
                 <div className="container">
                   <div className="pxp-agents-hero-search">
-                    <h2 className="pxp-section-h2">Find an Professional</h2>
+                    <h2 className="pxp-section-h2 p-0">Find an Professional</h2>
                     <div className="pxp-agents-hero-search-form mt-3 mt-md-4">
                       <div className="row">
                         <div className="col-sm-12 col-md-4">
@@ -118,7 +118,7 @@ class vendor extends Component {
               </div>
             </div>
             <div className="container">
-              <div className="row mt-100">
+              <div className="row mt-150">
                 {vendorsData && vendorsData.length
                   ? vendorsData.map((data, index) => (
                       <div key={index} className="col-sm-12 col-md-6 col-lg-3">
