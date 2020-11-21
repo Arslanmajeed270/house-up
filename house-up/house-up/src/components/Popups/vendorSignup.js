@@ -153,11 +153,8 @@ class vendorSignup extends Component {
 
 		const userData = cloneDeep(this.props.userData)
 
-		console.log('checking props data,', userData)
 		const date = userData && userData.businessStartDate.split('/')
 		const businessDate = date[2] + "-" + date[1] + "-" + date[0]
-		// console.log(moment(businessDate).format("YYYY-MM-DD")); 
-		// console.log('date',businessDate) 
 		this.setState({
 			profileImage: userData ? userData.profilePictureUrl : this.state.profileImage,
 			profileImageDefault : userData ? userData.profilePictureUrl : this.state.profileImageDefault,
@@ -191,7 +188,6 @@ class vendorSignup extends Component {
 	}
 
 	limitWordHandler = (str) => {
-		console.log('string ',str)
 		const arrayString = str.split('');
 		let paragraph = '';
 		const limit = arrayString.length < 20 ? arrayString.length : 20;
@@ -288,7 +284,6 @@ class vendorSignup extends Component {
 			profileImageDefault,
 			user
 		} = this.state;
-		console.log('eelo',provinceId)
 		const city = cityId.split(',')[1];
 		const cId = cityId.split(',')[0];
 
@@ -341,7 +336,6 @@ class vendorSignup extends Component {
 				profileImage: profileImage !== profileImageDefault ? "": profileImage,
 				userTypeId: 2
 			};
-			console.log(userData)
 			this.props.onUpdateVendor(userData , this.props.history);
 		}
 	};
@@ -426,8 +420,7 @@ class vendorSignup extends Component {
 				state: province,
 				city: city,
 			};
-			console.log('user data for vendor sign up', userData)
-			// this.props.onCreateVendor(userData);
+			this.props.onCreateVendor(userData);
 		}
 	};
 

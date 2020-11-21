@@ -100,7 +100,6 @@ class userSignup extends Component {
 	}
 
 	componentDidMount(){
-		console.log('props data', this.props.userData)
 		const userData = cloneDeep(this.props.userData)
 		
 		this.setState({
@@ -181,7 +180,6 @@ class userSignup extends Component {
 				profileImage: profileImage === profileImageDefault ? "" : profileImage, 
 				userTypeId: 1 
 			};
-			console.log(userData)
 			this.props.onUpdateUser(userData , this.props.history);
 		}
 	};
