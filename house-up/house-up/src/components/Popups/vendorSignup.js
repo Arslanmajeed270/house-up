@@ -149,9 +149,9 @@ class vendorSignup extends Component {
 	}
 
 	componentDidMount() {
+		console.log(this.props.userData)
 		if (this.props.userData) {
 			const userData = cloneDeep(this.props.userData);
-
 			const date = userData && userData.businessStartDate.split('/');
 			const businessDate = date[2] + '-' + date[1] + '-' + date[0];
 			this.setState({
@@ -929,7 +929,9 @@ class vendorSignup extends Component {
 									</div>
 								</div>
 							</div>
-							<div className='row' style={{ padding: '0px 15px' }}>
+							{
+								this.props.userData ? "" :
+									<div className='row' style={{ padding: '0px 15px' }}>
 								<div
 									className='col-md-6'
 									style={{ padding: '0px', paddingRight: '12px' }}
@@ -987,6 +989,8 @@ class vendorSignup extends Component {
 									</div>
 								</div>
 							</div>
+						
+							}
 						</div>
 						<div
 							className='form-group'

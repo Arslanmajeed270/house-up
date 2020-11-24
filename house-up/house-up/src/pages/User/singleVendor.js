@@ -471,6 +471,7 @@ class singleVendor extends Component {
 											<form
 												action='/single-vendor'
 												className='pxp-agent-comments-form mt-3 mt-md-4'
+												onSubmit={this.onSubmit}
 											>
 												<div className='row'>
 													<div className='col-sm-12 col-md-6'></div>
