@@ -24,7 +24,7 @@ class App extends Component {
 	showPosition(position) {
 		const latitude = position.coords.latitude;
 		const longitude = position.coords.longitude;
-	
+
 		this.setCurrentLocation(latitude, longitude);
 	}
 

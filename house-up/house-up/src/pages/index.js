@@ -62,7 +62,7 @@ class index extends Component {
 		} else if (model === 'emailSignin') {
 			this.setState({ phoneSignin: false, [model]: !this.state[model] });
 		} else if (model === 'subscriptionPlan') {
-			this.setState({ [model]: !this.state[model] , message:data });
+			this.setState({ [model]: !this.state[model], message: data });
 		} else if (model === 'cardSelection') {
 			this.setState({
 				subscriptionPlan: false,
@@ -105,10 +105,18 @@ class index extends Component {
 				[model]: !this.state[model],
 			});
 		} else if (model === 'userSignupModel') {
-			this.setState({ optUserModel: false, [model]: !this.state[model] , message: data });
+			this.setState({
+				optUserModel: false,
+				[model]: !this.state[model],
+				message: data,
+			});
 		} else if (model === 'vendorSignupModel') {
-			console.log('heelo',data)
-			this.setState({ optUserModelVendor: false, [model]: !this.state[model] , message: data });
+			console.log('heelo', data);
+			this.setState({
+				optUserModelVendor: false,
+				[model]: !this.state[model],
+				message: data,
+			});
 		} else if (model === 'congratulationModel') {
 			this.setState({
 				userSignupModel: false,
@@ -166,7 +174,7 @@ class index extends Component {
 						show={this.state.subscriptionPlan}
 						modelHanlder={this.modelHanlder}
 						closeCodelHanlder={this.closeCodelHanlder}
-						message = {this.state.message}
+						message={this.state.message}
 					/>
 				)}
 				{this.state.cardSelection && (
@@ -302,9 +310,7 @@ class index extends Component {
 					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>
-				<Routes 
-					modelHanlder={this.modelHanlder}
-				/>
+				<Routes modelHanlder={this.modelHanlder} />
 				{hideFooter === true ? ' ' : <Footer />}
 			</React.Fragment>
 		);
