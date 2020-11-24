@@ -17,9 +17,8 @@ class singleProp extends Component {
 			user: {},
 			userId: '',
 			imageToggle: false,
-			vendorId:'',
+			vendorId: '',
 			comments: [],
-
 		};
 	}
 
@@ -34,27 +33,27 @@ class singleProp extends Component {
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
-			if (
-				changedState.indexPageData &&
-				changedState.indexPageData &&
-				changedState.indexPageData.vendorPostPropertiesList.length
-			) {
-				changedState.comments = changedState.indexPageData.vendorPostPropertiesList.map(
-					(data) => {
-						if (
-							state.category === 'Property' &&
-							data.category === state.category &&
-							data.object &&
-							data.object.propertId &&
-							data.object.propertId === state.propertId
-						) {
-							changedState.comments = data.object.propertyComments
-								? data.object.propertyComments
-								: [];
-						}
+		if (
+			changedState.indexPageData &&
+			changedState.indexPageData &&
+			changedState.indexPageData.vendorPostPropertiesList.length
+		) {
+			changedState.comments = changedState.indexPageData.vendorPostPropertiesList.map(
+				(data) => {
+					if (
+						state.category === 'Property' &&
+						data.category === state.category &&
+						data.object &&
+						data.object.propertId &&
+						data.object.propertId === state.propertId
+					) {
+						changedState.comments = data.object.propertyComments
+							? data.object.propertyComments
+							: [];
 					}
-				);
-			}
+				}
+			);
+		}
 		if (
 			property &&
 			JSON.stringify(state.singlePropertyData) !==
@@ -70,12 +69,12 @@ class singleProp extends Component {
 		return null;
 	}
 
-		modelHanlder = (model, id) => {
-			this.setState({
-				[model]: !this.state[model],
-				vendorId: id
-			 });
-		}
+	modelHanlder = (model, id) => {
+		this.setState({
+			[model]: !this.state[model],
+			vendorId: id,
+		});
+	};
 	closeCodelHanlder = (model) => {
 		this.setState({
 			[model]: false,
@@ -87,7 +86,9 @@ class singleProp extends Component {
 		const id = this.props.match.params.id;
 
 		const userId = user.userId ? user.userId : '';
-		const profilePictureUrl = user.profilePictureUrl ? user.profilePictureUrl : ''
+		const profilePictureUrl = user.profilePictureUrl
+			? user.profilePictureUrl
+			: '';
 
 		this.setState({
 			id,
@@ -97,7 +98,7 @@ class singleProp extends Component {
 		let userData = {
 			propertyId: id,
 		};
-		this.props.onGetSinglePropertyData(userData , profilePictureUrl);
+		this.props.onGetSinglePropertyData(userData, profilePictureUrl);
 	}
 
 	onChange = (e) => {
@@ -127,7 +128,7 @@ class singleProp extends Component {
 	};
 
 	render() {
-		const { singlePropertyData, commentText, imageToggle } = this.state;
+		const { singlePropertyData, commentText, imageToggle, user } = this.state;
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -142,7 +143,9 @@ class singleProp extends Component {
 										{singlePropertyData &&
 											singlePropertyData.currency &&
 											singlePropertyData.currency.symbol}{' '}
-										{singlePropertyData && singlePropertyData.price ? singlePropertyData.price.toLocaleString() : ""}{' '}
+										{singlePropertyData && singlePropertyData.price
+											? singlePropertyData.price.toLocaleString()
+											: ''}{' '}
 										{singlePropertyData &&
 											singlePropertyData.currency &&
 											singlePropertyData.currency.lable}
@@ -704,7 +707,7 @@ class singleProp extends Component {
 																		key={index}
 																		className='media mt-2 mt-md-3'
 																	>
-																		<img 
+																		<img
 																			src={da && da.profilePictureUrl}
 																			className='mr-3'
 																			alt='...'
@@ -737,15 +740,29 @@ class singleProp extends Component {
 															value={commentText}
 															onChange={this.onChange}
 														/>
-														<span
-															className='send-btn-single-property'
-															onClick={this.onSubmit}
-														>
-															<img
-																src={require('../../assets/images/ic_sent.svg')}
-																alt=''
-															/>
-														</span>
+														{user && user.profilePictureUrl ? (
+															<span
+																className='send-btn-single-property'
+																onClick={this.onSubmit}
+															>
+																<img
+																	src={require('../../assets/images/ic_sent.svg')}
+																	alt=''
+																/>
+															</span>
+														) : (
+															<span
+																className='send-btn-single-property'
+																onClick={() =>
+																	this.props.modelHanlder('phoneSignin')
+																}
+															>
+																<img
+																	src={require('../../assets/images/ic_sent.svg')}
+																	alt=''
+																/>
+															</span>
+														)}
 													</div>
 												</form>
 											</div>
@@ -758,11 +775,13 @@ class singleProp extends Component {
 									<h3>Listed By</h3>
 									<div className='pxp-sp-agent mt-3 mt-md-4'>
 										<Link
-											to={`/single-vendor-${singlePropertyData &&
-													singlePropertyData.user &&
-													singlePropertyData.user.userId
-														? singlePropertyData.user.userId
-														: ''}`}
+											to={`/single-vendor-${
+												singlePropertyData &&
+												singlePropertyData.user &&
+												singlePropertyData.user.userId
+													? singlePropertyData.user.userId
+													: ''
+											}`}
 											className='pxp-sp-agent-fig pxp-cover rounded-lg user-profile'
 											style={{
 												backgroundImage: `url(${
@@ -776,11 +795,15 @@ class singleProp extends Component {
 										/>
 										<div className='pxp-sp-agent-info'>
 											<div className='pxp-sp-agent-info-name'>
-												<Link to={`/single-vendor-${singlePropertyData &&
-													singlePropertyData.user &&
-													singlePropertyData.user.userId
-														? singlePropertyData.user.userId
-														: ''}`}>
+												<Link
+													to={`/single-vendor-${
+														singlePropertyData &&
+														singlePropertyData.user &&
+														singlePropertyData.user.userId
+															? singlePropertyData.user.userId
+															: ''
+													}`}
+												>
 													{singlePropertyData &&
 													singlePropertyData.user &&
 													singlePropertyData.user.firstName
@@ -804,20 +827,36 @@ class singleProp extends Component {
 										</div>
 										<div className='clearfix' />
 										<div className='pxp-sp-agent-btns mt-3 mt-md-4'>
-											<button
-												className='pxp-sp-agent-btn-main'
-												data-toggle='modal'
-												onClick={() =>this.modelHanlder('contactModalState',singlePropertyData.userId)}
-											>
-												Contact Us
-											</button>
+											{user && user.profilePictureUrl ? (
+												<button
+													className='pxp-sp-agent-btn-main'
+													data-toggle='modal'
+													onClick={() =>
+														this.modelHanlder(
+															'contactModalState',
+															singlePropertyData.userId
+														)
+													}
+												>
+													Contact Us
+												</button>
+											) : (
+												<button
+													className='pxp-sp-agent-btn-main'
+													data-toggle='modal'
+													onClick={() => this.props.modelHanlder('phoneSignin')}
+												>
+													Contact Us
+												</button>
+											)}
+
 											{this.state.contactModalState ? (
-													<Contact
-														show={this.state.contactModalState}
-														closeCodelHanlder={this.closeCodelHanlder}
-														vendorId = {this.state.vendorId}
-													/>
-												) : null}
+												<Contact
+													show={this.state.contactModalState}
+													closeCodelHanlder={this.closeCodelHanlder}
+													vendorId={this.state.vendorId}
+												/>
+											) : null}
 										</div>
 									</div>
 								</div>
@@ -839,7 +878,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data , profilePictureUrl) => dispatch(actions.AddComments(data, profilePictureUrl)),
+		onCommentAdded: (data, profilePictureUrl) =>
+			dispatch(actions.AddComments(data, profilePictureUrl)),
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
 	};

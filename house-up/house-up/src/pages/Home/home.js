@@ -198,24 +198,24 @@ class home extends Component {
 										</div>
 									</div>
 								</Link>
-								<Link to="#" className='pxp-services-item'>
-									<div 
-									onClick={() =>
-									this.props.modelHanlder('phoneNumberVendorModel')
-								}>
-									<div className='pxp-services-item-fig'>
-										<img src='assets/images/service-icon-2.svg' alt='...' />
-									</div>
-									<div className='pxp-services-item-text text-center'>
-										<div className='pxp-services-item-text-title'>
-											Become a Professional
+								<Link to='#' className='pxp-services-item'>
+									<div
+										onClick={() =>
+											this.props.modelHanlder('phoneNumberVendorModel')
+										}
+									>
+										<div className='pxp-services-item-fig'>
+											<img src='assets/images/service-icon-2.svg' alt='...' />
 										</div>
-										<div className='pxp-services-item-text-sub'>
-											Register Your Local Business. <br />
-											HouseUp reviews all business <br />
-											before approval. 
-									
-									</div>
+										<div className='pxp-services-item-text text-center'>
+											<div className='pxp-services-item-text-title'>
+												Become a Professional
+											</div>
+											<div className='pxp-services-item-text-sub'>
+												Register Your Local Business. <br />
+												HouseUp reviews all business <br />
+												before approval.
+											</div>
 										</div>
 									</div>
 								</Link>

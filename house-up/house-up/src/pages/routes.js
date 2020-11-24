@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import PrivateRoute from '../components/common/PrivateRoute';
 
 import About from './About/about';
 import AddProperty from './Properties/addProperty';
@@ -24,14 +25,30 @@ class Routes extends React.Component {
 		return (
 			<Router>
 				<Route exact path={'/'} component={Home} />
-				<Route exact path={'/index-:country&:state&:city'} component={Index} />
-				<Route exact path={'/home'} component={() => <Home modelHanlder={this.props.modelHanlder}  />} />
+				<PrivateRoute
+					exact
+					path={'/index-:country&:state&:city'}
+					component={Index}
+				/>
+				<Route
+					exact
+					path={'/home'}
+					component={() => <Home modelHanlder={this.props.modelHanlder} />}
+				/>
 				<Route exact path={'/about'} component={About} />
-				<Route exact path={'/add-property'} component={AddProperty} />
+				<PrivateRoute exact path={'/add-property'} component={AddProperty} />
 				<Route exact path={'/add-product'} component={AddProduct} />
 				<Route exact path={'/add-coupon'} component={AddCoupon} />
-				<Route exact path={'/single-vendor-:id'} 
-					component={(route) => <SingleVendor match={route.match} modelHanlder={this.props.modelHanlder} />} />
+				<Route
+					exact
+					path={'/single-vendor-:id'}
+					component={(route) => (
+						<SingleVendor
+							match={route.match}
+							modelHanlder={this.props.modelHanlder}
+						/>
+					)}
+				/>
 				<Route exact path={'/blogs'} component={Blogs} />
 				<Route exact path={'/about'} component={About} />
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
@@ -45,7 +62,17 @@ class Routes extends React.Component {
 				<Route exact path={'/select-location'} component={SelectLocation} />
 				<Route exact path={'/properties'} component={Properties} />
 				<Route exact path={'/single-post'} component={SinglePost} />
-				<Route exact path={'/single-prop-:id'} component={SingleProp} />
+				<Route
+					exact
+					path={'/single-prop-:id'}
+					component={(props) => (
+						<SingleProp
+							history={props.history}
+							match={props.match}
+							modelHanlder={this.props.modelHanlder}
+						/>
+					)}
+				/>
 				<Route exact path={'/professionals'} component={Professionals} />
 			</Router>
 		);

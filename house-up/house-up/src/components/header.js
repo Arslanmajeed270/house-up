@@ -55,7 +55,7 @@ class header extends Component {
 	render() {
 		const animateHeader = this.props.animateHeader;
 		const { user, dropDownShow, currentLocation } = this.state;
-		console.log('user data',user)
+		console.log('user data', user);
 		return (
 			<React.Fragment>
 				<div
@@ -120,7 +120,19 @@ class header extends Component {
 											<Link to='/properties'>Find a Home</Link>
 										</li>
 										<li className='list-inline-item'>
-											<Link to='/add-property'>List a Property</Link>
+											{user && user.profilePictureUrl ? (
+												<Link to='/add-property'>List a Property</Link>
+											) : (
+												<Link
+													to='/add-property'
+													onClick={(e) => {
+														e.preventDefault();
+														this.props.modelHanlder('phoneSignin');
+													}}
+												>
+													List a Property
+												</Link>
+											)}
 										</li>
 										<li className='list-inline-item'>
 											<Link to='/professionals'>Find a Professional</Link>
@@ -197,13 +209,18 @@ class header extends Component {
 																Profile
 															</Link>
 														</li>
-														{user && user.userTypeId === 2 && !(user && user.packageSubscribed)  ? (
+														{user &&
+														user.userTypeId === 2 &&
+														!(user && user.packageSubscribed) ? (
 															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={() =>
-																		this.props.modelHanlder('subscriptionPlan','upgradeBoth')
+																		this.props.modelHanlder(
+																			'subscriptionPlan',
+																			'upgradeBoth'
+																		)
 																	}
-																	style={{ cursor: 'pointer'}}
+																	style={{ cursor: 'pointer' }}
 																>
 																	<img
 																		src={require('../assets/images/icons/ic_upgrade.svg')}
@@ -212,12 +229,18 @@ class header extends Component {
 																	upgrade
 																</div>
 															</li>
-														) : 
-															(user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName === "Monthly") ? 
+														) : user &&
+														  user.packageSubscribed &&
+														  user.packageSubscribed.packageDetail &&
+														  user.packageSubscribed.packageDetail
+																.packageName === 'Monthly' ? (
 															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={() =>
-																		this.props.modelHanlder('subscriptionPlan','annual')
+																		this.props.modelHanlder(
+																			'subscriptionPlan',
+																			'annual'
+																		)
 																	}
 																	style={{ cursor: 'pointer' }}
 																>
@@ -225,20 +248,30 @@ class header extends Component {
 																		src={require('../assets/images/icons/ic_upgrade.svg')}
 																		alt='upgradeIcon'
 																	/>
-																	{user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName}
+																	{user &&
+																		user.packageSubscribed &&
+																		user.packageSubscribed.packageDetail &&
+																		user.packageSubscribed.packageDetail
+																			.packageName}
 																</div>
 															</li>
-															:
-															(user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName === "Annual") ?
+														) : user &&
+														  user.packageSubscribed &&
+														  user.packageSubscribed.packageDetail &&
+														  user.packageSubscribed.packageDetail
+																.packageName === 'Annual' ? (
 															<li className='profile_header_dropdown_li'>
-																<div
-																	style={{ cursor: 'pointer' }}
-																>
-																	{user && user.packageSubscribed && user.packageSubscribed.packageDetail && user.packageSubscribed.packageDetail.packageName}
+																<div style={{ cursor: 'pointer' }}>
+																	{user &&
+																		user.packageSubscribed &&
+																		user.packageSubscribed.packageDetail &&
+																		user.packageSubscribed.packageDetail
+																			.packageName}
 																</div>
-															</li> 
-															: ""
-														 }
+															</li>
+														) : (
+															''
+														)}
 														<li
 															onClick={() =>
 																this.props.onLogout(this.props.history)
@@ -269,13 +302,13 @@ class header extends Component {
 										/>
 									</Link>
 								)}
-								<Link style={{color:'black'}}
-								to={`/single-vendor-${
-									user && user.userId ? user.userId : ''
-								}`} >
-								{
-									user && user.firstName
-								}
+								<Link
+									style={{ color: 'black' }}
+									to={`/single-vendor-${
+										user && user.userId ? user.userId : ''
+									}`}
+								>
+									{user && user.firstName}
 								</Link>
 							</div>
 						</div>
