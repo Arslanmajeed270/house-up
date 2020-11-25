@@ -73,7 +73,9 @@ class routes extends Component {
                 <Route      
                     exact 
                     path={"/single-vendor-:id"} 
-                    component={SingleVendor}
+                    component={(route)=> <SingleVendor 
+							match={route.match}
+                            modelHanlder={this.props.modelHanlder} />}
                 />
                 <Route      
                     exact 
@@ -83,7 +85,7 @@ class routes extends Component {
                 <Route      
                     exact 
                     path={"/Vendors"} 
-                    component={Vendors}
+                    component={()=> <Vendors modelHanlder={this.props.modelHanlder} />}
                 />
 
         </Router>

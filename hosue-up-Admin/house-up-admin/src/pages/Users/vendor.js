@@ -113,7 +113,7 @@ class vendor extends Component {
                                         <h6 className="mb-0">@{data.userName} </h6>
                                       </div>
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">+{data.msisdn} </h6>
+                                        <h6 className="mb-0">{data.msisdn} </h6>
                                       </div>
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <h6 className="mb-0">{data.emailAddress} </h6>
@@ -126,8 +126,10 @@ class vendor extends Component {
                                       </div>
                                       <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <h6 className="mb-0">{data.websiteLink}</h6>
+                                      </div>
+                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                                        <h6 className="mb-0">{data.qualification}</h6>
                                       </div> 
-                                       
                                       <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                         <h6 className="mb-0"> {data.businessStartDate} </h6>
                                       </div>
@@ -139,10 +141,16 @@ class vendor extends Component {
                                         <h6 className="mb-0">{data.address}</h6>
                                       </div>
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <Link className="no-anchor-style buisness-documents">Business Registration Document</Link>
+                                        <Link className="no-anchor-style buisness-documents"
+                                            onClick={()=>this.props.modelHanlder('businessRegDoc', data.businessRegistrationDocURL)}
+                                        >
+                                             Business Registration Document
+                                        </Link>
                                       </div>
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <Link className="no-anchor-style buisness-documents" style={{width:'100%'}}>Supporting Documents (optional) </Link>
+                                        <Link className="no-anchor-style buisness-documents" style={{width:'100%'}}
+                                          onClick={()=>this.props.modelHanlder('businessSuppDoc', data.businessSupportingDocURL)}
+                                        >Supporting Documents (optional) </Link>
                                         <button className="btn btn-primary approve-reject" onClick={()=>this.updateUserState("Approved" , data.userId)}>Approve</button>
                                         <button className="btn btn-danger approve-reject" onClick={()=>this.updateUserState("Rejected" , data.userId)}>Reject</button>
                                       </div>
