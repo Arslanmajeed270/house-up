@@ -70,10 +70,15 @@ class AddCard extends Component {
 	}
 
 	onChange = (e) => {
-		const targetName = e.target.name;
-		const targetvalue = e.target.value;
+		let targetName = e.target.name;
+		let targetValue = e.target.value;
+		if (targetName === 'expiryDate'){
+			this.setState({[targetName] : targetValue.replace(/\B(?=(\d{2})+(?!\d))+/g, "/")});
+		}
+		else{
+		this.setState({ [targetName]: targetValue });
+		}
 		
-		this.setState({ [targetName]: targetvalue });
 	};
 
 	onSubmit = (e) => {
@@ -141,6 +146,7 @@ class AddCard extends Component {
 										type='text'
 										className='form-control'
 										placeholder='Expire Date'
+										
 										name='expiryDate'
 										value={expiryDate}
 										required

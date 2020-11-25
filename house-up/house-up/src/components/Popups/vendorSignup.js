@@ -217,18 +217,18 @@ class vendorSignup extends Component {
 		this.props.onGetProfessionDetailAPI();
 	}
 
-	limitWordHandler = (str) => {
-		const arrayString = str.split('');
-		let paragraph = '';
-		const limit = arrayString.length < 20 ? arrayString.length : 20;
-		for (let i = 0; i < limit; i++) {
-			paragraph += arrayString[i] + ' ';
-		}
-		if (arrayString.length >= 30) {
-			paragraph += '...';
-		}
-		return paragraph;
-	};
+	// limitWordHandler = (str) => {
+	// 	const arrayString = str.split('');
+	// 	let paragraph = '';
+	// 	const limit = arrayString.length < 20 ? arrayString.length : 20;
+	// 	for (let i = 0; i < limit; i++) {
+	// 		paragraph += arrayString[i] + ' ';
+	// 	}
+	// 	if (arrayString.length >= 30) {
+	// 		paragraph += '...';
+	// 	}
+	// 	return paragraph;
+	// };
 
 	onChange = (e) => {
 		if (e.target.name === 'profileImage') {
@@ -295,6 +295,7 @@ class vendorSignup extends Component {
 			lastName,
 			confirmPassword,
 			password,
+			userName,
 			professionId,
 			businessSupportingDocument,
 			businessRegistrationDocument,
@@ -368,7 +369,7 @@ class vendorSignup extends Component {
 					businessSupportingDocument === businessSupportingDocumentDefault
 						? ''
 						: businessSupportingDocument,
-				profileImage: profileImage !== profileImageDefault ? '' : profileImage,
+				profileImage: profileImage === profileImageDefault ? '' : profileImage,
 				userTypeId: 2,
 			};
 			this.props.onUpdateVendor(userData, this.props.history);
@@ -490,6 +491,10 @@ class vendorSignup extends Component {
 			imagePreviewForSupport,
 			unitOther,
 		} = this.state;
+		console.log('province Id', professionId)
+		console.log('province Id', provinceId)
+		console.log('this.state',this.state)
+
 
 		let pageContent = '';
 
@@ -666,9 +671,7 @@ class vendorSignup extends Component {
 											{imagePreviewForRegister && imagePreviewForRegister.name
 												? imagePreviewForRegister.name
 												: this.props.userData
-												? this.limitWordHandler(
-														this.state.businessRegistrationDocument
-												  )
+												? "Uploaded"
 												: 'Business registration document'}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
@@ -781,10 +784,8 @@ class vendorSignup extends Component {
 												? imagePreviewForSupport.name
 												: this.props.userData &&
 												  this.state.businessSupportingDocument
-												? this.limitWordHandler(
-														this.state.businessSupportingDocument
-												  )
-												: 'Support document (optional)'}{' '}
+												? 	"Uploaded"
+												  : 'Support document (optional)'}{' '}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
 													src={require('../../assets/images/icons/ic_upload.svg')}
@@ -841,7 +842,7 @@ class vendorSignup extends Component {
 													placeholder='City'
 													name='provinceId'
 													value={provinceId}
-													// defaultValue={provinceId}
+													defaultValue={provinceId}
 													onChange={this.onChange}
 												>
 													<option value=''> Province / state </option>
