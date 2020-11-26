@@ -3,7 +3,9 @@ import {
 	SET_USERS,
 	SET_SINGLE_VENDOR,
 	SET_SINGLE_USER,
-	SET_USER_STATE
+	SET_USER_STATE,
+	SET_SINGLE_VENDORS_PROPERTIES,
+	GET_SINGLE_PROPERTY
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -11,7 +13,9 @@ const initialState = {
 	usersData : [],
 	singleVendorData : {},
 	singleUserData : {},
-	userState:false
+	userState:false,
+	singlePropertyData:{},
+	singleVendorsPropertiesData:{}
 };
 
 export default function (state = initialState, action) {
@@ -36,6 +40,16 @@ export default function (state = initialState, action) {
 			return {
 				userState: action.payload
 			};	
+		case SET_SINGLE_VENDORS_PROPERTIES:
+			return {
+				...state,
+				singleVendorsPropertiesData: action.payload,
+			};
+		case GET_SINGLE_PROPERTY:
+			return {
+				...state,
+				singlePropertyData: action.payload,
+			};
 	default:
 			return state;
 	}

@@ -9,7 +9,8 @@ class singleVendor extends Component {
     super(props);
     this.state = {
       singleVendorData: {},
-      id: null
+      id: null,
+      singleVendorsPropertiesData:{}
     };
   }
   static getDerivedStateFromProps(props, state) {
@@ -23,6 +24,15 @@ class singleVendor extends Component {
       changedState.singleVendorData = userPage.singleVendorData;  
       stateChanged = true;
     }
+    if (
+			userPage &&
+			JSON.stringify(state.singleVendorsPropertiesData) !==
+				JSON.stringify(userPage.singleVendorsPropertiesData)
+		) {
+			changedState.singleVendorsPropertiesData =
+      userPage.singleVendorsPropertiesData;
+			stateChanged = true;
+		}
 
     if(stateChanged){
       return changedState;
@@ -40,11 +50,22 @@ class singleVendor extends Component {
     let userData = {
       userId: id
     }
+    const data = {
+			offset: '0',
+			lat: '43.787083',
+			userId: id,
+			channel: 'web',
+			lng: '-79.497369',
+			limit: '10',
+		};
     this.props.onGetSingleVendorsData(userData);
+		this.props.onGetSingleVendorsPropertyData(data);
+
   }
 
     render() { 
-      const { singleVendorData } = this.state;
+      const { singleVendorData , singleVendorsPropertiesData } = this.state;
+      console.log(singleVendorsPropertiesData)
       
         return ( 
             <React.Fragment>
@@ -95,8 +116,12 @@ class singleVendor extends Component {
                                         <h6 className="mb-0">{singleVendorData && singleVendorData.streetAddress}</h6>
                                       </div>   
                                       <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <Link to="#" className="no-anchor-style buisness-documents">Business Registration Document</Link>
-                                        <Link to="#" className="no-anchor-style buisness-documents">Supporting Documents (optional) </Link>
+                                        <Link to="#" className="no-anchor-style buisness-documents"
+                                          onClick={()=>this.props.modelHanlder('businessRegDoc', singleVendorData.businessRegistrationDocURL)}
+                                          >Business Registration Document</Link>
+                                        <Link to="#" className="no-anchor-style buisness-documents"
+                                          onClick={()=>this.props.modelHanlder('businessRegDoc', singleVendorData.businessRegistrationDocURL)}
+                                        >Supporting Documents (optional) </Link>
                                       </div>
                                       <div className="bottom-line">
                                       
@@ -119,6 +144,7 @@ class singleVendor extends Component {
                                           <select className="vendor-status" >
                                             <option value="" >Active</option>
                                             <option value="">Inactive</option>
+                                            <option value="">Suspended</option>
                                           </select>
                                         </div>
                                         </div>
@@ -128,81 +154,88 @@ class singleVendor extends Component {
                           </div>
                         </div>
                       </div>
-                      {/* <h2 className="pxp-section-h2 mt-100">Listings by Erika Tillman</h2>
-                      <div className="row mt-4 mt-md-5">
-                        <div className="col-sm-12 col-md-6 col-lg-4">
-                          <Link to="single-prop" className="pxp-prop-card-1 rounded-lg mb-4">
-                            <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-1-gallery.jpg)'}} />
-                            <div className="pxp-prop-card-1-gradient pxp-animate" />
-                            <div className="pxp-prop-card-1-details">
-                              <div className="pxp-prop-card-1-details-title">Chic Apartment in Downtown</div>
-                              <div className="pxp-prop-card-1-details-price">$890,000</div>
-                              <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 920 SF</div>
-                            </div>
-                            <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-                          </Link>
-                        </div>
-                        <div className="col-sm-12 col-md-6 col-lg-4">
-                          <Link to="single-prop" className="pxp-prop-card-1 rounded-lg mb-4">
-                            <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-2-gallery.jpg)'}} />
-                            <div className="pxp-prop-card-1-gradient pxp-animate" />
-                            <div className="pxp-prop-card-1-details">
-                              <div className="pxp-prop-card-1-details-title">Colorful Little Apartment</div>
-                              <div className="pxp-prop-card-1-details-price">$2,675</div>
-                              <div className="pxp-prop-card-1-details-features text-uppercase">1 BD <span>|</span> 1 BA <span>|</span> 500 SF</div>
-                            </div>
-                            <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-                          </Link>
-                        </div>
-                        <div className="col-sm-12 col-md-6 col-lg-4">
-                          <Link to="single-prop" className="pxp-prop-card-1 rounded-lg mb-4">
-                            <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
-                            <div className="pxp-prop-card-1-gradient pxp-animate" />
-                            <div className="pxp-prop-card-1-details">
-                              <div className="pxp-prop-card-1-details-title">Cozy Two Bedroom Apartment</div>
-                              <div className="pxp-prop-card-1-details-price">$960,000</div>
-                              <div className="pxp-prop-card-1-details-features text-uppercase">2 BD <span>|</span> 2 BA <span>|</span> 870 SF</div>
-                            </div>
-                            <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-                          </Link>
-                        </div>
-                        <div className="col-sm-12 col-md-6 col-lg-4">
-                          <Link to="single-prop" className="pxp-prop-card-1 rounded-lg mb-4">
-                            <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-gallery.jpg)'}} />
-                            <div className="pxp-prop-card-1-gradient pxp-animate" />
-                            <div className="pxp-prop-card-1-details">
-                              <div className="pxp-prop-card-1-details-title">Beautiful House in Marina</div>
-                              <div className="pxp-prop-card-1-details-price">$5,198,000</div>
-                              <div className="pxp-prop-card-1-details-features text-uppercase">5 BD <span>|</span> 4.5 BA <span>|</span> 3,945 SF</div>
-                            </div>
-                            <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-                          </Link>
-                        </div>
-                        <div className="col-sm-12 col-md-6 col-lg-4">
-                          <Link to="single-prop" className="pxp-prop-card-1 rounded-lg mb-4">
-                            <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-8-1-gallery.jpg)'}} />
-                            <div className="pxp-prop-card-1-gradient pxp-animate" />
-                            <div className="pxp-prop-card-1-details">
-                              <div className="pxp-prop-card-1-details-title">Modern Residence</div>
-                              <div className="pxp-prop-card-1-details-price">$7,995</div>
-                              <div className="pxp-prop-card-1-details-features text-uppercase">4 BD <span>|</span> 1.5 BA <span>|</span> 2,240 SF</div>
-                            </div>
-                            <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-                          </Link>
-                        </div>
-                        <div className="col-sm-12 col-md-6 col-lg-4">
-                          <Link to="single-prop" className="pxp-prop-card-1 rounded-lg mb-4">
-                            <div className="pxp-prop-card-1-fig pxp-cover" style={{backgroundImage: 'url(assets/images/prop-9-1-gallery.jpg)'}} />
-                            <div className="pxp-prop-card-1-gradient pxp-animate" />
-                            <div className="pxp-prop-card-1-details">
-                              <div className="pxp-prop-card-1-details-title">Luxury Mansion</div>
-                              <div className="pxp-prop-card-1-details-price">$5,430,000</div>
-                              <div className="pxp-prop-card-1-details-features text-uppercase">4 BD <span>|</span> 5 BA <span>|</span> 5,200 SF</div>
-                            </div>
-                            <div className="pxp-prop-card-1-details-cta text-uppercase">View Details</div>
-                          </Link>
-                        </div>
-                      </div>*/}
+                      {singleVendorsPropertiesData &&
+                      singleVendorsPropertiesData.length ? (
+                        <h2 className='pxp-section-h2 mt-100'>
+                          Listings by {singleVendorData && singleVendorData.firstName}{' '}
+                          {singleVendorData && singleVendorData.lastName}{' '}
+                        </h2>
+                      ) : (
+                        ''
+                      )}
+                      <div className='row mt-4 mt-md-5'>
+                        {singleVendorsPropertiesData &&
+                        singleVendorsPropertiesData.length
+                          ? singleVendorsPropertiesData.map((data, idx) =>
+                              data && data.category === 'Property' ? (
+                                <>
+                                  <div
+                                    key={idx}
+                                    className='col-sm-12 col-md-6 col-lg-4'
+                                  >
+                                    <Link
+                                      to={`/single-prop-${
+                                        data && data.object && data.object.propertId
+                                      }`}
+                                      className='pxp-prop-card-1 rounded-lg mb-4'
+                                    >
+                                      <div
+                                        className='pxp-prop-card-1-fig pxp-cover'
+                                        style={{
+                                          backgroundImage: `url(${
+                                            data &&
+                                            data.object.imageList &&
+                                            data &&
+                                            data.object.imageList.length
+                                              ? data.object.imageList[0] &&
+                                                data.object.imageList[0].imageURL
+                                              : ''
+                                          })`,
+                                        }}
+                                      />
+                                      <div className='pxp-prop-card-1-gradient pxp-animate' />
+                                      <div className='pxp-prop-card-1-details'>
+                                        <div className='pxp-prop-card-1-details-title'>
+                                          {data && data.object && data.object.adTitle}
+                                        </div>
+                                        <div className='pxp-prop-card-1-details-price'>
+                                          {' '}
+                                          {data &&
+                                            data.object &&
+                                            data.object.currency &&
+                                            data.object.currency.symbol}{' '}
+                                          {data &&
+                                            data.object &&
+                                            data.object.price &&
+                                            data.object.price.toLocaleString()}
+                                        </div>
+                                        <div className='pxp-prop-card-1-details-features text-uppercase'>
+                                          {data &&
+                                            data.object &&
+                                            data.object.noOfBedrooms}{' '}
+                                          BD <span>|</span>{' '}
+                                          {data &&
+                                            data.object &&
+                                            data.object.noOfBathroomsValue}{' '}
+                                          BA <span>|</span>{' '}
+                                          {data &&
+                                            data.object &&
+                                            data.object.finishedSqftArea}{' '}
+                                          SF
+                                        </div>
+                                      </div>
+                                      <div className='pxp-prop-card-1-details-cta text-uppercase'>
+                                        View Details
+                                      </div>
+                                    </Link>
+                                  </div>
+                                </>
+                              ) : (
+                                ''
+                              )
+                            )
+                          : ''}
+                      </div>
                     </div> 
                   </section></div>
               </div>
@@ -219,7 +252,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetSingleVendorsData: (userData) => dispatch(actions.getSingleVendorData(userData))
+      onGetSingleVendorsData: (userData) => dispatch(actions.getSingleVendorData(userData)),
+      onGetSingleVendorsPropertyData: (userData) => dispatch(actions.getSingleVendorsPropertyData(userData))
+
   }
 };
  

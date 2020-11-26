@@ -79,17 +79,17 @@ class App extends Component {
                 />
                 <PrivateRoute      
                     exact 
-                    path={"/single-prop"} 
+                    path={"/single-prop-:id"} 
                     component={Index}
                 />
                 <PrivateRoute      
                     exact 
-                    path={"/single-user"} 
+                    path={"/single-user-:id"} 
                     component={Index }
                 />
                 <PrivateRoute      
                     exact 
-                    path={"/single-vendor"} 
+                    path={"/single-vendor-:id"} 
                     component={Index}
                 />
                 <PrivateRoute      
@@ -102,7 +102,7 @@ class App extends Component {
                     path={"/Vendors"} 
                     component={Index}
                 />
-                <Redirect to={loginCheck ? '/' : '/login'} />
+                {/* <Redirect to={loginCheck ? '/' : '/login'} /> */}
     </React.Fragment>
   )
                 }

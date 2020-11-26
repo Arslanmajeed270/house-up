@@ -5,6 +5,9 @@ import Header from '../components/header';
 import Sidebar from '../components/sideBar';
 import Routes from './routes';
 
+import BusinessRegDoc from '../components/Popups/BusinessRegistrationDoc'
+import BusinessSupportDoc from '../components/Popups/BusinessSupportDoc'
+
 
 class index extends Component {
     constructor(props) {
@@ -12,7 +15,11 @@ class index extends Component {
         this.state = {
           sideBarShow : false,
           notificationShow : false,
-          userShow : false
+          userShow : false,
+          businessRegDoc:false,
+          businessSuppDoc:false,
+          data:'',
+
         };
     }
 
@@ -32,9 +39,39 @@ class index extends Component {
         })
       }
 
+      closeCodelHanlder = (model) => {
+		this.setState({
+			[model]: false,
+		});
+	};
+	modelHanlder = (model, data) => {
+		if (model === 'businessRegDoc') {
+			this.setState({ [model]: !this.state[model] , data:data });
+		} else if (model === 'businessSuppDoc') {
+			this.setState({ [model]: !this.state[model] , data:data });
+		}
+	};
+      
+
     render() {
         return (
             <React.Fragment>
+                {this.state.businessRegDoc && (
+					<BusinessRegDoc
+						show={this.state.businessRegDoc}
+                        closeCodelHanlder={this.closeCodelHanlder}
+                        data={this.state.data}
+					/>
+				)}
+                {this.state.businessSuppDoc && (
+					<BusinessSupportDoc
+						show={this.state.businessSuppDoc}
+						closeCodelHanlder={this.closeCodelHanlder}
+                        data={this.state.data}
+					/>
+				)}
+
+                
                 <Header sideBarHandler = {()=>this.sideBarHandler()}
                  notificationToggle = { () => this.notificationToggle()} 
                  userToggleHandler = { () => this.userToggleHandler()} 
@@ -43,7 +80,7 @@ class index extends Component {
                   />
                 <div className="d-flex align-items-stretch">
                     <Sidebar sideBarState = {this.state.sideBarShow} />
-                    <Routes />
+                    <Routes modelHanlder={this.modelHanlder} />
                 </div>
             </React.Fragment>
         )

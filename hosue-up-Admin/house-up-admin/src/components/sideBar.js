@@ -20,7 +20,7 @@ class sideBar extends Component {
             <div id="sidebar" className={ this.props.sideBarState ? "sidebar py-3 shrink show": "sidebar py-3 " }>
                      <ul className="sidebar-menu list-unstyled">
                          <li className="sidebar-list-item"><Link to="/index" className="sidebar-link text-muted"><i className="o-home-1 mr-3 text-gray"></i><span>Home</span></Link></li>
-                         <li className="sidebar-list-item"><Link to="/vendors" className="sidebar-link text-muted"><i className="o-profile-1 mr-3 text-gray"></i><span>Vender</span></Link></li>
+                         <li className="sidebar-list-item"><Link to="/vendors" className="sidebar-link text-muted"><i className="o-profile-1 mr-3 text-gray"></i><span>Professionals</span></Link></li>
                          <li className="sidebar-list-item"><Link to="/user" className="sidebar-link text-muted"><i className="o-user-1 mr-3 text-gray"></i><span>User</span></Link></li>
                          <li className="sidebar-list-item"><Link to="/properties" className="sidebar-link text-muted"><i className="o-earth-globe-1 mr-3 text-gray"></i><span>Properties</span></Link></li>
                          <li className="sidebar-list-item"><Link to="/feature" className="sidebar-link text-muted"><i className="o-trophy-1 mr-3 text-gray"></i><span>Feature Post</span></Link></li>

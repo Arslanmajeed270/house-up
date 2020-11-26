@@ -1,196 +1,870 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+// import Contact from '../../components/Popups/contactUsPopup';
 
-class singleProperty extends Component {
-    state = {  }
-    render() { 
-        return ( 
-            <React.Fragment>
-                <div className="page-holder w-100 d-flex flex-wrap">
-                <div className="container-fluid px-xl-5">
-                  <section className="py-5">
-                    <div className="row">
-                      <div className="pxp-content">
-                        <div className=" mt-100">
-                          <div className="container">
-                            <div className="row">
-                              <div className="col-sm-12 col-md-5">
-                                <h2 className="pxp-sp-top-title">Beautiful House in Marina</h2>
-                                <p className="pxp-sp-top-address pxp-text-light">542 29th Avenue, Marina District, San Francisco, CA 94121</p>
-                                <div className="col-sm-12 col-md-7">
-                                  <div className="clearfix d-block d-xl-none" />
-                                  <div className="pxp-sp-top-feat mt-3 mt-md-0">
-                                    <div>5 <span>BD</span></div>
-                                    <div>4 <span>BA</span></div>
-                                    <div>3,945 <span>SF</span></div>
-                                  </div>
-                                  <div className="pxp-sp-top-price mt-3 mt-md-0">$5,198,000</div>
-                                </div>
-                              </div>
-                            </div>
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
+import ImagePreview from '../../components/Popups/ImagePreview';
+
+class singleProp extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			contactModalState: false,
+			singlePropertyData: {},
+			id: '',
+			commentText: '',
+			user: {},
+			userId: '',
+			imageToggle: false,
+			vendorId: '',
+			comments: [],
+		};
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		let userPage = props.userPage;
+		let auth = props.auth;
+
+		let stateChanged = false;
+		let changedState = {};
+
+		if (auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)) {
+			changedState.user = auth.user;
+			stateChanged = true;
+		}
+		if (
+			userPage &&
+			JSON.stringify(state.singlePropertyData) !==
+				JSON.stringify(userPage.singlePropertyData)
+		) {
+			changedState.singlePropertyData = userPage.singlePropertyData;
+			stateChanged = true;
+		}
+
+		if (stateChanged) {
+			return changedState;
+		}
+		return null;
+	}
+
+	// modelHanlder = (model, id) => {
+	// 	this.setState({
+	// 		[model]: !this.state[model],
+	// 		vendorId: id,
+	// 	});
+	// };
+	// closeCodelHanlder = (model) => {
+	// 	this.setState({
+	// 		[model]: false,
+	// 	});
+	// };
+
+	componentDidMount() {
+		console.log('hello')
+		// const { user } = this.state;
+		const id = this.props.match.params.id;
+
+		// const userId = user.userId ? user.userId : '';
+		// const profilePictureUrl = user.profilePictureUrl
+		// 	? user.profilePictureUrl
+		// 	: '';
+
+		this.setState({
+			id,
+			
+		});
+
+		let userData = {
+			propertyId: id,
+		};
+		this.props.onGetSinglePropertyData(userData);
+	}
+
+	// onChange = (e) => {
+	// 	this.setState({
+	// 		[e.target.name]: e.target.value,
+	// 	});
+	// };
+
+	// onSubmit = (e) => {
+	// 	e.preventDefault();
+	// 	const { id, commentText, userId } = this.state;
+
+	// 	const data = {
+	// 		postId: 0,
+	// 		category: 'Property',
+	// 		storyImageId: 0,
+	// 		propertyId: Number(id),
+	// 		commentText: commentText,
+	// 		userId: userId,
+	// 		vendorId: 0,
+	// 	};
+	// 	this.props.onCommentAdded(data);
+	// };
+
+	ImagePreviewHandler = () => {
+		this.setState({ imageToggle: !this.state.imageToggle });
+	};
+
+	render() {
+		const { singlePropertyData, commentText, imageToggle, user } = this.state;
+		console.log(this.state)
+		return (
+			<React.Fragment>
+				<div className='pxp-content'>
+					<div className='pxp-single-property-top pxp-content-wrapper mt-100'>
+						<div className='wrapper'>
+							<div className='row'>
+								<div className='col-sm-12 col-md-12'>
+									<h2 className='pxp-sp-top-title'>
+										{singlePropertyData && singlePropertyData.adTitle}
+									</h2>
+									<p className='pxp-sp-top-address pxp-text-light'>
+										{singlePropertyData &&
+											singlePropertyData.currency &&
+											singlePropertyData.currency.symbol}{' '}
+										{singlePropertyData && singlePropertyData.price
+											? singlePropertyData.price.toLocaleString()
+											: ''}{' '}
+										{singlePropertyData &&
+											singlePropertyData.currency &&
+											singlePropertyData.currency.lable}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className='wrapper pxp-single-property-gallery-container'>
+						<div
+							className='pxp-single-property-gallery'
+							itemScope
+							itemType='http://schema.org/ImageGallery'
+						>
+							<figure
+								itemProp='associatedMedia'
+								itemScope
+								itemType='http://schema.org/ImageObject'
+								className='pxp-sp-gallery-main-img'
+							>
+								<Link
+									onClick={this.ImagePreviewHandler}
+									itemProp='contentUrl'
+									data-size='1920x1280'
+									className='pxp-cover'
+									style={{
+										backgroundImage: `url(${
+											singlePropertyData &&
+											singlePropertyData.imageList &&
+											singlePropertyData.imageList.length &&
+											singlePropertyData.imageList[0] &&
+											singlePropertyData.imageList[0].imageURL
+										})`,
+									}}
+								/>
+								<figcaption itemProp='caption description'>
+									Image caption
+								</figcaption>
+							</figure>
+							{singlePropertyData &&
+							singlePropertyData.imageList &&
+							singlePropertyData.imageList.length
+								? singlePropertyData.imageList.map((img, index) =>
+										index > 0 && index < 5 ? (
+											<figure
+												key={index}
+												itemProp='associatedMedia'
+												itemScope
+												itemType='http://schema.org/ImageObject'
+											>
+												<Link
+													onClick={this.ImagePreviewHandler}
+													itemProp='contentUrl'
+													data-size='1920x1459'
+													className='pxp-cover'
+													style={{
+														backgroundImage: `url(${img && img.imageURL})`,
+													}}
+												/>
+												<figcaption itemProp='caption description'>
+													Image caption
+												</figcaption>
+											</figure>
+										) : (
+											''
+										)
+								  )
+								: ''}
+							{imageToggle ? (
+								<ImagePreview
+									show={this.state.imageToggle}
+									close={this.ImagePreviewHandler}
+									propertyImg={
+										singlePropertyData && singlePropertyData.imageList
+									}
+								/>
+							) : (
+								''
+							)}
+						</div>
+						<Link
+							onClick={this.ImagePreviewHandler}
+							className='pxp-sp-gallery-btn'
+						>
+							View Photos
+						</Link>
+						<div className='clearfix' />
+					</div>
+					<div className='container mt-4'>
+						<div className='row'>
+							<div className='col-lg-8'>
+								{singlePropertyData && singlePropertyData.address ? (
+									<div
+										style={{
+											color: '#000',
+											fontWeight: '300',
+											fontFamily: 'Light',
+										}}
+									>
+										{' '}
+										<span className='property-details'>Address:</span>{' '}
+										{singlePropertyData && singlePropertyData.address}
+									</div>
+								) : (
+									''
+								)}
+								{singlePropertyData && singlePropertyData.propertyType ? (
+									<div
+										style={{
+											color: '#000',
+											fontWeight: '300',
+											fontFamily: 'Light',
+										}}
+									>
+										{' '}
+										<span className='property-details'>
+											Property type:
+										</span>{' '}
+										{singlePropertyData && singlePropertyData.propertyType}{' '}
+									</div>
+								) : (
+									''
+								)}
+								{singlePropertyData && singlePropertyData.rentalListingYN ? (
+									<div
+										style={{
+											color: '#000',
+											fontWeight: '300',
+											fontFamily: 'Light',
+										}}
+									>
+										<span className='property-details'>Rental:</span>
+										{singlePropertyData && singlePropertyData.rentalListingYN}
+									</div>
+								) : (
+									''
+								)}
+								{singlePropertyData && singlePropertyData.createdDate ? (
+									<div
+										style={{
+											color: '#000',
+											fontWeight: '300',
+											fontFamily: 'Light',
+										}}
+									>
+										<span className='property-details'>Date listed:</span>{' '}
+										{singlePropertyData && singlePropertyData.createdDate}
+									</div>
+								) : (
+									''
+								)}
+								<div className='pxp-single-property-section mt-4 mt-md-5'>
+									<div className='mt-3 mt-md-4'>
+										{singlePropertyData && singlePropertyData.description ? (
+											<>
+												<h3>Description</h3>
+												<p>{singlePropertyData.description}</p>
+											</>
+										) : (
+											''
+										)}
+									</div>
+									<hr style={{ background: '#EFEFF4' }} />
+									<div>
+										<h3>Details</h3>
+										<div className='mt-3 mt-md-4'>
+											{singlePropertyData && singlePropertyData.buildingType ? (
+												<div>
+													{' '}
+													<span className='property-details'>
+														Building type:{' '}
+													</span>
+													{singlePropertyData &&
+														singlePropertyData.buildingType}{' '}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.noOfBathroomsValue ? (
+												<div>
+													<span className='property-details'>Bathrooms: </span>
+													{singlePropertyData &&
+														singlePropertyData.noOfBathroomsValue}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData && singlePropertyData.noOfBedrooms ? (
+												<div>
+													<span className='property-details'>Bedrooms: </span>
+													{singlePropertyData &&
+														singlePropertyData.noOfBedrooms}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.lotDimensionLength &&
+											singlePropertyData.lotDimensionWidth ? (
+												<div>
+													<span className='property-details'>
+														Lot dimensions:{' '}
+													</span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.lotDimensionLength}{' '}
+													x{' '}
+													{singlePropertyData &&
+														singlePropertyData.lotDimensionWidth}{' '}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData && singlePropertyData.lotTotalArea ? (
+												<div>
+													<span className='property-details'>Lot area: </span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.lotTotalArea}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData && singlePropertyData.basementType ? (
+												<div>
+													<span className='property-details'>Basement: </span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.basementType}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData && singlePropertyData.garageType ? (
+												<div>
+													<span className='property-details'>Garage: </span>{' '}
+													{singlePropertyData && singlePropertyData.garageType}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.finishedSqftArea ? (
+												<div>
+													<span className='property-details'>Sqrt Area: </span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.finishedSqftArea}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.primaryHeatingFuel ? (
+												<div>
+													<span className='property-details'>
+														Primary heating fuel:{' '}
+													</span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.primaryHeatingFuel}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData && singlePropertyData.yearBuilt ? (
+												<div>
+													<span className='property-details'>yearBuilt: </span>{' '}
+													{singlePropertyData && singlePropertyData.yearBuilt}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.yearFurnaceBuilt ? (
+												<div>
+													<span className='property-details'>
+														Year furnace installed:{' '}
+													</span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.yearFurnaceBuilt}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.yearRoofInstalled ? (
+												<div>
+													<span className='property-details'>
+														Year roof installed:{' '}
+													</span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.yearRoofInstalled}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData && singlePropertyData.storeys ? (
+												<div>
+													<span className='property-details'>Storeys: </span>{' '}
+													{singlePropertyData && singlePropertyData.storeys}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.waterSourceType ? (
+												<div>
+													<span className='property-details'>
+														Water source:{' '}
+													</span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.waterSourceType}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.propertyType !== 'House' &&
+											singlePropertyData &&
+											singlePropertyData.condoFee ? (
+												<div>
+													<span className='property-details'>
+														Condo fees (/month):{' '}
+													</span>{' '}
+													{singlePropertyData && singlePropertyData.condoFee}
+												</div>
+											) : (
+												''
+											)}
+											{singlePropertyData &&
+											singlePropertyData.propertyType !== 'House' &&
+											singlePropertyData &&
+											singlePropertyData.parkingSpaces ? (
+												<div>
+													<span className='property-details'>
+														Parking Spaces:{' '}
+													</span>{' '}
+													{singlePropertyData &&
+														singlePropertyData.parkingSpaces}
+												</div>
+											) : (
+												''
+											)}
+										</div>
+									</div>
+								</div>
+								<div className='pxp-single-property-section mt-4 mt-md-5'>
+									<h3>Amenities</h3>
+									<div className='row mt-3 mt-md-4'>
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.internet ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Internet</div>
+											</div>
+										) : (
+											''
+										)}
+
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.garage ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Garage</div>
+											</div>
+										) : (
+											''
+										)}
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.ac ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>
+													Air Conditioning
+												</div>
+											</div>
+										) : (
+											''
+										)}
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.dishWasher ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Dishwasher</div>
+											</div>
+										) : (
+											''
+										)}
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.disposal ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Disposal</div>
+											</div>
+										) : (
+											''
+										)}
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.balcony ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Balcony</div>
+											</div>
+										) : (
+											''
+										)}
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.gym ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Gym</div>
+											</div>
+										) : (
+											''
+										)}
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.playroom ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Playroom</div>
+											</div>
+										) : (
+											''
+										)}
+										{singlePropertyData &&
+										singlePropertyData.amenites &&
+										singlePropertyData.amenites.bar ? (
+											<div className='col-sm-6 col-lg-4'>
+												<div className='pxp-sp-amenities-item'>Bar</div>
+											</div>
+										) : (
+											''
+										)}
+									</div>
+								</div>
+								{/* <div className="pxp-single-property-section mt-4 mt-md-5">
+                        <h3>Explore the Area</h3>
+                        <div className="pxp-sp-pois-nav mt-3 mt-md-4">
+                          <div className="pxp-sp-pois-nav-transportation text-uppercase">
+                            Transportation
                           </div>
-                          <div className="pxp-single-property-gallery-container mt-4 mt-md-5">
-                            <div className="pxp-single-property-gallery" itemScope itemType="http://schema.org/ImageGallery">
-                              <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject" className="pxp-sp-gallery-main-img">
-                                <Link to="images/prop-7-1-big.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-7-1-big.jpg)'}} />
-                                <figcaption itemProp="caption description">Image caption</figcaption>
-                              </figure>
-                              <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                                <Link to="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1459" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                                <figcaption itemProp="caption description">Image caption</figcaption>
-                              </figure>
-                              <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                                <Link to="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x2560" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                                <figcaption itemProp="caption description">Image caption</figcaption>
-                              </figure>
-                              <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                                <Link to="images/prop-2-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-2-3-gallery.jpg)'}} />
-                                <figcaption itemProp="caption description">Image caption</figcaption>
-                              </figure>
-                              <figure itemProp="associatedMedia" itemScope itemType="http://schema.org/ImageObject">
-                                <Link to="images/prop-1-3-gallery.jpg" itemProp="contentUrl" data-size="1920x1280" className="pxp-cover" style={{backgroundImage: 'url(assets/images/prop-1-3-gallery.jpg)'}} />
-                                <figcaption itemProp="caption description">Image caption</figcaption>
-                              </figure>
-                            </div>
-                            <Link to="#" className="pxp-sp-gallery-btn">View Photos</Link>
-                            <div className="clearfix" />
+                          <div className="pxp-sp-pois-nav-Door Buds text-uppercase">
+                            Door Buds
                           </div>
-                          <div className="container mt-100">
-                            <div className="row">
-                              <div className="col-lg-8">
-                                <div className="pxp-single-property-section">
-                                  <h3>Key Details</h3>
-                                  <div className="row mt-3 mt-md-4">
-                                    <div className="col-sm-6">
-                                      <div className="pxp-sp-key-details-item">
-                                        <div className="pxp-sp-kd-item-label text-uppercase">Status</div>
-                                        <div className="pxp-sp-kd-item-value">Coming Soon</div>
-                                      </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                      <div className="pxp-sp-key-details-item">
-                                        <div className="pxp-sp-kd-item-label text-uppercase">Property Type</div>
-                                        <div className="pxp-sp-kd-item-value">Apartment</div>
-                                      </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                      <div className="pxp-sp-key-details-item">
-                                        <div className="pxp-sp-kd-item-label text-uppercase">Year Built</div>
-                                        <div className="pxp-sp-kd-item-value">1980</div>
-                                      </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                      <div className="pxp-sp-key-details-item">
-                                        <div className="pxp-sp-kd-item-label text-uppercase">Stories</div>
-                                        <div className="pxp-sp-kd-item-value">23</div>
-                                      </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                      <div className="pxp-sp-key-details-item">
-                                        <div className="pxp-sp-kd-item-label text-uppercase">Room Count</div>
-                                        <div className="pxp-sp-kd-item-value">6</div>
-                                      </div>
-                                    </div>
-                                    <div className="col-sm-6">
-                                      <div className="pxp-sp-key-details-item">
-                                        <div className="pxp-sp-kd-item-label text-uppercase">Parking Spaces</div>
-                                        <div className="pxp-sp-kd-item-value">2</div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="pxp-single-property-section mt-4 mt-md-5">
-                                  <h3>Overview</h3>
-                                  <div className="mt-3 mt-md-4">
-                                    <p>Fully furnished. Elegantly appointed condominium unit situated on premier location. PS6. The wide entry hall leads to a large living room with dining area. This expansive 2 bedroom and 2 renovated marble bathroom apartment has great windows. Despite the interior views, the apartments Southern and Eastern exposures allow for lovely natural light to fill every room. The master suite is surrounded by handcrafted milkwork and features incredible walk-in closet and storage space. The second bedroom is<span className="pxp-dots">...</span><span className="pxp-dots-more"> a corner room with double windows. The kitchen has fabulous space, new appliances, and a laundry area. Other features include rich herringbone floors, crown moldings and coffered ceilings throughout the apartment. 1049 5th Avenue is a classic pre-war building located across from Central Park, the reservoir and The Metropolitan Museum. Elegant lobby and 24 hours doorman. This is a pet-friendly building. 
-                                        <br /><br />
-                                        Conveniently located close to several trendy fitness centers like Equinox, New York Sports Clubs &amp; Crunch. Fine restaurants around the area, as well as top-ranked schools. 2% Flip tax paid by buyer to the condominium. Building just put an assessment for 18 months of approximately $500 per month.</span></p>
-                                    <Link to="#" className="pxp-sp-more text-uppercase"><span className="pxp-sp-more-1">Continue Reading <span className="fa fa-angle-down" /></span><span className="pxp-sp-more-2">Show Less <span className="fa fa-angle-up" /></span></Link>
-                                  </div>
-                                </div>
-                                <div className="pxp-single-property-section mt-4 mt-md-5">
-                                  <h3>Amenities</h3>
-                                  <div className="row mt-3 mt-md-4">
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-wifi" /> Internet</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-car" /> Garage</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-sun-o" /> Air Conditioning</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-bullseye" /> Dishwasher</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-recycle" /> Disposal</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-clone" /> Balcony</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-futbol-o" /> Gym</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-smile-o" /> Playroom</div>
-                                    </div>
-                                    <div className="col-sm-6 col-lg-4">
-                                      <div className="pxp-sp-amenities-item"><span className="fa fa-glass" /> Bar</div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="pxp-single-property-section mt-4 mt-md-5">
-                                  <h3>Explore the Area</h3>
-                                  <div className="pxp-sp-pois-nav mt-3 mt-md-4">
-                                    <div className="pxp-sp-pois-nav-transportation text-uppercase">Transportation</div>
-                                    <div className="pxp-sp-pois-nav-restaurants text-uppercase">Restaurants</div>
-                                    <div className="pxp-sp-pois-nav-shopping text-uppercase">Shopping</div>
-                                    <div className="pxp-sp-pois-nav-cafes text-uppercase">Cafes &amp; Bars</div>
-                                    <div className="pxp-sp-pois-nav-arts text-uppercase">Arts &amp; Entertainment</div>
-                                    <div className="pxp-sp-pois-nav-fitness text-uppercase">Fitness</div>
-                                  </div>
-                                  <div id="pxp-sp-map" className="mt-3" />
-                                </div>
-                              </div>
-                              <div className="col-lg-4">
-                                <div className="pxp-single-property-section pxp-sp-agent-section mt-4 mt-md-5 mt-lg-0">
-                                  <h3>Listed By</h3>
-                                  <div className="pxp-sp-agent mt-3 mt-md-4">
-                                    <Link to="single-agent.html" className="pxp-sp-agent-fig pxp-cover rounded-lg" style={{backgroundImage: 'url(assets/images/agent-4.jpg)', backgroundPosition: 'top center'}} />
-                                    <div className="pxp-sp-agent-info">
-                                      <div className="pxp-sp-agent-info-name"><Link to="single-agent.html">Erika Tillman</Link></div>
-                                      <div className="pxp-sp-agent-info-rating"><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /><span className="fa fa-star" /></div>
-                                      <div className="pxp-sp-agent-info-email"><Link to="mailto:erika.tillman@ HouseUPcom">erika.tillman@ HouseUPcom</Link></div>
-                                      <div className="pxp-sp-agent-info-phone"><span className="fa fa-phone" /> (123) 456-7890</div>
-                                    </div>
-                                    <div className="clearfix" />
-                                    <div className="pxp-sp-agent-btns mt-3 mt-md-4">
-                                      <Link to="#pxp-contact-agent" className="pxp-sp-agent-btn-main" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-envelope-o" /> Contact Agent</Link>
-                                      <Link to="#pxp-contact-agent" className="pxp-sp-agent-btn" data-toggle="modal" data-target="#pxp-contact-agent"><span className="fa fa-calendar-check-o" /> Request Tour</Link>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                          <div className="pxp-sp-pois-nav-shopping text-uppercase">
+                            Shopping
+                          </div>
+                          <div className="pxp-sp-pois-nav-cafes text-uppercase">
+                            Cafes &amp; Bars
+                          </div>
+                          <div className="pxp-sp-pois-nav-arts text-uppercase">
+                            Arts &amp; Entertainment
+                          </div>
+                          <div className="pxp-sp-pois-nav-fitness text-uppercase">
+                            Fitness
+                          </div>
+                        </div>
+                        <div id="pxp-sp-map" className="mt-3" />
+                      </div>
+                      <div className="pxp-single-property-section mt-4 mt-md-5">
+                        <h3>Schools in Marina District</h3>
+                        <ul className="nav nav-tabs pxp-nav-tabs mt-3 mt-md-4">
+                          <li className="nav-item">
+                            <Link className="nav-link active" to="" data-toggle="tab">Elementary</Link>
+                          </li>
+                          <li className="nav-item">
+                            <Link className="nav-link" to="" data-toggle="tab">Middle</Link>
+                          </li>
+                          <li className="nav-item">
+                            <Link className="nav-link" to="" data-toggle="tab">High</Link>
+                          </li>
+                        </ul>
+                        <div className="tab-content mt-3">
+                          <div className="tab-pane active" id="elementary" role="tabpanel">
+                            <table className="table table-responsive pxp-table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">School</th>
+                                  <th scope="col">Type</th>
+                                  <th scope="col">Grades</th>
+                                  <th scope="col">Rating</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Harvest Collegiate High School</td>
+                                  <td>Public</td>
+                                  <td>9-11</td>
+                                </tr>
+                                <tr>
+                                  <td>Harvest Collegiate High School</td>
+                                  <td>Public</td>
+                                  <td>9-11</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div className="tab-pane" id="middle" role="tabpanel">
+                            <table className="table table-responsive pxp-table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">School</th>
+                                  <th scope="col">Type</th>
+                                  <th scope="col">Grades</th>
+                                  <th scope="col">Rating</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Harvest Collegiate High School</td>
+                                  <td>Public</td>
+                                  <td>9-11</td>
+                                </tr>
+                                <tr>
+                                  <td>Harvest Collegiate High School</td>
+                                  <td>Public</td>
+                                  <td>9-11</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div className="tab-pane" id="high" role="tabpanel">
+                            <table className="table table-responsive pxp-table">
+                              <thead>
+                                <tr>
+                                  <th scope="col">School</th>
+                                  <th scope="col">Type</th>
+                                  <th scope="col">Grades</th>
+                                  <th scope="col">Rating</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td>Harvest Collegiate High School</td>
+                                  <td>Public</td>
+                                  <td>9-11</td>
+                                 
+                                </tr>
+                                <tr>
+                                  <td>Harvest Collegiate High School</td>
+                                  <td>Public</td>
+                                  <td>9-11</td>
+                                </tr>
+                              </tbody>
+                            </table>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </section>
-                </div>
-                <footer className="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
-                  <div className="container-fluid">
-                    <div className="row">
-                      <div className="col-md-6 text-center text-md-left text-primary">
-                        <p className="mb-2 mb-md-0">HouseUp © 2018-2020</p>
+                       */}
+								<div className='row mt-100'>
+									<div className='col-sm-12 col-lg-12'>
+										<div className='pxp-agent-block'>
+											<div className='pxp-agent-comments'>
+												{/* <h4>3 Reviews</h4> */}
+												<div className='mt-3 mt-md-4'>
+													{singlePropertyData &&
+													singlePropertyData.propertyComments &&
+													singlePropertyData.propertyComments.length
+														? singlePropertyData.propertyComments.map(
+																(da, index) => (
+																	<div
+																		key={index}
+																		className='media mt-2 mt-md-3'
+																	>
+																		<img
+																			src={da && da.profilePictureUrl}
+																			className='mr-3'
+																			alt='...'
+																		/>
+																		<div className='media-body'>
+																			<h5> {da && da.userFullName}</h5>
+																			<div className='pxp-agent-comments-date'>
+																				{da && da.createDateTime}
+																			</div>
+																			<p> {da && da.commentText} </p>
+																		</div>
+																	</div>
+																)
+														  )
+														: ''}
+												</div>
+												{/* <form
+													action='/single-vendor'
+													className='pxp-agent-comments-form mt-3 mt-md-4'
+													onSubmit={this.onSubmit}
+												>
+													<div className='row'>
+														<div className='col-sm-12 col-md-6'></div>
+													</div>
+													<div className='form-group comment-send-btn'>
+														<input
+															className='form-control'
+															placeholder='Write your review here...'
+															style={{ height: '75px' }}
+															name='commentText'
+															value={commentText}
+															onChange={this.onChange}
+														/>
+														{user && user.profilePictureUrl ? (
+															<span
+																className='send-btn-single-property'
+																onClick={this.onSubmit}
+															>
+																<img
+																	src={require('../../assets/images/ic_sent.svg')}
+																	alt=''
+																/>
+															</span>
+														) : (
+															<span
+																className='send-btn-single-property'
+																onClick={() =>
+																	this.props.modelHanlder('phoneSignin')
+																}
+															>
+																<img
+																	src={require('../../assets/images/ic_sent.svg')}
+																	alt=''
+																/>
+															</span>
+														)}
+													</div>
+												</form>
+											 */}
                       </div>
-                    </div>
-                  </div></footer>
-              </div>
-            </React.Fragment>
-         );
-    }
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className='col-lg-4'>
+								<div className='pxp-single-property-section pxp-sp-agent-section mt-4 mt-md-5 mt-lg-0'>
+									<h3>Listed By</h3>
+									<div className='pxp-sp-agent mt-3 mt-md-4'>
+										<Link
+											to={`/single-vendor-${
+												singlePropertyData &&
+												singlePropertyData.user &&
+												singlePropertyData.user.userId
+													? singlePropertyData.user.userId
+													: ''
+											}`}
+											className='pxp-sp-agent-fig pxp-cover rounded-lg user-profile'
+											style={{
+												backgroundImage: `url(${
+													singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.profilePictureUrl
+														? singlePropertyData.user.profilePictureUrl
+														: 'assets/images/ic_profile_placeholder.png'
+												})`,
+											}}
+										/>
+										<div className='pxp-sp-agent-info'>
+											<div className='pxp-sp-agent-info-name'>
+												<Link
+													to={`/single-vendor-${
+														singlePropertyData &&
+														singlePropertyData.user &&
+														singlePropertyData.user.userId
+															? singlePropertyData.user.userId
+															: ''
+													}`}
+												>
+													{singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.firstName
+														? singlePropertyData.user.firstName
+														: ''}{' '}
+													{singlePropertyData &&
+													singlePropertyData.user &&
+													singlePropertyData.user.lastName
+														? singlePropertyData.user.lastName
+														: ''}{' '}
+												</Link>
+											</div>
+											<div className='pxp-sp-agent-info-rating'></div>
+											<div className='pxp-sp-agent-info-phone'>
+												{singlePropertyData &&
+												singlePropertyData.user &&
+												singlePropertyData.user.professionDesc
+													? singlePropertyData.user.professionDesc
+													: ''}
+											</div>
+										</div>
+										<div className='clearfix' />
+										{/* <div className='pxp-sp-agent-btns mt-3 mt-md-4'>
+											{user && user.profilePictureUrl ? (
+												<button
+													className='pxp-sp-agent-btn-main'
+													data-toggle='modal'
+													onClick={() =>
+														this.modelHanlder(
+															'contactModalState',
+															singlePropertyData.userId
+														)
+													}
+												>
+													Contact Us
+												</button>
+											) : (
+												<button
+													className='pxp-sp-agent-btn-main'
+													data-toggle='modal'
+													onClick={() => this.props.modelHanlder('phoneSignin')}
+												>
+													Contact Us
+												</button>
+											)}
+
+											{this.state.contactModalState ? (
+												<Contact
+													show={this.state.contactModalState}
+													closeCodelHanlder={this.closeCodelHanlder}
+													vendorId={this.state.vendorId}
+												/>
+											) : null}
+										</div>
+									 */}
+                  </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</React.Fragment>
+		);
+	}
 }
- 
-export default singleProperty;
+
+const mapStateToProps = (state) => {
+	return {
+		userPage: state.userPage,
+		auth: state.auth,
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onGetSinglePropertyData: (userData) =>
+			dispatch(actions.getSingleProperty(userData)),
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(singleProp);
