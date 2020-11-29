@@ -36,3 +36,10 @@ code {
   margin-right: 12px;
   padding: 5px 30px;
 }
+
+.status-btn{
+  padding: 5px 25px;
+}
+.names-tags{
+  margin-bottom: 5px;
+}
