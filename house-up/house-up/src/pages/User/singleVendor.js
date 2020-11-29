@@ -198,17 +198,17 @@ class singleVendor extends Component {
 						<div className='container'>
 							<div className='row'>
 								<div className='col-sm-12 col-lg-8'>
-									<h1 className='pxp-page-header float-left'>
+									<h1 className='pxp-page-header'>
 										{singleVendorData && singleVendorData.firstName}{' '}
 										{singleVendorData && singleVendorData.lastName}{' '}
 									</h1>
 									<div className='clearfix' />
 									{singleVendorData && singleVendorData.userTypeId === 2 ? (
 										<div>
-											<h5>
+											<h5 style={{fontSize:'18px', padding:'10px 0px'}}>
 												{singleVendorData && singleVendorData.businessName}
 											</h5>
-											<h5>{singleVendorData && singleVendorData.address}</h5>
+											<h5 style={{fontSize:'18px', padding:'0px 0px 15px', color:'#000'}}>{singleVendorData && singleVendorData.address}</h5>
 										</div>
 									) : (
 										<div className='row'>
@@ -284,7 +284,7 @@ class singleVendor extends Component {
 								</div>
 							</div>
 							{singleVendorData && singleVendorData.userTypeId === 2 ? (
-								<div className='row'>
+								<div className='row sm-t-4'>
 									<div className='col-sm-12 col-lg-8'>
 										<div className='pxp-agent-section'>
 											<h3>
@@ -300,28 +300,28 @@ class singleVendor extends Component {
 									</div>
 
 									<div className='col-sm-12 col-lg-3 offset-lg-1'>
-										<div className='pxp-agent-section mt-4 mt-md-5 row'>
-											<div className='col-md-6'>
+										<div className='pxp-agent-section user-full-details row'>
+											<div className='col-6 quality'>
 												<p>Specialities</p>
 											</div>
-											<div className='col-md-6'>
+											<div className='col-6 detail-info'>
 												<p>
 													{singleVendorData && singleVendorData.professionDesc}
 												</p>
 											</div>
-											<div className='col-md-6'>
+											<div className='col-6 quality'>
 												<p>Busniess start</p>
 											</div>
-											<div className='col-md-6'>
+											<div className='col-6 detail-info'>
 												<p>
 													{singleVendorData &&
 														singleVendorData.businessStartDate}
 												</p>
 											</div>
-											<div className='col-md-6'>
+											<div className='col-6 quality'>
 												<p>Phone number</p>
 											</div>
-											<div className='col-md-6'>
+											<div className='col-6 detail-info'>
 												{hideContact ? (
 													<Link onClick={this.contactHandler}>
 														click to show
@@ -330,10 +330,10 @@ class singleVendor extends Component {
 													<p>{singleVendorData && singleVendorData.msisdn}</p>
 												)}
 											</div>
-											<div className='col-md-6'>
+											<div className='col-6 quality'>
 												<p>Account status</p>
 											</div>
-											<div className='col-md-6'>
+											<div className='col-6 detail-info status-red'>
 												<p>
 													{singleVendorData && singleVendorData.userStatusDesc}
 												</p>
@@ -469,8 +469,7 @@ class singleVendor extends Component {
 								</li>
 							</ul> */}
 							<div className='row mt-100'>
-								<div className='col-sm-12 col-lg-1' />
-								<div className='col-sm-12 col-lg-10'>
+								<div className='col-12 col-lg-6'>
 									<div className='pxp-agent-block'>
 										<div className='pxp-agent-comments'>
 											{singleVendorData &&
@@ -505,7 +504,6 @@ class singleVendor extends Component {
 													<input
 														className='form-control'
 														placeholder='Write your review here...'
-														style={{ height: '75px' }}
 														name='commentText'
 														value={commentText}
 														onChange={this.onChange}

@@ -153,7 +153,7 @@ class singleProp extends Component {
 			<React.Fragment>
 				<div className='pxp-content'>
 					<div className='pxp-single-property-top pxp-content-wrapper mt-100'>
-						<div className='wrapper'>
+						<div className='container'>
 							<div className='row'>
 								<div className='col-sm-12 col-md-12'>
 									<h2 className='pxp-sp-top-title'>
@@ -174,7 +174,7 @@ class singleProp extends Component {
 							</div>
 						</div>
 					</div>
-					<div className='wrapper pxp-single-property-gallery-container'>
+					<div className='container pxp-single-property-gallery-container'>
 						<div
 							className='pxp-single-property-gallery'
 							itemScope
@@ -250,7 +250,7 @@ class singleProp extends Component {
 							onClick={this.ImagePreviewHandler}
 							className='pxp-sp-gallery-btn'
 						>
-							View Photos
+							See All Photos
 						</Link>
 						<div className='clearfix' />
 					</div>
@@ -756,7 +756,6 @@ class singleProp extends Component {
 														<input
 															className='form-control'
 															placeholder='Write your review here...'
-															style={{ height: '75px' }}
 															name='commentText'
 															value={commentText}
 															onChange={this.onChange}

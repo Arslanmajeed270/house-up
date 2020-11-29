@@ -188,9 +188,9 @@ class comments extends Component {
 		}
 		return (
 			<React.Fragment>
-				<div className='row mt-100'>
+				<div className='row mt-100' style={{marginLeft:'0px',marginRight:'0px'}}>
 					<div className='col-sm-12 col-lg-1' />
-					<div className='col-sm-12 col-lg-10'>
+					<div className='col-sm-12 col-lg-6'>
 						<div className='pxp-agent-block'>
 							<div className='pxp-agent-comments'>
 								{commentData && commentData.category === 'Vendor'
@@ -275,7 +275,6 @@ class comments extends Component {
 										<input
 											className='form-control'
 											placeholder='Write your review here...'
-											style={{ height: '75px' }}
 											name='commentText'
 											value={commentText}
 											onChange={this.onChange}

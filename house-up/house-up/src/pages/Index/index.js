@@ -382,16 +382,6 @@ class index extends Component {
                         </div>
                       </div>
                       <div key={index} className="sort-by">
-                        <div
-                          className="sort-heading mt-4"
-                          style={{ marginBottom: '10px' }}
-                        >
-                          <div className="row">
-                            <div className="col-lg-6 col-md-6 col-sm-6 col-6">
-                              <div className="sort-by-heading hhhsize"></div>
-                            </div>
-                          </div>
-                        </div>
                         {indexPageData &&
                         indexPageData.vendorPostPropertiesList &&
                         indexPageData.vendorPostPropertiesList.length
@@ -882,8 +872,9 @@ class index extends Component {
 																								  )}
 																						</div>
 
-                                            <div className="row custom-row-styles">
-                                              <div className="col-12 post-navbar">
+                                            <div className="row custom-row-styles" style={{bottom: '0px'}}>
+                                              <div className="col-12 post-navbar" style={{marginTop:'0px'}}>
+                                              <div className="navWrap">
                                                 <span
                                                   style={{ cursor: 'pointer' }}
                                                   onClick={() =>
@@ -952,7 +943,7 @@ class index extends Component {
                                                 >
                                                   Contact us
                                                 </button>
-
+                                                  </div>
                                                 {data &&
                                                 data.object &&
                                                 data.object.propertyLikes &&
@@ -960,7 +951,7 @@ class index extends Component {
                                                   .length &&
                                                 data.object.propertyLikes
                                                   .length >= 1 ? (
-                                                  <div className="likedByText">
+                                                  <div className="likedByText" >
                                                     {' '}
                                                     Liked by{' '}
                                                     {data.object.propertyLikes[
@@ -1124,7 +1115,12 @@ class index extends Component {
 																					<div className='row'>
 																						<div className='col-md-9 col-sm-9 col-8'>
 																							<div className='vendor-detail'>
-																								<span>
+																								<span className="news-feed-user-name" style={{
+                                                fontSize: '20px',
+                                                padding: '0px 7px 0px 0px',
+                                                display:'block',
+                                                marginBottom:'5px'
+                                              }}>
 																									{data && data.object.firstName
 																										? data.object.firstName
 																										: ''}{' '}
@@ -1201,8 +1197,10 @@ class index extends Component {
 																					</div>
 																				</Link>
 
-                                        <div className="row custom-row-styles">
+                                        <div className="custom-row-styles" style={{bottom: '0px', padding:'0px'}}>
                                           <div className="col-12 vendor-navbar">
+                                          <div className="navWrap">
+                                          
                                             <span
                                               style={{ cursor: 'pointer' }}
                                               onClick={() =>
@@ -1410,6 +1408,7 @@ class index extends Component {
 																						</div>
 																					</div>
 																				</div>
+																			</div>
 																			</div>
 																		</>
 																	) : (

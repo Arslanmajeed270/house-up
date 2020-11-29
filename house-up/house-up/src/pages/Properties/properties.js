@@ -127,7 +127,7 @@ class properties extends Component {
 		return (
 			<React.Fragment>
 				<div className='pxp-content pxp-full-height'>
-					<div className='row' style={{marginTop:'110px'}}>
+					<div className='row' style={{ marginTop: '110px' }}>
 						{indexPageData &&
 						indexPageData.propertyCounts &&
 						indexPageData.propertyCounts.length
@@ -197,10 +197,26 @@ class properties extends Component {
 								</div>
 							</div>
 							 */}
-							<div className='row pb-4'>
+							<div className='c-list'>
+								{indexPageData &&
+								indexPageData.propertyCounts &&
+								indexPageData.propertyCounts.length
+									? indexPageData.propertyCounts.map((data, index) => (
+											<button
+												key={index}
+												className='btn'
+												onClick={() => this.getSelectedCityData(data.cityName)}
+											>
+												{' '}
+												{data && data.cityName}{' '}
+											</button>
+									  ))
+									: ''}
+							</div>
+							<div className='row pb-4 pt-4'>
 								<div className='col-sm-6'>
 									<h2 className='pxp-content-side-h2'>
-										{propertiesData && propertiesData.length} Results
+										{propertiesData && propertiesData.length} Properties
 									</h2>
 								</div>
 							</div>
@@ -249,9 +265,7 @@ class properties extends Component {
 																? data.price.toLocaleString()
 																: ''}
 														</div>
-													</div>
-													<div className='pxp-results-card-1-features'>
-														<span>
+														<span className='pxp-prop-card-1-details-features text-uppercase'>
 															{' '}
 															{data && data.noOfBedrooms} BD <span>|</span>{' '}
 															{data && data.noOfBathrooms} BA <span>|</span>{' '}

@@ -73,7 +73,7 @@ class header extends Component {
 				>
 					<div className='wrapper'>
 						<div className='row align-items-center'>
-							<div className='col-5 col-md-3 d-center-element-logo'>
+							<div className='col-8 col-md-3 d-center-element-logo'>
 								<Link
 									to={
 										user && user.profilePictureUrl
@@ -117,7 +117,7 @@ class header extends Component {
 										: 'Toronto'}
 								</Link>
 							</div>
-							<div className='col-2 col-md-8'>
+							<div className='col-1 col-md-8'>
 								<div
 									className={`flex-center-nav ${
 										animateHeader ? 'pr-8 veTop' : ''
