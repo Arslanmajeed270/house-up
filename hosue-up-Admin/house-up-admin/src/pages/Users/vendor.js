@@ -50,7 +50,7 @@ class vendor extends Component {
 
     render() { 
       const { vendorsData } = this.state;
-
+      console.log('vendors data',vendorsData)
         return ( 
             <React.Fragment>
                 <div className="page-holder w-100 d-flex flex-wrap">
@@ -59,110 +59,66 @@ class vendor extends Component {
                     <div className="row">
                       {vendorsData && vendorsData.length ? 
                       vendorsData.map( (data, index) => 
-                      data.userStatusDesc === "Active" || data.userStatusDesc === "Approved" ?
-                        <div key={index} className="col-lg-12">
-                          <Link to={`/single-vendor-${data && data.userId && data.userId}`} className="message card px-5 py-3 mb-4  no-anchor-style">
-                          <div className="row">   
+                        <div key={index} className="col-lg-12 message card px-5 py-3 mb-4">
+                          <div className="row">
+                            <div className="col-md-9">
+                            <Link to={`/single-vendor-${data && data.userId && data.userId}`} className="no-anchor-style" >
+                              <div className="row">
+                              <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                                {this.dateHandler(data.createDate)}
+                                <img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/demo.png"} 
+                                alt="Profile" style={{maxWidth: '48px', maxHeight:'48px' , backgroundColor:'#008CF8'}} 
+                                className=" mx-3 my-2 my-lg-0" />
+                                <h6 className="mb-0">{data.firstName} {data.lastName}</h6>
+                            </div>
+                            
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              {this.dateHandler(data.createDate)}<img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/demo.png"} alt="Profile" style={{maxWidth: '48px', maxHeight:'48px' , backgroundColor:'#008CF8'}} className="rounded-circle mx-3 my-2 my-lg-0" />
-                              <h6 className="mb-0">{data.firstName} {data.lastName}</h6>
+                              <h6 className="mb-0">@{data.userName}</h6>
+                            </div>
+                            <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <h6 className="mb-0">{data.msisdn}</h6>
                             </div>
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                               <h6 className="mb-0">{data.emailAddress}</h6>
                             </div>
-                            <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <h6 className="mb-0">@{data.userName}</h6>
                             </div>
-                            <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <h6 className="mb-0">{data.msisdn}</h6>
-                            </div>
-                            <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 mt-lg-0 text-dark exclode">{data.professionDesc }</div>
+                            </Link>
                             </div>
                             <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">{data.businessName}</div>
+                              <div className="row">
+                                {
+                                  data.userStatusDesc === "In Review" ?
+                                  <>
+                                    <div className="col-md-6">
+                                    <button className="btn btn-success status-btn" 
+                                      onClick={()=>this.updateUserState("Active" , data.userId)}>
+                                        APPROVE
+                                    </button>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <button className="btn btn-danger status-btn" 
+                                        onClick={()=>this.updateUserState("Rejected" , data.userId)}>
+                                          REJECT
+                                      </button>
+                                    </div>
+                                  </>
+                                  :
+                                  <>
+                                    <div className="col-md-6" />
+                                    <div className="col-md-6">
+                                      <button 
+                                        className={`btn  ${data.userStatusDesc === "Approved" || data.userStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
+                                      >
+                                        {data.userStatusDesc === "Approved" || data.userStatusDesc === "Active" ? "APPROVED" : "REJECTED"}
+                                      </button>
+                                    </div>
+                                  </>
+                                }
+                                
+                              </div>
                             </div>
-                            <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 text-dark exclode">{data.websiteLink}</div>
-                            </div>
-                            <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">{data.businessStartDate}</div>
-                            </div>
-                            <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                              <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2 text-dark exclode">{data.streetAddress}</div>
-                            </div>                                       
-                          </div>
-                          </Link>
+                         </div>
                         </div> 
-                        :
-                         data.userStatusDesc ==="In Review" ?
-                        <div key={index} className="row">
-                          <div className="col-sm-12 col-lg-3">
-                            <div className="pxp-agent-section mt-4 mt-md-5">
-                              <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
-                              style={{backgroundImage: `url(${data && data.profilePictureUrl ? data.profilePictureUrl : 'assets/images/ic_profile_placeholder.png"' })`, backgroundPosition: '50% 0%'}} />
-                            </div>
-                          </div>
-                          <div className="col-sm-12 col-lg-8">
-                            <div className="pxp-agent-section mt-4 mt-md-5">
-                              <h3>{data.firstName} {data.lastName} </h3>
-                              <div className="mt-3 mt-md-4">
-                                <div className="col-lg-12"><Link to="#" className="message card px-5 py-3 mb-4 no-anchor-style">
-                                    <div className="row">
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">@{data.userName} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.msisdn} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.emailAddress} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.professionDesc}</h6>
-                                      </div> 
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.businessName} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.websiteLink}</h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.qualification}</h6>
-                                      </div> 
-                                      <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0"> {data.businessStartDate} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.keywordsDescribeYourBusiness}</h6>
-                                      </div> 
-                                      
-                                      <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{data.address}</h6>
-                                      </div>
-                                      <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <Link className="no-anchor-style buisness-documents"
-                                            onClick={()=>this.props.modelHanlder('businessRegDoc', data.businessRegistrationDocURL)}
-                                        >
-                                             Business Registration Document
-                                        </Link>
-                                      </div>
-                                      <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <Link className="no-anchor-style buisness-documents" style={{width:'100%'}}
-                                          onClick={()=>this.props.modelHanlder('businessSuppDoc', data.businessSupportingDocURL)}
-                                        >Supporting Documents (optional) </Link>
-                                        <button className="btn btn-primary approve-reject" onClick={()=>this.updateUserState("Approved" , data.userId)}>Approve</button>
-                                        <button className="btn btn-danger approve-reject" onClick={()=>this.updateUserState("Rejected" , data.userId)}>Reject</button>
-                                      </div>
-                                                                          
-                                    </div></Link></div>
-                                </div>
-                            </div>
-                          </div>
-                        </div>
-                      
-                      : " "
-
                       )
                       : ''
                     }

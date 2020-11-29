@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import UserPropertiesList from './userPropertiesList';
+import UserPostsList from './userPostsList';
 
 class singleVendor extends Component {
   constructor(props) {
@@ -10,6 +12,7 @@ class singleVendor extends Component {
     this.state = {
       singleVendorData: {},
       id: null,
+      formHandler:0,
       singleVendorsPropertiesData:{}
     };
   }
@@ -60,11 +63,17 @@ class singleVendor extends Component {
 		};
     this.props.onGetSingleVendorsData(userData);
 		this.props.onGetSingleVendorsPropertyData(data);
+  }
 
+  formHandler = (num) =>{
+    this.setState({
+      formHandler : num
+    })
   }
 
     render() { 
       const { singleVendorData , singleVendorsPropertiesData } = this.state;
+      console.log(singleVendorData)
       console.log(singleVendorsPropertiesData)
       
         return ( 
@@ -72,172 +81,204 @@ class singleVendor extends Component {
                 <div className="page-holder w-100 d-flex flex-wrap">
                 <div className="container-fluid px-xl-5">
                   <section className="py-5">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-sm-12 col-lg-8">
-                        </div>
-                        <div className="col-sm-12 offset-lg-1 col-lg-3">
-                        </div>
+                    <div className="container message card px-5 py-3 mb-4">
+                      <div className="row ">
+                      <div className="col-sm-12 col-lg-1">
+                          <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
+                          style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl :  require("../../assets/images/ic_profile_placeholder.png") })`, backgroundPosition: '50% 0%'}} />
+                      </div>
+                      <div className="col-md-10 ">
                         <div className="row">
-                          <div className="col-sm-12 col-lg-3">
-                            <div className="pxp-agent-section mt-4 mt-md-5">
-                              <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
-                              style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl :  require("../../assets/images/ic_profile_placeholder.png") })`, backgroundPosition: '50% 0%'}} />
+                          <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Full Name</h6>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6 className="mb-0">{ singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName}</h6>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                          <div className="col-sm-12 col-lg-8">
-                            <div className="pxp-agent-section mt-4 mt-md-5">
-                              <h3>{ singleVendorData && singleVendorData.firstName} {singleVendorData && singleVendorData.lastName} </h3>
-                              <div className="mt-3 mt-md-4">
-                                <div className="col-lg-12"><Link to="#" className="message card px-5 py-3 mb-4 no-anchor-style">
-                                    <div className="row">
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">@{singleVendorData && singleVendorData.userName} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{singleVendorData && singleVendorData.msisdn} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{singleVendorData && singleVendorData.emailAddress} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{singleVendorData && singleVendorData.businessName} </h6>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{singleVendorData && singleVendorData.websiteLink}</h6>
-                                      </div>  
-                                      <div className="col-lg-4 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <div className="bg-gray-100 roundy px-4 py-1 mr-0 mr-lg-3 mt-2  text-dark exclode">{singleVendorData && singleVendorData.businessStartDate} </div>
-                                      </div>
-                                      <div className="col-lg-4 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{singleVendorData && singleVendorData.keywordsDescribeYourBusiness}</h6>
-                                      </div>
-                                      <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <h6 className="mb-0">{singleVendorData && singleVendorData.streetAddress}</h6>
-                                      </div>   
-                                      <div className="col-lg-12 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                        <Link to="#" className="no-anchor-style buisness-documents"
-                                          onClick={()=>this.props.modelHanlder('businessRegDoc', singleVendorData.businessRegistrationDocURL)}
-                                          >Business Registration Document</Link>
-                                        <Link to="#" className="no-anchor-style buisness-documents"
-                                          onClick={()=>this.props.modelHanlder('businessRegDoc', singleVendorData.businessRegistrationDocURL)}
-                                        >Supporting Documents (optional) </Link>
-                                      </div>
-                                      <div className="bottom-line">
-                                      
-                                        {singleVendorData && singleVendorData.packageSubscribed ?
-                                      <>
-                                        <div className="subscription" >
-                                          <button className="btn btn-primary vendor-subscription" >{singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName ? singleVendorData.packageSubscribed.packageDetail.packageName : " "} Subscriber</button>
-                                        </div>
-                                      
-                                      <h6 className="mb-0" style={{marginTop:'17px' , float:'left'}}>${singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName ? singleVendorData.packageSubscribed.packageDetail.packagePrice : " "}</h6>
-                                     
-                                      
-                                      </>  
-                                    : <div className="subscription" >
-                                        <button className="btn btn-primary vendor-subscription" >Not Subscribed</button>
-                                      </div> 
-                                    }
-                                        
-                                        <div className="status">
-                                          <select className="vendor-status" >
-                                            <option value="" >Active</option>
-                                            <option value="">Inactive</option>
-                                            <option value="">Suspended</option>
-                                          </select>
-                                        </div>
-                                        </div>
-                                    </div></Link></div>
+                            <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Email</h6>
+                                </div>
+                                <div className="col-md-12">
+                                <h6 className="mb-0">{singleVendorData && singleVendorData.emailAddress} </h6>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Username</h6>
+                                </div>
+                                <div className="col-md-12">
+                                <h6 className="mb-0">@{singleVendorData && singleVendorData.userName} </h6>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Mobile</h6>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6 className="mb-0">{singleVendorData && singleVendorData.msisdn} </h6>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Profession</h6>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6 className="mb-0">{singleVendorData && singleVendorData.professionDesc} </h6>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Business Name</h6>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6 className="mb-0">{singleVendorData && singleVendorData.businessName} </h6>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                            <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Website</h6>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6 className="mb-0">{singleVendorData && singleVendorData.websiteLink}</h6>
+                                </div>
+                              </div>
+                            </div>  
+                            <div className="col-lg-3 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                            <div className="row names-tags">
+                                <div className="col-md-12">
+                                  <h6>Qualification</h6>
+                                </div>
+                                <div className="col-md-12">
+                                  <h6 className="mb-0">{singleVendorData && singleVendorData.qualification}</h6>
+                                </div>
+                              </div>
+                            </div>  
+                            <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                  <div className="col-md-12">
+                                    <h6>Business Started</h6>
+                                  </div>
+                                  <div className="col-md-12">
+                                    <h6 className="mb-0">{singleVendorData && singleVendorData.businessStartDate} </h6>
+                                  </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                  <div className="col-md-12">
+                                    <h6>Key words</h6>
+                                  </div>
+                                  <div className="col-md-12">
+                                    <h6 className="mb-0">{singleVendorData && singleVendorData.keywordsDescribeYourBusiness} </h6>
+                                  </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                  <div className="col-md-12">
+                                    <h6>Key words</h6>
+                                  </div>
+                                  <div className="col-md-12">
+                                    <h6 className="mb-0">{singleVendorData && singleVendorData.keywordsDescribeYourBusiness} </h6>
+                                  </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                  <div className="col-md-12">
+                                    <h6>Zip Code</h6>
+                                  </div>
+                                  <div className="col-md-12">
+                                    <h6 className="mb-0">{singleVendorData && singleVendorData.zipCode} </h6>
+                                  </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-6 mt-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <Link to="#" className="no-anchor-style buisness-documents"
+                                onClick={()=>this.props.modelHanlder('businessRegDoc', singleVendorData.businessRegistrationDocURL)}
+                                >Business Registration Document</Link>
+                              <Link to="#" className="no-anchor-style buisness-documents"
+                                onClick={()=>this.props.modelHanlder('businessRegDoc', singleVendorData.businessRegistrationDocURL)}
+                              >Supporting Documents (optional) </Link>
+                            </div>
+                            <div className="col-lg-6 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                  <div className="col-md-12">
+                                    <h6>Address</h6>
+                                  </div>
+                                  <div className="col-md-12">
+                                    <h6 className="mb-0">{singleVendorData && singleVendorData.streetAddress} </h6>
+                                  </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-12 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                              <div className="row names-tags">
+                                  <div className="col-md-12">
+                                    <h6>About Business</h6>
+                                  </div>
+                                  <div className="col-md-12">
+                                    <h6 className="mb-0">{singleVendorData && singleVendorData.aboutBusiness} </h6>
+                                  </div>
+                              </div>
+                            </div>
+                            <div className="col-md-12">
+                              {
+                                singleVendorData && singleVendorData.packageSubscribed  ?
+                                <div className="subscription" >
+                                  <button className="btn btn-light" style={{color:'black'}} >{singleVendorData.packageSubscribed && singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName ? singleVendorData.packageSubscribed.packageDetail.packageName : " "}</button>
+                                  <button className="btn btn-light" style={{color:'black'}}>${singleVendorData.packageSubscribed && singleVendorData.packageSubscribed.packageDetail && singleVendorData.packageSubscribed.packageDetail.packageName ? singleVendorData.packageSubscribed.packageDetail.packagePrice : " "}</button>
+                                </div>
+                              : ""
+                              }
+                              <div style={{float:'right'}}>
+                                { singleVendorData && singleVendorData.userStatusDesc === "Approved" || singleVendorData && singleVendorData.userStatusDesc === "Active" ?
+                                <button className="btn btn-success status-btn" 
+                                  >
+                                    ACTIVE
+                                </button>
+                                :
+                                <button className="btn btn-danger status-btn" 
+                                >
+                                  REJECT
+                                </button>
+}
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      {singleVendorsPropertiesData &&
-                      singleVendorsPropertiesData.length ? (
-                        <h2 className='pxp-section-h2 mt-100'>
-                          Listings by {singleVendorData && singleVendorData.firstName}{' '}
-                          {singleVendorData && singleVendorData.lastName}{' '}
-                        </h2>
-                      ) : (
-                        ''
-                      )}
-                      <div className='row mt-4 mt-md-5'>
-                        {singleVendorsPropertiesData &&
-                        singleVendorsPropertiesData.length
-                          ? singleVendorsPropertiesData.map((data, idx) =>
-                              data && data.category === 'Property' ? (
-                                <>
-                                  <div
-                                    key={idx}
-                                    className='col-sm-12 col-md-6 col-lg-4'
-                                  >
-                                    <Link
-                                      to={`/single-prop-${
-                                        data && data.object && data.object.propertId
-                                      }`}
-                                      className='pxp-prop-card-1 rounded-lg mb-4'
-                                    >
-                                      <div
-                                        className='pxp-prop-card-1-fig pxp-cover'
-                                        style={{
-                                          backgroundImage: `url(${
-                                            data &&
-                                            data.object.imageList &&
-                                            data &&
-                                            data.object.imageList.length
-                                              ? data.object.imageList[0] &&
-                                                data.object.imageList[0].imageURL
-                                              : ''
-                                          })`,
-                                        }}
-                                      />
-                                      <div className='pxp-prop-card-1-gradient pxp-animate' />
-                                      <div className='pxp-prop-card-1-details'>
-                                        <div className='pxp-prop-card-1-details-title'>
-                                          {data && data.object && data.object.adTitle}
-                                        </div>
-                                        <div className='pxp-prop-card-1-details-price'>
-                                          {' '}
-                                          {data &&
-                                            data.object &&
-                                            data.object.currency &&
-                                            data.object.currency.symbol}{' '}
-                                          {data &&
-                                            data.object &&
-                                            data.object.price &&
-                                            data.object.price.toLocaleString()}
-                                        </div>
-                                        <div className='pxp-prop-card-1-details-features text-uppercase'>
-                                          {data &&
-                                            data.object &&
-                                            data.object.noOfBedrooms}{' '}
-                                          BD <span>|</span>{' '}
-                                          {data &&
-                                            data.object &&
-                                            data.object.noOfBathroomsValue}{' '}
-                                          BA <span>|</span>{' '}
-                                          {data &&
-                                            data.object &&
-                                            data.object.finishedSqftArea}{' '}
-                                          SF
-                                        </div>
-                                      </div>
-                                      <div className='pxp-prop-card-1-details-cta text-uppercase'>
-                                        View Details
-                                      </div>
-                                    </Link>
-                                  </div>
-                                </>
-                              ) : (
-                                ''
-                              )
-                            )
-                          : ''}
-                      </div>
-                    </div> 
-                  </section></div>
+                    </div>
+                    <div onClick={() => this.formHandler(0)}>
+                      Property Lists
+                    </div>
+                    <div onClick={() => this.formHandler(1)}>
+                      Post List
+                    </div>
+                    {
+                      this.state.formHandler === 0 && 
+                      <UserPropertiesList id={this.state.id} />
+                    }
+                    {
+                      this.state.formHandler === 1 && 
+                      <UserPostsList id={this.state.id} />
+                    }
+                     </section></div>
               </div>
             </React.Fragment>
          );
