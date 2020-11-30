@@ -11,6 +11,7 @@ class header extends Component {
 			user: {},
 			dropDownShow: false,
 			currentLocation: {},
+			showNav: false,
 		};
 	}
 
@@ -52,21 +53,27 @@ class header extends Component {
 		});
 	};
 
+	activeNav = () => {
+		this.setState({
+			showNav: !this.state.showNav,
+		});
+	};
+
 	render() {
 		const animateHeader = this.props.animateHeader;
-		const { user, dropDownShow, currentLocation } = this.state;
-		console.log('user data', user);
+		const { user, dropDownShow, currentLocation, showNav } = this.state;
 		return (
 			<React.Fragment>
 				<div
 					className={
 						'pxp-header fixed-top ' +
-						(animateHeader ? 'pxp-animate' : 'pxp-full')
+						(animateHeader ? 'pxp-animate' : 'pxp-full') +
+						(showNav ? ' pxp-mobile ' : '')
 					}
 				>
 					<div className='wrapper'>
 						<div className='row align-items-center'>
-							<div className='col-5 col-md-3 d-center-element-logo'>
+							<div className='col-8 col-md-3 d-center-element-logo'>
 								<Link
 									to={
 										user && user.profilePictureUrl
@@ -110,9 +117,17 @@ class header extends Component {
 										: 'Toronto'}
 								</Link>
 							</div>
-							<div className='col-2 col-md-8'>
-								<div className='flex-center-nav pr-8'>
-									<ul className='pxp-nav list-inline for-pad'>
+							<div className='col-1 col-md-8'>
+								<div
+									className={`flex-center-nav ${
+										animateHeader ? 'pr-8 veTop' : ''
+									}`}
+								>
+									<ul
+										className={`pxp-nav list-inline for-pad ${
+											showNav ? 'nav-active' : ''
+										}`}
+									>
 										{/* <li className="list-inline-item">
                             <Link to="/home">Home</Link>
                           </li> */}
@@ -175,7 +190,13 @@ class header extends Component {
 								</div>
 							</div>
 							<div className='col-5 col-md-1 text-right'>
-								<Link to='#' className='pxp-header-nav-trigger'>
+								<Link
+									to='#'
+									className={`pxp-header-nav-trigger ${
+										showNav ? 'pxp-active' : ''
+									}`}
+									onClick={this.activeNav}
+								>
 									<span className='fa fa-bars' />
 								</Link>
 								{user && user.profilePictureUrl ? (

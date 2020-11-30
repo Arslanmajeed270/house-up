@@ -152,10 +152,10 @@ class home extends Component {
 							</div>
 						</div>
 					</div>
-					<div className='mt-100 container'>
+					<div className='mt-60 container'>
 						<h2 className='pxp-section-h2'>Featured Properties</h2>
 						<p className='pxp-text-light'>Browse our latest hot offers</p>
-						<div className='container-fluid pxp-props-carousel-right mt-100'>
+						<div className='container-fluid pxp-props-carousel-right mt-60'>
 							<div className='pxp-props-carousel-right-container mt-4 mt-md-5'>
 								<div className='owl-carousel pxp-props-carousel-right-stage'>
 									<AliceCarousel
@@ -175,7 +175,7 @@ class home extends Component {
 						</div>
 					</div>
 					<div
-						className='pxp-services pxp-cover mt-100 pt-100 mb-200'
+						className='pxp-services pxp-cover mt-60 pt-100 mb-200'
 						style={{ backgroundImage: 'url(assets/images/services-h-fig.jpg)' }}
 					>
 						<h2 className='text-center pxp-section'>Why Choose Us</h2>
@@ -385,7 +385,7 @@ class home extends Component {
 							</div>
 						</div>
 					</div>
-					<div className='container mt-100'>
+					<div className='container mt-60'>
 						<h2 className='pxp-section-h2 text-center'>Membership Plans</h2>
 						<p className='pxp-text-light text-center'>
 							Choose the plan that suits you best
