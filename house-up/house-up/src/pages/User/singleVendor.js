@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment'
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -33,6 +34,21 @@ class singleVendor extends Component {
 			changedState.singleVendorData = vendor.singleVendorData;
 			stateChanged = true;
 		}
+			if (
+			vendor &&
+			JSON.stringify(state.singleVendorData) !== JSON.stringify(vendor.singleVendorData)
+		) {
+			changedState.singleVendorData = vendor.singleVendorData;
+			stateChanged = true;
+			if (
+				changedState.singleVendorData &&
+				changedState.singleVendorData.vendorComments &&
+				changedState.singleVendorData.vendorComments.length
+			) {
+				changedState.comments = changedState.singleVendorData.vendorComments
+			}
+		}
+
 		if (
 			vendor &&
 			JSON.stringify(state.singleVendorsPropertiesData) !==
@@ -111,7 +127,7 @@ class singleVendor extends Component {
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, commentText, userId } = this.state;
+		const { id, commentText, userId , user } = this.state;
 
 		const data = {
 			postId: 0,
@@ -122,8 +138,12 @@ class singleVendor extends Component {
 			userId: userId,
 			vendorId: Number(id),
 		};
-
-		this.props.onCommentAdded(data);
+		const indexValue = ''
+		const userFullName = `${user.firstName} ${user.lastName}`
+		const userName = user.userName
+		const profilePictureUrl = user.profilePictureUrl
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
+		this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
 	};
 
 	render() {
@@ -134,6 +154,7 @@ class singleVendor extends Component {
 			hideContact,
 			user,
 		} = this.state;
+		console.log(singleVendorData)
 
 		let editProfile = '';
 		if (
@@ -213,8 +234,9 @@ class singleVendor extends Component {
 											</div>
 										</div>
 									)}
-
-									<div className=''>
+									{
+										user.userId !== singleVendorData.userId ?
+											<div className=''>
 										<button
 											to='#pxp-work-with'
 											className='pxp-agent-contact-btn'
@@ -237,6 +259,9 @@ class singleVendor extends Component {
 											/>
 										) : null}
 									</div>
+									: ""
+									}
+									
 								</div>
 
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
@@ -517,7 +542,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
+		onCommentAdded: (data, index, userFullName ,userName, profilePictureUrl , date) =>
+		 dispatch(actions.AddComments(data, index, userFullName ,userName, profilePictureUrl, date)),
 		onGetSingleVendorsData: (userData) =>
 			dispatch(actions.getSingleVendorData(userData)),
 		onGetSingleVendorsPropertiesData: (data) =>

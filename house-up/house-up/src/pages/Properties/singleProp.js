@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment'
 import { Link } from 'react-router-dom';
 import Contact from '../../components/Popups/contactUsPopup';
 
@@ -32,6 +33,19 @@ class singleProp extends Component {
 		if (auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)) {
 			changedState.user = auth.user;
 			stateChanged = true;
+		}
+		if (
+			property &&
+			JSON.stringify(state.singleVendorData) !== JSON.stringify(property.singleVendorData)
+		) {
+			changedState.singleVendorData = property.singleVendorData;
+			stateChanged = true;
+			if (
+				changedState.singleVendorData &&
+				changedState.singleVendorData.propertyComments.length
+			) {
+				changedState.comments = changedState.singleVendorData.propertyComments
+			}
 		}
 		if (
 			changedState.indexPageData &&
@@ -109,7 +123,7 @@ class singleProp extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, commentText, userId } = this.state;
+		const { id, commentText, userId , user } = this.state;
 
 		const data = {
 			postId: 0,
@@ -120,7 +134,12 @@ class singleProp extends Component {
 			userId: userId,
 			vendorId: 0,
 		};
-		this.props.onCommentAdded(data);
+		const indexValue = ''
+		const userFullName = `${user.firstName} ${user.lastName}`
+		const userName = user.userName
+		const profilePictureUrl = user.profilePictureUrl
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
+		this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
 	};
 
 	ImagePreviewHandler = () => {
@@ -129,6 +148,7 @@ class singleProp extends Component {
 
 	render() {
 		const { singlePropertyData, commentText, imageToggle, user } = this.state;
+		console.log(singlePropertyData)
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -828,29 +848,22 @@ class singleProp extends Component {
 										</div>
 										<div className='clearfix' />
 										<div className='pxp-sp-agent-btns mt-3 mt-md-4'>
-											{user && user.profilePictureUrl ? (
-												<button
+											{
+												user.userId !== singlePropertyData.userId ?
+													<button
 													className='pxp-sp-agent-btn-main'
 													data-toggle='modal'
-													onClick={() =>
-														this.modelHanlder(
-															'contactModalState',
-															singlePropertyData.userId
-														)
-													}
+													onClick={
+														user && user.profilePictureUrl ?
+														() =>
+															this.modelHanlder('contactModalState',singlePropertyData.userId)
+														: 
+														() => this.props.modelHanlder('phoneSignin')}
 												>
 													Contact Us
 												</button>
-											) : (
-												<button
-													className='pxp-sp-agent-btn-main'
-													data-toggle='modal'
-													onClick={() => this.props.modelHanlder('phoneSignin')}
-												>
-													Contact Us
-												</button>
-											)}
-
+											: ""
+											}
 											{this.state.contactModalState ? (
 												<Contact
 													show={this.state.contactModalState}
@@ -879,8 +892,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data, profilePictureUrl) =>
-			dispatch(actions.AddComments(data, profilePictureUrl)),
+		onCommentAdded: (data, index, userFullName ,userName, profilePictureUrl , date) =>
+		 dispatch(actions.AddComments(data, index, userFullName ,userName, profilePictureUrl, date)),
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
 	};

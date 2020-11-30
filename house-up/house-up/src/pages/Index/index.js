@@ -160,6 +160,7 @@ class index extends Component {
 			postId,
 			storyImageId,
 			vendorId,
+			user
 		} = this.state;
 		if (typeCategory === 'Post') {
 			postId = id;
@@ -178,11 +179,12 @@ class index extends Component {
 			userId: userId,
 			vendorId: vendorId,
 		};
+		const userFullName = `${user.firstName} ${user.lastName}`
 		this.setState({
 			commentText: '',
 			activeCommentId: '',
 		});
-		this.props.onCommentAdded(data, index, userName);
+		this.props.onCommentAdded(data, index,userFullName,userName );
 	};
 
 	followUnfollwProfessionals = (id, index, follow, val) => (e) => {
@@ -774,13 +776,13 @@ class index extends Component {
 																											onChange={this.onChange}
 																										/>
 
-																										<span
+																										<button
 																											className=''
 																											onClick={() =>
 																												this.AddComment(
 																													data &&
-																														data.object &&
-																														data.object.postId,
+																													data.object &&
+																													data.object.postId,
 																													data && data.category,
 																													index
 																												)
@@ -790,7 +792,7 @@ class index extends Component {
 																												src={require('../../assets/images/ic_sent.svg')}
 																												alt=''
 																											/>
-																										</span>
+																										</button>
 																									</div>
 																								</div>
 																							</div>
@@ -1079,7 +1081,7 @@ class index extends Component {
 																											}
 																											onChange={this.onChange}
 																										/>
-																										<span
+																										<button
 																											className=''
 																											onClick={() =>
 																												this.AddComment(
@@ -1096,7 +1098,7 @@ class index extends Component {
 																												src={require('../../assets/images/ic_sent.svg')}
 																												alt=''
 																											/>
-																										</span>
+																										</button>
 																									</div>
 																								</div>
 																							</div>
@@ -1387,7 +1389,7 @@ class index extends Component {
 																									onChange={this.onChange}
 																								/>
 
-																								<span
+																								<button
 																									className=''
 																									onClick={() =>
 																										this.AddComment(
@@ -1403,7 +1405,7 @@ class index extends Component {
 																										src={require('../../assets/images/ic_sent.svg')}
 																										alt=''
 																									/>
-																								</span>
+																								</button>
 																							</div>
 																						</div>
 																					</div>
@@ -1579,8 +1581,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data, index, userName) =>
-			dispatch(actions.AddComments(data, index, userName)),
+		onCommentAdded: (data, index,userFullName,userName ) =>
+			dispatch(actions.AddComments(data, index,userFullName,userName )),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
 		onFollowUnfollowProfessionals: (data, index, type) =>
 			dispatch(actions.followProfessionals(data, index, type)),

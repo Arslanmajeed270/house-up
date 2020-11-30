@@ -136,6 +136,8 @@ export const createVendor = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/registerUser', userData)
 		.then((res) => {
+			console.log('res from backend',res)
+
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: REGISTER_VENDOR_SUCCESS });
 				dispatch(clearErrors());
