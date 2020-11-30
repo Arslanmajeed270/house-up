@@ -239,15 +239,17 @@ export const followProfessionals = (data, index, type) => (dispatch) => {
 		});
 };
 // add Comments to the post and property
-export const AddComments = (data, index, contactName , profilePictureUrl) => (dispatch) => {
+export const AddComments = (data, index, userFullName , userName , profilePictureUrl , date) => (dispatch) => {
 	axios.post(backendServerURL + '/addComment', data).then((res) => {
 		if (res && res.data && res.data.resultCode === '200') {
 			const payload = {
 				index: index,
 				category: data.category,
 				comment: data.commentText,
-				contactName: contactName,
-				profilePictureUrl : profilePictureUrl
+				userFullName: userFullName,
+				userName : userName,
+				profilePictureUrl : profilePictureUrl,
+				createDateTime : date
 			};
 			dispatch({
 				type: ADD_COMMENTS,
@@ -403,7 +405,6 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/chargeCustomerUsingCreditCard', userData)
 		.then((res) => {
-			console.log('heelo ',res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
@@ -436,7 +437,6 @@ export const getPackagePlan = () => (dispatch) => {
 			channel:"web"
 	})
 		.then((res) => {
-			console.log('bye,',res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch(clearErrors());
 				dispatch({

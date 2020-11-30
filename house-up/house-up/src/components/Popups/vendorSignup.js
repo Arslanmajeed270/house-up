@@ -594,7 +594,11 @@ class vendorSignup extends Component {
 									<div className='form-group'>
 										<input
 											type='text'
-											className='form-control'
+											className={`form-control ${
+												errors && errors.message && errors.message === "User with this email already exist." ? 
+												'customError'
+												 : ''
+											}`}
 											id='pxp-signin-email'
 											placeholder='Email'
 											name='emailAddress'
@@ -602,6 +606,11 @@ class vendorSignup extends Component {
 											onChange={this.onChange}
 											required
 										/>
+										{
+											errors && errors.message && errors.message === "User with this email already exist." ?
+											<span className="text-danger error-text">{errors.message}</span>
+										: ""
+										}
 									</div>
 								</div>
 								<div
@@ -611,7 +620,11 @@ class vendorSignup extends Component {
 									<div className='form-group'>
 										<input
 											type='text'
-											className='form-control'
+											className={`form-control ${
+												errors && errors.message && errors.message === "User with this user name already exist" ? 
+												'customError'
+												 : ''
+											}`}
 											id='pxp-signin-email'
 											placeholder='Create UserName'
 											name='userName'
@@ -619,6 +632,11 @@ class vendorSignup extends Component {
 											onChange={this.onChange}
 											required
 										/>
+										{
+											errors && errors.message && errors.message === "User with this user name already exist" ?
+											<span className="text-danger error-text">{errors.message}</span>
+										: ""
+										}
 									</div>
 								</div>
 							</div>
@@ -941,7 +959,9 @@ class vendorSignup extends Component {
 										<input
 											type={viewPass ? 'text' : 'password'}
 											className={`form-control ${
-												errors && errors.message ? 'customError' : ''
+												errors && errors.message && errors.message === "Password not matched!" ? 
+												'customError'
+												 : ''
 											}`}
 											id='pxp-signin-email'
 											placeholder='Password'
@@ -969,7 +989,9 @@ class vendorSignup extends Component {
 										<input
 											type={viewConfirmPass ? 'text' : 'password'}
 											className={`form-control ${
-												errors && errors.message ? 'customError' : ''
+												errors && errors.message && errors.message === "Password not matched!" ? 
+												'customError'
+												 : ''
 											}`}
 											id='pxp-signin-email'
 											placeholder='Confirm Password'

@@ -165,9 +165,11 @@ export default function (state = initialState, action) {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.propertyComments.push({
-						contactName: action.payload.contactName,	
+						userName: action.payload.userName,
+						userFullName: action.payload.userFullName,	
 						commentText: action.payload.comment,
-						profilePictureUrl :  action.payload.profilePictureUrl
+						profilePictureUrl :  action.payload.profilePictureUrl,
+						createDateTime : action.payload.createDateTime
 					});
 				}
 				if (action.payload.category === 'Post') {
@@ -175,6 +177,7 @@ export default function (state = initialState, action) {
 						action.payload.index
 					].object.postComments.push({
 						userName: action.payload.userName,
+						createDateTime : action.payload.createDateTime,
 						commentText: action.payload.comment,
 					});
 				}
@@ -182,8 +185,11 @@ export default function (state = initialState, action) {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.vendorComments.push({
+						userFullName: action.payload.userFullName,
 						userName: action.payload.userName,
+						profilePictureUrl :  action.payload.profilePictureUrl,
 						commentText: action.payload.comment,
+						createDateTime : action.payload.createDateTime
 					});
 				}
 			}

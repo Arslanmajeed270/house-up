@@ -889,3 +889,7 @@ h1.titles-property {
   width: 100px;
   height: 100px;
 }
+.error-text{
+  font-size: 12px;
+  padding: 0px 10px;
+}

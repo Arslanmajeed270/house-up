@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import moment from 'moment'
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/common/Spinner';
+
 class comments extends Component {
 	constructor(props) {
 		super(props);
@@ -11,7 +13,7 @@ class comments extends Component {
 			indexPageData: {},
 			user: {},
 			contactEmail: '',
-			contactName: '',
+			userFullName: '',
 			commentText: '',
 			userId: '',
 			postId: '',
@@ -94,12 +96,12 @@ class comments extends Component {
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
-		const contactName = `${firstName} ${lastName}`;
+		const userFullName = `${firstName} ${lastName}`;
 		const userId = user.userId ? user.userId : '';
 
 		this.setState({
 			contactEmail,
-			contactName,
+			userFullName,
 			userId,
 		});
 
@@ -143,7 +145,7 @@ class comments extends Component {
 			storyImageId,
 			vendorId,
 			category,
-			contactName
+			userFullName
 		} = this.state;
 
 		const data = {
@@ -153,10 +155,11 @@ class comments extends Component {
 			propertyId: Number(propertyId),
 			commentText: commentText,
 			userId: userId,
-			vendorId: Number(vendorId),
+			vendorId: Number(vendorId)
 		};
-
-		this.props.onCommentAdded(data, indexValue, contactName , profilePictureUrl);
+		const userName = this.state.user.userName;
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
+		this.props.onCommentAdded(data, indexValue, userFullName ,userName, profilePictureUrl,date);
 	};
 
 	render() {
@@ -277,15 +280,17 @@ class comments extends Component {
 											value={commentText}
 											onChange={this.onChange}
 										/>
-										<span
+										<button
 											className='send-btn-single-property'
+											type="submit"
 											onClick={this.onSubmit}
+											
 										>
 											<img
 												src={require('../../assets/images/ic_sent.svg')}
 												alt=''
 											/>
-										</span>
+										</button>
 									</div>
 								</form>
 							</div>
@@ -307,8 +312,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data, index, contactName , profilePictureUrl) =>
-			dispatch(actions.AddComments(data, index, contactName , profilePictureUrl)),
+		onCommentAdded: (data, index, userFullName ,userName, profilePictureUrl , date) =>
+			dispatch(actions.AddComments(data, index, userFullName ,userName, profilePictureUrl, date)),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
 	};
 };
