@@ -113,7 +113,7 @@ class forgotPass extends Component {
         dialogClassName="modal-width"
         onHide={() => this.props.closeCodelHanlder('forgotPass')}
       >
-        <Modal.Body style={{ padding: '30px 15px 10px' }}>
+        <Modal.Body style={{ padding: '20px 15px 5px' }}>
           <Link to="#">
             <form>
               <div

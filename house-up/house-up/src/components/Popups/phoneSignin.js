@@ -115,7 +115,7 @@ class phoneSignIn extends Component {
         dialogClassName="modal-width"
         onHide={() => this.props.closeCodelHanlder('phoneSignin')}
       >
-        <Modal.Body style={{ paddingTop: '25px' }}>
+        <Modal.Body style={{ paddingTop: '20px' }}>
           <div>
             <div className="logo-modal"></div>
             <div className="">

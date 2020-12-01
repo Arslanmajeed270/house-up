@@ -576,7 +576,7 @@ class vendorSignup extends Component {
 											type='text'
 											className='form-control'
 											id='pxp-signin-email'
-											placeholder='lastName'
+											placeholder='Last Name'
 											name='lastName'
 											value={lastName}
 											onChange={this.onChange}

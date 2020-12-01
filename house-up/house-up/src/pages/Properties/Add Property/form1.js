@@ -335,7 +335,7 @@ class form1 extends Component {
                   className="btn btn-lg btn-primary"
                   htmlFor="pictures"
                   style={{
-                    marginTop: '15px',
+                    marginTop: '50px',
                     backgroundColor: '#00B0E9',
                     borderRadius: '0px',
                     border: 'none',

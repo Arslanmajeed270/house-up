@@ -67,13 +67,13 @@ class phonenumberForgotPass extends Component {
           closeButton
           onClick={() => this.props.closeCodelHanlder('phoneNoForgotPass')}
         ></Modal.Header>
-        <Modal.Body style={{ padding: '30px 15px 10px' }}>
+        <Modal.Body style={{ padding: '20px 15px 5px' }}>
           {errors && errors.message && (
             <Alert variant="danger">
               <strong>Error!</strong> {errors.message}
             </Alert>
           )}
-          <div className="logo-modal">
+          <div className="logo-modal img-large">
             <img
               src={require('../../assets/images/icons/ic_logo.svg')}
               alt=""

@@ -15,7 +15,7 @@ class forgotPassCongrats extends Component {
       >
         <Modal.Body
           onClick={this.props.congratulationPopupHandler}
-          style={{ padding: '30px 15px 10px' }}
+          style={{ padding: '20px 15px 5px' }}
         >
           <div className="">
             <div

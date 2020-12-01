@@ -572,7 +572,7 @@ h1.pxp-page-header {
 }
 .pxp-nav > li > a,
 .pxp-nav > li > a:hover {
-    /*/* font-weight: 700; */ */
+    /*/* font-weight: 700; */ 
     color: #fff;
     text-decoration: none;
 }
@@ -2839,7 +2839,7 @@ h1.pxp-page-header {
 
 .pxp-map-side {
     position: fixed;
-    top: 69px;
+    top: 116px;
     bottom: 62.72px;
     width: 50%;
 }
@@ -2988,7 +2988,7 @@ a.pxp-list-toggle.pxp-active {
 }
 .pxp-price-marker {
     position: absolute;
-    font-family: font-family: 'Regular', sans-serif;;
+    font-family: 'Regular', sans-serif;;
     color: #333;
     border: 2px solid #333;
     background-color: #fff;
@@ -4928,6 +4928,10 @@ fieldset[disabled] .checkbox.custom-checkbox input:checked+span {
         margin-top: 20px;
     }
 
+    .vendor-login-name {
+        display: none;
+    }
+
     .pxp-sp-gallery-btn {
         right: 50px;
         bottom: 70px;
@@ -6763,7 +6767,6 @@ span.title-property {
     color: #4d4d4d;
     font-size: 14px;
     font-family: Regular;
-    margin-bottom: 14px;
     height: auto !important;
 }
 .dashboard-newsfeed-details span {
@@ -6814,9 +6817,9 @@ span.title-property {
     position: relative;
 }
 
-.comment-input-pointer img {
+.comment-input-pointer img,.comment-input-pointer button  {
     position: absolute;
-    top: 2px;
+    top: 1px;
     right: 5px;
     width: 25px;
 }
@@ -6874,15 +6877,21 @@ span.title-property {
 }
 
 .logo-modal img {
-    /* width: 30px;
+    width: 30px;
     height: 60px;
-    line-height: 60px; */
+    line-height: 60px; 
 }
 
-/* .user {
+.logo-modal.img-large img {
+    width: auto;
+    height: auto;
+    line-height: normal; 
+}
+
+.user {
     font-size: 18px !important;
     padding: 8px 0px 0px 0px !important;
-} */
+}
  
 .visa-card-selection {
     display: flex;

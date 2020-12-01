@@ -127,7 +127,7 @@ class properties extends Component {
 		return (
 			<React.Fragment>
 				<div className='pxp-content pxp-full-height'>
-					<div className='row' style={{ marginTop: '110px' }}>
+					{/*<div className='row' style={{ marginTop: '110px' }}>
 						{indexPageData &&
 						indexPageData.propertyCounts &&
 						indexPageData.propertyCounts.length
@@ -144,7 +144,7 @@ class properties extends Component {
 									</div>
 							  ))
 							: ''}
-					</div>
+							</div> */}
 					<div className='pxp-map-side pxp-map-right pxp-half'>
 						<GoogleMapReact
 							bootstrapURLKeys={{ key: googpleMapApiKey }}

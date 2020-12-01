@@ -357,7 +357,7 @@ class index extends Component {
                       <div className="row">
                         <div className="col-md-12 col-lg-12">
                           <div className="container-fluid pxp-props-carousel-right mt-100 mtpx-100">
-                            <div className="pxp-props-carousel-right-container mt-4 mt-md-5">
+                            <div className="pxp-props-carousel-right-container mt-4">
                               <div className="owl-carousel pxp-props-carousel-right-stage-2">
                                 <AliceCarousel
                                   mouseTracking
@@ -836,7 +836,7 @@ class index extends Component {
 																							<div className='col-md-6 col-sm-6 col-6'>
 																								<div
 																									className='feature-head'
-																									style={{ textAlign: 'right' }}
+																									style={{ textAlign: 'right',paddingRight:'20px',fontSize:'20px',fontFamily:'Condensed' }}
 																								>
 																									<span>
 																										<b>
