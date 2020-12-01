@@ -141,7 +141,7 @@ class home extends Component {
 													placeholder='City, neighbourhood...'
 												/>
 												<img
-													class='search'
+													className='search'
 													src='assets/images/ic_search.svg'
 													alt='logo'
 												></img>

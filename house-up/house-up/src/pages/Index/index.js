@@ -230,6 +230,11 @@ class index extends Component {
 		this.setState({ storyToggle: !this.state.storyToggle });
 	};
 
+	handleDragStart = (e) => {
+		e.preventDefault();
+		console.log('checking i am here');
+	};
+
 	render() {
 		let {
 			errors,
@@ -294,24 +299,27 @@ class index extends Component {
 		) {
 			for (let i = 0; i < indexPageData.propertyCounts.length; i++) {
 				let locationItem = (
-					<div className='neighbourhoods_slider'>
-						<Link to='/properties'>
-							<div
-								className='pxp-prop-card-explore'
-								style={{
-									backgroundImage: `url(${
-										indexPageData.propertyCounts[i] &&
-										indexPageData.propertyCounts[i].properties[0] &&
-										indexPageData.propertyCounts[i].properties[0]
-											.imageList[0] &&
-										indexPageData.propertyCounts[i].properties[0].imageList[0]
-											.imageURL
-											? indexPageData.propertyCounts[i].properties[0]
-													.imageList[0].imageURL
-											: require('../../assets/images/dashboard/ottawa.png')
-									})`,
-								}}
-							>
+					<div
+						onDragStart={this.handleDragStart}
+						className='neighbourhoods_slider'
+					>
+						<div
+							onClick={() => this.props.history.push('/properties')}
+							className='pxp-prop-card-explore'
+							style={{
+								backgroundImage: `url(${
+									indexPageData.propertyCounts[i] &&
+									indexPageData.propertyCounts[i].properties[0] &&
+									indexPageData.propertyCounts[i].properties[0].imageList[0] &&
+									indexPageData.propertyCounts[i].properties[0].imageList[0]
+										.imageURL
+										? indexPageData.propertyCounts[i].properties[0].imageList[0]
+												.imageURL
+										: require('../../assets/images/dashboard/ottawa.png')
+								})`,
+							}}
+						>
+							<div to='/properties'>
 								<div className='d-table w-100 '>
 									<div className='d-table-cell va-bottom neighbours-height paddg'>
 										<h2>
@@ -324,7 +332,7 @@ class index extends Component {
 									</div>
 								</div>
 							</div>
-						</Link>
+						</div>
 					</div>
 				);
 				locationItems.push(locationItem);
