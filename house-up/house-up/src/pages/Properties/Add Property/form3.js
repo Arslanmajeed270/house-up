@@ -51,6 +51,8 @@ class form3 extends Component {
 			areaType: [],
 			buildingType: [],
 			condoFee: '',
+			propertyFeeId:'',
+			packageRenewal:false
 		};
 	}
 	moreOptionToggle = () => {
@@ -277,8 +279,24 @@ class form3 extends Component {
 				buildingTypeId: buildingType[0].id,
 			});
 		}
+		// const feeData = {
+		// 	dropDownData : this.props.dropDownData,
+		// 	form4Data: this.state.form4Data,
+		// 	form4DataHandler: this.form4DataHandler
+		// }
+		// this.props.modelHanlder('propertyPlanSelection', feeData)
+		console.log("website sucks")
 		this.props.form3DataHandler(dataform3);
+		this.props.formShowHandler(3);
 	};
+	// form4DataHandler = (form4Data) => {
+	// 	console.log("hello")
+	// 	this.setState({ 
+	// 		packageRenewal: form4Data.autoRenew,
+	// 		propertyFeeId: form4Data.feeId 
+	// 	});
+	// };
+	
 
 	render() {
 		const {
@@ -936,14 +954,16 @@ class form3 extends Component {
 									</button>
 								</div>
 							</div>
-							{this.state.propertyPlanState ? (
+							{/* {this.state.propertyPlanState ? (
 								<PropertyPlan
 									show={this.state.propertyPlanState}
+									autoRenew={this.props.autoRenew}
+									feeId={this.props.feeId}
 									closeCodelHanlder={this.propertyPlanStateHandler}
 								/>
 							) : (
 								''
-							)}
+							)} */}
 						</div>
 					</div>
 				</form>

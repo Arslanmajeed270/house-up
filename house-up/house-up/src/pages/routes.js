@@ -36,8 +36,8 @@ class Routes extends React.Component {
 					component={() => <Home modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/about'} component={About} />
-				<PrivateRoute exact path={'/add-property'} component={AddProperty} />
-				<Route exact path={'/add-product'} component={AddProduct} />
+				<PrivateRoute exact path={'/add-property'} component={() => <AddProperty modelHanlder={this.props.modelHanlder}/> } />
+		<Route exact path={'/add-product'} component={AddProduct } />
 				<Route exact path={'/add-coupon'} component={AddCoupon} />
 				<Route
 					exact

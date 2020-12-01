@@ -744,49 +744,40 @@ class singleProp extends Component {
 														  )
 														: ''}
 												</div>
-												<form
-													action='/single-vendor'
-													className='pxp-agent-comments-form mt-3 mt-md-4'
-													onSubmit={this.onSubmit}
-												>
-													<div className='row'>
-														<div className='col-sm-12 col-md-6'></div>
-													</div>
-													<div className='form-group comment-send-btn'>
-														<input
-															className='form-control'
-															placeholder='Write your review here...'
-															style={{ height: '75px' }}
-															name='commentText'
-															value={commentText}
-															onChange={this.onChange}
+													{
+													user && user.profilePictureUrl ?
+															<form
+												action='/single-vendor'
+												className='pxp-agent-comments-form mt-3 mt-md-4'
+												onSubmit={this.onSubmit}
+											>
+												<div className='row'>
+													<div className='col-sm-12 col-md-6'></div>
+												</div>
+												<div className='form-group comment-send-btn'>
+													<input
+														className='form-control'
+														placeholder='Write your review here...'
+														style={{ height: '75px' }}
+														name='commentText'
+														value={commentText}
+														onChange={this.onChange}
+													/>
+													<span
+														className='send-btn-single-property'
+														onClick={this.onSubmit}
+													>
+														<img
+															src={require('../../assets/images/ic_sent.svg')}
+															alt=''
 														/>
-														{user && user.profilePictureUrl ? (
-															<span
-																className='send-btn-single-property'
-																onClick={this.onSubmit}
-															>
-																<img
-																	src={require('../../assets/images/ic_sent.svg')}
-																	alt=''
-																/>
-															</span>
-														) : (
-															<span
-																className='send-btn-single-property'
-																onClick={() =>
-																	this.props.modelHanlder('phoneSignin')
-																}
-															>
-																<img
-																	src={require('../../assets/images/ic_sent.svg')}
-																	alt=''
-																/>
-															</span>
-														)}
-													</div>
-												</form>
-											</div>
+													</span>
+												</div>
+											</form>
+										
+										: ""
+												}
+												</div>
 										</div>
 									</div>
 								</div>

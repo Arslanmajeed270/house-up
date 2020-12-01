@@ -240,6 +240,7 @@ class index extends Component {
 			storyToggle,
 			activeCommentId,
 		} = this.state;
+		console.log("index page data", indexPageData)
 
 		let pageContent = '';
 
@@ -294,8 +295,8 @@ class index extends Component {
 		) {
 			for (let i = 0; i < indexPageData.propertyCounts.length; i++) {
 				let locationItem = (
-					<Link to='/properties'>
-						<div className='neighbourhoods_slider'>
+					<div className='neighbourhoods_slider'>
+						<Link to='/properties'>
 							<div
 								className='pxp-prop-card-explore'
 								style={{
@@ -324,8 +325,8 @@ class index extends Component {
 									</div>
 								</div>
 							</div>
-						</div>
-					</Link>
+						</Link>
+					</div>
 				);
 				locationItems.push(locationItem);
 			}

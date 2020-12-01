@@ -13,6 +13,9 @@ class propertyPlan extends Component {
 			propertyPlanState: false,
 		};
 	}
+	componentDidMount(){
+		console.log("clicked")
+	}
 
 	clickHandler = () => {
 		this.setState({ clicked: !this.state.clicked });

@@ -603,6 +603,7 @@ class vendorSignup extends Component {
 											placeholder='Email'
 											name='emailAddress'
 											value={emailAddress}
+											disabled={this.props.userData ? true : false }
 											onChange={this.onChange}
 											required
 										/>
@@ -629,6 +630,7 @@ class vendorSignup extends Component {
 											placeholder='Create UserName'
 											name='userName'
 											value={userName}
+											disabled={this.props.userData ? true : false }
 											onChange={this.onChange}
 											required
 										/>

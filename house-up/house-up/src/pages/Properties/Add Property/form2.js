@@ -90,9 +90,9 @@ class form2 extends Component {
 		const form2Data = {
 			description,
 			currencyId:
-				currencyId === ''
-					? currencyData && currencyData.length && currencyData[0].id
-					: currencyId,
+			currencyId === ''
+				? currencyData && currencyData.length && currencyData[0].id
+				: currencyId,
 			adTitle,
 			contactName,
 			contactEmail,
