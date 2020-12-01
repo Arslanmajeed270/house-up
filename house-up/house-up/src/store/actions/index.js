@@ -27,7 +27,8 @@ export {
 	createCreditCardToken,
 	markCreditCardDefault,
 	chargeCustomerUsingCreditCard,
-	getPackagePlan
+	getPackagePlan,
+	chargeCustomerForPropertyUsingCreditCard
 } from './pageActions';
 
 export {
