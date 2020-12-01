@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import moment from 'moment'
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import Contact from '../../components/Popups/contactUsPopup';
 
@@ -36,7 +36,8 @@ class singleProp extends Component {
 		}
 		if (
 			property &&
-			JSON.stringify(state.singleVendorData) !== JSON.stringify(property.singleVendorData)
+			JSON.stringify(state.singleVendorData) !==
+				JSON.stringify(property.singleVendorData)
 		) {
 			changedState.singleVendorData = property.singleVendorData;
 			stateChanged = true;
@@ -44,7 +45,7 @@ class singleProp extends Component {
 				changedState.singleVendorData &&
 				changedState.singleVendorData.propertyComments.length
 			) {
-				changedState.comments = changedState.singleVendorData.propertyComments
+				changedState.comments = changedState.singleVendorData.propertyComments;
 			}
 		}
 		if (
@@ -123,7 +124,7 @@ class singleProp extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, commentText, userId , user } = this.state;
+		const { id, commentText, userId, user } = this.state;
 
 		const data = {
 			postId: 0,
@@ -134,12 +135,19 @@ class singleProp extends Component {
 			userId: userId,
 			vendorId: 0,
 		};
-		const indexValue = ''
-		const userFullName = `${user.firstName} ${user.lastName}`
-		const userName = user.userName
-		const profilePictureUrl = user.profilePictureUrl
-		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
-		this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
+		const indexValue = '';
+		const userFullName = `${user.firstName} ${user.lastName}`;
+		const userName = user.userName;
+		const profilePictureUrl = user.profilePictureUrl;
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
+		this.props.onCommentAdded(
+			data,
+			indexValue,
+			userFullName,
+			userName,
+			profilePictureUrl,
+			date
+		);
 	};
 
 	ImagePreviewHandler = () => {
@@ -148,7 +156,7 @@ class singleProp extends Component {
 
 	render() {
 		const { singlePropertyData, commentText, imageToggle, user } = this.state;
-		console.log(singlePropertyData)
+		console.log(singlePropertyData);
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -744,23 +752,24 @@ class singleProp extends Component {
 														  )
 														: ''}
 												</div>
-												<form
-													action='/single-vendor'
-													className='pxp-agent-comments-form mt-3 mt-md-4'
-													onSubmit={this.onSubmit}
-												>
-													<div className='row'>
-														<div className='col-sm-12 col-md-6'></div>
-													</div>
-													<div className='form-group comment-send-btn'>
-														<input
-															className='form-control'
-															placeholder='Write your review here...'
-															name='commentText'
-															value={commentText}
-															onChange={this.onChange}
-														/>
-														{user && user.profilePictureUrl ? (
+												{user && user.profilePictureUrl ? (
+													<form
+														action='/single-vendor'
+														className='pxp-agent-comments-form mt-3 mt-md-4'
+														onSubmit={this.onSubmit}
+													>
+														<div className='row'>
+															<div className='col-sm-12 col-md-6'></div>
+														</div>
+														<div className='form-group comment-send-btn'>
+															<input
+																className='form-control'
+																placeholder='Write your review here...'
+																style={{ height: '75px' }}
+																name='commentText'
+																value={commentText}
+																onChange={this.onChange}
+															/>
 															<span
 																className='send-btn-single-property'
 																onClick={this.onSubmit}
@@ -770,21 +779,11 @@ class singleProp extends Component {
 																	alt=''
 																/>
 															</span>
-														) : (
-															<span
-																className='send-btn-single-property'
-																onClick={() =>
-																	this.props.modelHanlder('phoneSignin')
-																}
-															>
-																<img
-																	src={require('../../assets/images/ic_sent.svg')}
-																	alt=''
-																/>
-															</span>
-														)}
-													</div>
-												</form>
+														</div>
+													</form>
+												) : (
+													''
+												)}
 											</div>
 										</div>
 									</div>
@@ -847,22 +846,25 @@ class singleProp extends Component {
 										</div>
 										<div className='clearfix' />
 										<div className='pxp-sp-agent-btns mt-3 mt-md-4'>
-											{
-												user.userId !== singlePropertyData.userId ?
-													<button
+											{user.userId !== singlePropertyData.userId ? (
+												<button
 													className='pxp-sp-agent-btn-main'
 													data-toggle='modal'
 													onClick={
-														user && user.profilePictureUrl ?
-														() =>
-															this.modelHanlder('contactModalState',singlePropertyData.userId)
-														: 
-														() => this.props.modelHanlder('phoneSignin')}
+														user && user.profilePictureUrl
+															? () =>
+																	this.modelHanlder(
+																		'contactModalState',
+																		singlePropertyData.userId
+																	)
+															: () => this.props.modelHanlder('phoneSignin')
+													}
 												>
 													Contact Us
 												</button>
-											: ""
-											}
+											) : (
+												''
+											)}
 											{this.state.contactModalState ? (
 												<Contact
 													show={this.state.contactModalState}
@@ -891,8 +893,24 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data, index, userFullName ,userName, profilePictureUrl , date) =>
-		 dispatch(actions.AddComments(data, index, userFullName ,userName, profilePictureUrl, date)),
+		onCommentAdded: (
+			data,
+			index,
+			userFullName,
+			userName,
+			profilePictureUrl,
+			date
+		) =>
+			dispatch(
+				actions.AddComments(
+					data,
+					index,
+					userFullName,
+					userName,
+					profilePictureUrl,
+					date
+				)
+			),
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
 	};

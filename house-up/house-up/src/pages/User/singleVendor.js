@@ -242,14 +242,18 @@ class singleVendor extends Component {
 											className='pxp-agent-contact-btn'
 											data-toggle='modal'
 											data-target='#pxp-work-with'
-											onClick={() =>
+											onClick={
+												user && user.profilePictureUrl ?
+												() =>
 												this.modelHanlder(
 													'contactModalState',
 													singleVendorData.userId
 												)
+												:
+												() => this.props.modelHanlder('phoneSignin')
 											}
 										>
-											CONTACTS US{' '}
+											CONTACT US{' '}
 										</button>
 										{this.state.contactModalState ? (
 											<Contact
@@ -492,7 +496,9 @@ class singleVendor extends Component {
 														</div>
 												  ))
 												: ''}
-											<form
+												{
+													user && user.profilePictureUrl ?
+															<form
 												action='/single-vendor'
 												className='pxp-agent-comments-form mt-3 mt-md-4'
 												onSubmit={this.onSubmit}
@@ -519,6 +525,9 @@ class singleVendor extends Component {
 													</span>
 												</div>
 											</form>
+										
+										: ""
+												}
 										</div>
 									</div>
 								</div>

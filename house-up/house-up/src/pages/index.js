@@ -21,6 +21,7 @@ import ForgotPassCongrats from '../components/Popups/forgotPassCongrats';
 import SubscriptionPlan from '../components/Popups/subscriptionPlan';
 import CardSelection from '../components/Popups/cardSelection';
 import CardDetails from '../components/Popups/cardDetails';
+import PropertyPlanSelection from '../components/Popups/propertyPlanSelection'
 
 class index extends Component {
 	constructor(props) {
@@ -48,6 +49,7 @@ class index extends Component {
 			animateHeader: false,
 			packageId: '',
 			message: '',
+			propertyPlanSelection:false
 		};
 	}
 
@@ -66,8 +68,13 @@ class index extends Component {
 		} else if (model === 'cardSelection') {
 			this.setState({
 				subscriptionPlan: false,
+				propertyPlanSelection: false,
 				[model]: !this.state[model],
 				packageId: data,
+			});
+		} else if (model === 'propertyPlanSelection') {
+			this.setState({
+				[model]: !this.state[model] , message:data,
 			});
 		} else if (model === 'cardDetails') {
 			this.setState({ cardSelection: false, [model]: !this.state[model] });
@@ -215,6 +222,14 @@ class index extends Component {
 						closeCodelHanlder={this.closeCodelHanlder}
 						phNumber={this.state.phNumber}
 						forgotPassHandler={this.modelHanlder}
+					/>
+				)}
+				{this.state.propertyPlanSelection && (
+					<PropertyPlanSelection
+						show={this.state.propertyPlanSelection}
+						modelHanlder={this.modelHanlder}
+						message={this.state.message}
+						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
 				{this.state.forgotPass && (
