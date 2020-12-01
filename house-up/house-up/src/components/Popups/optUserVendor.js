@@ -103,7 +103,7 @@ class OptUserVendor extends Component {
           onClick={() => this.props.closeCodelHanlder('optUserModelVendor')}
         ></Modal.Header>
 
-        <Modal.Body style={{ padding: '30px 0px 10px' }}>
+        <Modal.Body style={{ padding: '20px 0px 5px' }}>
           <div className="form-group">
             {errors && errors.message && (
               <Alert variant="danger">
@@ -112,7 +112,7 @@ class OptUserVendor extends Component {
             )}
             <div
               className="text-center"
-              style={{ fontSize: '22px', fontWeight: '500', color: '#000' }}
+              style={{ fontSize: '22px', lineHeight:'22px', fontWeight: '500', color: '#000' }}
             >
               We sent you a code to{' '}
             </div>

@@ -92,7 +92,7 @@ class phoneNumberVendor extends Component {
 							<strong>Error!</strong> {errors.message}
 						</Alert>
 					)}
-					<div className='logo-modal'>
+					<div className='logo-modal img-large'>
 						<img
 							src={require('../../assets/images/icons/ic_logo.svg')}
 							alt=''

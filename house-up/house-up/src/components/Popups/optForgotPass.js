@@ -89,7 +89,7 @@ class optForgotPass extends Component {
           onClick={() => this.props.closeCodelHanlder('optForgotPass')}
         ></Modal.Header>
 
-        <Modal.Body style={{ padding: '30px 0px 10px' }}>
+        <Modal.Body style={{ padding: '20px 0px 5px' }}>
           <div className="form-group">
             {errors && errors.message && (
               <Alert variant="danger">
@@ -103,7 +103,7 @@ class optForgotPass extends Component {
                 fontSize: '22px',
                 fontWeight: '500',
                 color: '#000',
-                lineHeight: '20px;',
+                lineHeight: '22px;',
               }}
             >
               We sent you a code to{' '}
@@ -114,7 +114,7 @@ class optForgotPass extends Component {
                 fontSize: '22px',
                 fontWeight: '500',
                 color: '#000',
-                lineHeight: '20px;',
+                lineHeight: '22px;',
               }}
             >
               verify your phone number

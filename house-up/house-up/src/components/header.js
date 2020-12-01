@@ -71,7 +71,7 @@ class header extends Component {
 						(showNav ? ' pxp-mobile ' : '')
 					}
 				>
-					<div className='wrapper'>
+					<div className='container'>
 						<div className='row align-items-center'>
 							<div className='col-8 col-md-3 d-center-element-logo'>
 								<Link
@@ -117,10 +117,10 @@ class header extends Component {
 										: 'Toronto'}
 								</Link>
 							</div>
-							<div className='col-1 col-md-8'>
+							<div className='col-1 col-md-6'>
 								<div
 									className={`flex-center-nav ${
-										animateHeader ? 'pr-8 veTop' : ''
+										animateHeader ? 'veTop' : ''
 									}`}
 								>
 									<ul
@@ -189,7 +189,7 @@ class header extends Component {
 									}
 								</div>
 							</div>
-							<div className='col-5 col-md-1 text-right'>
+							<div className='col-3 col-md-3 text-right'>
 								<Link
 									to='#'
 									className={`pxp-header-nav-trigger ${
@@ -201,6 +201,14 @@ class header extends Component {
 								</Link>
 								{user && user.profilePictureUrl ? (
 									<>
+											<Link
+												className="vendor-login-name"
+												to={`/single-vendor-${
+													user && user.userId ? user.userId : ''
+												}`}
+											>
+												{user && user.firstName}
+											</Link>
 										<div
 											to='#'
 											className={`pxp-header-user pxp-signin-trigger ${
@@ -323,14 +331,6 @@ class header extends Component {
 										/>
 									</Link>
 								)}
-								<Link
-									style={{ color: 'black' }}
-									to={`/single-vendor-${
-										user && user.userId ? user.userId : ''
-									}`}
-								>
-									{user && user.firstName}
-								</Link>
 							</div>
 						</div>
 					</div>

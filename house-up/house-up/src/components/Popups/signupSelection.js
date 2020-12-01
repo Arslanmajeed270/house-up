@@ -15,14 +15,15 @@ class signupSelection extends Component {
           closeButton
           onClick={() => this.props.closeCodelHanlder('signupSelectionModel')}
         ></Modal.Header>
-        <Modal.Body style={{ paddingBottom: '25px', paddingTop: '25px' }}>
+        <Modal.Body style={{ paddingBottom: '20px', paddingTop: '20px' }}>
           <Link>
             <p
               style={{
                 color: '#000',
                 textTransform: 'uppercase',
-                fontSize: '14px',
+                fontSize: '16px',
                 padding: '0px 0px 8px',
+                fontWeight:'bold'
               }}
             >
               Register As

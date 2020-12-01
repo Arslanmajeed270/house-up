@@ -96,13 +96,13 @@ class phoneNumber extends Component {
           closeButton
           onClick={() => this.props.closeCodelHanlder('phoneNumberModel')}
         ></Modal.Header>
-        <Modal.Body style={{ paddingTop: '25px' }}>
+        <Modal.Body style={{ paddingTop: '20px' }}>
           {errors && errors.message && (
             <Alert variant="danger">
               <strong>Error!</strong> {errors.message}
             </Alert>
           )}
-          <div className="logo-modal">
+          <div className="logo-modal img-large">
             <img
               src={require('../../assets/images/icons/ic_logo.svg')}
               alt=""

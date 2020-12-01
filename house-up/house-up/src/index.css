@@ -110,10 +110,23 @@ body {
 .user {
   font-family: "Regular", sans-serif;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 16px !important;
   color: #000;
   padding: 8px 0 6px 0;
+  font-weight: bold;
 }
+
+.vendor-login-name {
+  color: #fff;
+  float: right;
+  margin-left: 5px !important;
+  margin-top: 10px;
+}
+
+.pxp-full .vendor-login-name {
+  color: #000;
+}
+
 .user-description {
   font-family: "Condensed", sans-serif;
   font-size: 14px;
@@ -245,7 +258,8 @@ body {
   display: block;
   font-size: 14px;
   /*font-weight: 500;
-  */outline: none;
+  */
+  outline: none;
   padding: 10px 10px 8px;
   position: relative;
   transition: all 0.3s;
@@ -293,10 +307,10 @@ body {
   position: absolute;
   top: 0px;
   transition: all 0.3s;
-  -webkit-transition:;
-  -moz-transition:;
-  -ms-transition:;
-  -o-transition:;
+  -webkit-transition: ;
+  -moz-transition: ;
+  -ms-transition: ;
+  -o-transition: ;
 }
 .logo-modal .image-upload-container {
   display: grid;
@@ -513,6 +527,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   /* width: 309.833px !important; */
   margin-right: 20px !important;
 }
+
+.explore-our-neighbours .alice-carousel__stage-item,
+.newsfeed .alice-carousel__stage-item {
+  /* width: 309.833px !important; */
+  margin-right: 0px !important;
+}
 .pxp-prop-card-1-fig .pxp-cover {
   width: 280px !important;
 }
@@ -549,12 +569,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .password-forgotPass {
   position: absolute;
   right: 25px;
-  bottom: 162px !important;
+  bottom: 156px !important;
 }
 .confirmPass-forgotPass {
   position: absolute;
   right: 25px;
-  bottom: 100px !important;
+  bottom: 94px !important;
 }
 .confirmPass-userSignup {
   position: absolute;
@@ -655,7 +675,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .container-fluid.pxp-props-carousel-right.mt-100 {
   padding-left: 0 !important;
-  margin-top: 61px !important;
+  margin-top: 30px !important;
 }
 
 .pxp-prop-card-1-details-title {
@@ -869,10 +889,10 @@ pxp-blog-post-block h2,
   bottom: 167px;
 }
 .country-code-forgotPass {
-  bottom: 173px;
+  bottom: 169px;
 }
 .country-code-forgot-page {
-  bottom: 130.75px;
+  bottom: 125.75px;
 }
 .pi-200 {
   padding-left: 200px !important;
@@ -973,7 +993,7 @@ h1.titles-property {
   width: 100px;
   height: 100px;
 }
-.error-text{
+.error-text {
   font-size: 12px;
   padding: 0px 10px;
 }

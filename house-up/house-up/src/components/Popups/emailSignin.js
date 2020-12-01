@@ -117,10 +117,10 @@ class emailSignin extends Component {
           closeButton
           onClick={() => this.props.closeCodelHanlder('emailSignin')}
         ></Modal.Header>
-        <Modal.Body style={{ paddingTop: '25px' }}>
+        <Modal.Body style={{ paddingTop: '20px' }}>
           <div>
             <div className="logo-modal"></div>
-            <div className="form-group">
+            <div className="">
               <Link
                 to="#"
                 style={{ float: 'right', marginBottom: '3px' }}
