@@ -88,15 +88,21 @@ class cardSelection extends Component {
 
 	onSubmit = () => {
 		const{user} = this.state;
-		const pkgId = this.props.packageId;
-		console.log('checking packaging id: ', pkgId)
-		
-		const data ={
-			userId:user.userId,
-			packageId:pkgId,
-			currency:"cad"
+		if(this.props.packageId){
+			console.log("credit card if statement")
+			const data ={
+				userId:user.userId,
+				packageId:this.props.packageId,
+				currency:"cad"
+			}
+			console.log("data fro api", data)
+			this.props.onChargeCustomerUsingCreditCard(data);
 		}
-		this.props.onChargeCustomerUsingCreditCard(data);
+		else if(this.props.data){
+			console.log("property if statement")
+			this.props.onchargeCustomerForPropertyUsingCreditCard(this.props.data);
+		}
+
 	};
 
 	render() {
@@ -147,14 +153,14 @@ class cardSelection extends Component {
 														</div>
 														<div className='col-md-9 visa-card-selection'>
 															<div>
-																<div class='card '>
+																<div className='card '>
 																	{' '}
 																	{data.brand === 'Visa'
 																		? 'VISA'
 																		: 'MASTER'}{' '}
 																	Card
 																</div>
-																<div class='card-description'>
+																<div className='card-description'>
 																	{' '}
 																	**** **** **** {data.last4}{' '}
 																</div>
@@ -188,8 +194,8 @@ class cardSelection extends Component {
                                     </div>
                                     <div className="col-md-9 visa-card-selection">
                                         <div>
-                                            <div class="card">Master Card</div>
-                                            <div class="card-description"> **** **** **** 4545 </div>
+                                            <div className="card">Master Card</div>
+                                            <div className="card-description"> **** **** **** 4545 </div>
                                         </div>
                                         <img src={require('../../assets/images/ic_check_sel.svg')} alt="" />
                                     </div>
@@ -241,6 +247,8 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(actions.markCreditCardDefault(data)),
 			onChargeCustomerUsingCreditCard: (data) =>
 			dispatch(actions.chargeCustomerUsingCreditCard(data)),
+			onchargeCustomerForPropertyUsingCreditCard: (data) =>
+			dispatch(actions.chargeCustomerForPropertyUsingCreditCard(data)),
 	};
 };
 

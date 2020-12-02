@@ -13,7 +13,7 @@ class propertyPlanSubscription extends Component {
 		this.state = {
 			autoRenew:false,
 			packageSelection:false,
-			feeId:1,
+			feeId:'',
 			feeTypes:[]
 		};
 	}
@@ -35,16 +35,26 @@ class propertyPlanSubscription extends Component {
 	onSubmit = (e) =>{
 		e.preventDefault();
 		const from4Data = {
-			propertyFeeId :1,
+			propertyFeeId :this.state.feeId,
 			packageRenewal:this.state.autoRenew
 		}
-		const packageId = this.state.feeId
-		this.props.modelHanlder('cardSelection', packageId)
+		const data ={
+			propertyFeeId:this.state.feeId,
+			propertyId:0,
+			packageRenewal:this.state.autoRenew
+		}
+		this.props.modelHanlder('cardSelection', data)
 		this.props.message.form4DataHandler(from4Data)
 	}
+	selectPlan = (id) => (
+		this.setState({
+			feeId : id
+		})
+	)
 
 	render() {
-		const { feeTypes , packageSelection } = this.state;
+		const { feeTypes , packageSelection, feeId } = this.state;
+		console.log(`checking this.state: `, this.state);
 		return (
 			<React.Fragment>
 				<Modal
@@ -57,28 +67,20 @@ class propertyPlanSubscription extends Component {
 						<div>
 							<h1>Select Plan</h1>
 						</div>
-							<div className="property-plan-div">
-								<div>
-									LISTING FREE
-								</div>
-								<div className="user-description">
-									Listing property free...
-								</div>
-							</div>
 							{
 								feeTypes && feeTypes.length ?
 								feeTypes.map((data , index)=>
-								<div className=" property-plan-div  row" >
+								<div className=" property-plan-div  row" onClick={()=>this.selectPlan(data.propertyPostingFeeId)} >
 									<div key={index} className="col-md-10">
 									<div>
-										{data.propertyPostingFee === "10" ? "BASIC PLAN" : "STANDARD PLAN"}
+										{data.propertyPostingFee === "10" ?  "BASIC PLAN" : data.propertyPostingFee === "15" ? "STANDARD PLAN" : "LISTING FREE"}
 									</div>
 									<div className="user-description">
 										{data.propertyPostingFeeDesc}
 									</div>
 								</div>
 								<div className="col-md-2">
-										<img src={require(packageSelection ? '../../assets/images/ic_check_sel.svg' :'../../assets/images/ic_check.svg')} alt="" />
+										<img src={require(feeId === data.propertyPostingFeeId ? '../../assets/images/ic_check_sel.svg' :'../../assets/images/ic_check.svg')} alt="" />
 									</div>
 								</div>
 								)

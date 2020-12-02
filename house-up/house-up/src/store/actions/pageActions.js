@@ -430,6 +430,36 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 		});
 };
 
+// chargeCustomerForPropertyUsingCreditCard
+export const chargeCustomerForPropertyUsingCreditCard = (userData) => (dispatch) => {
+	axios
+		.post(backendServerURL + '/chargeCustomerForPropertyUsingCreditCard', userData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch({ type: SHOW_POP_UP });
+				dispatch(clearErrors());
+			} else {
+				dispatch({ type: HIDE_POP_UP });
+				dispatch({ type: SET_DEFAULT_ALL_CARDS });
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		});
+};
+
 // Get Package plan from backend
 export const getPackagePlan = () => (dispatch) => {
 	axios
