@@ -17,6 +17,7 @@ class singleVendor extends Component {
 			commentText: '',
 			user: {},
 			hideContact: true,
+			showPropertyPackage:false
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
@@ -70,27 +71,30 @@ class singleVendor extends Component {
 	}
 
 	componentDidMount() {
-		const id = this.props.match.params.id;
+		const uId = this.props.match.params.id;
 		this.setState({
-			id: id,
-		});
-
-		this.setState({
-			userId: this.state.user.userId ? this.state.user.userId : '',
+			id: uId,
 		});
 
 		let userData = {
-			userId: id,
+			userId: uId,
 		};
+		this.props.onGetSingleVendorsData(userData);
+
+		console.log('userid',this.state.user.userId)
+		console.log('uID',uId)
+		
+		console.log("showPropertyPackage", this.state.showPropertyPackage)
 		const data = {
 			offset: '0',
 			lat: '43.787083',
-			userId: id,
+			userId: uId,
 			channel: 'web',
 			lng: '-79.497369',
 			limit: '10',
+			showPropertyPackage: Number(this.state.user.userId) !== Number(uId) ? false : true
 		};
-		this.props.onGetSingleVendorsData(userData);
+		console.log(data)
 		this.props.onGetSingleVendorsPropertiesData(data);
 	}
 

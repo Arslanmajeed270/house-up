@@ -52,6 +52,15 @@ class userPropertiesList extends Component {
             };
         this.props.onGetSingleVendorsPropertyData(data);
       }
+      updatePropertyState = (propertyStatusDesc , propertyId) =>
+  {
+    let userData = {
+      propertyId,
+      propertyStatusDesc
+    };
+    console.log(userData);
+    this.props.onUpdatePropertyState(userData);
+  }
     render() {
         const {singleVendorsPropertiesData} = this.state;
         return (
@@ -122,17 +131,26 @@ class userPropertiesList extends Component {
                                             data.object.finishedSqftArea}{' '}
                                           SF
                                         </div>
-                                        <div className='pxp-prop-card-1-details-features row text-uppercase'>
+                                        {
+                                          data && data.object && data.object.propertyStatusDesc === "In Review" ?
+                                          <div className='pxp-prop-card-1-details-features row text-uppercase'>
                                           <div className="col-md-4">
-                                            <button className="btn btn-success">APPROVE</button>
+                                            <button className="btn btn-success"
+                                            onClick={()=>this.updatePropertyState("Approved" , data.object.propertId)}>
+                                              APPROVE</button>
                                           </div>
                                           <div className="col-md-4">
-                                            <button className="btn btn-danger">REJECT</button>
+                                            <button className="btn btn-danger"
+                                            onClick={()=>this.updatePropertyState("Rejected" , data.object.propertId)}
+                                            >
+                                              REJECT</button>
                                           </div>
                                           <div className="col-md-4">
                                             <h6 >Premium Plan</h6>
                                           </div> 
                                         </div>
+                                        : ""
+                                        }
                                       </div>
                                       
                                     </Link>
@@ -156,7 +174,8 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-        onGetSingleVendorsPropertyData: (userData) => dispatch(actions.getSingleVendorsPropertyData(userData))
+      onUpdatePropertyState : (userData)=> dispatch(actions.updatePropertyState(userData)),
+      onGetSingleVendorsPropertyData: (userData) => dispatch(actions.getSingleVendorsPropertyData(userData)),
   
     }
   };

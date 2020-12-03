@@ -81,6 +81,16 @@ class singleProp extends Component {
 		this.props.onGetSinglePropertyData(userData);
 	}
 
+	updatePropertyState = (propertyStatusDesc , propertyId) =>
+  {
+    let userData = {
+      propertyId,
+      propertyStatusDesc
+    };
+    console.log(userData);
+    this.props.onUpdatePropertyState(userData);
+  }
+
 	// onChange = (e) => {
 	// 	this.setState({
 	// 		[e.target.name]: e.target.value,
@@ -116,7 +126,7 @@ class singleProp extends Component {
 					<div className='pxp-single-property-top pxp-content-wrapper mt-100'>
 						<div className='wrapper'>
 							<div className='row'>
-								<div className='col-sm-12 col-md-10'>
+								<div className='col-sm-12 col-md-8'>
 									<h2 className='pxp-sp-top-title'>
 										{singlePropertyData && singlePropertyData.adTitle}
 									</h2>
@@ -133,27 +143,28 @@ class singleProp extends Component {
 									</p>
 								</div>
 
-								<div className='col-sm-12 col-md-2' style={{textAlign:'right'}}>
+								<div className='col-sm-12 col-md-4' style={{textAlign:'right'}}>
 									<h4>Premium Plan</h4>
 									<div style={{float:'right'}}>
-										{ singlePropertyData && singlePropertyData.userStatusDesc === "Approved" || singlePropertyData && singlePropertyData.userStatusDesc === "Active" ?
+										{ singlePropertyData && singlePropertyData.propertyStatusDesc === "Approved" || singlePropertyData && singlePropertyData.propertyStatusDesc === "Active" ?
 										<button className="btn btn-success status-btn" 
 										>
 											ACTIVE
 										</button>
-										: singlePropertyData && singlePropertyData.userStatusDesc === "Reject" ?
+										: singlePropertyData && singlePropertyData.propertyStatusDesc === "Rejected" ?
 										<button className="btn btn-danger status-btn" 
 										>
 										REJECT
 										</button>
-										: singlePropertyData && singlePropertyData.userStatusDesc === "" ?
+										: singlePropertyData && singlePropertyData.propertyStatusDesc === "In Review" ?
 										<>
 											<button className="btn btn-success status-btn" 
-											>
-												ACTIVE
+                                        onClick={()=>this.updatePropertyState("Approved" , singlePropertyData.propertId)}>
+										ACTIVE
 											</button>
 											<button className="btn btn-danger status-btn" 
-											>
+											onClick={()=>this.updatePropertyState("Rejected" , singlePropertyData.propertId)}>
+											
 												REJECT
 											</button>
 										</>
@@ -893,6 +904,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
+			onUpdatePropertyState : (userData)=> dispatch(actions.updatePropertyState(userData))
 	};
 };
 

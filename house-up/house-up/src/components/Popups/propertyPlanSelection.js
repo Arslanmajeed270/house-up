@@ -40,11 +40,12 @@ class propertyPlanSubscription extends Component {
 		}
 		const data ={
 			propertyFeeId:this.state.feeId,
-			propertyId:0,
-			packageRenewal:this.state.autoRenew
+			packageRenewal:this.state.autoRenew,
+			form4DataHandler : this.props.message.form4DataHandler,
+			for : "property"
 		}
+		console.log("data fro", data)
 		this.props.modelHanlder('cardSelection', data)
-		this.props.message.form4DataHandler(from4Data)
 	}
 	selectPlan = (id) => (
 		this.setState({

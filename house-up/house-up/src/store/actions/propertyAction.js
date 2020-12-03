@@ -7,6 +7,7 @@ import {
 	SET_ERRORS,
 	PROPERTY_DROP_DWON,
 	GET_SINGLE_PROPERTY,
+	SHOW_POP_UP
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -36,6 +37,7 @@ export const dropDwonMenu = () => (dispatch) => {
 			channel: 'web',
 		})
 		.then((res) => {
+			console.log("res from backend", res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({
 					type: PROPERTY_DROP_DWON,
@@ -69,6 +71,7 @@ export const addProperty = (userData, history) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/AddProperty', userData)
 		.then((res) => {
+			console.log('res for add property', res)
 			if (res && res.data && res.data.resultCode === '200') {
 				history.push(
 					`/index-${userData.country}&${userData.state}&${userData.city}`
@@ -86,6 +89,7 @@ export const addProperty = (userData, history) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
+			console.log(err)
 			dispatch({
 				type: SET_ERRORS,
 				payload:

@@ -18,6 +18,13 @@ export {
     getSingleVendorData,
     getSingleUserData,
     updateUserState,
-    getSingleVendorsPropertyData,
-    getSingleProperty
+    
 } from './userActions';
+
+export {
+    getSingleVendorsPropertyData,
+    getSingleProperty,
+    getPropertiesData,
+    updatePropertyState
+}
+from './propertyAction'

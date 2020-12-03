@@ -47,8 +47,8 @@ class index extends Component {
 			cardSelection: false,
 			cardDetails: false,
 			animateHeader: false,
-			packageId: '',
 			message: '',
+			data:'',
 			propertyPlanSelection:false
 		};
 	}
@@ -70,7 +70,7 @@ class index extends Component {
 				subscriptionPlan: false,
 				propertyPlanSelection: false,
 				[model]: !this.state[model],
-				packageId: data,
+				data: data,
 			});
 		} else if (model === 'propertyPlanSelection') {
 			this.setState({
@@ -186,7 +186,7 @@ class index extends Component {
 				)}
 				{this.state.cardSelection && (
 					<CardSelection
-						packageId={this.state.packageId}
+						data={this.state.data}
 						show={this.state.cardSelection}
 						closeCodelHanlder={this.closeCodelHanlder}
 						cardDetailsHandler={this.modelHanlder}
