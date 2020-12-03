@@ -53,21 +53,20 @@ class singleProp extends Component {
 			changedState.indexPageData &&
 			changedState.indexPageData.vendorPostPropertiesList.length
 		) {
-			changedState.comments = changedState.indexPageData.vendorPostPropertiesList.map(
-				(data) => {
-					if (
-						state.category === 'Property' &&
-						data.category === state.category &&
-						data.object &&
-						data.object.propertId &&
-						data.object.propertId === state.propertId
-					) {
-						changedState.comments = data.object.propertyComments
-							? data.object.propertyComments
-							: [];
-					}
+			changedState.indexPageData.vendorPostPropertiesList.map((data) => {
+				if (
+					state.category === 'Property' &&
+					data.category === state.category &&
+					data.object &&
+					data.object.propertId &&
+					data.object.propertId === state.propertId
+				) {
+					changedState.comments = data.object.propertyComments
+						? data.object.propertyComments
+						: [];
 				}
-			);
+				return data;
+			});
 		}
 		if (
 			property &&

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import moment from 'moment'
+import moment from 'moment';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
@@ -47,32 +47,31 @@ class comments extends Component {
 				changedState.indexPageData &&
 				changedState.indexPageData.vendorPostPropertiesList.length
 			) {
-				changedState.comments = changedState.indexPageData.vendorPostPropertiesList.map(
-					(data) => {
-						if (
-							state.category === 'Property' &&
-							data.category === state.category &&
-							data.object &&
-							data.object.propertId &&
-							data.object.propertId === state.propertId
-						) {
-							changedState.comments = data.object.propertyComments
-								? data.object.propertyComments
-								: [];
-						}
-						if (
-							state.category === 'Post' &&
-							data.category === state.category &&
-							data.object &&
-							data.object.postId &&
-							data.object.postId === state.postId
-						) {
-							changedState.comments = data.object.postComments
-								? data.object.postComments
-								: [];
-						}
+				changedState.indexPageData.vendorPostPropertiesList.map((data) => {
+					if (
+						state.category === 'Property' &&
+						data.category === state.category &&
+						data.object &&
+						data.object.propertId &&
+						data.object.propertId === state.propertId
+					) {
+						changedState.comments = data.object.propertyComments
+							? data.object.propertyComments
+							: [];
 					}
-				);
+					if (
+						state.category === 'Post' &&
+						data.category === state.category &&
+						data.object &&
+						data.object.postId &&
+						data.object.postId === state.postId
+					) {
+						changedState.comments = data.object.postComments
+							? data.object.postComments
+							: [];
+					}
+					return data;
+				});
 			}
 		}
 
@@ -145,7 +144,7 @@ class comments extends Component {
 			storyImageId,
 			vendorId,
 			category,
-			userFullName
+			userFullName,
 		} = this.state;
 
 		const data = {
@@ -155,11 +154,18 @@ class comments extends Component {
 			propertyId: Number(propertyId),
 			commentText: commentText,
 			userId: userId,
-			vendorId: Number(vendorId)
+			vendorId: Number(vendorId),
 		};
 		const userName = this.state.user.userName;
-		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
-		this.props.onCommentAdded(data, indexValue, userFullName ,userName, profilePictureUrl,date);
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
+		this.props.onCommentAdded(
+			data,
+			indexValue,
+			userFullName,
+			userName,
+			profilePictureUrl,
+			date
+		);
 	};
 
 	render() {
@@ -171,7 +177,6 @@ class comments extends Component {
 			indexValue,
 			commentData,
 		} = this.state;
-
 
 		let pageContent = '';
 
@@ -188,7 +193,10 @@ class comments extends Component {
 		}
 		return (
 			<React.Fragment>
-				<div className='row mt-100' style={{marginLeft:'0px',marginRight:'0px'}}>
+				<div
+					className='row mt-100'
+					style={{ marginLeft: '0px', marginRight: '0px' }}
+				>
 					<div className='col-sm-12 col-lg-1' />
 					<div className='col-sm-12 col-lg-6'>
 						<div className='pxp-agent-block'>
@@ -281,9 +289,8 @@ class comments extends Component {
 										/>
 										<button
 											className='send-btn-single-property'
-											type="submit"
+											type='submit'
 											onClick={this.onSubmit}
-											
 										>
 											<img
 												src={require('../../assets/images/ic_sent.svg')}
@@ -311,8 +318,24 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data, index, userFullName ,userName, profilePictureUrl , date) =>
-			dispatch(actions.AddComments(data, index, userFullName ,userName, profilePictureUrl, date)),
+		onCommentAdded: (
+			data,
+			index,
+			userFullName,
+			userName,
+			profilePictureUrl,
+			date
+		) =>
+			dispatch(
+				actions.AddComments(
+					data,
+					index,
+					userFullName,
+					userName,
+					profilePictureUrl,
+					date
+				)
+			),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
 	};
 };

@@ -11,7 +11,6 @@ import Spinner from '../../components/common/Spinner';
 import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
-import PropertyPlanSelection from '../../components/Popups/propertyPlanSelection';
 
 class addProperty extends Component {
 	constructor(props) {
@@ -37,17 +36,15 @@ class addProperty extends Component {
 		this.setState({ form2Data: form2Data });
 	};
 	form3DataHandler = (form3Data) => {
-		console.log("from 3 data handler", form3Data)
+		console.log('from 3 data handler', form3Data);
 		this.setState({ form3Data: form3Data });
 	};
 	form4DataHandler = (form4Data) => {
-		console.log("from 4 data handler", form4Data)
+		console.log('from 4 data handler', form4Data);
 		this.setState({ form4Data: form4Data });
-		this.addProperty(form4Data)
-		console.log("from 4 data handler", this.state.form4Data)
-
+		this.addProperty(form4Data);
+		console.log('from 4 data handler', this.state.form4Data);
 	};
-	
 
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
@@ -99,7 +96,7 @@ class addProperty extends Component {
 	}
 
 	addProperty = (form4Data) => {
-		console.log("add Property Function")
+		console.log('add Property Function');
 		const form1Data = this.state.form1Data;
 		const form2Data = this.state.form2Data;
 		const form3Data = this.state.form3Data;
@@ -170,12 +167,14 @@ class addProperty extends Component {
 			propertyId: 0,
 			country: 'Canada',
 			state: form1Data.state ? form1Data.state : 'Ontario',
-			
-			propertyFeeId : form4Data.propertyFeeId ? form4Data.propertyFeeId : 1,
-			packageRenewal:form4Data.packageRenewal ? form4Data.packageRenewal: false
+
+			propertyFeeId: form4Data.propertyFeeId ? form4Data.propertyFeeId : 1,
+			packageRenewal: form4Data.packageRenewal
+				? form4Data.packageRenewal
+				: false,
 		};
 
-		console.log("add Property Data ", formData)
+		console.log('add Property Data ', formData);
 
 		this.props.onAddProperty(formData, this.props.history);
 	};
@@ -185,24 +184,16 @@ class addProperty extends Component {
 			formShow: num,
 		});
 	};
-	
+
 	render() {
-		const {
-			dropDownData,
-			loading,
-			errors,
-			form3Data,
-			form4Data,
-		} = this.state;
+		const { dropDownData, loading, errors, form3Data } = this.state;
 
-		const data = { 
-			dropDownData : dropDownData,
-			form4DataHandler: this.form4DataHandler 
-		}
-
+		const data = {
+			dropDownData: dropDownData,
+			form4DataHandler: this.form4DataHandler,
+		};
 
 		let pageContent = '';
-
 
 		if (loading) {
 			pageContent = <Spinner />;
@@ -211,7 +202,6 @@ class addProperty extends Component {
 		}
 
 		return (
-			
 			<React.Fragment>
 				{errors && errors.message && (
 					<Alert variant='danger' style={{ marginTop: '15px' }}>
@@ -240,13 +230,11 @@ class addProperty extends Component {
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form3DataHandler={this.form3DataHandler}
 						form3Data={form3Data}
-
-						modelHanlder = {this.props.modelHanlder}
+						modelHanlder={this.props.modelHanlder}
 					/>
 				)}
-				{this.state.formShow === 3 && (
-					this.props.modelHanlder('propertyPlanSelection', data)
-				)}
+				{this.state.formShow === 3 &&
+					this.props.modelHanlder('propertyPlanSelection', data)}
 				{pageContent}
 			</React.Fragment>
 		);

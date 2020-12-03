@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as actions from './store/actions/index';
@@ -9,6 +9,25 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.showPosition = this.showPosition.bind(this);
+		this.state = {
+			isAuthenticated: false,
+		};
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		const auth = props.auth ? props.auth : {};
+		let stateChanged = false;
+		let changedState = {};
+
+		if (state.isAuthenticated !== auth.isAuthenticated) {
+			changedState.isAuthenticated = auth.isAuthenticated;
+			stateChanged = true;
+		}
+
+		if (stateChanged) {
+			return changedState;
+		}
+		return null;
 	}
 
 	componentDidMount() {
@@ -17,10 +36,15 @@ class App extends Component {
 		} else {
 			this.props.onSetCurrentLocation(0, 0);
 		}
+		if (localStorage.jwtToken) {
+			this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
+		}
 	}
+
 	setCurrentLocation(lat, lon) {
 		this.props.onSetCurrentLocation(lat, lon);
 	}
+
 	showPosition(position) {
 		const latitude = position.coords.latitude;
 		const longitude = position.coords.longitude;
@@ -29,12 +53,8 @@ class App extends Component {
 	}
 
 	render() {
-		if (localStorage.jwtToken) {
-			this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
-		}
-
 		return (
-			<React.Fragment>
+			<Switch>
 				<PrivateRoute
 					exact
 					path={'/index-:country&:state&:city'}
@@ -60,10 +80,15 @@ class App extends Component {
 				<Route exact path={'/single-post'} component={Index} />
 				<Route exact path={'/single-prop-:id'} component={Index} />
 				<Route exact path={'/professionals'} component={Index} />
-			</React.Fragment>
+				<Redirect to='/' />
+			</Switch>
 		);
 	}
 }
+
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+});
 
 const mapDispatchToProps = (dispatch) => {
 	return {
@@ -73,4 +98,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

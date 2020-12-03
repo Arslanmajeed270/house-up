@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap'
-
-import AliceCarousel from 'react-alice-carousel';
+import { Carousel } from 'react-bootstrap';
 
 import 'react-alice-carousel/lib/alice-carousel.css';
 
@@ -246,7 +244,7 @@ class index extends Component {
 			storyToggle,
 			activeCommentId,
 		} = this.state;
-		console.log("indexPage data", indexPageData	)
+		console.log('indexPage data', indexPageData);
 
 		let pageContent = '';
 
@@ -286,35 +284,43 @@ class index extends Component {
 														<div className='pxp-props-carousel-right-container mt-4'>
 															<div className='owl-carousel pxp-props-carousel-right-stage-2'>
 																<Carousel>
-																	{
-																		indexPageData && indexPageData.userStories && indexPageData.userStories.length ?
-																		indexPageData.userStories.map((data, index) => 
-																			<Carousel.Item>
-																				<Link to='#' onClick={this.storyHandler}>
-																					<div style={{ width: '80px' }}>
-																						<div
-																							className='pxp-prop-card-dashboard'
-																							style={{
-																								backgroundImage: `url(${
-																									data &&
-																									data.stories[0] &&
-																									data.stories[0].storyImages[0] &&
-																									data.stories[0].storyImages[0].storyImageURL
-																								})`,
-																							}}
-																						/>
-																						<span className='dashboard-user-name'>
-																							{data.user.firstName}
-																						</span>
-																						<span className='dashboard-user-name withPropertyDealer'>
-																							{data.user.professionDesc}
-																						</span>
-																					</div>
-																				</Link> 
-																			</Carousel.Item>
-																		)
-																		: "" 
-																	}
+																	{indexPageData &&
+																	indexPageData.userStories &&
+																	indexPageData.userStories.length
+																		? indexPageData.userStories.map(
+																				(data, index) => (
+																					<Carousel.Item>
+																						<Link
+																							to='#'
+																							onClick={this.storyHandler}
+																						>
+																							<div style={{ width: '80px' }}>
+																								<div
+																									className='pxp-prop-card-dashboard'
+																									style={{
+																										backgroundImage: `url(${
+																											data &&
+																											data.stories[0] &&
+																											data.stories[0]
+																												.storyImages[0] &&
+																											data.stories[0]
+																												.storyImages[0]
+																												.storyImageURL
+																										})`,
+																									}}
+																								/>
+																								<span className='dashboard-user-name'>
+																									{data.user.firstName}
+																								</span>
+																								<span className='dashboard-user-name withPropertyDealer'>
+																									{data.user.professionDesc}
+																								</span>
+																							</div>
+																						</Link>
+																					</Carousel.Item>
+																				)
+																		  )
+																		: ''}
 																</Carousel>
 																{storyToggle ? (
 																	<StoryPrevivew
@@ -351,44 +357,63 @@ class index extends Component {
 																							<div className='pxp-props-carousel-right-stage-3'>
 																								<div>
 																									<Carousel>
-																										{
-																											indexPageData && indexPageData.propertyCounts && indexPageData.propertyCounts.length ?
-																											indexPageData.propertyCounts.map((data, index) =>
-																											
-																											
-																										<Carousel.Item>
-																										  <div
-																												// className='neighbourhoods_slider'
-																											>
-																												<div
-																													onClick={() => this.props.history.push('/properties')}
-																													className='pxp-prop-card-explore'
-																													style={{
-																														backgroundImage: `url(${
-																															data.properties && data.properties.length ?
-																															data.properties[0].imageList && data.properties[0].imageList[0].imageURL
-																																: require('../../assets/images/dashboard/ottawa.png')
-																														})`,
-																													}}
-																												>
-																													<div to='/properties'>
-																														<div className='d-table w-100 '>
-																															<div className='d-table-cell va-bottom neighbours-height paddg'>
-																																<h2>
-																																	{data.cityName}
-																																</h2>
-																																<p>
-																																	{data.propertyCount} Properties
-																																</p>
+																										{indexPageData &&
+																										indexPageData.propertyCounts &&
+																										indexPageData.propertyCounts
+																											.length
+																											? indexPageData.propertyCounts.map(
+																													(data, index) => (
+																														<Carousel.Item>
+																															<div
+																															// className='neighbourhoods_slider'
+																															>
+																																<div
+																																	onClick={() =>
+																																		this.props.history.push(
+																																			'/properties'
+																																		)
+																																	}
+																																	className='pxp-prop-card-explore'
+																																	style={{
+																																		backgroundImage: `url(${
+																																			data.properties &&
+																																			data
+																																				.properties
+																																				.length
+																																				? data
+																																						.properties[0]
+																																						.imageList &&
+																																				  data
+																																						.properties[0]
+																																						.imageList[0]
+																																						.imageURL
+																																				: require('../../assets/images/dashboard/ottawa.png')
+																																		})`,
+																																	}}
+																																>
+																																	<div to='/properties'>
+																																		<div className='d-table w-100 '>
+																																			<div className='d-table-cell va-bottom neighbours-height paddg'>
+																																				<h2>
+																																					{
+																																						data.cityName
+																																					}
+																																				</h2>
+																																				<p>
+																																					{
+																																						data.propertyCount
+																																					}{' '}
+																																					Properties
+																																				</p>
+																																			</div>
+																																		</div>
+																																	</div>
+																																</div>
 																															</div>
-																														</div>
-																													</div>
-																												</div>
-																											</div>
-																										</Carousel.Item>
-																										)
-																											: "" 
-																										}
+																														</Carousel.Item>
+																													)
+																											  )
+																											: ''}
 																									</Carousel>
 																								</div>
 																							</div>
@@ -1566,18 +1591,6 @@ class index extends Component {
 		);
 	}
 }
-
-const responsive = {
-	0: { items: 2 },
-	568: { items: 4 },
-	1024: { items: 6.5 },
-};
-
-const locationResponcive = {
-	0: { items: 1 },
-	568: { items: 1 },
-	1024: { items: 1.3 },
-};
 
 const mapStateToProps = (state) => {
 	return {
