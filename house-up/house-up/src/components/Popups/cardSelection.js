@@ -17,7 +17,7 @@ class cardSelection extends Component {
 			showPopUp: false,
 		};
 	}
-	
+
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const page = props.page;
@@ -40,6 +40,7 @@ class cardSelection extends Component {
 					if (data.isDefault) {
 						changedState.cardId = data.cardId;
 					}
+					return data;
 				});
 			}
 			stateChanged = true;
@@ -52,7 +53,10 @@ class cardSelection extends Component {
 			changedState.showPopUp = page.showPopUp;
 			if (changedState.showPopUp === true) {
 				props.onHidePopUp();
-				props.cardDetailsHandler('congratulationModel','Your Account has been successfully Upgraded');
+				props.cardDetailsHandler(
+					'congratulationModel',
+					'Your Account has been successfully Upgraded'
+				);
 			}
 			stateChanged = true;
 		}
@@ -87,28 +91,25 @@ class cardSelection extends Component {
 	};
 
 	onSubmit = () => {
-		const{user} = this.state;
-		if(this.props.data.for === "property"){
-			console.log("property if statement", this.props.data)
-			const data ={
-				propertyFeeId:this.props.data && this.props.data.propertyFeeId,
-				packageRenewal:this.props.data && this.props.data.packageRenewal,
-			}
-			console.log(data)
-			this.props.data && this.props.data.form4DataHandler(data)
-
-		}
-		else	if(this.props.data ){
-			console.log("credit card if statement")
-			const data ={
-				userId:user.userId,
-				packageId:this.props.data,
-				currency:"cad"
-			}
-			console.log("data fro api", data)
+		const { user } = this.state;
+		if (this.props.data.for === 'property') {
+			console.log('property if statement', this.props.data);
+			const data = {
+				propertyFeeId: this.props.data && this.props.data.propertyFeeId,
+				packageRenewal: this.props.data && this.props.data.packageRenewal,
+			};
+			console.log(data);
+			this.props.data && this.props.data.form4DataHandler(data);
+		} else if (this.props.data) {
+			console.log('credit card if statement');
+			const data = {
+				userId: user.userId,
+				packageId: this.props.data,
+				currency: 'cad',
+			};
+			console.log('data fro api', data);
 			this.props.onChargeCustomerUsingCreditCard(data);
 		}
-			
 	};
 
 	render() {
@@ -250,9 +251,9 @@ const mapDispatchToProps = (dispatch) => {
 		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
 		onMarkCreditCardDefault: (data) =>
 			dispatch(actions.markCreditCardDefault(data)),
-			onChargeCustomerUsingCreditCard: (data) =>
+		onChargeCustomerUsingCreditCard: (data) =>
 			dispatch(actions.chargeCustomerUsingCreditCard(data)),
-			onchargeCustomerForPropertyUsingCreditCard: (data) =>
+		onchargeCustomerForPropertyUsingCreditCard: (data) =>
 			dispatch(actions.chargeCustomerForPropertyUsingCreditCard(data)),
 	};
 };

@@ -21,7 +21,7 @@ import ForgotPassCongrats from '../components/Popups/forgotPassCongrats';
 import SubscriptionPlan from '../components/Popups/subscriptionPlan';
 import CardSelection from '../components/Popups/cardSelection';
 import CardDetails from '../components/Popups/cardDetails';
-import PropertyPlanSelection from '../components/Popups/propertyPlanSelection'
+import PropertyPlanSelection from '../components/Popups/propertyPlanSelection';
 
 class index extends Component {
 	constructor(props) {
@@ -48,8 +48,8 @@ class index extends Component {
 			cardDetails: false,
 			animateHeader: false,
 			message: '',
-			data:'',
-			propertyPlanSelection:false
+			data: '',
+			propertyPlanSelection: false,
 		};
 	}
 
@@ -74,7 +74,8 @@ class index extends Component {
 			});
 		} else if (model === 'propertyPlanSelection') {
 			this.setState({
-				[model]: !this.state[model] , message:data,
+				[model]: !this.state[model],
+				message: data,
 			});
 		} else if (model === 'cardDetails') {
 			this.setState({ cardSelection: false, [model]: !this.state[model] });

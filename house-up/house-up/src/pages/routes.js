@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PrivateRoute from '../components/common/PrivateRoute';
 
 import About from './About/about';
@@ -23,7 +23,7 @@ import SelectLocation from './selectLocation/selectLocation';
 class Routes extends React.Component {
 	render() {
 		return (
-			<Router>
+			<React.Fragment>
 				<Route exact path={'/'} component={Home} />
 				<PrivateRoute
 					exact
@@ -36,8 +36,14 @@ class Routes extends React.Component {
 					component={() => <Home modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/about'} component={About} />
-				<PrivateRoute exact path={'/add-property'} component={() => <AddProperty modelHanlder={this.props.modelHanlder}/> } />
-		<Route exact path={'/add-product'} component={AddProduct } />
+				<PrivateRoute
+					exact
+					path={'/add-property'}
+					component={() => (
+						<AddProperty modelHanlder={this.props.modelHanlder} />
+					)}
+				/>
+				<Route exact path={'/add-product'} component={AddProduct} />
 				<Route exact path={'/add-coupon'} component={AddCoupon} />
 				<Route
 					exact
@@ -74,9 +80,9 @@ class Routes extends React.Component {
 					)}
 				/>
 				<Route exact path={'/professionals'} component={Professionals} />
-			</Router>
+			</React.Fragment>
 		);
 	}
 }
 
-export default withRouter(Routes);
+export default Routes;
