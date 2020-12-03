@@ -39,7 +39,7 @@ class user extends Component {
 
     render() { 
       const { usersData } = this.state;
-
+console.log(usersData)
         return ( 
             <React.Fragment>
                 <div className="page-holder w-100 d-flex flex-wrap">

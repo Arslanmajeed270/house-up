@@ -177,7 +177,7 @@ class addProperty extends Component {
 
 		console.log("add Property Data ", formData)
 
-		// this.props.onAddProperty(formData, this.props.history);
+		this.props.onAddProperty(formData, this.props.history);
 	};
 
 	formShowHandler = (num) => {

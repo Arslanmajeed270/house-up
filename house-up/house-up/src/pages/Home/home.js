@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import AliceCarousel from 'react-alice-carousel';
+import { Carousel } from 'react-bootstrap'
 
 import 'react-alice-carousel/lib/alice-carousel.css';
 
@@ -49,63 +49,13 @@ class home extends Component {
 
 	render() {
 		const { homePageData, loading } = this.state;
+		console.log(homePageData)
 
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;
 		} else {
 			pageContent = '';
-		}
-
-		const items = [];
-		if (
-			homePageData &&
-			homePageData.properties &&
-			homePageData.properties.length
-		) {
-			for (let i = 0; i < homePageData.properties.length; i++) {
-				let item = (
-					<div>
-						<Link
-							to={`/single-prop-${homePageData.properties[i].propertId}`}
-							className='pxp-prop-card-1 rounded-lg'
-						>
-							<div
-								className='pxp-prop-card-1-fig pxp-cover'
-								style={{
-									backgroundImage: `url(${
-										homePageData.properties[i] &&
-										homePageData.properties[i].imageList &&
-										homePageData.properties[i].imageList[0] &&
-										homePageData.properties[i].imageList[0].imageURL
-											? homePageData.properties[i].imageList[0].imageURL
-											: require('../../assets/images/dashboard/ottawa.png')
-									})`,
-								}}
-							/>
-							<div className='pxp-prop-card-1-gradient pxp-animate' />
-							<div className='pxp-prop-card-1-details'>
-								<div className='pxp-prop-card-1-details-titles'>
-									{homePageData.properties[i].adTitle}
-								</div>
-								<div className='pxp-prop-card-1-details-price'>
-									{homePageData.properties[i].currency.symbol}
-									{homePageData.properties[i].price.toLocaleString()}
-								</div>
-								<div className='pxp-prop-card-1-details-features text-uppercase'>
-									{homePageData.properties[i].noOfBedrooms} BD <span>|</span>{' '}
-									{homePageData.properties[i].noOfBathrooms} BA <span>|</span>{' '}
-									{homePageData.properties[i].finishedSqftArea} SF
-								</div>
-							</div>
-							<div className='pxp-prop-card-1-details-cta text-uppercase'>
-								View Details
-							</div>
-						</Link>
-					</div>
-				);
-				items.push(item);
-			}
 		}
 
 		return (
@@ -158,12 +108,51 @@ class home extends Component {
 						<div className='container-fluid pxp-props-carousel-right mt-60'>
 							<div className='pxp-props-carousel-right-container mt-4 mt-md-5'>
 								<div className='owl-carousel pxp-props-carousel-right-stage'>
-									<AliceCarousel
-										mouseTracking
-										responsive={responsive}
-										items={items}
-										disableDotsControls={true}
-									/>
+									<Carousel>
+									{
+											homePageData && homePageData.properties && homePageData.properties.length ?
+											homePageData.properties.map((data , index) => 
+									<Carousel.Item>
+										<div>
+											<Link
+												to={`/single-prop-${data.propertId}`}
+												className='pxp-prop-card-1 rounded-lg'
+											>
+												<div
+													className='pxp-prop-card-1-fig pxp-cover'
+													style={{
+														backgroundImage: `url(${
+															data && data.imageList && data.imageList.length ?
+															data.imageList[0] && data.imageList[0].imageURL
+																: require('../../assets/images/dashboard/ottawa.png')
+														})`,
+													}}
+												/>
+												<div className='pxp-prop-card-1-gradient pxp-animate' />
+												<div className='pxp-prop-card-1-details'>
+													<div className='pxp-prop-card-1-details-titles'>
+														{data.adTitle}
+													</div>
+													<div className='pxp-prop-card-1-details-price'>
+														{data.currency.symbol}
+														{data.price.toLocaleString()}
+													</div>
+													<div className='pxp-prop-card-1-details-features text-uppercase'>
+														{data.noOfBedrooms} BD <span>|</span>{' '}
+														{data.noOfBathrooms} BA <span>|</span>{' '}
+														{data.finishedSqftArea} SF
+													</div>
+												</div>
+												<div className='pxp-prop-card-1-details-cta text-uppercase'>
+													View Details
+												</div>
+											</Link>
+										</div>
+									</Carousel.Item>
+											)
+											: ""
+										}
+								</Carousel>
 									<Link
 										to='/properties'
 										className='pxp-primary-cta text-uppercase mt-4 mt-md-5 pxp-animate'
@@ -446,14 +435,6 @@ class home extends Component {
 		);
 	}
 }
-
-// const handleDragStart = (e) => e.preventDefault();
-
-const responsive = {
-	0: { items: 1 },
-	568: { items: 2 },
-	1024: { items: 4.7 },
-};
 
 const mapStateToProps = (state) => {
 	return {

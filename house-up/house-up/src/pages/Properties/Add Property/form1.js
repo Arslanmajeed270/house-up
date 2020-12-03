@@ -92,6 +92,7 @@ class form1 extends Component {
 			latitude: form1Data.latitude ? form1Data.latitude : 32.57698,
 			state: form1Data.state ? form1Data.state : '',
 			city: form1Data.city ? form1Data.city : '',
+			image : form1Data ? form1Data.image:''
 		});
 		this.props.onGetCountries();
 	}
