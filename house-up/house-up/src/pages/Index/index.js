@@ -253,7 +253,87 @@ class index extends Component {
 		} else {
 			pageContent = '';
 		}
+		const items = [];
 
+		if (
+			indexPageData &&
+			indexPageData.userStories &&
+			indexPageData.userStories.length
+		) {
+			for (let i = 0; i < indexPageData.userStories.length; i++) {
+				let item = (
+					<Link to='#' onClick={this.storyHandler}>
+						<div style={{ width: '80px' }}>
+							<div
+								className='pxp-prop-card-dashboard'
+								style={{
+									backgroundImage: `url(${
+										indexPageData &&
+										indexPageData.userStories[i] &&
+										indexPageData.userStories[i].stories[0] &&
+										indexPageData.userStories[i].stories[0].storyImages[0] &&
+										indexPageData.userStories[i].stories[0].storyImages[0]
+											.storyImageURL
+									})`,
+								}}
+							/>
+							<span className='dashboard-user-name'>
+								{indexPageData.userStories[i].user.firstName}
+							</span>
+							<span className='dashboard-user-name withPropertyDealer'>
+								{indexPageData.userStories[i].user.professionDesc}
+							</span>
+						</div>
+					</Link>
+				);
+				items.push(item);
+			}
+		}
+
+		const locationItems = [];
+		if (
+			indexPageData &&
+			indexPageData.propertyCounts &&
+			indexPageData.propertyCounts.length
+		) {
+			for (let i = 0; i < indexPageData.propertyCounts.length; i++) {
+				let locationItem = (
+					<div  className='neighbourhoods_slider'>
+						<div onDoubleClick={() => this.props.history.push('/properties')} >
+							<div
+								className='pxp-prop-card-explore'
+								style={{
+									backgroundImage: `url(${
+										indexPageData.propertyCounts[i] &&
+										indexPageData.propertyCounts[i].properties[0] &&
+										indexPageData.propertyCounts[i].properties[0]
+											.imageList[0] &&
+										indexPageData.propertyCounts[i].properties[0].imageList[0]
+											.imageURL
+											? indexPageData.propertyCounts[i].properties[0]
+													.imageList[0].imageURL
+											: require('../../assets/images/dashboard/ottawa.png')
+									})`,
+								}}
+							>
+								<div className='d-table w-100 '>
+									<div className='d-table-cell va-bottom neighbours-height paddg'>
+										<h2>
+											{indexPageData.propertyCounts[i] &&
+												indexPageData.propertyCounts[i].cityName}
+										</h2>
+										<p>
+											{indexPageData.propertyCounts[i].propertyCount} Properties
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				);
+				locationItems.push(locationItem);
+			}
+		}
 		return (
 			<React.Fragment>
 				{this.state.contactModalState ? (
@@ -283,45 +363,12 @@ class index extends Component {
 													<div className='container-fluid pxp-props-carousel-right mt-100 mtpx-100'>
 														<div className='pxp-props-carousel-right-container mt-4'>
 															<div className='owl-carousel pxp-props-carousel-right-stage-2'>
-																<Carousel>
-																	{indexPageData &&
-																	indexPageData.userStories &&
-																	indexPageData.userStories.length
-																		? indexPageData.userStories.map(
-																				(data, index) => (
-																					<Carousel.Item>
-																						<Link
-																							to='#'
-																							onClick={this.storyHandler}
-																						>
-																							<div style={{ width: '80px' }}>
-																								<div
-																									className='pxp-prop-card-dashboard'
-																									style={{
-																										backgroundImage: `url(${
-																											data &&
-																											data.stories[0] &&
-																											data.stories[0]
-																												.storyImages[0] &&
-																											data.stories[0]
-																												.storyImages[0]
-																												.storyImageURL
-																										})`,
-																									}}
-																								/>
-																								<span className='dashboard-user-name'>
-																									{data.user.firstName}
-																								</span>
-																								<span className='dashboard-user-name withPropertyDealer'>
-																									{data.user.professionDesc}
-																								</span>
-																							</div>
-																						</Link>
-																					</Carousel.Item>
-																				)
-																		  )
-																		: ''}
-																</Carousel>
+																<AliceCarousel
+																	mouseTracking
+																	disableButtonsControls={true}
+																	items={items}
+																	responsive={responsive}
+																/>
 																{storyToggle ? (
 																	<StoryPrevivew
 																		show={this.state.storyToggle}
@@ -356,65 +403,16 @@ class index extends Component {
 																							</h2>
 																							<div className='pxp-props-carousel-right-stage-3'>
 																								<div>
-																									<Carousel>
-																										{indexPageData &&
-																										indexPageData.propertyCounts &&
-																										indexPageData.propertyCounts
-																											.length
-																											? indexPageData.propertyCounts.map(
-																													(data, index) => (
-																														<Carousel.Item>
-																															<div
-																															// className='neighbourhoods_slider'
-																															>
-																																<div
-																																	onClick={() =>
-																																		this.props.history.push(
-																																			'/properties'
-																																		)
-																																	}
-																																	className='pxp-prop-card-explore'
-																																	style={{
-																																		backgroundImage: `url(${
-																																			data.properties &&
-																																			data
-																																				.properties
-																																				.length
-																																				? data
-																																						.properties[0]
-																																						.imageList &&
-																																				  data
-																																						.properties[0]
-																																						.imageList[0]
-																																						.imageURL
-																																				: require('../../assets/images/dashboard/ottawa.png')
-																																		})`,
-																																	}}
-																																>
-																																	<div to='/properties'>
-																																		<div className='d-table w-100 '>
-																																			<div className='d-table-cell va-bottom neighbours-height paddg'>
-																																				<h2>
-																																					{
-																																						data.cityName
-																																					}
-																																				</h2>
-																																				<p>
-																																					{
-																																						data.propertyCount
-																																					}{' '}
-																																					Properties
-																																				</p>
-																																			</div>
-																																		</div>
-																																	</div>
-																																</div>
-																															</div>
-																														</Carousel.Item>
-																													)
-																											  )
-																											: ''}
-																									</Carousel>
+																									<AliceCarousel
+																										mouseTracking
+																										disableButtonsControls={
+																											true
+																										}
+																										items={locationItems}
+																										responsive={
+																											locationResponcive
+																										}
+																									/>
 																								</div>
 																							</div>
 																						</div>
@@ -426,7 +424,7 @@ class index extends Component {
 
 																	{(data.category &&
 																		data.category === 'Post') ||
-																	(data && data.category === 'Property') ? (
+																	(data && data.category === 'Property' && data.object.propertyStatusDesc === "Approved") ? (
 																		<div className='dashboard-newsfeed'>
 																			<div className='dashboard-newsfeed-content'>
 																				<ul className='news-feed-user-ul'>
@@ -795,7 +793,7 @@ class index extends Component {
 																						</div>
 																					</>
 																				) : data.category &&
-																				  data.category === 'Property' ? (
+																				  data.category === 'Property' && data.object.propertyStatusDesc === "Approved" ? (
 																					<>
 																						<Link
 																							to={`/single-prop-${

@@ -19,6 +19,7 @@ class properties extends Component {
 			propertiesData: [],
 			propertyPrice: '',
 			indexPageData: {},
+			currentLocation:{}
 		};
 	}
 
@@ -57,6 +58,14 @@ class properties extends Component {
 			stateChanged = true;
 		}
 
+		if (
+			page &&
+			JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)
+		) {
+			changedState.currentLocation = page.currentLocation;
+			stateChanged = true;
+		}
+
 		if (stateChanged) {
 			return changedState;
 		}
@@ -66,13 +75,16 @@ class properties extends Component {
 	componentDidMount() {
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
+			console.log("current Location", this.state.currentLocation)
+			const { currentLocation } = this.state;
+
 
 		const data = {
 			state: '',
 			channel: 'web',
 			lat: 43.787083,
 			lng: -79.497369,
-			city: '',
+			city: currentLocation && currentLocation.city,
 			limit: 10,
 			offset: 0,
 			loggedInuserId: userId,
@@ -221,8 +233,9 @@ class properties extends Component {
 								</div>
 							</div>
 							<div className='row'>
-								{propertiesData && propertiesData.length
+								{propertiesData && propertiesData.length 
 									? propertiesData.map((data, index) => (
+									 data.propertyStatusDesc === "Approved"  &&
 											<div
 												key={index}
 												className='col-sm-12 col-md-6 col-xxxl-4'
