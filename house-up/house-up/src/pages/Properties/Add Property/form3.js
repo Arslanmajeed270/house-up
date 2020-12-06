@@ -52,6 +52,7 @@ class form3 extends Component {
 		};
 	}
 	moreOptionToggle = () => {
+		console.log("clicked")
 		this.setState({ moreInfo: !this.state.moreInfo });
 	};
 	componentDidMount() {
@@ -685,13 +686,12 @@ class form3 extends Component {
 									</select>
 								</div>
 								<div className='col-md-12'>
-									<Link
-										to='#'
+									<button
 										className='more-options'
 										onClick={this.moreOptionToggle}
 									>
 										More Options
-									</Link>
+									</button>
 								</div>
 								{this.state.moreInfo ? (
 									<>

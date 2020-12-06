@@ -55,7 +55,6 @@ class cardSelection extends Component {
 				props.onHidePopUp();
 				props.cardDetailsHandler(
 					'congratulationModel',
-					'Your Account has been successfully Upgraded'
 				);
 			}
 			stateChanged = true;

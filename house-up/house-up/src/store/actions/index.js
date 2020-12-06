@@ -37,4 +37,4 @@ export {
 	getSingleVendorsPropertyData,
 } from './vendorPageAction';
 
-export { dropDwonMenu, addProperty, getSingleProperty } from './propertyAction';
+export { dropDwonMenu, addProperty, getSingleProperty,AddCommentsUserProp } from './propertyAction';

@@ -394,7 +394,7 @@ class home extends Component {
 						</p>
 						<div className='row mt-5'>
 							<div className='col-sm-12 col-md-6 col-lg-6'>
-								<Link href='#' className='pxp-plans-1-item '>
+								<Link to='#' className='pxp-plans-1-item '>
 									<div className='pxp-plans-1-item-fig'>
 										<img
 											src={require('../../assets/images/ic_monthly_plan.svg')}
@@ -417,7 +417,7 @@ class home extends Component {
 								</Link>
 							</div>
 							<div className='col-sm-12 col-md-6 col-lg-6'>
-								<Link href='#' className='pxp-plans-1-item pxp-is-popular'>
+								<Link to='#' className='pxp-plans-1-item pxp-is-popular'>
 									<div className='pxp-plans-1-item-label'>Most Popular</div>
 									<div className='pxp-plans-1-item-fig'>
 										<img

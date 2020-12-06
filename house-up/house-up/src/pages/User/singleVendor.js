@@ -27,6 +27,7 @@ class singleVendor extends Component {
 		let stateChanged = false;
 		let changedState = {};
 
+		console.log('checking vendor in getDerivedStateFromProps: ', vendor);
 		if (
 			vendor &&
 			JSON.stringify(state.singleVendorData) !==
@@ -72,6 +73,7 @@ class singleVendor extends Component {
 
 	componentDidMount() {
 		const uId = this.props.match.params.id;
+		console.log('checking uId: ', uId);
 		this.setState({
 			id: uId,
 		});
@@ -158,7 +160,9 @@ class singleVendor extends Component {
 			hideContact,
 			user,
 		} = this.state;
-		console.log(singleVendorData)
+		console.log(singleVendorsPropertiesData)
+
+
 
 		let editProfile = '';
 		if (
@@ -385,7 +389,8 @@ class singleVendor extends Component {
 								{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length
 									? singleVendorsPropertiesData.map((data, idx) =>
-											data && data.category === 'Property' ? (
+											data && data.category === 'Property' &&
+											data.object.propertyStatusDesc === "Approved" &&
 												<>
 													<div
 														key={idx}
@@ -451,8 +456,7 @@ class singleVendor extends Component {
 											) : (
 												''
 											)
-									  )
-									: ''}
+									 }
 							</div>
 							{/* <ul className='pagination pxp-paginantion mt-3 mt-md-4'>
 								<li className='page-item active'>
@@ -554,7 +558,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onCommentAdded: (data, index, userFullName ,userName, profilePictureUrl , date) =>
-		 dispatch(actions.AddComments(data, index, userFullName ,userName, profilePictureUrl, date)),
+		 dispatch(actions.AddCommentsUserProp(data, index, userFullName ,userName, profilePictureUrl, date)),
 		onGetSingleVendorsData: (userData) =>
 			dispatch(actions.getSingleVendorData(userData)),
 		onGetSingleVendorsPropertiesData: (data) =>

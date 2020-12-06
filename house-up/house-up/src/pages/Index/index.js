@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
+import AliceCarousel from 'react-alice-carousel'
 
 import 'react-alice-carousel/lib/alice-carousel.css';
 
@@ -1589,7 +1590,17 @@ class index extends Component {
 		);
 	}
 }
+const responsive = {
+	0: { items: 2 },
+	568: { items: 4 },
+	1024: { items: 6.5 },
+};
 
+const locationResponcive = {
+	0: { items: 1 },
+	568: { items: 1 },
+	1024: { items: 1.3 },
+};
 const mapStateToProps = (state) => {
 	return {
 		page: state.page,

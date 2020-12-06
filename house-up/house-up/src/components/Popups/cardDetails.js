@@ -72,13 +72,7 @@ class AddCard extends Component {
 	onChange = (e) => {
 		let targetName = e.target.name;
 		let targetValue = e.target.value;
-		if (targetName === 'expiryDate'){
-			this.setState({[targetName] : targetValue.replace(/\B(?=(\d{2})+(?!\d))+/g, "/")});
-		}
-		else{
 		this.setState({ [targetName]: targetValue });
-		}
-		
 	};
 
 	onSubmit = (e) => {
@@ -101,6 +95,7 @@ class AddCard extends Component {
 			token: token,
 			userId: user.userId,
 		};
+		console.log("data packet", data)
 		this.props.onCreateCardToken(data);
 	};
 

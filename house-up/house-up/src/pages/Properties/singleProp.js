@@ -10,6 +10,7 @@ import ImagePreview from '../../components/Popups/ImagePreview';
 class singleProp extends Component {
 	constructor(props) {
 		super(props);
+		
 		this.state = {
 			contactModalState: false,
 			singlePropertyData: {},
@@ -17,7 +18,7 @@ class singleProp extends Component {
 			commentText: '',
 			user: {},
 			userId: '',
-			imageToggle: false,
+			// imageToggle: false,
 			vendorId: '',
 			comments: [],
 		};
@@ -57,12 +58,12 @@ class singleProp extends Component {
 				if (
 					state.category === 'Property' &&
 					data.category === state.category &&
-					data.object &&
-					data.object.propertId &&
-					data.object.propertId === state.propertId
+					data &&
+					data.propertId &&
+					data.propertId === state.propertId
 				) {
-					changedState.comments = data.object.propertyComments
-						? data.object.propertyComments
+					changedState.comments = data.propertyComments
+						? data.propertyComments
 						: [];
 				}
 				return data;
@@ -155,7 +156,7 @@ class singleProp extends Component {
 
 	render() {
 		const { singlePropertyData, commentText, imageToggle, user } = this.state;
-		console.log(singlePropertyData);
+		console.log("checking this.state: ", this.state);
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -241,17 +242,13 @@ class singleProp extends Component {
 										)
 								  )
 								: ''}
-							{imageToggle ? (
 								<ImagePreview
-									show={this.state.imageToggle}
+									show={imageToggle}
 									close={this.ImagePreviewHandler}
 									propertyImg={
 										singlePropertyData && singlePropertyData.imageList
 									}
 								/>
-							) : (
-								''
-							)}
 						</div>
 						<Link
 							onClick={this.ImagePreviewHandler}
@@ -901,7 +898,7 @@ const mapDispatchToProps = (dispatch) => {
 			date
 		) =>
 			dispatch(
-				actions.AddComments(
+				actions.AddCommentsUserProp(
 					data,
 					index,
 					userFullName,

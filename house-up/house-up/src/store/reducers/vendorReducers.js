@@ -2,7 +2,7 @@ import {
 	SET_VENDORS,
 	SET_SINGLE_VENDOR,
 	SET_SINGLE_VENDORS_PROPERTIES,
-	ADD_COMMENTS
+	ADD_COMMENTS_PROP_USER
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -18,23 +18,25 @@ export default function (state = initialState, action) {
 				...state,
 				vendorsData: action.payload,
 			};
-		case SET_SINGLE_VENDOR:
+		case SET_SINGLE_VENDOR: {
+			console.log("checking here in SET_SINGLE_VENDOR: ", action.payload);
 			return {
 				...state,
 				singleVendorData: action.payload,
 			};
+		}
 		case SET_SINGLE_VENDORS_PROPERTIES:
 			return {
 				...state,
 				singleVendorsPropertiesData: action.payload,
 			};
 
-			case ADD_COMMENTS: {
+			case ADD_COMMENTS_PROP_USER: {
 			let singleVendorData = Object.assign({}, state.singleVendorData);
 			if (
 				singleVendorData &&
-				singleVendorData.vendorComments &&
-				singleVendorData.vendorComments.length >= action.payload.index
+				singleVendorData.vendorComments 
+				// singleVendorData.vendorComments.length >= action.payload.index
 			) {
 				if (action.payload.category === 'Vendor') {
 					singleVendorData.vendorComments.push({

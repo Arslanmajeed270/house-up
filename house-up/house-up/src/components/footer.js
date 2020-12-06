@@ -31,25 +31,25 @@ class footer extends Component {
               style={{ textAlign: 'center' }}
             >
               <div className='col-md-4'>
-                <Link className='social-icons'>
+                <Link  to="#" className='social-icons'>
                   <img
                     src={require('../assets/images/ic_linkedin.svg')}
                     alt=''
                   />
                 </Link>
-                <Link className='social-icons'>
+                <Link to="#" className='social-icons'>
                   <img
                     src={require('../assets/images/ic_facebook.svg')}
                     alt=''
                   />
                 </Link>
-                <Link className='social-icons'>
+                <Link to="#"  className='social-icons'>
                   <img
                     src={require('../assets/images/ic_instagram.svg')}
                     alt=''
                   />
                 </Link>
-                <Link className='social-icons'>
+                <Link to="#" className='social-icons'>
                   <img
                     src={require('../assets/images/ic_twitter.svg')}
                     alt=''

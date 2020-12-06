@@ -251,6 +251,7 @@ export const AddComments = (data, index, userFullName , userName , profilePictur
 				profilePictureUrl : profilePictureUrl,
 				createDateTime : date
 			};
+			console.log(payload)
 			dispatch({
 				type: ADD_COMMENTS,
 				payload: payload,
@@ -375,6 +376,7 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/createCreditCardToken', userData)
 		.then((res) => {
+			console.log("res",res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
