@@ -4,30 +4,12 @@ import { connect } from 'react-redux';
 
 import * as actions from './store/actions/index';
 import PrivateRoute from './components/common/PrivateRoute';
+import PublicRoute from './components/common/PublicRoute';
 import Index from './pages';
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.showPosition = this.showPosition.bind(this);
-		this.state = {
-			isAuthenticated: false,
-		};
-	}
-
-	static getDerivedStateFromProps(props, state) {
-		const auth = props.auth ? props.auth : {};
-		let stateChanged = false;
-		let changedState = {};
-
-		if (state.isAuthenticated !== auth.isAuthenticated) {
-			changedState.isAuthenticated = auth.isAuthenticated;
-			stateChanged = true;
-		}
-
-		if (stateChanged) {
-			return changedState;
-		}
-		return null;
 	}
 
 	componentDidMount() {
@@ -60,7 +42,7 @@ class App extends Component {
 					path={'/index-:country&:state&:city'}
 					component={Index}
 				/>
-				<Route exact path={'/'} component={Index} />
+				<PublicRoute exact path={'/'} component={Index} />
 				<Route exact path={'/home'} component={Index} />
 				<Route exact path={'/about'} component={Index} />
 				<PrivateRoute exact path={'/add-property'} component={Index} />
@@ -86,10 +68,6 @@ class App extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({
-	auth: state.auth,
-});
-
 const mapDispatchToProps = (dispatch) => {
 	return {
 		setCurrentUser: (user) => dispatch(actions.setCurrentUser(user)),
@@ -98,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(null, mapDispatchToProps)(App));

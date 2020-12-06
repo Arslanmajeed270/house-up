@@ -3,7 +3,7 @@ import {
 	PAGE_LOADING,
 	PROPERTY_DROP_DWON,
 	GET_SINGLE_PROPERTY,
-	ADD_COMMENTS
+	ADD_COMMENTS_PROP_USER
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -33,7 +33,8 @@ export default function (state = initialState, action) {
 				...state,
 				singlePropertyData: action.payload,
 			};
-		case ADD_COMMENTS: {
+		case ADD_COMMENTS_PROP_USER: 
+		console.log('action payload',action.payload)
 			let singlePropertyData = Object.assign({}, state.singlePropertyData);
 			if (
 				singlePropertyData &&
@@ -54,7 +55,6 @@ export default function (state = initialState, action) {
 				...state,
 				singlePropertyData,
 			};
-		}
 		default:
 			return state;
 	}

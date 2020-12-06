@@ -14,6 +14,7 @@ class imagePreview extends Component {
 	}
 
 	componentDidMount() {
+		console.log("image preview")
 		this.setState({
 			propertyImg: this.props.propertyImg,
 		});
@@ -21,6 +22,7 @@ class imagePreview extends Component {
 
 	render() {
 		const { propertyImg } = this.state;
+		console.log("property images", propertyImg)
 
 		const propertyImages = [];
 
@@ -40,7 +42,7 @@ class imagePreview extends Component {
 				centered
 				dialogClassName='modal-90w'
 				size='lg'
-				onHide={() => this.props.close()}
+				onHide={this.props.close}
 			>
 				<ImageGallery
 					items={propertyImages}

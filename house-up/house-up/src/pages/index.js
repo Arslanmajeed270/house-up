@@ -22,6 +22,7 @@ import SubscriptionPlan from '../components/Popups/subscriptionPlan';
 import CardSelection from '../components/Popups/cardSelection';
 import CardDetails from '../components/Popups/cardDetails';
 import PropertyPlanSelection from '../components/Popups/propertyPlanSelection';
+import ImagePreview from '../components/Popups/ImagePreview'
 
 class index extends Component {
 	constructor(props) {
@@ -42,11 +43,13 @@ class index extends Component {
 			vendorSignupModel: false,
 			congratulationModel: false,
 			phNumber: '',
+			imageToggle:false,
 			vendorCongrats: false,
 			subscriptionPlan: false,
 			cardSelection: false,
 			cardDetails: false,
 			animateHeader: false,
+			imagePreview:false,
 			message: '',
 			data: '',
 			propertyPlanSelection: false,
@@ -136,6 +139,11 @@ class index extends Component {
 		} else if (model === 'vendorCongrats') {
 			this.setState({
 				vendorSignupModel: false,
+				[model]: !this.state[model],
+			});
+		}
+		else if (model === 'imageToggle') {
+			this.setState({
 				[model]: !this.state[model],
 			});
 		} else if (model === 'alreadyHaveAccount') {
@@ -318,6 +326,12 @@ class index extends Component {
 				{this.state.vendorCongrats && (
 					<Congratulation
 						show={this.state.vendorCongrats}
+						closeCodelHanlder={this.closeCodelHanlder}
+					/>
+				)}
+				{this.state.imageToggle && (
+					<ImagePreview
+						show={this.state.imageToggle}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
