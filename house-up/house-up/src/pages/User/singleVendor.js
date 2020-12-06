@@ -141,7 +141,7 @@ class singleVendor extends Component {
 			storyImageId: 0,
 			propertyId: 0,
 			commentText: commentText,
-			userId: userId,
+			userId: user.userId,
 			vendorId: Number(id),
 		};
 		const indexValue = ''
@@ -149,6 +149,7 @@ class singleVendor extends Component {
 		const userName = user.userName
 		const profilePictureUrl = user.profilePictureUrl
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
+		console.log("comment added ")
 		this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
 	};
 
@@ -160,7 +161,7 @@ class singleVendor extends Component {
 			hideContact,
 			user,
 		} = this.state;
-		console.log(singleVendorsPropertiesData)
+		console.log('checking this.state on single vendor',this.state)
 
 
 

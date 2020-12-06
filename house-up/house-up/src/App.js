@@ -52,7 +52,7 @@ class App extends Component {
 				<Route exact path={'/comming-soon'} component={Index} />
 				<Route
 					exact
-					path={'/comments-:id&:category&:indexValue'}
+					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
 					component={Index}
 				/>
 				<Route exact path={'/select-location'} component={Index} />

@@ -30,14 +30,14 @@ class vendor extends Component {
 
   }
 
-  updateUserState = (userStateDesc , userId) =>
+  updateVendorsState = (userStateDesc , userId) =>
   {
     let userData = {
       userId,
       userStateDesc
     };
     console.log(userData);
-    this.props.onUpdateUserState(userData);
+    this.props.onUpdateVendorsState(userData);
   }
 
   componentDidMount() {
@@ -91,13 +91,13 @@ class vendor extends Component {
                                   <>
                                     <div className="col-md-6">
                                     <button className="btn btn-success status-btn" 
-                                      onClick={()=>this.updateUserState("Active" , data.userId)}>
+                                      onClick={()=>this.updateVendorsState("Active" , data.userId)}>
                                         APPROVE
                                     </button>
                                     </div>
                                     <div className="col-md-6">
                                       <button className="btn btn-danger status-btn" 
-                                        onClick={()=>this.updateUserState("Rejected" , data.userId)}>
+                                        onClick={()=>this.updateVendorsState("Rejected" , data.userId)}>
                                           REJECT
                                       </button>
                                     </div>
@@ -150,7 +150,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       onGetVendorsData: () => dispatch(actions.getVendorsData()),
-      onUpdateUserState : (userData)=> dispatch(actions.updateUserState(userData))
+      onUpdateVendorsState : (userData)=> dispatch(actions.updateVendorsState(userData))
   }
 };
  

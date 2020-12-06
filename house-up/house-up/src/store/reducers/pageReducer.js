@@ -177,8 +177,10 @@ export default function (state = initialState, action) {
 						action.payload.index
 					].object.postComments.push({
 						userName: action.payload.userName,
-						createDateTime : action.payload.createDateTime,
+						userFullName: action.payload.userFullName,	
 						commentText: action.payload.comment,
+						profilePictureUrl :  action.payload.profilePictureUrl,
+						createDateTime : action.payload.createDateTime
 					});
 				}
 				if (action.payload.category === 'Vendor') {

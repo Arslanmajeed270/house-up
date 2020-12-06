@@ -324,6 +324,13 @@ class header extends Component {
 										}`}
 										onClick={() => this.props.modelHanlder('phoneSignin')}
 									>
+										<Link
+												className="vendor-login-name"
+												to="#"
+												onClick={() => this.props.modelHanlder('phoneSignin')}
+											>
+												Sign In / Sing Up
+											</Link>
 										{/* <span className="far fa-user" /> */}
 										<img
 											src={require('../assets/images/ic_profile.svg')}

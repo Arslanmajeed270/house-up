@@ -267,7 +267,16 @@ export const AddComments = (data, index, userFullName , userName , profilePictur
 				},
 			});
 		}
-	});
+	})
+	.catch((err) => {
+			console.log(err)
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
 };
 
 // Contact US
@@ -405,7 +414,7 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 // CHARGE CUSTOMER USING CREDIT CARD
 export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 	axios
-		.post(backendServerURL + '/chargeCustomerUsingCreditCard', userData)
+		.post(backendServerURL + '/chargeCustomer', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });

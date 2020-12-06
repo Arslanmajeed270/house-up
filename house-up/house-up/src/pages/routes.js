@@ -22,9 +22,10 @@ import SelectLocation from './selectLocation/selectLocation';
 
 class Routes extends React.Component {
 	render() {
+		console.log("checking this.props",this.props)
 		return (
 			<React.Fragment>
-				<Route exact path={'/'} component={Home} />
+				<Route exact path={'/'} component={() => <Home modelHanlder={this.props.modelHanlder} />} />
 				<PrivateRoute
 					exact
 					path={'/index-:country&:state&:city'}
@@ -60,7 +61,7 @@ class Routes extends React.Component {
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
 				<Route
 					exact
-					path={'/comments-:id&:category&:indexValue'}
+					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
 					component={Comments}
 				/>
 				<Route exact path={'/contact'} component={Contact} />

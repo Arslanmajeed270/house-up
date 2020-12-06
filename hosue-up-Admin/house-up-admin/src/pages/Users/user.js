@@ -42,11 +42,11 @@ class user extends Component {
 console.log(usersData)
         return ( 
             <React.Fragment>
-                <div className="page-holder w-100 d-flex flex-wrap">
+              <div className="page-holder w-100 d-flex flex-wrap">
                 <div className="container-fluid px-xl-5">
                   <section className="py-5">
                     <div className="row">
-                    {usersData && usersData.length ? 
+                      {usersData && usersData.length ? 
                       usersData.map( (data, index) =>
                           <div key={index} className="col-lg-12 message card px-5 py-3 mb-4">
                             <div className="row">
@@ -98,7 +98,7 @@ console.log(usersData)
                                         <button 
                                           className={`btn  ${data.userStatusDesc === "Approved" || data.userStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
                                         >
-                                          {data.userStatusDesc === "Approved" || data.userStatusDesc === "Active" ? "APPROVED" : "REJECTED"}
+                                          {data.userStatusDesc === "Approved" || data.userStatusDesc === "Active" ? "ACTIVE" : "REJECTED"}
                                         </button>
                                       </div>
                                     </>
