@@ -22,9 +22,13 @@ class comments extends Component {
 			vendorId: '',
 			category: '',
 			data: [],
+			loading:false,
 			comments: [],
 			indexValue: '',
 			commentData: {},
+			cityName:'',
+			stateName:'',
+			countryName:''
 		};
 	}
 
@@ -35,6 +39,14 @@ class comments extends Component {
 
 		let stateChanged = false;
 		let changedState = {};
+
+		if (
+			page &&
+			JSON.stringify(state.loading) !== JSON.stringify(page.loading)
+		) {
+			changedState.loading = page.loading;
+			stateChanged = true;
+		}
 
 		if (
 			page &&
@@ -91,7 +103,8 @@ class comments extends Component {
 	}
 
 	componentDidMount() {
-		const { user } = this.state;
+		
+		const { user , countryName, stateName, cityName, } = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -107,18 +120,42 @@ class comments extends Component {
 		const id = this.props.match.params.id;
 		const category = this.props.match.params.category;
 		const indexValue = this.props.match.params.indexValue;
+		const city = this.props.match.params.city;
+		const state = this.props.match.params.state;
+		const country = this.props.match.params.country;
+		console.log("checking props", this.props)
+
 
 		this.setState({
 			id: id,
 			category: category,
 			indexValue: indexValue,
 		});
+
 		if (category === 'Post') {
 			this.setState({ postId: id });
 		} else if (category === 'Property') {
 			this.setState({ propertyId: id });
 		} else if (category === 'Vendor') {
 			this.setState({ vendorId: id });
+		}
+		console.log("heelpo")
+		if(!this.state.indexPageData.vendorPostPropertiesList ){
+			console.log("hello there")
+			const data = {
+			state: state,
+			channel: 'web',
+			lat: 43.787083,
+			lng: -79.497369,
+			city: city,
+			limit: 10,
+			offset: 0,
+			loggedInuserId: userId,
+			country: country,
+		};
+			console.log("checking data packets", data)
+
+			this.props.onGetIndexPageData(data);
 		}
 	}
 
@@ -177,6 +214,7 @@ class comments extends Component {
 			indexValue,
 			commentData,
 		} = this.state;
+		console.log("checking index page data", indexPageData)
 
 		let pageContent = '';
 

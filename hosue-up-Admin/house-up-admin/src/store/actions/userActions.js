@@ -104,13 +104,28 @@ export const getSingleUserData = (userData) => dispatch => {
 };
 
 //Vendors  - Update Vendors State
-export const updateUserState = (userData) => dispatch => {
+export const updateVendorsState = (userData) => dispatch => {
 	console.log("checking userData: ", userData);
     axios
     .post(backendServerURL+'/updateUserState',userData)
     .then(res => {
 		console.log('checking resonse data ',res);
 		dispatch(getVendorsData());
+    })
+    .catch(err => {
+		dispatch({type: SET_ERRORS, 
+		payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
+};
+
+//Users  - Update users State
+export const updateUserState = (userData) => dispatch => {
+	console.log("checking userData: ", userData);
+    axios
+    .post(backendServerURL+'/updateUserState',userData)
+    .then(res => {
+		console.log('checking resonse data ',res);
+		dispatch(getUsersData());
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, 

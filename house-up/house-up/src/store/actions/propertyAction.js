@@ -143,6 +143,7 @@ export const getSingleProperty = (userData) => (dispatch) => {
 export const AddCommentsUserProp = (data, index, userFullName , userName , profilePictureUrl , date) => (dispatch) => {
 	axios.post(backendServerURL + '/addComment', data).then((res) => {
 		if (res && res.data && res.data.resultCode === '200') {
+			console.log(res)
 			const payload = {
 				index: index,
 				category: data.category,
@@ -168,5 +169,14 @@ export const AddCommentsUserProp = (data, index, userFullName , userName , profi
 				},
 			});
 		}
-	});
+	})
+		.catch((err) => {
+			console.log(err)
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
 };

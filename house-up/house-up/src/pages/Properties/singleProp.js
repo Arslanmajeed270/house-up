@@ -124,6 +124,7 @@ class singleProp extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
+		console.log('cooment added')
 		const { id, commentText, userId, user } = this.state;
 
 		const data = {
@@ -140,6 +141,7 @@ class singleProp extends Component {
 		const userName = user.userName;
 		const profilePictureUrl = user.profilePictureUrl;
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
+		console.log('cooment added lower')
 		this.props.onCommentAdded(
 			data,
 			indexValue,
@@ -748,12 +750,12 @@ class singleProp extends Component {
 														  )
 														: ''}
 												</div>
+												<form
+													className='pxp-agent-comments-form mt-3 mt-md-4'
+													onSubmit={this.onSubmit}
+												>
 												{user && user.profilePictureUrl ? (
-													<form
-														action='/single-vendor'
-														className='pxp-agent-comments-form mt-3 mt-md-4'
-														onSubmit={this.onSubmit}
-													>
+													<>
 														<div className='row'>
 															<div className='col-sm-12 col-md-6'></div>
 														</div>
@@ -766,20 +768,22 @@ class singleProp extends Component {
 																value={commentText}
 																onChange={this.onChange}
 															/>
-															<span
+															<button
+															 type="submit"
 																className='send-btn-single-property'
-																onClick={this.onSubmit}
+																// onClick={this.onSubmit}
 															>
 																<img
-																	src={require('../../assets/images/ic_sent.svg')}
+																	src={require( '../../assets/images/ic_sent.svg')}
 																	alt=''
 																/>
-															</span>
+															</button>
 														</div>
-													</form>
+													</>
 												) : (
 													''
-												)}
+													)}
+													</form>
 											</div>
 										</div>
 									</div>

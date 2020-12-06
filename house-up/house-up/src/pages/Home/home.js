@@ -48,9 +48,62 @@ class home extends Component {
 		this.props.onGetHomePageData();
 	}
 
+	ProfessionalRenderer = (HomeData) => {
+		let professionalRender = [];
+		if( HomeData && HomeData.vendors ){
+			HomeData.vendors.map( (data, index) => 
+			{
+				if( data && data.userStatusDesc	=== "Active" && professionalRender.length < 4  ) {
+					professionalRender.push(
+					<div
+						key={index}
+						className='col-sm-12 col-md-6 col-lg-3'
+					>
+						<Link
+							to={`/single-vendor-${
+								data && data.userId && data.userId
+							}`}
+							className='pxp-agents-1-item'
+						>
+							<div className='pxp-agents-1-item-fig-container rounded-lg'>
+								<div
+									className='pxp-agents-1-item-fig pxp-cover'
+									style={{
+										backgroundImage: `url(${
+											data.profilePictureUrl
+												? data.profilePictureUrl
+												: 'assets/images/agent-2.jpg'
+										})`,
+									}}
+								/>
+							</div>
+							<div className='pxp-agents-1-item-details rounded-lg'>
+								<div className='pxp-agents-1-item-details-name'>
+									{data.firstName} {data.lastName}
+								</div>
+								<div className='pxp-agents-1-item-details-email'>
+									{' '}
+									{data.professionDesc}
+								</div>
+								<div className='pxp-agents-1-item-details-spacer' />
+								<div className='pxp-agents-1-item-cta text-uppercase'>
+									More Details
+								</div>
+							</div>
+						</Link>
+					</div>
+					);
+				}
+				return data;
+			})									
+	}
+	return professionalRender;
+}
+
 	render() {
 		const { homePageData, loading } = this.state;
 		console.log(homePageData)
+		console.log("checking props in home page",this.props)
 
 		let pageContent = '';
 		if (loading) {
@@ -272,7 +325,10 @@ class home extends Component {
 											<div
 												className='pxp-areas-1-item-fig pxp-cover'
 												style={{
-													backgroundImage: 'url(assets/images/area-1.jpg)',
+													backgroundImage: `url(${
+														data && data.properties && data.properties[0].imageList && data.properties[0].imageList[0].imageURL ? data.properties[0].imageList[0].imageURL 
+																			: 'assets/images/area-2.jpg'
+																	})`,
 												}}
 											/>
 											<div className='pxp-areas-1-item-details'>
@@ -333,50 +389,7 @@ class home extends Component {
 							Search for qualified professionals in your area
 						</p>
 						<div className='row mt-4 mt-md-5'>
-							{homePageData && homePageData.vendors
-								? homePageData.vendors.map(
-										(data, index) =>
-											index < 4 && (
-												<div
-													key={index}
-													className='col-sm-12 col-md-6 col-lg-3'
-												>
-													<Link
-														to={`/single-vendor-${
-															data && data.userId && data.userId
-														}`}
-														className='pxp-agents-1-item'
-													>
-														<div className='pxp-agents-1-item-fig-container rounded-lg'>
-															<div
-																className='pxp-agents-1-item-fig pxp-cover'
-																style={{
-																	backgroundImage: `url(${
-																		data.profilePictureUrl
-																			? data.profilePictureUrl
-																			: 'assets/images/agent-2.jpg'
-																	})`,
-																}}
-															/>
-														</div>
-														<div className='pxp-agents-1-item-details rounded-lg'>
-															<div className='pxp-agents-1-item-details-name'>
-																{data.firstName} {data.lastName}
-															</div>
-															<div className='pxp-agents-1-item-details-email'>
-																{' '}
-																{data.professionDesc}
-															</div>
-															<div className='pxp-agents-1-item-details-spacer' />
-															<div className='pxp-agents-1-item-cta text-uppercase'>
-																More Details
-															</div>
-														</div>
-													</Link>
-												</div>
-											)
-								  )
-								: ''}
+							{this.ProfessionalRenderer(homePageData).map(data => data)}
 							<div className='col-lg-12'>
 								<Link
 									to='/professionals'

@@ -72,7 +72,10 @@ class index extends Component {
 			city: city,
 			province: state,
 		};
-		this.props.onGetIndexPageData(data);
+		if(!this.state.indexPageData.vendorPostPropertiesList )
+		{
+			this.props.onGetIndexPageData(data);
+		}
 		setTimeout(() => {
 			this.props.onUpdateCurrentLocaiton(userData);
 		}, 3000);
@@ -235,12 +238,102 @@ class index extends Component {
 		console.log('checking i am here');
 	};
 
+	ProfessionalRenderer = (indexData) => {
+		let professionalRender = [];
+		if( indexData && indexData.vendors ){
+			indexData.vendors.map( (data, index) => 
+			{
+				if( data && data.userStatusDesc	=== "Active" && professionalRender.length < 6 ) {
+					professionalRender.push(
+						<div
+							key={index}
+							className='suggested-vendors-list'
+						>
+							<div className='mb-md-3'>
+								<div className='row'>
+									<div className='col-md-2 col-lg-2 col-sm-2'>
+										<Link
+											to={`/single-vendor-${
+												data && data.userId
+											}`}
+										>
+											<div className='suggested-vendor-img'>
+												<img
+													src={
+														data && data.profilePictureUrl
+															? data.profilePictureUrl
+															: 'assets/images/dashboard/ic_profile_placeholder.png'
+													}
+													alt=''
+												/>
+											</div>
+										</Link>
+									</div>
+									<div className='col-md-7 col-lg-7 col-sm-7 col-nopadd'>
+										<div className='suggested-vendor-name'>
+											<p>
+												{data && data.firstName
+													? data.firstName
+													: ''}{' '}
+												{data && data.lastName
+													? data.lastName
+													: ''}
+											</p>
+											<span>
+												{data &&
+												data.professionDesc &&
+												data.professionDesc !== 'null'
+													? data.professionDesc
+													: ''}
+											</span>
+										</div>
+									</div>
+									<div className='col-md-3 col-lg-3 col-sm-3'>
+										<div className='suggested-vendor-follow text-right'>
+											{
+												this.state.user.userId !== data.userId ?
+													<Link
+												to='#'
+												onClick={this.followUnfollwProfessionals(
+													data && data.userId && data.userId,
+													index,
+													data &&
+														data.isUserFollowedByLoggedInUser,
+													'VendorsRight'
+												)}
+											>
+												{' '}
+												{data &&
+												data.isUserFollowedByLoggedInUser ===
+													true
+													? 'Unfollow'
+													: 'Follow'}{' '}
+											</Link>
+										
+										: ""
+											}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					);
+				}
+				return data;
+			})									
+	}
+	return professionalRender;
+}
+
 	render() {
 		let {
 			errors,
 			loading,
 			indexPageData,
 			user,
+			cityName,
+			countryName,
+			stateName,
 			commentText,
 			storyToggle,
 			activeCommentId,
@@ -495,7 +588,9 @@ class index extends Component {
 																								</span>
 																							</Link>
 																							.
-																							<Link
+																							{
+																								user.userId !== data.object.userId ?
+																								<Link
 																								to=''
 																								onClick={this.followUnfollwProfessionals(
 																									data &&
@@ -520,6 +615,9 @@ class index extends Component {
 																									? 'Unfollow'
 																									: 'Follow'}{' '}
 																							</Link>
+																							
+																							:""
+																							}
 																							<h2 style={{ fontSize: '20px' }}>
 																								{data &&
 																								data.object &&
@@ -614,7 +712,7 @@ class index extends Component {
 																										data.object.postId
 																									}&${
 																										data && data.category
-																									}&${index}`}
+																									}&${index}&${cityName}&${stateName}&${countryName}`}
 																									style={{ color: '#706666' }}
 																								>
 																									<img
@@ -714,7 +812,7 @@ class index extends Component {
 																											data.object.postId
 																										}&${
 																											data && data.category
-																										}&${index}`}
+																										}&${index}&${cityName}&${stateName}&${countryName}`}
 																									>
 																										View all{' '}
 																										{
@@ -932,7 +1030,7 @@ class index extends Component {
 																											data.object.propertId
 																										}&${
 																											data && data.category
-																										}&${index}`}
+																										}&${index}&${cityName}&${stateName}&${countryName}`}
 																										style={{ color: '#706666' }}
 																									>
 																										<img
@@ -1036,7 +1134,7 @@ class index extends Component {
 																											data.object.propertId
 																										}&${
 																											data && data.category
-																										}&${index}`}
+																										}&${index}&${cityName}&${stateName}&${countryName}`}
 																									>
 																										View all{' '}
 																										{
@@ -1135,6 +1233,8 @@ class index extends Component {
 																					<div className='row'>
 																						<div className='col-md-9 col-sm-9 col-8'>
 																							<div className='vendor-detail'>
+																								{
+																									data && data.userId !== user.userId ?
 																								<span
 																									className='news-feed-user-name'
 																									style={{
@@ -1174,6 +1274,8 @@ class index extends Component {
 																											: 'Follow'}{' '}
 																									</Link>
 																								</span>
+																								: ""
+																								}
 																								<p>
 																									<span>
 																										{data &&
@@ -1267,7 +1369,7 @@ class index extends Component {
 																									data.object.userId
 																								}&${
 																									data && data.category
-																								}&${index}`}
+																								}&${index}&${cityName}&${stateName}&${countryName}`}
 																								style={{ color: '#706666' }}
 																							>
 																								<img
@@ -1366,7 +1468,7 @@ class index extends Component {
 																										data.object.userId
 																									}&${
 																										data && data.category
-																									}&${index}`}
+																									}&${index}&${cityName}&${stateName}&${countryName}`}
 																								>
 																									View all{' '}
 																									{
@@ -1504,81 +1606,7 @@ class index extends Component {
 												</div>
 											) : null}
 										</div>
-										{indexPageData &&
-											indexPageData.vendors &&
-											indexPageData.vendors.map(
-												(data, index) =>
-													index < 6 && (
-														<div
-															key={index}
-															className='suggested-vendors-list '
-														>
-															<div className='mb-md-3'>
-																<div className='row'>
-																	<div className='col-md-2 col-lg-2 col-sm-2'>
-																		<Link
-																			to={`/single-vendor-${
-																				data && data.userId
-																			}`}
-																		>
-																			<div className='suggested-vendor-img'>
-																				<img
-																					src={
-																						data && data.profilePictureUrl
-																							? data.profilePictureUrl
-																							: 'assets/images/dashboard/ic_profile_placeholder.png'
-																					}
-																					alt=''
-																				/>
-																			</div>
-																		</Link>
-																	</div>
-																	<div className='col-md-7 col-lg-7 col-sm-7 col-nopadd'>
-																		<div className='suggested-vendor-name'>
-																			<p>
-																				{data && data.firstName
-																					? data.firstName
-																					: ''}{' '}
-																				{data && data.lastName
-																					? data.lastName
-																					: ''}
-																			</p>
-																			<span>
-																				{data &&
-																				data.professionDesc &&
-																				data.professionDesc !== 'null'
-																					? data.professionDesc
-																					: ''}
-																			</span>
-																		</div>
-																	</div>
-																	<div className='col-md-3 col-lg-3 col-sm-3'>
-																		<div className='suggested-vendor-follow text-right'>
-																			<Link
-																				to='#'
-																				onClick={this.followUnfollwProfessionals(
-																					data && data.userId && data.userId,
-																					index,
-																					data &&
-																						data.isUserFollowedByLoggedInUser,
-																					'VendorsRight'
-																				)}
-																			>
-																				{' '}
-																				{data &&
-																				data.isUserFollowedByLoggedInUser ===
-																					true
-																					? 'Unfollow'
-																					: 'Follow'}{' '}
-																			</Link>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													)
-												// : " "
-											)}
+										{this.ProfessionalRenderer(indexPageData).map(data => data)}
 									</div>
 								</div>
 							</div>
