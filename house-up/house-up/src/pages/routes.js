@@ -25,11 +25,14 @@ class Routes extends React.Component {
 		console.log("checking this.props",this.props)
 		return (
 			<React.Fragment>
-				<Route exact path={'/'} component={() => <Home modelHanlder={this.props.modelHanlder} />} />
+				<Route exact path={'/'} component={() => <Home 
+				 	modelHanlder={this.props.modelHanlder} />} />
 				<PrivateRoute
 					exact
 					path={'/index-:country&:state&:city'}
-					component={Index}
+					component={(route) => <Index
+						match={route.match}
+						modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route
 					exact
@@ -41,7 +44,11 @@ class Routes extends React.Component {
 					exact
 					path={'/add-property'}
 					component={() => (
-						<AddProperty modelHanlder={this.props.modelHanlder} />
+						<AddProperty 
+						modelHanlder={this.props.modelHanlder} 
+						history={this.props.history} 
+						closeCodelHanlder={this.props.closeCodelHanlder}
+						/>
 					)}
 				/>
 				<Route exact path={'/add-product'} component={AddProduct} />
@@ -61,8 +68,11 @@ class Routes extends React.Component {
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
 				<Route
 					exact
+
 					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
-					component={Comments}
+					component={(routes) => <Comments
+					match={routes.match}
+						modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/contact'} component={Contact} />
 				<Route exact path={'/privacy'} component={Privacy} />

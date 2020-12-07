@@ -66,13 +66,14 @@ export const dropDwonMenu = () => (dispatch) => {
 };
 
 //Add Property  - ADD property from front end
-export const addProperty = (userData, history) => (dispatch) => {
+export const addProperty = (userData, history, closeCodelHanlder) => (dispatch) => {
 	dispatch(setPageLoading());
 	axios
 		.post(backendServerURL + '/AddProperty', userData)
 		.then((res) => {
 			console.log('res for add property', res);
 			if (res && res.data && res.data.resultCode === '200') {
+				closeCodelHanlder('cardSelection');
 				history.push(
 					`/index-${userData.country}&${userData.state}&${userData.city}`
 				);

@@ -142,7 +142,11 @@ class singleProp extends Component {
 		const profilePictureUrl = user.profilePictureUrl;
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
 		console.log('cooment added lower')
-		this.props.onCommentAdded(
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ){
+			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}` } due to ${user.rejectionReason}`)
+		}
+		else{
+			this.props.onCommentAdded(
 			data,
 			indexValue,
 			userFullName,
@@ -150,6 +154,7 @@ class singleProp extends Component {
 			profilePictureUrl,
 			date
 		);
+		}
 	};
 
 	ImagePreviewHandler = () => {
@@ -851,6 +856,9 @@ class singleProp extends Component {
 													className='pxp-sp-agent-btn-main'
 													data-toggle='modal'
 													onClick={
+														user && user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ?
+														 () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+														:
 														user && user.profilePictureUrl
 															? () =>
 																	this.modelHanlder(

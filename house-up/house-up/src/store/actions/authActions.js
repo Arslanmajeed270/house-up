@@ -105,6 +105,7 @@ export const createUser = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/registerUser', userData)
 		.then((res) => {
+			console.log("res for creating user", res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: REGISTER_USER_SUCCESS });
 				dispatch(clearErrors());

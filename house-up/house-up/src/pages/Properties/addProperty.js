@@ -23,6 +23,7 @@ class addProperty extends Component {
 			form3Data: {},
 			form4Data: {},
 			loading: false,
+			user:{},
 			error: {},
 			currentLocation: {},
 		};
@@ -50,6 +51,7 @@ class addProperty extends Component {
 		const errors = props.errors;
 		const property = props.property;
 		const page = props.page;
+		const auth = props.auth;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -60,6 +62,15 @@ class addProperty extends Component {
 				JSON.stringify(property.dropDownData)
 		) {
 			changedState.dropDownData = property.dropDownData;
+			stateChanged = true;
+		}
+
+		if (
+			auth &&
+			auth.user &&
+			JSON.stringify(state.user) !== JSON.stringify(auth.user)
+		) {
+			changedState.user = auth.user;
 			stateChanged = true;
 		}
 
@@ -107,6 +118,7 @@ class addProperty extends Component {
 			contactEmail: form2Data.contactEmail ? form2Data.contactEmail : '',
 			adTitle: form2Data.adTitle ? form2Data.adTitle : '',
 			contactName: form2Data.contactName ? form2Data.contactName : '',
+			phoneNo: this.state.user.msisdn ? this.state.user.msisdn : '',
 			contactNumber: form2Data.contactNumber ? form2Data.contactNumber : 0,
 			userId: form2Data.userId ? form2Data.userId : 0,
 			price: form2Data.price ? form2Data.price : 0,
@@ -176,7 +188,7 @@ class addProperty extends Component {
 
 		console.log('add Property Data ', formData);
 
-		this.props.onAddProperty(formData, this.props.history);
+		this.props.onAddProperty(formData, this.props.history, this.props.closeCodelHanlder);
 	};
 
 	formShowHandler = (num) => {
@@ -192,7 +204,7 @@ class addProperty extends Component {
 			dropDownData: dropDownData,
 			form4DataHandler: this.form4DataHandler,
 		};
-
+		console.log('checking history: ', this.props.history);
 		let pageContent = '';
 
 		if (loading) {
@@ -245,14 +257,15 @@ const mapStateToProps = (state) => {
 		property: state.property,
 		errors: state.errors,
 		page: state.page,
+		auth: state.auth
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onDropDwonMenu: () => dispatch(actions.dropDwonMenu()),
-		onAddProperty: (data, history) =>
-			dispatch(actions.addProperty(data, history)),
+		onAddProperty: (data, history, closeCodelHanlder) =>
+			dispatch(actions.addProperty(data, history, closeCodelHanlder)),
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 	};
