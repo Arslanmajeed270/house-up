@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
 import AliceCarousel from 'react-alice-carousel'
 
+import { Twitter , Facebook, Linkedin } from 'react-social-sharing'
+
 import 'react-alice-carousel/lib/alice-carousel.css';
 
 import { connect } from 'react-redux';
@@ -43,7 +45,7 @@ class index extends Component {
 
 	componentDidMount() {
 		const userId =
-			this.state.user && this.state.user.userId ? this.state.user.userId : null;
+		this.state.user && this.state.user.userId ? this.state.user.userId : null;
 		const country = this.props.match.params.country;
 		const state = this.props.match.params.state;
 		const city = this.props.match.params.city;
@@ -135,7 +137,15 @@ class index extends Component {
 			userId: userId,
 			action: `${like ? 'Unlike' : 'Like'}`,
 		};
-		this.props.onLikedPostOrProperty(data, index, userName);
+		const { user } = this.state
+			if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected")
+		{
+			console.log(this.state.user)
+				this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}`)
+		}
+		else{
+			this.props.onLikedPostOrProperty(data, index, userName);
+		}
 	};
 
 	onChange = (e) => {
@@ -152,6 +162,7 @@ class index extends Component {
 		}
 	};
 	AddComment = (id, typeCategory, index) => {
+		console.log("add comment function called")
 		const userName =
 			this.state.user && this.state.user.userName
 				? this.state.user.userName
@@ -187,7 +198,14 @@ class index extends Component {
 			commentText: '',
 			activeCommentId: '',
 		});
-		this.props.onCommentAdded(data, index, userFullName, userName);
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected"  )
+		{
+			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+		}
+		else{
+			this.props.onCommentAdded(data, index, userFullName, userName);
+		}
+		console.log("ending comment function")
 	};
 
 	followUnfollwProfessionals = (id, index, follow, val) => (e) => {
@@ -202,8 +220,15 @@ class index extends Component {
 			vendorId: id,
 		};
 		const type = val;
-		this.props.onFollowUnfollowProfessionals(data, index, type);
-	};
+		const { user } = this.state
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" )
+		{
+			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+		}
+		else{
+			this.props.onFollowUnfollowProfessionals(data, index, type);
+	}
+};
 
 	limitWordHandler = (str) => {
 		const arrayString = str.split(' ');
@@ -338,7 +363,7 @@ class index extends Component {
 			storyToggle,
 			activeCommentId,
 		} = this.state;
-		console.log('indexPage data', indexPageData);
+		console.log('indexPage data', this.state);
 
 		let pageContent = '';
 
@@ -730,8 +755,9 @@ class index extends Component {
 																									className='dashboard-newsfeed-contact nodecor'
 																									data-toggle='modal'
 																									data-target=''
-																									onClick={() =>
-																										this.modelHanlder(
+																									onClick={
+																										user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+																										: () => this.modelHanlder(
 																											'contactModalState',
 																											data &&
 																												data.object &&
@@ -868,7 +894,6 @@ class index extends Component {
 																											}
 																											onChange={this.onChange}
 																										/>
-
 																										<button
 																											className=''
 																											onClick={() =>
@@ -1048,7 +1073,10 @@ class index extends Component {
 																										className='dashboard-newsfeed-contact nodecor'
 																										data-toggle='modal'
 																										data-target=''
-																										onClick={() =>
+																										onClick={
+																											user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+																										: 
+																											() =>
 																											this.modelHanlder(
 																												'contactModalState',
 																												data &&
@@ -1387,8 +1415,10 @@ class index extends Component {
 																								className='dashboard-newsfeed-contact nodecor'
 																								data-toggle='modal'
 																								data-target=''
-																								onClick={() =>
-																									this.modelHanlder(
+																								onClick={
+																									user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+																										: 
+																									() => this.modelHanlder(
 																										'contactModalState',
 																										data &&
 																											data.object &&

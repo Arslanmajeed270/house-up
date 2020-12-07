@@ -150,7 +150,12 @@ class singleVendor extends Component {
 		const profilePictureUrl = user.profilePictureUrl
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
 		console.log("comment added ")
-		this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected"){
+			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc }`} due to ${user.rejectionReason}`)
+		}
+		else{
+			this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
+		}
 	};
 
 	render() {
@@ -241,6 +246,13 @@ class singleVendor extends Component {
 													{singleVendorData && singleVendorData.emailAddress}
 												</p>
 											</div>
+											{
+												singleVendorData && singleVendorData.userStatusDesc === "Inactive" ?
+												<div className='col-md-12'>
+													<p className="text-danger" >Your Account is been Inactive for 7 days due to {singleVendorData.rejectionReason}.</p>
+												</div>
+											: ""
+											}
 										</div>
 									)}
 									{
@@ -252,7 +264,9 @@ class singleVendor extends Component {
 											data-toggle='modal'
 											data-target='#pxp-work-with'
 											onClick={
-												user && user.profilePictureUrl ?
+												user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ?
+												() => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc}`} due to ${user.rejectionReason}`)
+												: ( user && user.profilePictureUrl ?
 												() =>
 												this.modelHanlder(
 													'contactModalState',
@@ -260,6 +274,7 @@ class singleVendor extends Component {
 												)
 												:
 												() => this.props.modelHanlder('phoneSignin')
+												)
 											}
 										>
 											CONTACT US{' '}

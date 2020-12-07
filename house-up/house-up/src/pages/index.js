@@ -23,6 +23,7 @@ import CardSelection from '../components/Popups/cardSelection';
 import CardDetails from '../components/Popups/cardDetails';
 import PropertyPlanSelection from '../components/Popups/propertyPlanSelection';
 import ImagePreview from '../components/Popups/ImagePreview'
+import AlertPopup from '../components/Popups/alertPopup'
 
 class index extends Component {
 	constructor(props) {
@@ -50,6 +51,7 @@ class index extends Component {
 			cardDetails: false,
 			animateHeader: false,
 			imagePreview:false,
+			alertPopup:false,
 			message: '',
 			data: '',
 			propertyPlanSelection: false,
@@ -133,6 +135,12 @@ class index extends Component {
 				userSignupModel: false,
 				vendorSignupModel: false,
 				cardSelection: false,
+				[model]: !this.state[model],
+				message: data,
+			});
+		}
+		else if (model === 'alertPopup') {
+			this.setState({
 				[model]: !this.state[model],
 				message: data,
 			});
@@ -335,12 +343,23 @@ class index extends Component {
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
+				{this.state.alertPopup && (
+					<AlertPopup
+						show={this.state.alertPopup}
+						message={this.state.message}
+						closeCodelHanlder={this.closeCodelHanlder}
+					/>
+				)}
 				<Header
 					history={this.props.history}
 					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>
-				<Routes modelHanlder={this.modelHanlder} />
+			<Routes 
+			modelHanlder={this.modelHanlder} 
+			history={this.props.history} 
+			closeCodelHanlder={this.closeCodelHanlder}
+			/>
 				{hideFooter === true ? ' ' : <Footer />}
 			</React.Fragment>
 		);

@@ -240,8 +240,10 @@ export const followProfessionals = (data, index, type) => (dispatch) => {
 };
 // add Comments to the post and property
 export const AddComments = (data, index, userFullName , userName , profilePictureUrl , date) => (dispatch) => {
+	console.log("add comment api called")
 	axios.post(backendServerURL + '/addComment', data).then((res) => {
-		if (res && res.data && res.data.resultCode === '200') {
+		if (res && res.data) {
+			console.log("res for comment in index page", res)
 			const payload = {
 				index: index,
 				category: data.category,
@@ -269,7 +271,7 @@ export const AddComments = (data, index, userFullName , userName , profilePictur
 		}
 	})
 	.catch((err) => {
-			console.log(err)
+			console.log('console.log in err of commen',err)
 			dispatch({
 				type: SET_ERRORS,
 				payload:
