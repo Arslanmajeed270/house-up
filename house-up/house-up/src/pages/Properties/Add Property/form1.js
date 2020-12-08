@@ -39,11 +39,43 @@ class form1 extends Component {
 	}
 
 	handleChange = (address) => {
+		// console.log('address from suggestion api', address)
 		this.setState({ address });
 	};
 
+	searchCity = (address , cities) => {
+		console.log("in search city function", cities)
+		console.log("in search city function", address)
+		for (let i=0; i < cities.length; i++) {
+        if (cities[i].name === address) {
+					return cities[i]
+				}
+		}
+	}
+
 	handleSelect = (address) => {
-		this.setState({ address });
+		const { cities } = this.state;
+		// console.log("selected address from maps api",address)
+		const add1 = address.split(", ")
+		const cityName = add1[1]
+
+		console.log('city of selected address', cityName)
+
+		const city = this.searchCity(cityName, cities)
+		
+		console.log("city", city)
+		if(city){
+			this.setState({address : address})
+		}
+		else{
+						
+			this.props.modelHanlder('alertPopup',
+			'We are currently available in cities of Ontario Canada.'
+			)
+			// alert("Sorry! We are currently available in cities of Ontario Canada.")
+			this.setState({address: ''})
+		}
+		
 
 		geocodeByAddress(address)
 			.then((results) => getLatLng(results[0]))
@@ -67,6 +99,9 @@ class form1 extends Component {
 			let states = [];
 			states = cloneDeep(changedState.countries[0]);
 			changedState.states = states.states;
+			let cities = [];
+			cities = cloneDeep(changedState.states[0]);
+			changedState.cities = cities.cities;
 		}
 		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
 			changedState.errors = errors;
@@ -85,6 +120,7 @@ class form1 extends Component {
 		return null;
 	}
 	componentDidMount() {
+	
 		const { form1Data } = this.props;
 		this.setState({
 			address: form1Data.address ? form1Data.address : '',
@@ -214,8 +250,8 @@ class form1 extends Component {
 		this.imagesHandler(this.state.previewImages);
 	};
 	render() {
-		const { googleMapKey, previewImages } = this.state;
-
+		const { googleMapKey, previewImages , states , cities , address } = this.state;
+console.log("address  : ", address)
 		return (
 			<React.Fragment>
 				<form onSubmit={this.onSubmit}>
@@ -256,6 +292,15 @@ class form1 extends Component {
 											onClick={() => this.props.formShowHandler(2)}
 										>
 											Step 3
+										</Nav.Link>
+									</Nav.Item>
+									<Nav.Item>
+										<Nav.Link
+											eventKey='/4'
+											className='tabs'
+											onClick={() => this.props.formShowHandler(3)}
+										>
+											Step 4
 										</Nav.Link>
 									</Nav.Item>
 								</Nav>

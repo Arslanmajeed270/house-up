@@ -142,9 +142,10 @@ export const getSingleProperty = (userData) => (dispatch) => {
 
 // add Comments to the post and property
 export const AddCommentsUserProp = (data, index, userFullName , userName , profilePictureUrl , date) => (dispatch) => {
+	console.log("comment action")
 	axios.post(backendServerURL + '/addComment', data).then((res) => {
-		if (res && res.data && res.data.resultCode === '200') {
 			console.log(res)
+		if (res && res.data && res.data.resultCode === '200') {
 			const payload = {
 				index: index,
 				category: data.category,

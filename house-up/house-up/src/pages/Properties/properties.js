@@ -236,7 +236,7 @@ class properties extends Component {
 							<div className='row'>
 								{propertiesData && propertiesData.length 
 									? propertiesData.map((data, index) => (
-									 	// data.propertyStatusDesc === "Approved"  &&
+									 	data.propertyStatusDesc === "Approved"  &&
 											<div
 												key={index}
 												className='col-sm-12 col-md-6 col-xxxl-4'

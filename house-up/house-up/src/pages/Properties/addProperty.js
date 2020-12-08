@@ -6,6 +6,7 @@ import * as actions from '../../store/actions/index';
 import Form1 from './Add Property/form1';
 import Form2 from './Add Property/form2';
 import Form3 from './Add Property/form3';
+import Form4 from './Add Property/form4';
 import Spinner from '../../components/common/Spinner';
 
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -42,9 +43,7 @@ class addProperty extends Component {
 	};
 	form4DataHandler = (form4Data) => {
 		console.log('from 4 data handler', form4Data);
-		this.setState({ form4Data: form4Data });
-		this.addProperty(form4Data);
-		console.log('from 4 data handler', this.state.form4Data);
+		this.setState({ form4Data: form4Data }, () => this.addProperty(form4Data));
 	};
 
 	static getDerivedStateFromProps(props, state) {
@@ -106,11 +105,12 @@ class addProperty extends Component {
 		this.props.onDropDwonMenu();
 	}
 
-	addProperty = (form4Data) => {
+	addProperty = () => {
 		console.log('add Property Function');
 		const form1Data = this.state.form1Data;
 		const form2Data = this.state.form2Data;
 		const form3Data = this.state.form3Data;
+		const form4Data = this.state.form4Data;
 
 		const formData = {
 			currencyId: form2Data.currencyId ? form2Data.currencyId : 2,
@@ -225,6 +225,7 @@ class addProperty extends Component {
 						dropDownData={dropDownData}
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form1DataHandler={this.form1DataHandler}
+						modelHanlder={this.props.modelHanlder}
 						form1Data={this.state.form1Data}
 					/>
 				)}
@@ -246,7 +247,13 @@ class addProperty extends Component {
 					/>
 				)}
 				{this.state.formShow === 3 &&
-					this.props.modelHanlder('propertyPlanSelection', data)}
+					<Form4 
+						dropDownData={dropDownData}
+						formShowHandler={(num) => this.formShowHandler(num)}
+						form4DataHandler={this.form4DataHandler}
+						form4Data={this.state.form4Data}
+					/>
+				}
 				{pageContent}
 			</React.Fragment>
 		);

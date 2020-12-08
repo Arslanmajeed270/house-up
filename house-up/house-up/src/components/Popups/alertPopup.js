@@ -29,7 +29,7 @@ class congrationPopup extends Component {
 								paddingBottom: '0px',
 							}}
 						>
-							OOPs!
+							SORRY!
 						</div>
 					</div>
 					{
