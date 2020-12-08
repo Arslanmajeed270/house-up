@@ -145,7 +145,7 @@ class form2 extends Component {
 									Pairing the industry's top technology with unsurpassed local
 									expertise.
 								</p>
-								<Nav.Item variant='pills' defaultActiveKey='/2'>
+								<Nav variant='pills' defaultActiveKey='/2'>
 									<Nav.Item>
 										<Nav.Link
 											eventKey='/1'
@@ -173,7 +173,16 @@ class form2 extends Component {
 											Step 3
 										</Nav.Link>
 									</Nav.Item>
-								</Nav.Item>
+									<Nav.Item>
+										<Nav.Link
+											eventKey='/4'
+											className='tabs'
+											onClick={() => this.props.formShowHandler(3)}
+										>
+											Step 4
+										</Nav.Link>
+									</Nav.Item>
+								</Nav>
 							</div>
 						</div>
 						<div className='row'>

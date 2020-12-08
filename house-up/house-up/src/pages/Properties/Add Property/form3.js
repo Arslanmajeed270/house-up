@@ -294,7 +294,6 @@ class form3 extends Component {
 				buildingTypeId: buildingType[0].id,
 			});
 		}
-		console.log('website sucks');
 		this.props.form3DataHandler(dataform3);
 		this.props.formShowHandler(3);
 	};
@@ -381,6 +380,15 @@ class form3 extends Component {
 											onClick={() => this.props.formShowHandler(2)}
 										>
 											Step 3
+										</Nav.Link>
+									</Nav.Item>
+									<Nav.Item>
+										<Nav.Link
+											eventKey='/4'
+											className='tabs'
+											onClick={() => this.props.formShowHandler(3)}
+										>
+											Step 4
 										</Nav.Link>
 									</Nav.Item>
 								</Nav>
@@ -950,7 +958,7 @@ class form3 extends Component {
 										type='submit'
 										className='btn btn-lg btn-primary btn-property'
 									>
-										Post Property
+										Next
 									</button>
 								</div>
 							</div>

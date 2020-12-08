@@ -17,9 +17,12 @@ import {
 	HIDE_POP_UP,
 	SHOW_POP_UP,
 	SET_PACKAGE_DETAILS,
+	SET_CURRENT_USERS_CARD
 } from './actionTypes';
+import { setCurrentUser } from './authActions';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
+
 
 export const setPageLoading = () => {
 	return {
@@ -37,6 +40,7 @@ export const clearErrors = () => {
 		type: CLEAR_ERRORS,
 	};
 };
+
 
 //INDEX  - Get indexPage data from backend
 export const getIndexPageData = (data) => (dispatch) => {
@@ -389,6 +393,8 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 		.then((res) => {
 			console.log("res",res)
 			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+				dispatch(setCurrentUser(res.data.data.user));
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
 			} else {
@@ -419,6 +425,9 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 		.post(backendServerURL + '/chargeCustomer', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
+				console.log('res on charge customer using card',res)
+				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+				dispatch(setCurrentUser(res.data.data.user))
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
 			} else {

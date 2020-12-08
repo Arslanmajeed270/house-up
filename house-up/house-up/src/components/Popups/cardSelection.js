@@ -55,6 +55,7 @@ class cardSelection extends Component {
 				props.onHidePopUp();
 				props.cardDetailsHandler(
 					'congratulationModel',
+					'Your Account is Successfully Upgraded'
 				);
 			}
 			stateChanged = true;
@@ -186,29 +187,6 @@ class cardSelection extends Component {
 									</div>
 							  ))
 							: ''}
-						{/* <div>
-                    <div className="card-selection">
-                        <div className="dashboard-newsfeed-content"
-                        >
-                            <div>
-                                <div className="row">
-                                    <div className="col-md-3 logo-modal">
-                                        <img  src={require("../../assets/images/ic_visa_master_card.svg")} 
-                                        alt=""  
-                                        style={{width:"46px", height:'14px', marginTop: "20px"}}/>
-                                    </div>
-                                    <div className="col-md-9 visa-card-selection">
-                                        <div>
-                                            <div className="card">Master Card</div>
-                                            <div className="card-description"> **** **** **** 4545 </div>
-                                        </div>
-                                        <img src={require('../../assets/images/ic_check_sel.svg')} alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div> */}
 						<div>
 							<div>
 								<div

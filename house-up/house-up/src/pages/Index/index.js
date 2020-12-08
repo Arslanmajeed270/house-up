@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap';
+import moment from 'moment';
 import AliceCarousel from 'react-alice-carousel'
-
-import { Twitter , Facebook, Linkedin } from 'react-social-sharing'
 
 import 'react-alice-carousel/lib/alice-carousel.css';
 
@@ -192,7 +190,14 @@ class index extends Component {
 			commentText: commentText,
 			userId: userId,
 			vendorId: vendorId,
+			phoneNo: user.msisdn,
+			channel:'web'
 		};
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
+		const profilePictureUrl =
+			user && user.profilePictureUrl
+				? user.profilePictureUrl
+				: null;
 		const userFullName = `${user.firstName} ${user.lastName}`;
 		this.setState({
 			commentText: '',
@@ -203,7 +208,7 @@ class index extends Component {
 			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
 		}
 		else{
-			this.props.onCommentAdded(data, index, userFullName, userName);
+			this.props.onCommentAdded(data, index, userFullName, userName,profilePictureUrl,date );
 		}
 		console.log("ending comment function")
 	};
@@ -1668,8 +1673,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data, index, userFullName, userName) =>
-			dispatch(actions.AddComments(data, index, userFullName, userName)),
+		onCommentAdded: (data, index, userFullName, userName,profilePictureUrl , date) =>
+			dispatch(actions.AddComments(data, index, userFullName, userName, profilePictureUrl, date)),
 		onGetIndexPageData: (userId) => dispatch(actions.getIndexPageData(userId)),
 		onFollowUnfollowProfessionals: (data, index, type) =>
 			dispatch(actions.followProfessionals(data, index, type)),

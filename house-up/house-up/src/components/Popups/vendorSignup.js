@@ -57,6 +57,9 @@ class vendorSignup extends Component {
 			profileImageDefault: '',
 			businessSupportingDocumentDefault: '',
 			businessRegistrationDocumentDefault: '',
+			businessRegistrationDocumentExist:false,
+			businessSupportingDocumentExist:false,
+			profileImageExist:false
 		};
 	}
 
@@ -312,6 +315,9 @@ class vendorSignup extends Component {
 			businessSupportingDocumentDefault,
 			profileImageDefault,
 			user,
+			businessRegistrationDocumentExist,
+			businessSupportingDocumentExist,
+			profileImageExist
 		} = this.state;
 		const city = cityId.split(',')[1];
 		const cId = cityId.split(',')[0];
@@ -364,13 +370,32 @@ class vendorSignup extends Component {
 					businessRegistrationDocument === businessRegistrationDocumentDefault
 						? ''
 						: businessRegistrationDocument,
+
+						businessRegistrationDocumentExist:
+					businessRegistrationDocument === businessRegistrationDocumentDefault
+						? businessRegistrationDocumentExist
+						: !businessRegistrationDocumentExist,
+						
+
+
 				businessSupportingDocument:
 					businessSupportingDocument === businessSupportingDocumentDefault
 						? ''
 						: businessSupportingDocument,
+
+						businessSupportingDocumentExist:
+					businessSupportingDocument === businessSupportingDocumentDefault
+						? businessSupportingDocumentExist
+						: !	businessSupportingDocumentExist,
+
+
 				profileImage: profileImage === profileImageDefault ? '' : profileImage,
+				
+				profileImageExist: profileImage === profileImageDefault ? profileImageExist : !profileImageExist,
+
 				userTypeId: 2,
 			};
+			console.log("data packet for update profile", userData)
 			this.props.onUpdateVendor(userData, this.props.history);
 		}
 	};

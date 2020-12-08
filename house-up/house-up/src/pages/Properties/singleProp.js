@@ -135,6 +135,8 @@ class singleProp extends Component {
 			commentText: commentText,
 			userId: userId,
 			vendorId: 0,
+			phoneNo:user.msisdn,
+			channel:'web'
 		};
 		const indexValue = '';
 		const userFullName = `${user.firstName} ${user.lastName}`;
@@ -146,6 +148,7 @@ class singleProp extends Component {
 			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}` } due to ${user.rejectionReason}`)
 		}
 		else{
+			console.log("commeent function")
 			this.props.onCommentAdded(
 			data,
 			indexValue,
@@ -776,7 +779,7 @@ class singleProp extends Component {
 															<button
 															 type="submit"
 																className='send-btn-single-property'
-																// onClick={this.onSubmit}
+																onClick={this.onSubmit}
 															>
 																<img
 																	src={require( '../../assets/images/ic_sent.svg')}

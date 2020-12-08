@@ -16,13 +16,13 @@ class propertyPlanSubscription extends Component {
 	}
 
 	componentDidMount() {
-		console.log('pros', this.props.message);
+		console.log('pros', this.props.dropDownData);
 		this.setState({
 			feeTypes:
-				this.props.message &&
-				this.props.message.dropDownData &&
-				this.props.message.dropDownData.propertyPostingFees
-					? this.props.message.dropDownData.propertyPostingFees
+				
+				this.props.dropDownData &&
+				this.props.dropDownData.propertyPostingFees
+					? this.props.dropDownData.propertyPostingFees
 					: '',
 		});
 		console.log('clicked 1');
@@ -47,7 +47,6 @@ class propertyPlanSubscription extends Component {
 			for: 'property',
 		};
 		console.log('data fro', data);
-		this.props.modelHanlder('cardSelection', data);
 	};
 	selectPlan = (id) =>
 		this.setState({

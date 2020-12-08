@@ -70,8 +70,12 @@ class AddCard extends Component {
 	}
 
 	onChange = (e) => {
+		const { expiryDate } = this.state
 		let targetName = e.target.name;
 		let targetValue = e.target.value;
+		if( targetName === "expiryDate" ){
+			 this.setState({ [targetName] : targetValue.replace(/^(\d{2})(\d{2})/, '$1/$2/')});
+		}
 		this.setState({ [targetName]: targetValue });
 	};
 
@@ -101,6 +105,7 @@ class AddCard extends Component {
 
 	render() {
 		const { cardNumber, expiryDate, cvv, errors, loading } = this.state;
+			 console.log("expiry date", expiryDate)
 		let pageData = '';
 		if (loading) {
 			pageData = <Spinner />;

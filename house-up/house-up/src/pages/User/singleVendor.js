@@ -143,6 +143,8 @@ class singleVendor extends Component {
 			commentText: commentText,
 			userId: user.userId,
 			vendorId: Number(id),
+			phoneNo:user.msisdn,
+			channel:'web'
 		};
 		const indexValue = ''
 		const userFullName = `${user.firstName} ${user.lastName}`
