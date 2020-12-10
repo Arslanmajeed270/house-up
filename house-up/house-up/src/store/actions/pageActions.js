@@ -290,6 +290,7 @@ export const contactUs = (data, index) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/contactUs', data)
 		.then((res) => {
+			console.log(res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());

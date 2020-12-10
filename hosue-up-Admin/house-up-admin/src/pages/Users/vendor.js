@@ -32,7 +32,7 @@ class vendor extends Component {
 
   updateVendorsState = (userStateDesc , userId) =>
   {
-    let userData = {
+    const userData = {
       userId,
       userStateDesc
     };

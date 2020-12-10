@@ -55,6 +55,7 @@ class singleUser extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props)
     const id = this.props.match.params.id;
     this.setState({
       id: id
@@ -137,11 +138,15 @@ class singleUser extends Component {
                             <div className="col-md-12">
                               <h6>Action</h6>
                             </div>
-                            <div className="subscription col-md-12" >
+                            <button className="btn btn-primary" onClick={() => this.props.modelHanlder('userStatus',singleUserData.userId )}  > 
+                              Action
+                            </button>
+
+                            {/* <div className="subscription col-md-12" >
                                 <button className="btn btn-success" style={{color:'black'}} onClick={()=>this.updateUserState("Active" , singleUserData.userId)} >Active</button>
                                 <button className="btn btn-warning" style={{color:'black'}} onClick={()=>this.updateUserState("Inactive" , singleUserData.userId)}>In Active</button>
                                 <button className="btn btn-danger" style={{color:'black'}} onClick={()=>this.updateUserState("Suspended" , singleUserData.userId)}>Suspended</button>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
 

@@ -7,6 +7,8 @@ import Routes from './routes';
 
 import BusinessRegDoc from '../components/Popups/BusinessRegistrationDoc'
 import BusinessSupportDoc from '../components/Popups/BusinessSupportDoc'
+import UserStatusAction from '../components/Popups/StatusAction/UserStatusAction'
+import VendorStatusAction from '../components/Popups/StatusAction/VendorStatusAction';
 
 
 class index extends Component {
@@ -19,6 +21,8 @@ class index extends Component {
           businessRegDoc:false,
           businessSuppDoc:false,
           data:'',
+          userStatus:false,
+          vendorStatus:false
 
         };
     }
@@ -49,6 +53,12 @@ class index extends Component {
 			this.setState({ [model]: !this.state[model] , data:data });
 		} else if (model === 'businessSuppDoc') {
 			this.setState({ [model]: !this.state[model] , data:data });
+        }
+        else if (model === 'userStatus') {
+			this.setState({ [model]: !this.state[model] , data:data });
+        }
+        else if (model === 'vendorStatus') {
+			this.setState({ [model]: !this.state[model] , data:data });
 		}
 	};
       
@@ -67,6 +77,20 @@ class index extends Component {
 					<BusinessSupportDoc
 						show={this.state.businessSuppDoc}
 						closeCodelHanlder={this.closeCodelHanlder}
+                        data={this.state.data}
+					/>
+				)}
+                {this.state.userStatus && (
+					<UserStatusAction
+						show={this.state.userStatus}
+                        closeCodelHanlder={this.closeCodelHanlder}
+                        data={this.state.data}
+					/>
+				)}
+                {this.state.vendorStatus && (
+					<VendorStatusAction
+						show={this.state.vendorStatus}
+                        closeCodelHanlder={this.closeCodelHanlder}
                         data={this.state.data}
 					/>
 				)}

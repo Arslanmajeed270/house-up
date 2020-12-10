@@ -4,6 +4,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
+var jwt = require('jsonwebtoken');
+
+
 class form4 extends Component {
   constructor(props) {
 		super(props);
@@ -17,7 +20,8 @@ class form4 extends Component {
 			expiryDate: '',
 			cvv: '',
 			user: {},
-		};
+			addCardToggle:false
+		}
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -67,6 +71,40 @@ class form4 extends Component {
 		return null;
 	}
 
+	onChangeHandler = (e) => {
+		const { expiryDate } = this.state
+		let targetName = e.target.name;
+		let targetValue = e.target.value;
+		if( targetName === "expiryDate" ){
+			 this.setState({ [targetName] : targetValue.replace(/^(\d{2})(\d{2})/, '$1/$2/')});
+		}
+		this.setState({ [targetName]: targetValue });
+	};
+
+	addCard = (e) => {
+		e.preventDefault();
+		const { cardNumber, expiryDate, cvv, user } = this.state;
+		const jwtSecretKey = process.env.REACT_APP_JWT_SECRET_KEY;
+		const now = new Date();
+		const expTime = Math.round(now.getTime() / 1000) + 2000;
+		var token = jwt.sign(
+			{
+				cardNumber: cardNumber,
+				expiryDate: expiryDate,
+				cvv: cvv,
+				exp: expTime,
+			},
+			jwtSecretKey
+		);
+		const data = {
+			channel: 'web',
+			token: token,
+			userId: user.userId,
+		};
+		console.log("data packet", data)
+		this.props.onCreateCardToken(data);
+	}
+
 	componentDidMount() {
 
 		console.log('pros', this.props.dropDownData);
@@ -87,6 +125,12 @@ class form4 extends Component {
 			autoRenew: !this.state.autoRenew,
 		});
 	};
+
+	addCardToggle = () => {
+		this.setState({
+			addCardToggle : !this.state.addCardToggle
+		})
+	}
 
 	
 	
@@ -285,55 +329,64 @@ class form4 extends Component {
 							<div>
 									<button
 										className='more-options'
+										onClick={this.addCardToggle}
 									>
 										Add New Card
 									</button>
-									<form onSubmit={this.onSubmit}>
-							<div className='row'>
-								<div className='col-md-12' style={{ margin: '15px 0px 0px' }}>
-									<input
-										type='text'
-										className='form-control'
-										placeholder='Card Number'
-										name='cardNumber'
-										value={cardNumber}
-										minLength='16'
-										maxLength='16'
-										onChange={this.onChange}
-										required
-									/>
-								</div>
-								<div
-									className='col-md-6'
-									style={{ margin: '15px 0px', paddingRight: '0px' }}
-								>
-									<input
-										type='text'
-										className='form-control'
-										placeholder='Expire Date'
-										name='expiryDate'
-										value={expiryDate}
-										required
-										onChange={this.onChange}
-									/>
-								</div>
-								<div className='col-md-6' style={{ margin: '15px 0px' }}>
-									<input
-										type='text'
-										className='form-control'
-										placeholder='CVV'
-										name='cvv'
-										value={cvv}
-										required
-										onChange={this.onChange}
-									/>
+									{
+										this.state.addCardToggle ?
+										<form onSubmit={this.addCard}>
+											<div className='row'>
+												<div className='col-md-12' style={{ margin: '15px 0px 0px' }}>
+													<input
+														type='text'
+														className='form-control'
+														placeholder='Card Number'
+														name='cardNumber'
+														value={cardNumber}
+														minLength='16'
+														maxLength='16'
+														onChange={this.onChangeHandler}
+														required
+													/>
+												</div>
+												<div
+													className='col-md-6'
+													style={{ margin: '15px 0px', paddingRight: '0px' }}
+												>
+													<input
+														type='text'
+														className='form-control'
+														placeholder='Expire Date'
+														name='expiryDate'
+														value={expiryDate}
+														required
+														onChange={this.onChangeHandler}
+													/>
+												</div>
+												<div className='col-md-6' style={{ margin: '15px 0px' }}>
+													<input
+														type='text'
+														className='form-control'
+														placeholder='CVV'
+														name='cvv'
+														value={cvv}
+														required
+														onChange={this.onChangeHandler}
+													/>
+												</div>
+												<div className="col-md-12" style={{textAlign:'center' , marginBottom:'10px'}} >
+													<button className="btn btn-primary" onClick={this.addCard} >
+														Add New Card
+													</button>
+												</div>
+											</div>
+										</form>
+										: ""
+									}
 								</div>
 							</div>
-						</form>
-						</div>
-						</div>
-						</div>
-						
+							</div>
 						</div>
 						<div>
 							<button
@@ -363,6 +416,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(actions.chargeCustomerUsingCreditCard(data)),
 		onchargeCustomerForPropertyUsingCreditCard: (data) =>
 			dispatch(actions.chargeCustomerForPropertyUsingCreditCard(data)),
+		onCreateCardToken: (data) => dispatch(actions.createCreditCardToken(data)),
 	};
 };
 

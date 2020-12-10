@@ -196,7 +196,7 @@ class comments extends Component {
 		const userName = this.state.user.userName;
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
 		const { user} = this.state;
-		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected"){
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review"){
 			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} for 7 days due to ${user.rejectionReason}`)
 		}
 		else{
