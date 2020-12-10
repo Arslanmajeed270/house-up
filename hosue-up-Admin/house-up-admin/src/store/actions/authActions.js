@@ -25,13 +25,9 @@ export const loginUser = (userData, history) => dispatch => {
         userData
     )
     .then(res => {
-  
-        // const {token} = res.data;
-        // const decoded = jwt_decode(token);
-        // setAuthToken(token);
     
         if(res.data &&  res.data.data && res.data.data.user ){
-            localStorage.setItem('jwtToken', res.data.data.user) ;
+            localStorage.setItem('jwtToken',JSON.stringify( res.data.data.user)) ;
             dispatch(setCurrentUser(res.data.data.user));
         }
 

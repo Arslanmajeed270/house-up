@@ -394,6 +394,9 @@ class vendorSignup extends Component {
 				profileImageExist: profileImage === profileImageDefault ? profileImageExist : !profileImageExist,
 
 				userTypeId: 2,
+
+				phoneNo: user.msisdn,
+				channel:'web'
 			};
 			console.log("data packet for update profile", userData)
 			this.props.onUpdateVendor(userData, this.props.history);

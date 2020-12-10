@@ -152,7 +152,7 @@ class singleVendor extends Component {
 		const profilePictureUrl = user.profilePictureUrl
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
 		console.log("comment added ")
-		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected"){
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review"){
 			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc }`} due to ${user.rejectionReason}`)
 		}
 		else{
@@ -266,7 +266,7 @@ class singleVendor extends Component {
 											data-toggle='modal'
 											data-target='#pxp-work-with'
 											onClick={
-												user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ?
+												user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review" ?
 												() => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc}`} due to ${user.rejectionReason}`)
 												: ( user && user.profilePictureUrl ?
 												() =>

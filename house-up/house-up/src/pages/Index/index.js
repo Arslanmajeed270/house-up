@@ -136,7 +136,7 @@ class index extends Component {
 			action: `${like ? 'Unlike' : 'Like'}`,
 		};
 		const { user } = this.state
-			if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected")
+			if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review")
 		{
 			console.log(this.state.user)
 				this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}`)
@@ -203,7 +203,7 @@ class index extends Component {
 			commentText: '',
 			activeCommentId: '',
 		});
-		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected"  )
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review"  )
 		{
 			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
 		}
@@ -226,7 +226,7 @@ class index extends Component {
 		};
 		const type = val;
 		const { user } = this.state
-		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" )
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review" )
 		{
 			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
 		}
@@ -321,26 +321,24 @@ class index extends Component {
 									<div className='col-md-3 col-lg-3 col-sm-3'>
 										<div className='suggested-vendor-follow text-right'>
 											{
-												this.state.user.userId !== data.userId ?
+												this.state.user.userId === data.userId ? "" :
 													<Link
-												to='#'
-												onClick={this.followUnfollwProfessionals(
-													data && data.userId && data.userId,
-													index,
-													data &&
-														data.isUserFollowedByLoggedInUser,
-													'VendorsRight'
-												)}
-											>
-												{' '}
-												{data &&
-												data.isUserFollowedByLoggedInUser ===
-													true
-													? 'Unfollow'
-													: 'Follow'}{' '}
-											</Link>
-										
-										: ""
+													to='#'
+													onClick={this.followUnfollwProfessionals(
+														data && data.userId && data.userId,
+														index,
+														data &&
+															data.isUserFollowedByLoggedInUser,
+														'VendorsRight'
+													)}
+												>
+													{' '}
+													{data &&
+													data.isUserFollowedByLoggedInUser ===
+														true
+														? 'Unfollow'
+														: 'Follow'}{' '}
+												</Link>
 											}
 										</div>
 									</div>
@@ -619,7 +617,7 @@ class index extends Component {
 																							</Link>
 																							.
 																							{
-																								user.userId !== data.object.userId ?
+																								user.userId !== data.object.user.userId ?
 																								<Link
 																								to=''
 																								onClick={this.followUnfollwProfessionals(
@@ -756,12 +754,14 @@ class index extends Component {
 																										alt=''
 																									/>{' '}
 																								</Link>
-																								<button
+																								{
+																									data.object.user.userId === user.userId ? "" : 
+																									<button
 																									className='dashboard-newsfeed-contact nodecor'
 																									data-toggle='modal'
 																									data-target=''
 																									onClick={
-																										user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+																										user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
 																										: () => this.modelHanlder(
 																											'contactModalState',
 																											data &&
@@ -774,6 +774,8 @@ class index extends Component {
 																									Contact us
 																								</button>
 
+																								}
+																								
 																								{data &&
 																								data.object &&
 																								data.object.postLikes &&
@@ -1074,12 +1076,14 @@ class index extends Component {
 																											alt=''
 																										/>{' '}
 																									</Link>
-																									<button
+																									{
+																										data.object.user.userId === user.userId ? "" :
+																										<button
 																										className='dashboard-newsfeed-contact nodecor'
 																										data-toggle='modal'
 																										data-target=''
 																										onClick={
-																											user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+																											user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected"  || user.userStatusDesc === "In Review" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
 																										: 
 																											() =>
 																											this.modelHanlder(
@@ -1094,7 +1098,9 @@ class index extends Component {
 																									>
 																										Contact us
 																									</button>
-																								</div>
+																								
+																									}
+																									</div>
 																								{data &&
 																								data.object &&
 																								data.object.propertyLikes &&
@@ -1266,8 +1272,7 @@ class index extends Component {
 																					<div className='row'>
 																						<div className='col-md-9 col-sm-9 col-8'>
 																							<div className='vendor-detail'>
-																								{
-																									data && data.userId !== user.userId ?
+																								
 																								<span
 																									className='news-feed-user-name'
 																									style={{
@@ -1282,7 +1287,10 @@ class index extends Component {
 																										: ''}{' '}
 																									{data && data.object.lastName
 																										? data.object.lastName
-																										: ''}{' '}
+																										: ''}
+																									{
+																									data && data.object.userId !== user.userId ?
+																									<>
 																									.
 																									<Link
 																										to=''
@@ -1298,6 +1306,7 @@ class index extends Component {
 																											'Vendors'
 																										)}
 																									>
+																									
 																										{' '}
 																										{data.object &&
 																										data.object
@@ -1306,9 +1315,11 @@ class index extends Component {
 																											? 'Unfollow'
 																											: 'Follow'}{' '}
 																									</Link>
+																										</>
+																										: ""
+																									}
 																								</span>
-																								: ""
-																								}
+																								
 																								<p>
 																									<span>
 																										{data &&
@@ -1416,12 +1427,14 @@ class index extends Component {
 																									alt=''
 																								/>{' '}
 																							</Link>
-																							<button
+																							{
+																								user.userId === data.object.userId ? "" :
+																								<button
 																								className='dashboard-newsfeed-contact nodecor'
 																								data-toggle='modal'
 																								data-target=''
 																								onClick={
-																									user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
+																									user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review" ? () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
 																										: 
 																									() => this.modelHanlder(
 																										'contactModalState',
@@ -1434,6 +1447,8 @@ class index extends Component {
 																								Contact us
 																							</button>
 
+																							}
+																							
 																							{data &&
 																							data.object &&
 																							data.object.vendorLikes &&

@@ -257,7 +257,7 @@ class singleVendor extends Component {
                               : ""
                               }
                                 {
-                                  singleVendorData.userStatusDesc === "In Review" ?
+                                  singleVendorData && singleVendorData.userStatusDesc === "In Review" ?
                                   <>
                                     <div className="col-md-6">
                                     <button className="btn btn-success status-btn" 
@@ -277,13 +277,20 @@ class singleVendor extends Component {
                                     <div className="col-md-6" />
                                     <div className="col-md-6">
                                       <button 
-                                        className={`btn  ${singleVendorData.userStatusDesc === "Approved" || singleVendorData.userStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
+                                        className={`btn  ${ singleVendorData &&  singleVendorData.userStatusDesc === "Approved" || singleVendorData &&  singleVendorData.userStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
                                       >
-                                        {singleVendorData.userStatusDesc === "Approved" || singleVendorData.userStatusDesc === "Active" ? "APPROVED" : "REJECTED"}
+                                        {singleVendorData && singleVendorData.userStatusDesc}
                                       </button>
                                     </div>
                                   </>
                                 }
+
+                                <div>
+                                  <button className="btn btn-primary" onClick={()=>this.props.modelHanlder('vendorStatus',singleVendorData && singleVendorData.userId )} >
+                                    Action
+                                  </button>
+                                </div>
+
                             </div>
                           </div>
                         </div>

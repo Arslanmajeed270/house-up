@@ -104,13 +104,14 @@ export const getSingleUserData = (userData) => dispatch => {
 };
 
 //Vendors  - Update Vendors State
-export const updateVendorsState = (userData) => dispatch => {
+export const updateVendorsState = (userData , closeCodelHanlder) => dispatch => {
 	console.log("checking userData: ", userData);
     axios
     .post(backendServerURL+'/updateUserState',userData)
     .then(res => {
 		console.log('checking resonse data ',res);
 		dispatch(getVendorsData());
+		closeCodelHanlder('vendorStatus')
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, 

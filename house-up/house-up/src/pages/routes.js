@@ -68,11 +68,10 @@ class Routes extends React.Component {
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
 				<Route
 					exact
-
 					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
 					component={(routes) => <Comments
 					match={routes.match}
-						modelHanlder={this.props.modelHanlder} />}
+					modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/contact'} component={Contact} />
 				<Route exact path={'/privacy'} component={Privacy} />
