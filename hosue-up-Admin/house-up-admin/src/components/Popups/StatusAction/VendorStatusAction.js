@@ -24,11 +24,19 @@ class UserStatusAction extends Component {
         const { userId , userStateDesc } = this.state
 	    const userData = {
             userId,
-            userStateDesc
+			userStateDesc,
+			updateVendor:this.props.onUpdateVendorsStatus,
+			for:'vendor'
         };
-        const closeCodelHanlder = this.props.closeCodelHanlder
-        console.log(userData);
-        this.props.onUpdateVendorsStatus(userData, closeCodelHanlder);
+		console.log(userData);
+		if(userStateDesc === "Rejected" || userStateDesc === "Suspended" || userStateDesc === "Inactive")
+		{
+			this.props.modelHanlder('rejectedReason',userData)
+		}
+		else{
+			console.log("hello")
+			this.props.modelHanlder('confirmation', userData)
+		}
 	}
   
 	selectPlan = (id) =>
@@ -173,11 +181,6 @@ class UserStatusAction extends Component {
 		);
 	}
 }
-const mapStateToProps = (state) => {
-	return {
-		page: state.page,
-	};
-};
 
 const mapDispatchToProps = (dispatch) => {
 	return{
@@ -187,6 +190,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(UserStatusAction);

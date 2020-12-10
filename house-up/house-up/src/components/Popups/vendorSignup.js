@@ -152,6 +152,7 @@ class vendorSignup extends Component {
 	}
 
 	componentDidMount() {
+		this.props.onHideError()
 		console.log(this.props.userData);
 		if (this.props.userData) {
 			const userData = cloneDeep(this.props.userData);
@@ -1105,6 +1106,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onUpdateVendor: (userData, history) =>
 			dispatch(actions.updateVendor(userData, history)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

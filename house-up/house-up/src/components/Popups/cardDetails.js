@@ -79,6 +79,10 @@ class AddCard extends Component {
 		this.setState({ [targetName]: targetValue });
 	};
 
+	componentDidMount () {
+		this.props.onHideError();
+	}
+
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { cardNumber, expiryDate, cvv, user } = this.state;
@@ -195,6 +199,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
 		onCreateCardToken: (data) => dispatch(actions.createCreditCardToken(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

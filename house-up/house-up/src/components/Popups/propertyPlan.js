@@ -14,6 +14,7 @@ class propertyPlan extends Component {
 		};
 	}
 	componentDidMount(){
+		this.props.onHideError();
 		console.log("clicked")
 	}
 

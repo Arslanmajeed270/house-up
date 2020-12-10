@@ -61,6 +61,10 @@ class phoneNumber extends Component {
     }
   };
 
+  componentDidMount(){
+    this.props.onHideError()
+  }
+
   onSubmit = (e) => {
     e.preventDefault();
     let number = '+' + 1 + this.state.number;
@@ -170,6 +174,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
     onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 
