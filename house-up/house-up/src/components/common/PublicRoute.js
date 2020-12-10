@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
 			auth.isAuthenticated === false ? (
 				<Component {...props} />
 			) : (
-				<Redirect to={'/index-Canada&Ontario&Toronto'} />
+				<Redirect to={'/index-Canada&Ontario&Renfrew'} />
 			)
 		}
 	/>

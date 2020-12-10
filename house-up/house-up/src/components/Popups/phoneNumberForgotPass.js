@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 // importing actions
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
 
@@ -30,6 +31,10 @@ class phonenumberForgotPass extends Component {
     if (stateChanged) {
       return changedState;
     }
+  }
+
+  componentDidMount(){
+    this.props.onHideError()
   }
 
   onChange = (e) => {
@@ -137,6 +142,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

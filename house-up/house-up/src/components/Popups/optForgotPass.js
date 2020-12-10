@@ -49,6 +49,10 @@ class optForgotPass extends Component {
     return null;
   }
 
+  componentDidMount(){
+    this.props.onHideError()
+  }
+
   handleChange = (otp) => {
     this.setState({ otp });
     if (otp.length === 4) {
@@ -173,6 +177,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),
     onVerifyPin: (data) => dispatch(actions.verifyPin(data)),
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

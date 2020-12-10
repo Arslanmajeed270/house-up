@@ -25,10 +25,17 @@ class UserStatusAction extends Component {
 		const { userId , userStateDesc } = this.state
 	  const userData = {
 		  userId,
-		  userStateDesc
+		  userStateDesc,
+		  updateUser: this.props.onUpdateUserStatus,
+		  for:'user'
 	  };
 	  console.log(userData);
-	  this.props.onUpdateUserStatus(userData);
+	  if(userStateDesc === "Active"){
+		this.props.modelHanlder('confirmation', userData)
+	  }
+	  else {
+		this.props.modelHanlder('rejectedReason',userData)
+	  }
 	}
   
 	selectPlan = (id) =>
@@ -119,11 +126,7 @@ class UserStatusAction extends Component {
 		);
 	}
 }
-const mapStateToProps = (state) => {
-	return {
-		page: state.page,
-	};
-};
+
 
 const mapDispatchToProps = (dispatch) => {
 	return{
@@ -133,6 +136,6 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(
-	mapStateToProps,
+	null,
 	mapDispatchToProps
 )(UserStatusAction);

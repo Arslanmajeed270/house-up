@@ -9,6 +9,8 @@ import BusinessRegDoc from '../components/Popups/BusinessRegistrationDoc'
 import BusinessSupportDoc from '../components/Popups/BusinessSupportDoc'
 import UserStatusAction from '../components/Popups/StatusAction/UserStatusAction'
 import VendorStatusAction from '../components/Popups/StatusAction/VendorStatusAction';
+import Confirmation from '../components/Popups/confirmation';
+import RejectedReason from '../components/Popups/RejectedReason';
 
 
 class index extends Component {
@@ -22,8 +24,9 @@ class index extends Component {
           businessSuppDoc:false,
           data:'',
           userStatus:false,
-          vendorStatus:false
-
+          vendorStatus:false,
+          confirmation:false,
+          rejectedReason:false
         };
     }
 
@@ -59,6 +62,22 @@ class index extends Component {
         }
         else if (model === 'vendorStatus') {
 			this.setState({ [model]: !this.state[model] , data:data });
+        }
+        else if (model === 'confirmation') {
+			this.setState({ 
+                [model]: !this.state[model] ,
+                data:data,
+                vendorStatus:false,
+                userStatus:false
+            });
+        }
+        else if (model === 'rejectedReason') {
+			this.setState({ 
+                [model]: !this.state[model] ,
+                data:data,
+                vendorStatus:false,
+                userStatus:false
+            });
 		}
 	};
       
@@ -82,14 +101,30 @@ class index extends Component {
 				)}
                 {this.state.userStatus && (
 					<UserStatusAction
-						show={this.state.userStatus}
+                        show={this.state.userStatus}
+                        modelHanlder={this.modelHanlder}
                         closeCodelHanlder={this.closeCodelHanlder}
                         data={this.state.data}
 					/>
 				)}
                 {this.state.vendorStatus && (
 					<VendorStatusAction
+                        modelHanlder={this.modelHanlder}
 						show={this.state.vendorStatus}
+                        closeCodelHanlder={this.closeCodelHanlder}
+                        data={this.state.data}
+					/>
+				)}
+                {this.state.confirmation && (
+					<Confirmation
+						show={this.state.confirmation}
+                        closeCodelHanlder={this.closeCodelHanlder}
+                        data={this.state.data}
+					/>
+				)}
+                {this.state.rejectedReason && (
+					<RejectedReason
+						show={this.state.rejectedReason}
                         closeCodelHanlder={this.closeCodelHanlder}
                         data={this.state.data}
 					/>

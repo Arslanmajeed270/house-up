@@ -71,6 +71,7 @@ class contacUsPopup extends Component {
 	}
 
 	componentDidMount() {
+		this.props.onHideError();
 		const { user} = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
@@ -254,7 +255,7 @@ const mapDispatchToProps = (dispatch) => {
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
-
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

@@ -21,8 +21,8 @@ class form1 extends Component {
 			address: '',
 			images: [],
 			previewImages: [],
-			longitude: 78.68576,
 			latitude: 32.57698,
+			longitude: 78.68576,
 			googleMapKey:
 				process.env.REACT_APP_GOOGLE_MAP_KEY |
 				'AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk',
@@ -232,8 +232,8 @@ class form1 extends Component {
 			state: state,
 			images: images,
 			previewImages: previewImages,
-			longitude: longitude,
 			latitude: latitude,
+			longitude: longitude,
 		};
 		if (
 			this.state.previewImages.length !== 0 &&

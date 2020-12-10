@@ -99,6 +99,7 @@ class userSignup extends Component {
 	}
 
 	componentDidMount() {
+		this.props.onHideError()
 		const userData = cloneDeep(this.props.userData);
 
 		this.setState({
@@ -412,6 +413,8 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onUpdateUser: (userData, history) =>
 			dispatch(actions.updateUser(userData, history)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
+
 	};
 };
 

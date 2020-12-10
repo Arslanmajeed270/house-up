@@ -63,6 +63,7 @@ class forgotPass extends Component {
     return null;
   }
   componentDidMount() {
+    this.props.onHideError()
     let data = {
       emailAddress: '',
       msisdn: this.props.phNumber,
@@ -221,6 +222,7 @@ const mapDispatchToProps = (dispatch) => {
     onResetUserPassword: (data) => dispatch(actions.resetUserPassword(data)),
     onErrorSet: (msg) =>
       dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

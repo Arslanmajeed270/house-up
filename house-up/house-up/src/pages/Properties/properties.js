@@ -25,8 +25,8 @@ class properties extends Component {
 
 	static defaultProps = {
 		center: {
-			lat: 59.95,
-			lng: 30.33,
+			lat: 43.6532,
+			lng: 79.3832,
 		},
 		zoom: 15,
 	};
@@ -83,7 +83,7 @@ class properties extends Component {
 			state: '',
 			channel: 'web',
 			lat: 43.787083,
-			lng: -79.497369,
+			lng: 79.497369,
 			city: currentLocation && currentLocation.city,
 			limit: 10,
 			offset: 0,
@@ -102,7 +102,7 @@ class properties extends Component {
 			state: 'Ontario',
 			channel: 'web',
 			lat: 43.787083,
-			lng: -79.497369,
+			lng: 79.497369,
 			city: cityName,
 			limit: 10,
 			offset: 0,
@@ -164,7 +164,7 @@ class properties extends Component {
 							defaultCenter={this.props.center}
 							defaultZoom={this.props.zoom}
 						>
-							<AnyReactComponent lat={59.955413} lng={30.337844} />
+							<AnyReactComponent lat={43.787083} lng={79.497369} />
 						</GoogleMapReact>
 						<Link to='' className='pxp-list-toggle'>
 							<span className='fa fa-list' />
@@ -291,7 +291,7 @@ class properties extends Component {
 									  ))
 									: []}
 							</div>
-							<ul className='pagination pxp-paginantion mt-2 mt-md-4'>
+							{/* <ul className='pagination pxp-paginantion mt-2 mt-md-4'>
 								<li className='page-item active'>
 									<Link className='page-link' to=''>
 										1
@@ -307,7 +307,7 @@ class properties extends Component {
 										Next <span className='fa fa-angle-right' />
 									</Link>
 								</li>
-							</ul>
+							</ul> */}
 						</div>
 					</div>
 				</div>
