@@ -6,23 +6,8 @@ import { Modal } from 'react-bootstrap';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
 class imagePreview extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			propertyImg: [],
-		};
-	}
-
-	componentDidMount() {
-		console.log("image preview")
-		this.setState({
-			propertyImg: this.props.propertyImg,
-		});
-	}
-
 	render() {
-		const { propertyImg } = this.state;
-		console.log("property images", propertyImg)
+		const propertyImg = this.props.propertyImg;
 
 		const propertyImages = [];
 
