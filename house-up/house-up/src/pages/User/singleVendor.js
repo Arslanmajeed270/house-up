@@ -353,7 +353,10 @@ class singleVendor extends Component {
 											</div>
 											<div className='col-6 detail-info'>
 												{hideContact ? (
-													<Link onClick={this.contactHandler}>
+													<Link onClick={(e) => {
+														e.preventDefault();
+														this.contactHandler();
+													}}>
 														click to show
 													</Link>
 												) : (

@@ -18,7 +18,7 @@ class singleProp extends Component {
 			commentText: '',
 			user: {},
 			userId: '',
-			// imageToggle: false,
+			imageToggle: false,
 			vendorId: '',
 			comments: [],
 		};
@@ -205,7 +205,10 @@ class singleProp extends Component {
 								className='pxp-sp-gallery-main-img'
 							>
 								<Link
-									onClick={this.ImagePreviewHandler}
+									onClick={(e) => {
+										e.preventDefault();
+										this.ImagePreviewHandler();
+									}}
 									itemProp='contentUrl'
 									data-size='1920x1280'
 									className='pxp-cover'
@@ -235,7 +238,10 @@ class singleProp extends Component {
 												itemType='http://schema.org/ImageObject'
 											>
 												<Link
-													onClick={this.ImagePreviewHandler}
+													onClick={(e) => {
+														e.preventDefault();
+														this.ImagePreviewHandler();
+													}}
 													itemProp='contentUrl'
 													data-size='1920x1459'
 													className='pxp-cover'
@@ -261,7 +267,10 @@ class singleProp extends Component {
 								/>
 						</div>
 						<Link
-							onClick={this.ImagePreviewHandler}
+							onClick={(e) => {
+								e.preventDefault();
+								this.ImagePreviewHandler();
+							}}
 							className='pxp-sp-gallery-btn'
 						>
 							See All Photos
