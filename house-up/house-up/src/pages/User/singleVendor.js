@@ -182,7 +182,7 @@ class singleVendor extends Component {
 			editProfile = (
 				<div>
 					<button
-						className='btn btn-primary'
+						className='btn btn-primary mb-10'
 						onClick={() => this.props.modelHanlder('vendorSignupModel', user)}
 					>
 						edit Profile
@@ -198,7 +198,7 @@ class singleVendor extends Component {
 			editProfile = (
 				<div>
 					<button
-						className='btn btn-primary'
+						className='btn btn-primary mb-10'
 						onClick={() => this.props.modelHanlder('userSignupModel', user)}
 					>
 						edit Profile
