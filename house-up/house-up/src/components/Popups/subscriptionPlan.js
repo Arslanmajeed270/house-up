@@ -68,14 +68,14 @@ class subscriptionPlan extends Component {
 										>
 											<Link to='#'>
 												<div className='row'>
-													<div className='col-md-3 logo-modal'>
+													<div className='col-4 logo-modal'>
 														<img
 															src={data && data.packageIconURL}
 															alt=''
 															style={{ height: '60px' }}
 														/>
 													</div>
-													<div className='col-md-9'>
+													<div className='col-8'>
 														<div class='user '>{data && data.packageName}</div>
 														<div class='user-description'>
 															{data && data.packageDetail}
@@ -106,14 +106,14 @@ class subscriptionPlan extends Component {
 										>
 											<Link to='#'>
 												<div className='row'>
-													<div className='col-md-3 logo-modal'>
+													<div className='col-4 logo-modal'>
 														<img
 															src={data && data.packageIconURL}
 															alt=''
 															style={{ height: '60px' }}
 														/>
 													</div>
-													<div className='col-md-9'>
+													<div className='col-8'>
 														<div class='user '>{data && data.packageName}</div>
 														<div class='user-description'>
 															{data && data.packageDetail}

@@ -89,7 +89,7 @@ body {
 }
 .subscription-card {
   background: #fff;
-  padding: 30px 10px;
+  padding: 20px 10px;
 }
 .card-selection {
   padding: 20px 10px;
@@ -211,6 +211,13 @@ body {
 }
 .logo-modal {
   text-align: -webkit-center;
+}
+
+.subscription-card .logo-modal {
+  text-align: left;
+}
+.subscription-card .logo-modal img {
+  width: auto;
 }
 
 .signin-popup {
