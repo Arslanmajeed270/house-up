@@ -71,6 +71,16 @@ class singleVendor extends Component {
     })
   }
 
+  updateVendorsState = (userStateDesc , userId) =>
+  {
+    let userData = {
+      userId,
+      userStateDesc
+    };
+    console.log(userData);
+    this.props.onUpdateVendorsState(userData);
+  }
+
     render() { 
       const { singleVendorData , singleVendorsPropertiesData } = this.state;
       console.log(singleVendorData)
@@ -246,19 +256,41 @@ class singleVendor extends Component {
                                 </div>
                               : ""
                               }
-                              <div style={{float:'right'}}>
-                                { singleVendorData && singleVendorData.userStatusDesc === "Approved" || singleVendorData && singleVendorData.userStatusDesc === "Active" ?
-                                <button className="btn btn-success status-btn" 
-                                  >
-                                    ACTIVE
-                                </button>
-                                :
-                                <button className="btn btn-danger status-btn" 
-                                >
-                                  REJECT
-                                </button>
-}
-                              </div>
+                                {
+                                  singleVendorData && singleVendorData.userStatusDesc === "In Review" ?
+                                  <>
+                                    <div className="col-md-6">
+                                    <button className="btn btn-success status-btn" 
+                                      onClick={()=>this.updateVendorsState("Active" , singleVendorData.userId)}>
+                                        APPROVE
+                                    </button>
+                                    </div>
+                                    <div className="col-md-6">
+                                      <button className="btn btn-danger status-btn" 
+                                        onClick={()=>this.updateVendorsState("Rejected" , singleVendorData.userId)}>
+                                          REJECT
+                                      </button>
+                                    </div>
+                                  </>
+                                  :
+                                  <>
+                                    <div className="col-md-6" />
+                                    <div className="col-md-6">
+                                      <button 
+                                        className={`btn  ${ singleVendorData &&  singleVendorData.userStatusDesc === "Approved" || singleVendorData &&  singleVendorData.userStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
+                                      >
+                                        {singleVendorData && singleVendorData.userStatusDesc}
+                                      </button>
+                                    </div>
+                                  </>
+                                }
+
+                                <div>
+                                  <button className="btn btn-primary" onClick={()=>this.props.modelHanlder('vendorStatus',singleVendorData && singleVendorData.userId )} >
+                                    Action
+                                  </button>
+                                </div>
+
                             </div>
                           </div>
                         </div>
@@ -294,7 +326,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       onGetSingleVendorsData: (userData) => dispatch(actions.getSingleVendorData(userData)),
-      onGetSingleVendorsPropertyData: (userData) => dispatch(actions.getSingleVendorsPropertyData(userData))
+      onUpdateVendorsState : (userData)=> dispatch(actions.updateVendorsState(userData)),
+      onGetSingleVendorsPropertyData: (userData) => dispatch(actions.getSingleVendorsPropertyData(userData)),
 
   }
 };

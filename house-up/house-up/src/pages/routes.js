@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import PrivateRoute from '../components/common/PrivateRoute';
 
 import About from './About/about';
@@ -22,13 +22,17 @@ import SelectLocation from './selectLocation/selectLocation';
 
 class Routes extends React.Component {
 	render() {
+		console.log("checking this.props",this.props)
 		return (
-			<Router>
-				<Route exact path={'/'} component={Home} />
+			<React.Fragment>
+				<Route exact path={'/'} component={() => <Home 
+				 	modelHanlder={this.props.modelHanlder} />} />
 				<PrivateRoute
 					exact
 					path={'/index-:country&:state&:city'}
-					component={Index}
+					component={(route) => <Index
+						match={route.match}
+						modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route
 					exact
@@ -36,7 +40,17 @@ class Routes extends React.Component {
 					component={() => <Home modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/about'} component={About} />
-				<PrivateRoute exact path={'/add-property'} component={AddProperty} />
+				<PrivateRoute
+					exact
+					path={'/add-property'}
+					component={() => (
+						<AddProperty 
+						modelHanlder={this.props.modelHanlder} 
+						history={this.props.history} 
+						closeCodelHanlder={this.props.closeCodelHanlder}
+						/>
+					)}
+				/>
 				<Route exact path={'/add-product'} component={AddProduct} />
 				<Route exact path={'/add-coupon'} component={AddCoupon} />
 				<Route
@@ -54,8 +68,10 @@ class Routes extends React.Component {
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
 				<Route
 					exact
-					path={'/comments-:id&:category&:indexValue'}
-					component={Comments}
+					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
+					component={(routes) => <Comments
+					match={routes.match}
+					modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/contact'} component={Contact} />
 				<Route exact path={'/privacy'} component={Privacy} />
@@ -74,9 +90,9 @@ class Routes extends React.Component {
 					)}
 				/>
 				<Route exact path={'/professionals'} component={Professionals} />
-			</Router>
+			</React.Fragment>
 		);
 	}
 }
 
-export default withRouter(Routes);
+export default Routes;

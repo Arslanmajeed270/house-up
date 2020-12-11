@@ -15,13 +15,15 @@ import * as serviceWorker from './serviceWorker';
 import pageReducer from './store/reducers/pageReducer';
 import userReducers from './store/reducers/userReducers'
 import authReducer from './store/reducers/authReducer';
+import propertyReducer from './store/reducers/propertyReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   page: pageReducer,
   userPage : userReducers,
-  auth : authReducer
+  auth : authReducer,
+  propPage: propertyReducer
 });
 
 //const store = createStore(burgerBuilderReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

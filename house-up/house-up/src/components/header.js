@@ -135,8 +135,14 @@ class header extends Component {
 											<Link to='/properties'>Find a Home</Link>
 										</li>
 										<li className='list-inline-item'>
-											{user && user.profilePictureUrl ? (
-												<Link to='/add-property'>List a Property</Link>
+											{user && user.profilePictureUrl  ? (
+												user.userStatusDesc === "Rejected"?
+													<Link to={`#`}
+													onClick={ () =>this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc} due to ${user.rejectionReason}`)
+													 }
+													>List a Property</Link>
+:
+													<Link to={`/add-property`}>List a Property</Link>
 											) : (
 												<Link
 													to='/add-property'
@@ -203,9 +209,8 @@ class header extends Component {
 									<>
 											<Link
 												className="vendor-login-name"
-												to={`/single-vendor-${
-													user && user.userId ? user.userId : ''
-												}`}
+												to="#"
+												onClick={this.dropDownHandler}
 											>
 												{user && user.firstName}
 											</Link>
@@ -243,8 +248,10 @@ class header extends Component {
 														!(user && user.packageSubscribed) ? (
 															<li className='profile_header_dropdown_li'>
 																<div
-																	onClick={() =>
-																		this.props.modelHanlder(
+																	onClick={
+																		user && user.userStatusDesc === "Rejected" ?
+																		() => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc } due to ${user.rejectionReason}`)
+																		:() => this.props.modelHanlder(
 																			'subscriptionPlan',
 																			'upgradeBoth'
 																		)
@@ -324,6 +331,13 @@ class header extends Component {
 										}`}
 										onClick={() => this.props.modelHanlder('phoneSignin')}
 									>
+										<Link
+												className="vendor-login-name"
+												to="#"
+												onClick={() => this.props.modelHanlder('phoneSignin')}
+											>
+												Sign In / Sing Up
+											</Link>
 										{/* <span className="far fa-user" /> */}
 										<img
 											src={require('../assets/images/ic_profile.svg')}

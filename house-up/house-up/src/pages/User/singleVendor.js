@@ -17,6 +17,7 @@ class singleVendor extends Component {
 			commentText: '',
 			user: {},
 			hideContact: true,
+			showPropertyPackage:false
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
@@ -26,6 +27,7 @@ class singleVendor extends Component {
 		let stateChanged = false;
 		let changedState = {};
 
+		console.log('checking vendor in getDerivedStateFromProps: ', vendor);
 		if (
 			vendor &&
 			JSON.stringify(state.singleVendorData) !==
@@ -70,27 +72,31 @@ class singleVendor extends Component {
 	}
 
 	componentDidMount() {
-		const id = this.props.match.params.id;
+		const uId = this.props.match.params.id;
+		console.log('checking uId: ', uId);
 		this.setState({
-			id: id,
-		});
-
-		this.setState({
-			userId: this.state.user.userId ? this.state.user.userId : '',
+			id: uId,
 		});
 
 		let userData = {
-			userId: id,
+			userId: uId,
 		};
+		this.props.onGetSingleVendorsData(userData);
+
+		console.log('userid',this.state.user.userId)
+		console.log('uID',uId)
+		
+		console.log("showPropertyPackage", this.state.showPropertyPackage)
 		const data = {
 			offset: '0',
 			lat: '43.787083',
-			userId: id,
+			userId: uId,
 			channel: 'web',
 			lng: '-79.497369',
 			limit: '10',
+			showPropertyPackage: Number(this.state.user.userId) !== Number(uId) ? false : true
 		};
-		this.props.onGetSingleVendorsData(userData);
+		console.log(data)
 		this.props.onGetSingleVendorsPropertiesData(data);
 	}
 
@@ -135,15 +141,23 @@ class singleVendor extends Component {
 			storyImageId: 0,
 			propertyId: 0,
 			commentText: commentText,
-			userId: userId,
+			userId: user.userId,
 			vendorId: Number(id),
+			phoneNo:user.msisdn,
+			channel:'web'
 		};
 		const indexValue = ''
 		const userFullName = `${user.firstName} ${user.lastName}`
 		const userName = user.userName
 		const profilePictureUrl = user.profilePictureUrl
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss')
-		this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
+		console.log("comment added ")
+		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review"){
+			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc }`} due to ${user.rejectionReason}`)
+		}
+		else{
+			this.props.onCommentAdded(data, indexValue,userFullName,userName , profilePictureUrl , date );
+		}
 	};
 
 	render() {
@@ -154,7 +168,9 @@ class singleVendor extends Component {
 			hideContact,
 			user,
 		} = this.state;
-		console.log(singleVendorData)
+		console.log('checking this.state on single vendor',this.state)
+
+
 
 		let editProfile = '';
 		if (
@@ -232,6 +248,13 @@ class singleVendor extends Component {
 													{singleVendorData && singleVendorData.emailAddress}
 												</p>
 											</div>
+											{
+												singleVendorData && singleVendorData.userStatusDesc === "Inactive" ?
+												<div className='col-md-12'>
+													<p className="text-danger" >Your Account is been Inactive for 7 days due to {singleVendorData.rejectionReason}.</p>
+												</div>
+											: ""
+											}
 										</div>
 									)}
 									{
@@ -242,14 +265,21 @@ class singleVendor extends Component {
 											className='pxp-agent-contact-btn'
 											data-toggle='modal'
 											data-target='#pxp-work-with'
-											onClick={() =>
+											onClick={
+												user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review" ?
+												() => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc}`} due to ${user.rejectionReason}`)
+												: ( user && user.profilePictureUrl ?
+												() =>
 												this.modelHanlder(
 													'contactModalState',
 													singleVendorData.userId
 												)
+												:
+												() => this.props.modelHanlder('phoneSignin')
+												)
 											}
 										>
-											CONTACTS US{' '}
+											CONTACT US{' '}
 										</button>
 										{this.state.contactModalState ? (
 											<Contact
@@ -323,7 +353,10 @@ class singleVendor extends Component {
 											</div>
 											<div className='col-6 detail-info'>
 												{hideContact ? (
-													<Link onClick={this.contactHandler}>
+													<Link onClick={(e) => {
+														e.preventDefault();
+														this.contactHandler();
+													}}>
 														click to show
 													</Link>
 												) : (
@@ -377,7 +410,8 @@ class singleVendor extends Component {
 								{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length
 									? singleVendorsPropertiesData.map((data, idx) =>
-											data && data.category === 'Property' ? (
+											data && data.category === 'Property' &&
+											data.object.propertyStatusDesc === "Approved" &&
 												<>
 													<div
 														key={idx}
@@ -443,8 +477,7 @@ class singleVendor extends Component {
 											) : (
 												''
 											)
-									  )
-									: ''}
+									 }
 							</div>
 							{/* <ul className='pagination pxp-paginantion mt-3 mt-md-4'>
 								<li className='page-item active'>
@@ -492,7 +525,9 @@ class singleVendor extends Component {
 														</div>
 												  ))
 												: ''}
-											<form
+												{
+													user && user.profilePictureUrl ?
+															<form
 												action='/single-vendor'
 												className='pxp-agent-comments-form mt-3 mt-md-4'
 												onSubmit={this.onSubmit}
@@ -519,6 +554,9 @@ class singleVendor extends Component {
 													</span>
 												</div>
 											</form>
+										
+										: ""
+												}
 										</div>
 									</div>
 								</div>
@@ -541,7 +579,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onCommentAdded: (data, index, userFullName ,userName, profilePictureUrl , date) =>
-		 dispatch(actions.AddComments(data, index, userFullName ,userName, profilePictureUrl, date)),
+		 dispatch(actions.AddCommentsUserProp(data, index, userFullName ,userName, profilePictureUrl, date)),
 		onGetSingleVendorsData: (userData) =>
 			dispatch(actions.getSingleVendorData(userData)),
 		onGetSingleVendorsPropertiesData: (data) =>

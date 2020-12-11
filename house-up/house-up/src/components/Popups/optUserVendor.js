@@ -69,6 +69,10 @@ class OptUserVendor extends Component {
     }
   };
 
+  componentDidMount(){
+    this.props.onHideError()
+  }
+
   resendPin = (num) => {
     const data = {
       msisdn: num,
@@ -175,6 +179,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),
     onVerifyPin: (data) => dispatch(actions.verifyPin(data)),
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

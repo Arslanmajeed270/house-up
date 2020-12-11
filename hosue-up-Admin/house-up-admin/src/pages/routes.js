@@ -68,7 +68,9 @@ class routes extends Component {
                 <Route      
                     exact 
                     path={"/single-user-:id"} 
-                    component={SingleUser}
+                    component={(route) => <SingleUser
+                                             modelHanlder={this.props.modelHanlder} 
+                                             match={route.match} />}
                 />
                 <Route      
                     exact 

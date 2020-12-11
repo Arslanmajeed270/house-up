@@ -71,7 +71,9 @@ class emailSignin extends Component {
     }
     return null;
   }
-
+componentDidMount(){
+  this.props.onHideError();
+}
   onChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -226,6 +228,7 @@ const mapDispatchToProps = (dispatch) => {
     onErrorSet: (msg) =>
       dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
     onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

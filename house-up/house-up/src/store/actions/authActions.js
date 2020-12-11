@@ -105,6 +105,7 @@ export const createUser = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/registerUser', userData)
 		.then((res) => {
+			console.log("res for creating user", res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: REGISTER_USER_SUCCESS });
 				dispatch(clearErrors());
@@ -173,10 +174,12 @@ export const updateVendor = (userData , history) => (dispatch) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				localStorage.removeItem('jwtToken');
 				setAuthToken(false);
+				dispatch({type : SHOW_POP_UP})
 				dispatch(clearCurrentUser());
 				history.push(`/home`);
 				dispatch(clearErrors());
 			} else {
+				dispatch({type : HIDE_POP_UP})
 				dispatch({
 					type: SET_ERRORS,
 					payload: {

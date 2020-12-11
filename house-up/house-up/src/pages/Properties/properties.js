@@ -19,13 +19,14 @@ class properties extends Component {
 			propertiesData: [],
 			propertyPrice: '',
 			indexPageData: {},
+			currentLocation:{}
 		};
 	}
 
 	static defaultProps = {
 		center: {
-			lat: 59.95,
-			lng: 30.33,
+			lat: 43.6532,
+			lng: 79.3832,
 		},
 		zoom: 15,
 	};
@@ -57,6 +58,14 @@ class properties extends Component {
 			stateChanged = true;
 		}
 
+		if (
+			page &&
+			JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)
+		) {
+			changedState.currentLocation = page.currentLocation;
+			stateChanged = true;
+		}
+
 		if (stateChanged) {
 			return changedState;
 		}
@@ -66,13 +75,16 @@ class properties extends Component {
 	componentDidMount() {
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
+			console.log("current Location", this.state.currentLocation)
+			const { currentLocation } = this.state;
+
 
 		const data = {
 			state: '',
 			channel: 'web',
 			lat: 43.787083,
-			lng: -79.497369,
-			city: '',
+			lng: 79.497369,
+			city: currentLocation && currentLocation.city,
 			limit: 10,
 			offset: 0,
 			loggedInuserId: userId,
@@ -90,7 +102,7 @@ class properties extends Component {
 			state: 'Ontario',
 			channel: 'web',
 			lat: 43.787083,
-			lng: -79.497369,
+			lng: 79.497369,
 			city: cityName,
 			limit: 10,
 			offset: 0,
@@ -111,6 +123,7 @@ class properties extends Component {
 	render() {
 		const { loading, indexPageData } = this.state;
 		let { propertiesData } = this.state;
+		console.log('checking this.state: ', this.state);
 
 		propertiesData =
 			indexPageData && indexPageData.properties ? indexPageData.properties : [];
@@ -151,7 +164,7 @@ class properties extends Component {
 							defaultCenter={this.props.center}
 							defaultZoom={this.props.zoom}
 						>
-							<AnyReactComponent lat={59.955413} lng={30.337844} />
+							<AnyReactComponent lat={43.787083} lng={79.497369} />
 						</GoogleMapReact>
 						<Link to='' className='pxp-list-toggle'>
 							<span className='fa fa-list' />
@@ -221,8 +234,9 @@ class properties extends Component {
 								</div>
 							</div>
 							<div className='row'>
-								{propertiesData && propertiesData.length
+								{propertiesData && propertiesData.length 
 									? propertiesData.map((data, index) => (
+									 	data.propertyStatusDesc === "Approved"  &&
 											<div
 												key={index}
 												className='col-sm-12 col-md-6 col-xxxl-4'
@@ -277,7 +291,7 @@ class properties extends Component {
 									  ))
 									: []}
 							</div>
-							<ul className='pagination pxp-paginantion mt-2 mt-md-4'>
+							{/* <ul className='pagination pxp-paginantion mt-2 mt-md-4'>
 								<li className='page-item active'>
 									<Link className='page-link' to=''>
 										1
@@ -293,7 +307,7 @@ class properties extends Component {
 										Next <span className='fa fa-angle-right' />
 									</Link>
 								</li>
-							</ul>
+							</ul> */}
 						</div>
 					</div>
 				</div>

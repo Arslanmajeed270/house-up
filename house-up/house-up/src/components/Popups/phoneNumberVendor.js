@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 // importing actions
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -43,6 +44,11 @@ class phoneNumberVendor extends Component {
 			return changedState;
 		}
 	}
+
+	componentDidMount(){
+		this.props.onHideError()
+	}
+
 	onChange = (e) => {
 		if (e.target.value >= 0) {
 			this.setState({
@@ -158,6 +164,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

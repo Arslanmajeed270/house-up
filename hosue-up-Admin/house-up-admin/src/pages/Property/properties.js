@@ -7,18 +7,18 @@ class properties extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      usersData: []
+      propertiesData:[]
     };
   }
   static getDerivedStateFromProps(props, state) {
   
-    let userPage = props.userPage;
+    let propPage = props.propPage;
 
     let stateChanged = false;
     let changedState = {};
 
-    if(userPage && JSON.stringify(state.usersData) !== JSON.stringify(userPage.usersData)){
-      changedState.usersData = userPage.usersData;  
+    if(propPage && JSON.stringify(state.propertiesData) !== JSON.stringify(propPage.propertiesData)){
+      changedState.propertiesData = propPage.propertiesData;  
       stateChanged = true;
     }
 
@@ -30,45 +30,78 @@ class properties extends Component {
   }
 
   componentDidMount() {
-    this.props.onGetUsersData();
+    const data = {
+			state: '',
+			channel: 'web',
+			lat: 43.787083,
+			lng: -79.497369,
+			city: '',
+			limit: 10,
+			offset: 0,
+			country: '',
+		};
+    this.props.onGetPropertiesData(data);
+  }
+
+  limitWordHandler = (str) => {
+		const arrayString = str.split(' ');
+		let paragraph = '';
+		const limit = arrayString.length < 3 ? arrayString.length : 3;
+		for (let i = 0; i < limit; i++) {
+			paragraph += arrayString[i] + ' ';
+		}
+		if (arrayString.length >= 3) {
+			paragraph += '...';
+		}
+		return paragraph;
+  };
+  
+  updatePropertyState = (propertyStatusDesc , propertyId) =>
+  {
+    let userData = {
+      propertyId,
+      propertyStatusDesc
+    };
+    console.log(userData);
+    this.props.onUpdatePropertyState(userData);
   }
 
   dateHandler = (date) => {
-    return <strong className="h5 mb-0">{date.split('/')[0]}<sup className="smaller text-gray font-weight-normal">{date.split('/')[1]}</sup></strong>;
+    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+    return <strong className="h5 mb-0">{date.split('-')[2]}<sup className="smaller text-gray font-weight-normal">{months[date.split('-')[1]-1]}</sup></strong>;
   }
 
     render() { 
-      const { usersData } = this.state;
-
+      const { propertiesData  } = this.state;
+      console.log(propertiesData)
         return ( 
             <React.Fragment>
                 <div className="page-holder w-100 d-flex flex-wrap">
                 <div className="container-fluid px-xl-5">
                   <section className="py-5">
                     <div className="row">
-                    {usersData && usersData.length ? 
-                      usersData.map( (data, index) =>
+                    {propertiesData && propertiesData.length ? 
+                      propertiesData.map( (data, index) =>
                           <div key={index} className="col-lg-12 message card px-5 py-3 mb-4">
                             <div className="row">
                               <div className="col-md-9">
-                              <Link to={`/single-user-${data && data.userId && data.userId}`} className="no-anchor-style" >
+                              <Link to={`/single-prop-${data && data.propertId}`} className="no-anchor-style" >
                                 <div className="row">
-                                <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                                <div className="col-lg-6 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                   {this.dateHandler(data.createDate)}
-                                  <img src={data.profilePictureUrl ? data.profilePictureUrl : "assets/img/demo.png"} 
+                                  <img src={data.imageList && data.imageList[0] && data.imageList[0].imageURL ? data.imageList[0].imageURL : "assets/img/demo.png"} 
                                   alt="Profile" style={{maxWidth: '48px', maxHeight:'48px' , backgroundColor:'#008CF8'}} 
-                                  className="rounded-circle mx-3 my-2 my-lg-0" />
-                                  <h6 className="mb-0">{data.firstName} {data.lastName}</h6>
+                                  className="mx-3 my-2 my-lg-0" />
+                                  <h6 className="mb-0">{this.	limitWordHandler(data.adTitle)}</h6>
                               </div>
-                              
-                              <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                <h6 className="mb-0">@{data.userName}</h6>
+                              <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                                <h6 className="mb-0">{data.propertyType}</h6>
                               </div>
-                              <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                <h6 className="mb-0">{data.msisdn}</h6>
+                              <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                                <h6 className="mb-0">{data.price}</h6>
                               </div>
-                              <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                <h6 className="mb-0">{data.emailAddress}</h6>
+                              <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
+                                <h6 className="mb-0">{data.city}</h6>
                               </div>
                               </div>
                               </Link>
@@ -76,17 +109,17 @@ class properties extends Component {
                               <div className="col-lg-3 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                 <div className="row">
                                   {
-                                    data.userStatusDesc === "In Review" ?
+                                    data.propertyStatusDesc === "In Review" ?
                                     <>
                                       <div className="col-md-6">
                                       <button className="btn btn-success status-btn" 
-                                        onClick={()=>this.updateUserState("Active" , data.userId)}>
+                                        onClick={()=>this.updatePropertyState("Approved" , data.propertId)}>
                                           APPROVE
                                       </button>
                                       </div>
                                       <div className="col-md-6">
                                         <button className="btn btn-danger status-btn" 
-                                          onClick={()=>this.updateUserState("Rejected" , data.userId)}>
+                                          onClick={()=>this.updatePropertyState("Rejected" , data.propertId)}>
                                             REJECT
                                         </button>
                                       </div>
@@ -96,9 +129,9 @@ class properties extends Component {
                                       <div className="col-md-6" />
                                       <div className="col-md-6">
                                         <button 
-                                          className={`btn  ${data.userStatusDesc === "Approved" || data.userStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
+                                          className={`btn  ${data.propertyStatusDesc === "Approved" || data.propertyStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
                                         >
-                                          {data.userStatusDesc === "Approved" || data.userStatusDesc === "Active" ? "APPROVED" : "REJECTED"}
+                                          {data.propertyStatusDesc === "Approved" || data.propertyStatusDesc === "Active" ? "APPROVED" : "REJECTED"}
                                         </button>
                                       </div>
                                     </>
@@ -149,13 +182,14 @@ class properties extends Component {
 
 const mapStateToProps = state => {
   return {
-    userPage: state.userPage
+    propPage: state.propPage
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetUsersData: () => dispatch(actions.getUsersData())
+      onGetPropertiesData: (data) => dispatch(actions.getPropertiesData(data)),
+      onUpdatePropertyState : (userData)=> dispatch(actions.updatePropertyState(userData))
   }
 };
  

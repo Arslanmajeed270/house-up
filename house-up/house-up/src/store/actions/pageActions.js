@@ -17,9 +17,12 @@ import {
 	HIDE_POP_UP,
 	SHOW_POP_UP,
 	SET_PACKAGE_DETAILS,
+	SET_CURRENT_USERS_CARD
 } from './actionTypes';
+import { setCurrentUser } from './authActions';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
+
 
 export const setPageLoading = () => {
 	return {
@@ -37,6 +40,7 @@ export const clearErrors = () => {
 		type: CLEAR_ERRORS,
 	};
 };
+
 
 //INDEX  - Get indexPage data from backend
 export const getIndexPageData = (data) => (dispatch) => {
@@ -240,8 +244,10 @@ export const followProfessionals = (data, index, type) => (dispatch) => {
 };
 // add Comments to the post and property
 export const AddComments = (data, index, userFullName , userName , profilePictureUrl , date) => (dispatch) => {
+	console.log("add comment api called")
 	axios.post(backendServerURL + '/addComment', data).then((res) => {
-		if (res && res.data && res.data.resultCode === '200') {
+		if (res && res.data) {
+			console.log("res for comment in index page", res)
 			const payload = {
 				index: index,
 				category: data.category,
@@ -251,6 +257,7 @@ export const AddComments = (data, index, userFullName , userName , profilePictur
 				profilePictureUrl : profilePictureUrl,
 				createDateTime : date
 			};
+			console.log(payload)
 			dispatch({
 				type: ADD_COMMENTS,
 				payload: payload,
@@ -266,7 +273,16 @@ export const AddComments = (data, index, userFullName , userName , profilePictur
 				},
 			});
 		}
-	});
+	})
+	.catch((err) => {
+			console.log('console.log in err of commen',err)
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
 };
 
 // Contact US
@@ -274,6 +290,7 @@ export const contactUs = (data, index) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/contactUs', data)
 		.then((res) => {
+			console.log(res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
@@ -375,7 +392,10 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/createCreditCardToken', userData)
 		.then((res) => {
+			console.log("res",res)
 			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+				dispatch(setCurrentUser(res.data.data.user));
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
 			} else {
@@ -403,7 +423,40 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 // CHARGE CUSTOMER USING CREDIT CARD
 export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 	axios
-		.post(backendServerURL + '/chargeCustomerUsingCreditCard', userData)
+		.post(backendServerURL + '/chargeCustomer', userData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				console.log('res on charge customer using card',res)
+				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+				dispatch(setCurrentUser(res.data.data.user))
+				dispatch({ type: SHOW_POP_UP });
+				dispatch(clearErrors());
+			} else {
+				dispatch({ type: HIDE_POP_UP });
+				dispatch({ type: SET_DEFAULT_ALL_CARDS });
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		});
+};
+
+// chargeCustomerForPropertyUsingCreditCard
+export const chargeCustomerForPropertyUsingCreditCard = (userData) => (dispatch) => {
+	axios
+		.post(backendServerURL + '/chargeCustomerForPropertyUsingCreditCard', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });

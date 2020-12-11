@@ -6,21 +6,8 @@ import { Modal } from 'react-bootstrap';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
 class imagePreview extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			propertyImg: [],
-		};
-	}
-
-	componentDidMount() {
-		this.setState({
-			propertyImg: this.props.propertyImg,
-		});
-	}
-
 	render() {
-		const { propertyImg } = this.state;
+		const propertyImg = this.props.propertyImg;
 
 		const propertyImages = [];
 
@@ -40,7 +27,7 @@ class imagePreview extends Component {
 				centered
 				dialogClassName='modal-90w'
 				size='lg'
-				onHide={() => this.props.close()}
+				onHide={this.props.close}
 			>
 				<ImageGallery
 					items={propertyImages}

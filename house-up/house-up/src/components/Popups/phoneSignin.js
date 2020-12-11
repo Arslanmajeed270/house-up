@@ -74,6 +74,10 @@ class phoneSignIn extends Component {
     return null;
   }
 
+  componentDidMount(){
+    this.props.onHideError()
+  }
+
   onChange = (e) => {
     if (e.target.name === 'msisdn') {
       if (e.target.value >= 0) {
@@ -242,6 +246,7 @@ const mapDispatchToProps = (dispatch) => {
     onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
     onErrorSet: (msg) =>
       dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

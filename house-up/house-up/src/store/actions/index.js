@@ -27,7 +27,8 @@ export {
 	createCreditCardToken,
 	markCreditCardDefault,
 	chargeCustomerUsingCreditCard,
-	getPackagePlan
+	getPackagePlan,
+	chargeCustomerForPropertyUsingCreditCard
 } from './pageActions';
 
 export {
@@ -36,4 +37,9 @@ export {
 	getSingleVendorsPropertyData,
 } from './vendorPageAction';
 
-export { dropDwonMenu, addProperty, getSingleProperty } from './propertyAction';
+export { 
+	dropDwonMenu,
+	addProperty,
+	getSingleProperty,
+	AddCommentsUserProp 
+} from './propertyAction';

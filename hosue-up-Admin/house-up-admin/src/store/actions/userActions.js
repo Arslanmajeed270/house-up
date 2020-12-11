@@ -104,13 +104,14 @@ export const getSingleUserData = (userData) => dispatch => {
 };
 
 //Vendors  - Update Vendors State
-export const updateUserState = (userData) => dispatch => {
+export const updateVendorsState = (userData , closeCodelHanlder) => dispatch => {
 	console.log("checking userData: ", userData);
     axios
     .post(backendServerURL+'/updateUserState',userData)
     .then(res => {
 		console.log('checking resonse data ',res);
 		dispatch(getVendorsData());
+		closeCodelHanlder('vendorStatus')
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, 
@@ -118,69 +119,18 @@ export const updateUserState = (userData) => dispatch => {
     })      
 };
 
-//SingleVendorsProperty  - Get SingleVendorsProperty data from backend
-export const getSingleVendorsPropertyData = (userData) => (dispatch) => {
-	// dispatch(setPageLoading());
-
-	axios
-		.post(backendServerURL + '/getVendorPostsNdProperties', userData)
-		.then((res) => {
-			dispatch({
-				type: SET_SINGLE_VENDORS_PROPERTIES,
-				payload:
-				res && res.data && res.data.data && res.data.data.postNdPropertiesList
-						? res.data.data.postNdPropertiesList
-						: [],
-			});
-			dispatch(clearErrors());
-		})
-		.catch((err) => {
-			dispatch({
-				type: SET_ERRORS,
-				payload:
-					err && err.response && err.response.data ? err.response.data : {},
-			});
-		})
-		.finally(() => dispatch(clearPageLoading()));
+//Users  - Update users State
+export const updateUserState = (userData) => dispatch => {
+	console.log("checking userData: ", userData);
+    axios
+    .post(backendServerURL+'/updateUserState',userData)
+    .then(res => {
+		console.log('checking resonse data ',res);
+		dispatch(getUsersData());
+    })
+    .catch(err => {
+		dispatch({type: SET_ERRORS, 
+		payload: err && err.response && err.response.data ? err.response.data : {}})
+    })      
 };
 
-//Get Singel Property
-export const getSingleProperty = (userData) => (dispatch) => {
-	dispatch(setPageLoading());
-
-	axios
-		.post(backendServerURL + '/getProperty', userData)
-		.then((res) => {
-			console.log(res)
-			if (res && res.data && res.data.resultCode === '200') {
-				dispatch({
-					type: GET_SINGLE_PROPERTY,
-					payload:
-						res.data &&
-						res.data.data &&
-						res.data.data.length &&
-						res.data.data[0]
-							? res.data.data[0]
-							: {},
-				});
-				dispatch(clearErrors());
-			} else {
-				dispatch({
-					type: SET_ERRORS,
-					payload: {
-						message: res.data.message
-							? res.data.message
-							: 'Something went wrong! Please try again.',
-					},
-				});
-			}
-		})
-		.catch((err) => {
-			dispatch({
-				type: SET_ERRORS,
-				payload:
-					err && err.response && err.response.data ? err.response.data : {},
-			});
-		})
-		.finally(() => dispatch(clearPageLoading()));
-};

@@ -43,3 +43,6 @@ code {
 .names-tags{
   margin-bottom: 5px;
 }
+.custom-switch {
+  padding-left: 0px !important;
+}

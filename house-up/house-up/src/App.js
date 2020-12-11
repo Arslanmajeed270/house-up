@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as actions from './store/actions/index';
 import PrivateRoute from './components/common/PrivateRoute';
+import PublicRoute from './components/common/PublicRoute';
 import Index from './pages';
 class App extends Component {
 	constructor(props) {
@@ -17,10 +18,15 @@ class App extends Component {
 		} else {
 			this.props.onSetCurrentLocation(0, 0);
 		}
+		if (localStorage.jwtToken) {
+			this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
+		}
 	}
+
 	setCurrentLocation(lat, lon) {
 		this.props.onSetCurrentLocation(lat, lon);
 	}
+
 	showPosition(position) {
 		const latitude = position.coords.latitude;
 		const longitude = position.coords.longitude;
@@ -29,18 +35,14 @@ class App extends Component {
 	}
 
 	render() {
-		if (localStorage.jwtToken) {
-			this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
-		}
-
 		return (
-			<React.Fragment>
+			<Switch>
 				<PrivateRoute
 					exact
 					path={'/index-:country&:state&:city'}
 					component={Index}
 				/>
-				<Route exact path={'/'} component={Index} />
+				<PublicRoute exact path={'/'} component={Index} />
 				<Route exact path={'/home'} component={Index} />
 				<Route exact path={'/about'} component={Index} />
 				<PrivateRoute exact path={'/add-property'} component={Index} />
@@ -50,7 +52,7 @@ class App extends Component {
 				<Route exact path={'/comming-soon'} component={Index} />
 				<Route
 					exact
-					path={'/comments-:id&:category&:indexValue'}
+					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
 					component={Index}
 				/>
 				<Route exact path={'/select-location'} component={Index} />
@@ -60,7 +62,8 @@ class App extends Component {
 				<Route exact path={'/single-post'} component={Index} />
 				<Route exact path={'/single-prop-:id'} component={Index} />
 				<Route exact path={'/professionals'} component={Index} />
-			</React.Fragment>
+				<Redirect to='/' />
+			</Switch>
 		);
 	}
 }

@@ -17,7 +17,7 @@ class cardSelection extends Component {
 			showPopUp: false,
 		};
 	}
-	
+
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const page = props.page;
@@ -40,6 +40,7 @@ class cardSelection extends Component {
 					if (data.isDefault) {
 						changedState.cardId = data.cardId;
 					}
+					return data;
 				});
 			}
 			stateChanged = true;
@@ -52,7 +53,10 @@ class cardSelection extends Component {
 			changedState.showPopUp = page.showPopUp;
 			if (changedState.showPopUp === true) {
 				props.onHidePopUp();
-				props.cardDetailsHandler('congratulationModel','Your Account has been successfully Upgraded');
+				props.cardDetailsHandler(
+					'congratulationModel',
+					'Your Account is Successfully Upgraded'
+				);
 			}
 			stateChanged = true;
 		}
@@ -87,21 +91,29 @@ class cardSelection extends Component {
 	};
 
 	onSubmit = () => {
-		const{user} = this.state;
-		const pkgId = this.props.packageId;
-		console.log('checking packaging id: ', pkgId)
-		
-		const data ={
-			userId:user.userId,
-			packageId:pkgId,
-			currency:"cad"
+		const { user } = this.state;
+		if (this.props.data.for === 'property') {
+			console.log('property if statement', this.props.data);
+			const data = {
+				propertyFeeId: this.props.data && this.props.data.propertyFeeId,
+				packageRenewal: this.props.data && this.props.data.packageRenewal,
+			};
+			console.log(data);
+			this.props.data && this.props.data.form4DataHandler(data);
+		} else if (this.props.data) {
+			console.log('credit card if statement');
+			const data = {
+				userId: user.userId,
+				packageId: this.props.data,
+				currency: 'cad',
+			};
+			console.log('data fro api', data);
+			this.props.onChargeCustomerUsingCreditCard(data);
 		}
-		this.props.onChargeCustomerUsingCreditCard(data);
 	};
 
 	render() {
 		const { user, loading, cardId } = this.state;
-		console.log('checking packaging id: ', this.props.packageId)
 
 		let pageContent = '';
 		if (loading) {
@@ -147,14 +159,14 @@ class cardSelection extends Component {
 														</div>
 														<div className='col-md-9 visa-card-selection'>
 															<div>
-																<div class='card '>
+																<div className='card '>
 																	{' '}
 																	{data.brand === 'Visa'
 																		? 'VISA'
 																		: 'MASTER'}{' '}
 																	Card
 																</div>
-																<div class='card-description'>
+																<div className='card-description'>
 																	{' '}
 																	**** **** **** {data.last4}{' '}
 																</div>
@@ -175,29 +187,6 @@ class cardSelection extends Component {
 									</div>
 							  ))
 							: ''}
-						{/* <div>
-                    <div className="card-selection">
-                        <div className="dashboard-newsfeed-content"
-                        >
-                            <div>
-                                <div className="row">
-                                    <div className="col-md-3 logo-modal">
-                                        <img  src={require("../../assets/images/ic_visa_master_card.svg")} 
-                                        alt=""  
-                                        style={{width:"46px", height:'14px', marginTop: "20px"}}/>
-                                    </div>
-                                    <div className="col-md-9 visa-card-selection">
-                                        <div>
-                                            <div class="card">Master Card</div>
-                                            <div class="card-description"> **** **** **** 4545 </div>
-                                        </div>
-                                        <img src={require('../../assets/images/ic_check_sel.svg')} alt="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </div> */}
 						<div>
 							<div>
 								<div
@@ -239,8 +228,10 @@ const mapDispatchToProps = (dispatch) => {
 		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
 		onMarkCreditCardDefault: (data) =>
 			dispatch(actions.markCreditCardDefault(data)),
-			onChargeCustomerUsingCreditCard: (data) =>
+		onChargeCustomerUsingCreditCard: (data) =>
 			dispatch(actions.chargeCustomerUsingCreditCard(data)),
+		onchargeCustomerForPropertyUsingCreditCard: (data) =>
+			dispatch(actions.chargeCustomerForPropertyUsingCreditCard(data)),
 	};
 };
 

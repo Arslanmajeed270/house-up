@@ -8,30 +8,18 @@ import * as actions from './store/actions/index';
 
 import Index from "./pages";
 import LogIn from './components/Auth/Login/content'
+import Switch from 'react-bootstrap/esm/Switch';
 
 class App extends Component {
+
+    componentDidMount() {
+		if (localStorage.jwtToken) {
+			this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
+		}
+	}
     render() {
-
-        let loginCheck = false;
-    
-        if (localStorage.jwtToken) {
-          
-        //   setAuthToken(localStorage.jwtToken);
-        //   const decoded = jwt_decode(localStorage.jwtToken);
-          this.props.setCurrentUser(localStorage.jwtToken);
-          loginCheck = true;  
-        //   const currentTime = Date.now()/1000;
-      
-        //   if (decoded.exp < currentTime) {
-        //       this.props.logoutUser();
-        //       window.location.href = routesPrefix+'login';
-        //   }
-    
-      }
-
-
-  return (
-    <React.Fragment>
+        return (
+            <Switch>
                 <Route      
                     exact 
                     path={"/login"} 
@@ -102,8 +90,8 @@ class App extends Component {
                     path={"/Vendors"} 
                     component={Index}
                 />
-                {/* <Redirect to={loginCheck ? '/' : '/login'} /> */}
-    </React.Fragment>
+                {/* <Redirect to='/' /> */}
+            </Switch>   
   )
                 }
 }
