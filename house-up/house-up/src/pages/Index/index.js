@@ -702,7 +702,8 @@ class index extends Component {
 
 																						<div className='row custom-row-styles'>
 																							<div className='col-12 post-navbar'>
-																								<span
+																									<div className="navWrap">
+																							<span
 																									style={{ cursor: 'pointer' }}
 																									onClick={() =>
 																										this.addLike(
@@ -775,7 +776,7 @@ class index extends Component {
 																								</button>
 
 																								}
-																								
+																								</div>
 																								{data &&
 																								data.object &&
 																								data.object.postLikes &&
@@ -1446,8 +1447,8 @@ class index extends Component {
 																							>
 																								Contact us
 																							</button>
-
-																							}
+																						}
+																						</div>
 																							
 																							{data &&
 																							data.object &&
@@ -1593,7 +1594,6 @@ class index extends Component {
 																						</div>
 																					</div>
 																				</div>
-																			</div>
 																		</>
 																	) : (
 																		''
