@@ -144,6 +144,11 @@ label {
     font-family: "Condensed", sans-serif;
     font-size: 15px;
 }
+
+.pt-20 {
+    padding-top: 20px;
+}
+
 textarea.form-control {
     padding: 1rem;
 }
@@ -2839,9 +2844,10 @@ h1.pxp-page-header {
 
 .pxp-map-side {
     position: fixed;
-    top: 116px;
+    top: 80px;
     bottom: 62.72px;
     width: 50%;
+    z-index: 3;
 }
 .pxp-map-side.pxp-half {
     width: 50%;
@@ -2943,14 +2949,17 @@ a.pxp-adv-toggle {
     border-radius: .25rem;
     font-size: 1.2rem;
     line-height: 46px;
-    color: #333;
+    color: #333 !important;
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
+    width: auto !important;
 }
-a.pxp-adv-toggle {
-    padding: 0 15px;
+
+a.pxp-map-toggle:hover, a.pxp-adv-toggle:hover {
+    color: #333 !important;
 }
+
 a.pxp-map-toggle:hover,
 a.pxp-adv-toggle:hover {
     border: 1px solid #333;
@@ -2960,7 +2969,7 @@ a.pxp-map-toggle.pxp-active:hover,
 a.pxp-adv-toggle.pxp-active,
 a.pxp-adv-toggle.pxp-active:hover {
     background-color: #333;
-    color: #fff;
+    color: #fff !important;
     border: 1px solid #333;
 }
 a.pxp-list-toggle {
@@ -3094,6 +3103,7 @@ a.pxp-list-toggle.pxp-active {
     font-size: 14px;
     padding: 0 10px 5px 10px;
     color: #333;
+    font-weight: bold;
 }
 .pxp-dark-mode .pxp-marker-details-info-price {
     color: #fff;
@@ -3299,14 +3309,33 @@ a.pxp-results-card-1 .carousel-inner > .carousel-item {
     margin-right: -5px;
     margin-left: -5px;
 }
+.pxp-content-side-search-form-adv label {
+    font-weight: 700;
+}
+
 .pxp-filter-form-col,
 .pxp-content-side-search-form-col {
     padding-right: 5px;
     padding-left: 5px;
 }
 .pxp-content-side-search-form-adv {
-    display: none;
+  -webkit-transition: height .3s ease;
+  transition: height .3s ease;
+  -moz-transition: height .3s ease;
+  -ms-transition: height .3s ease;
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 0px;
 }
+
+.pxp-content-side-search-form-adv.active {
+  -webkit-transition: height .3s ease;
+  transition: height .3s ease;
+  -moz-transition: height .3s ease;
+  -ms-transition: height .3s ease;
+  height: 450px;
+}
+
 .pxp-filter-btn {
     display: inline-block;
     text-align: center;
@@ -6774,6 +6803,8 @@ span.title-property {
 .dashboard-newsfeed-details span {
     color: #000000;
 }
+
+
 
 .likedByText {
     font-family: Condensed;
