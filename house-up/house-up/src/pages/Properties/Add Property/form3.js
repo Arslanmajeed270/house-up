@@ -52,7 +52,6 @@ class form3 extends Component {
 		};
 	}
 	moreOptionToggle = () => {
-		console.log('clicked');
 		this.setState({ moreInfo: !this.state.moreInfo });
 	};
 	componentDidMount() {

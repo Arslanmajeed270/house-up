@@ -206,7 +206,7 @@ class vendor extends Component {
                         </Link>
                       </div> */}
 								</div>
-								<ul className='pagination pxp-paginantion mt-2 mt-md-3'>
+								{/* <ul className='pagination pxp-paginantion mt-2 mt-md-3'>
 									<li className='page-item '>
 										<Link className='page-link' to=''>
 											1
@@ -228,6 +228,7 @@ class vendor extends Component {
 										</Link>
 									</li>
 								</ul>
+							 */}
 							</div>
 						</div>
 					</div>

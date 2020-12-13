@@ -32,7 +32,11 @@ class Routes extends React.Component {
 					exact
 					path={'/index-:country&:state&:city'}
 					component={(route) => (
-						<Index match={route.match} modelHanlder={this.props.modelHanlder} />
+						<Index
+							match={route.match}
+							history={this.props.history}
+							modelHanlder={this.props.modelHanlder}
+						/>
 					)}
 				/>
 				<Route

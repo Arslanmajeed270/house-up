@@ -66,9 +66,8 @@ class home extends Component {
 		if (HomeData && HomeData.vendors) {
 			HomeData.vendors.map((data, index) => {
 				if (
-					data &&
-					data.userStatusDesc === 'Active' &&
-					professionalRender.length < 4
+					(data && data.userStatusDesc === 'Active') ||
+					(data.userStatusDesc === 'Approved' && professionalRender.length < 4)
 				) {
 					professionalRender.push(
 						<div key={index} className='col-sm-12 col-md-6 col-lg-3'>
@@ -120,7 +119,6 @@ class home extends Component {
 			pageContent = '';
 		}
 		const items = [];
-		console.log('checking homePageData: ', homePageData);
 		if (
 			homePageData &&
 			homePageData.properties &&

@@ -213,13 +213,6 @@ class header extends Component {
 								</Link>
 								{user && user.profilePictureUrl ? (
 									<>
-										<Link
-											className='vendor-login-name'
-											to='#'
-											onClick={this.dropDownHandler}
-										>
-											{user && user.firstName}
-										</Link>
 										<div
 											to='#'
 											className={`pxp-header-user pxp-signin-trigger ${
@@ -308,7 +301,15 @@ class header extends Component {
 														  user.packageSubscribed.packageDetail
 																.packageName === 'Annual' ? (
 															<li className='profile_header_dropdown_li'>
-																<div style={{ cursor: 'pointer' }}>
+																<div
+																	onClick={() =>
+																		this.props.modelHanlder(
+																			'subscriptionPlan',
+																			'annualAcitve'
+																		)
+																	}
+																	style={{ cursor: 'pointer' }}
+																>
 																	{user &&
 																		user.packageSubscribed &&
 																		user.packageSubscribed.packageDetail &&
@@ -333,6 +334,19 @@ class header extends Component {
 												''
 											)}
 										</div>
+										<Link
+											style={{
+												display: 'block',
+												paddingRight: '10px',
+												marginTop: '-8px',
+												float: 'none',
+											}}
+											className='vendor-login-name'
+											to='#'
+											onClick={this.dropDownHandler}
+										>
+											{user && user.firstName}
+										</Link>
 									</>
 								) : (
 									<div
@@ -353,7 +367,7 @@ class header extends Component {
 										</div>
 										{/* <span className="far fa-user" /> */}
 										<img
-											style={{cursor: "pointer"}}
+											style={{ cursor: 'pointer' }}
 											src={require('../assets/images/ic_profile.svg')}
 											alt=''
 										/>

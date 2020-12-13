@@ -178,7 +178,6 @@ class index extends Component {
 		) {
 			animateHeader = true;
 		}
-		console.log('checking i am here');
 		return (
 			<React.Fragment>
 				{this.state.phoneSignin && (
