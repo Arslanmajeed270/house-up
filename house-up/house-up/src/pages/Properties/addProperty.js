@@ -24,7 +24,7 @@ class addProperty extends Component {
 			form3Data: {},
 			form4Data: {},
 			loading: false,
-			user:{},
+			user: {},
 			error: {},
 			currentLocation: {},
 		};
@@ -38,11 +38,9 @@ class addProperty extends Component {
 		this.setState({ form2Data: form2Data });
 	};
 	form3DataHandler = (form3Data) => {
-		console.log('from 3 data handler', form3Data);
 		this.setState({ form3Data: form3Data });
 	};
 	form4DataHandler = (form4Data) => {
-		console.log('from 4 data handler', form4Data);
 		this.setState({ form4Data: form4Data }, () => this.addProperty(form4Data));
 	};
 
@@ -102,11 +100,14 @@ class addProperty extends Component {
 	}
 
 	componentDidMount() {
-		this.props.onDropDwonMenu();
+		console.log('checking this.state: ', this.state);
+		if (!this.state.dropDownData || !this.state.dropDownData.currencies) {
+			console.log('i am into if');
+			this.props.onDropDwonMenu();
+		}
 	}
 
 	addProperty = () => {
-		console.log('add Property Function');
 		const form1Data = this.state.form1Data;
 		const form2Data = this.state.form2Data;
 		const form3Data = this.state.form3Data;
@@ -186,9 +187,11 @@ class addProperty extends Component {
 				: false,
 		};
 
-		console.log('add Property Data ', formData);
-
-		this.props.onAddProperty(formData, this.props.history, this.props.closeCodelHanlder);
+		this.props.onAddProperty(
+			formData,
+			this.props.history,
+			this.props.closeCodelHanlder
+		);
 	};
 
 	formShowHandler = (num) => {
@@ -199,12 +202,12 @@ class addProperty extends Component {
 
 	render() {
 		const { dropDownData, loading, errors, form3Data } = this.state;
+		console.log('checking this.state into render: ', this.state);
 
 		const data = {
 			dropDownData: dropDownData,
 			form4DataHandler: this.form4DataHandler,
 		};
-		console.log('checking history: ', this.props.history);
 		let pageContent = '';
 
 		if (loading) {
@@ -246,14 +249,14 @@ class addProperty extends Component {
 						modelHanlder={this.props.modelHanlder}
 					/>
 				)}
-				{this.state.formShow === 3 &&
-					<Form4 
+				{this.state.formShow === 3 && (
+					<Form4
 						dropDownData={dropDownData}
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form4DataHandler={this.form4DataHandler}
 						form4Data={this.state.form4Data}
 					/>
-				}
+				)}
 				{pageContent}
 			</React.Fragment>
 		);
@@ -264,7 +267,7 @@ const mapStateToProps = (state) => {
 		property: state.property,
 		errors: state.errors,
 		page: state.page,
-		auth: state.auth
+		auth: state.auth,
 	};
 };
 

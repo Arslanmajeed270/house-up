@@ -22,8 +22,8 @@ import SubscriptionPlan from '../components/Popups/subscriptionPlan';
 import CardSelection from '../components/Popups/cardSelection';
 import CardDetails from '../components/Popups/cardDetails';
 import PropertyPlanSelection from '../components/Popups/propertyPlanSelection';
-import ImagePreview from '../components/Popups/ImagePreview'
-import AlertPopup from '../components/Popups/alertPopup'
+import ImagePreview from '../components/Popups/ImagePreview';
+import AlertPopup from '../components/Popups/alertPopup';
 
 class index extends Component {
 	constructor(props) {
@@ -44,14 +44,14 @@ class index extends Component {
 			vendorSignupModel: false,
 			congratulationModel: false,
 			phNumber: '',
-			imageToggle:false,
+			imageToggle: false,
 			vendorCongrats: false,
 			subscriptionPlan: false,
 			cardSelection: false,
 			cardDetails: false,
 			animateHeader: false,
-			imagePreview:false,
-			alertPopup:false,
+			imagePreview: false,
+			alertPopup: false,
 			message: '',
 			data: '',
 			propertyPlanSelection: false,
@@ -124,7 +124,6 @@ class index extends Component {
 				message: data,
 			});
 		} else if (model === 'vendorSignupModel') {
-			console.log('heelo', data);
 			this.setState({
 				optUserModelVendor: false,
 				[model]: !this.state[model],
@@ -138,8 +137,7 @@ class index extends Component {
 				[model]: !this.state[model],
 				message: data,
 			});
-		}
-		else if (model === 'alertPopup') {
+		} else if (model === 'alertPopup') {
 			this.setState({
 				[model]: !this.state[model],
 				message: data,
@@ -149,8 +147,7 @@ class index extends Component {
 				vendorSignupModel: false,
 				[model]: !this.state[model],
 			});
-		}
-		else if (model === 'imageToggle') {
+		} else if (model === 'imageToggle') {
 			this.setState({
 				[model]: !this.state[model],
 			});
@@ -181,6 +178,7 @@ class index extends Component {
 		) {
 			animateHeader = true;
 		}
+		console.log('checking i am here');
 		return (
 			<React.Fragment>
 				{this.state.phoneSignin && (
@@ -355,11 +353,11 @@ class index extends Component {
 					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>
-			<Routes 
-			modelHanlder={this.modelHanlder} 
-			history={this.props.history} 
-			closeCodelHanlder={this.closeCodelHanlder}
-			/>
+				<Routes
+					modelHanlder={this.modelHanlder}
+					history={this.props.history}
+					closeCodelHanlder={this.closeCodelHanlder}
+				/>
 				{hideFooter === true ? ' ' : <Footer />}
 			</React.Fragment>
 		);

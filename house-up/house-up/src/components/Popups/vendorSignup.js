@@ -57,9 +57,9 @@ class vendorSignup extends Component {
 			profileImageDefault: '',
 			businessSupportingDocumentDefault: '',
 			businessRegistrationDocumentDefault: '',
-			businessRegistrationDocumentExist:false,
-			businessSupportingDocumentExist:false,
-			profileImageExist:false
+			businessRegistrationDocumentExist: false,
+			businessSupportingDocumentExist: false,
+			profileImageExist: false,
 		};
 	}
 
@@ -152,8 +152,7 @@ class vendorSignup extends Component {
 	}
 
 	componentDidMount() {
-		this.props.onHideError()
-		console.log(this.props.userData);
+		this.props.onHideError();
 		if (this.props.userData) {
 			const userData = cloneDeep(this.props.userData);
 			const date = userData && userData.businessStartDate.split('/');
@@ -318,7 +317,7 @@ class vendorSignup extends Component {
 			user,
 			businessRegistrationDocumentExist,
 			businessSupportingDocumentExist,
-			profileImageExist
+			profileImageExist,
 		} = this.state;
 		const city = cityId.split(',')[1];
 		const cId = cityId.split(',')[0];
@@ -372,34 +371,33 @@ class vendorSignup extends Component {
 						? ''
 						: businessRegistrationDocument,
 
-						businessRegistrationDocumentExist:
+				businessRegistrationDocumentExist:
 					businessRegistrationDocument === businessRegistrationDocumentDefault
 						? businessRegistrationDocumentExist
 						: !businessRegistrationDocumentExist,
-						
-
 
 				businessSupportingDocument:
 					businessSupportingDocument === businessSupportingDocumentDefault
 						? ''
 						: businessSupportingDocument,
 
-						businessSupportingDocumentExist:
+				businessSupportingDocumentExist:
 					businessSupportingDocument === businessSupportingDocumentDefault
 						? businessSupportingDocumentExist
-						: !	businessSupportingDocumentExist,
-
+						: !businessSupportingDocumentExist,
 
 				profileImage: profileImage === profileImageDefault ? '' : profileImage,
-				
-				profileImageExist: profileImage === profileImageDefault ? profileImageExist : !profileImageExist,
+
+				profileImageExist:
+					profileImage === profileImageDefault
+						? profileImageExist
+						: !profileImageExist,
 
 				userTypeId: 2,
 
 				phoneNo: user.msisdn,
-				channel:'web'
+				channel: 'web',
 			};
-			console.log("data packet for update profile", userData)
 			this.props.onUpdateVendor(userData, this.props.history);
 		}
 	};
@@ -519,9 +517,6 @@ class vendorSignup extends Component {
 			imagePreviewForSupport,
 			unitOther,
 		} = this.state;
-		console.log('province Id', professionId);
-		console.log('province Id', provinceId);
-		console.log('this.state', this.state);
 
 		let pageContent = '';
 
@@ -1106,7 +1101,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onUpdateVendor: (userData, history) =>
 			dispatch(actions.updateVendor(userData, history)),
-    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
+		onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

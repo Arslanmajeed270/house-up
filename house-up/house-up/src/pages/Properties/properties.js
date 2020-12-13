@@ -19,7 +19,7 @@ class properties extends Component {
 			propertiesData: [],
 			propertyPrice: '',
 			indexPageData: {},
-			currentLocation:{}
+			currentLocation: {},
 		};
 	}
 
@@ -60,7 +60,8 @@ class properties extends Component {
 
 		if (
 			page &&
-			JSON.stringify(state.currentLocation) !== JSON.stringify(page.currentLocation)
+			JSON.stringify(state.currentLocation) !==
+				JSON.stringify(page.currentLocation)
 		) {
 			changedState.currentLocation = page.currentLocation;
 			stateChanged = true;
@@ -75,9 +76,7 @@ class properties extends Component {
 	componentDidMount() {
 		const userId =
 			this.state.user && this.state.user.userId ? this.state.user.userId : null;
-			console.log("current Location", this.state.currentLocation)
-			const { currentLocation } = this.state;
-
+		const { currentLocation } = this.state;
 
 		const data = {
 			state: '',
@@ -123,8 +122,6 @@ class properties extends Component {
 	render() {
 		const { loading, indexPageData } = this.state;
 		let { propertiesData } = this.state;
-		console.log('checking this.state: ', this.state);
-
 		propertiesData =
 			indexPageData && indexPageData.properties ? indexPageData.properties : [];
 
@@ -234,61 +231,65 @@ class properties extends Component {
 								</div>
 							</div>
 							<div className='row'>
-								{propertiesData && propertiesData.length 
-									? propertiesData.map((data, index) => (
-									 	data.propertyStatusDesc === "Approved"  &&
-											<div
-												key={index}
-												className='col-sm-12 col-md-6 col-xxxl-4'
-											>
-												<Link
-													to={`/single-prop-${data && data.propertId}`}
-													className='pxp-results-card-1 rounded-lg'
-													data-prop={1}
-												>
+								{propertiesData && propertiesData.length
+									? propertiesData.map(
+											(data, index) =>
+												data.propertyStatusDesc === 'Approved' && (
 													<div
-														id='card-carousel-1'
-														className='carousel slide'
-														data-ride='carousel'
-														data-interval='false'
+														key={index}
+														className='col-sm-12 col-md-6 col-xxxl-4'
 													>
-														<div className='carousel-inner'>
+														<Link
+															to={`/single-prop-${data && data.propertId}`}
+															className='pxp-results-card-1 rounded-lg'
+															data-prop={1}
+														>
 															<div
-																className='carousel-item active'
-																style={{
-																	backgroundImage: `url(${
-																		data &&
-																		data.imageList &&
-																		data.imageList.length &&
-																		data.imageList[0].imageURL
-																			? data.imageList[0].imageURL
-																			: 'assets/images/ic_profile_placeholder.png'
-																	})`,
-																}}
-															/>
-														</div>
+																id='card-carousel-1'
+																className='carousel slide'
+																data-ride='carousel'
+																data-interval='false'
+															>
+																<div className='carousel-inner'>
+																	<div
+																		className='carousel-item active'
+																		style={{
+																			backgroundImage: `url(${
+																				data &&
+																				data.imageList &&
+																				data.imageList.length &&
+																				data.imageList[0].imageURL
+																					? data.imageList[0].imageURL
+																					: 'assets/images/ic_profile_placeholder.png'
+																			})`,
+																		}}
+																	/>
+																</div>
+															</div>
+															<div className='pxp-results-card-1-gradient' />
+															<div className='pxp-results-card-1-details'>
+																<div className='pxp-results-card-1-details-title'>
+																	{data && data.adTitle}
+																</div>
+																<div className='pxp-results-card-1-details-price'>
+																	{data &&
+																		data.currency &&
+																		data.currency.symbol}
+																	{data && data.price
+																		? data.price.toLocaleString()
+																		: ''}
+																</div>
+																<span className='pxp-prop-card-1-details-features text-uppercase'>
+																	{' '}
+																	{data && data.noOfBedrooms} BD <span>|</span>{' '}
+																	{data && data.noOfBathrooms} BA <span>|</span>{' '}
+																	{data && data.finishedSqftArea} SF
+																</span>
+															</div>
+														</Link>
 													</div>
-													<div className='pxp-results-card-1-gradient' />
-													<div className='pxp-results-card-1-details'>
-														<div className='pxp-results-card-1-details-title'>
-															{data && data.adTitle}
-														</div>
-														<div className='pxp-results-card-1-details-price'>
-															{data && data.currency && data.currency.symbol}
-															{data && data.price
-																? data.price.toLocaleString()
-																: ''}
-														</div>
-														<span className='pxp-prop-card-1-details-features text-uppercase'>
-															{' '}
-															{data && data.noOfBedrooms} BD <span>|</span>{' '}
-															{data && data.noOfBathrooms} BA <span>|</span>{' '}
-															{data && data.finishedSqftArea} SF
-														</span>
-													</div>
-												</Link>
-											</div>
-									  ))
+												)
+									  )
 									: []}
 							</div>
 							{/* <ul className='pagination pxp-paginantion mt-2 mt-md-4'>

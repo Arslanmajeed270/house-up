@@ -70,16 +70,18 @@ class AddCard extends Component {
 	}
 
 	onChange = (e) => {
-		const { expiryDate } = this.state
+		const { expiryDate } = this.state;
 		let targetName = e.target.name;
 		let targetValue = e.target.value;
-		if( targetName === "expiryDate" ){
-			 this.setState({ [targetName] : targetValue.replace(/^(\d{2})(\d{2})/, '$1/$2/')});
+		if (targetName === 'expiryDate') {
+			this.setState({
+				[targetName]: targetValue.replace(/^(\d{2})(\d{2})/, '$1/$2/'),
+			});
 		}
 		this.setState({ [targetName]: targetValue });
 	};
 
-	componentDidMount () {
+	componentDidMount() {
 		this.props.onHideError();
 	}
 
@@ -103,13 +105,11 @@ class AddCard extends Component {
 			token: token,
 			userId: user.userId,
 		};
-		console.log("data packet", data)
 		this.props.onCreateCardToken(data);
 	};
 
 	render() {
 		const { cardNumber, expiryDate, cvv, errors, loading } = this.state;
-			 console.log("expiry date", expiryDate)
 		let pageData = '';
 		if (loading) {
 			pageData = <Spinner />;
@@ -150,7 +150,6 @@ class AddCard extends Component {
 										type='text'
 										className='form-control'
 										placeholder='Expire Date'
-										
 										name='expiryDate'
 										value={expiryDate}
 										required
@@ -199,7 +198,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
 		onCreateCardToken: (data) => dispatch(actions.createCreditCardToken(data)),
-    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
+		onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

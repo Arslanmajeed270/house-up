@@ -119,9 +119,7 @@ class header extends Component {
 							</div>
 							<div className='col-1 col-md-6'>
 								<div
-									className={`flex-center-nav ${
-										animateHeader ? 'veTop' : ''
-									}`}
+									className={`flex-center-nav ${animateHeader ? 'veTop' : ''}`}
 								>
 									<ul
 										className={`pxp-nav list-inline for-pad ${
@@ -135,14 +133,22 @@ class header extends Component {
 											<Link to='/properties'>Find a Home</Link>
 										</li>
 										<li className='list-inline-item'>
-											{user && user.profilePictureUrl  ? (
-												user.userStatusDesc === "Rejected"?
-													<Link to={`#`}
-													onClick={ () =>this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc} due to ${user.rejectionReason}`)
-													 }
-													>List a Property</Link>
-:
+											{user && user.profilePictureUrl ? (
+												user.userStatusDesc === 'Rejected' ? (
+													<Link
+														to={`#`}
+														onClick={() =>
+															this.props.modelHanlder(
+																'alertPopup',
+																`Your Account is been ${user.userStatusDesc} due to ${user.rejectionReason}`
+															)
+														}
+													>
+														List a Property
+													</Link>
+												) : (
 													<Link to={`/add-property`}>List a Property</Link>
+												)
 											) : (
 												<Link
 													to='/add-property'
@@ -207,13 +213,13 @@ class header extends Component {
 								</Link>
 								{user && user.profilePictureUrl ? (
 									<>
-											<Link
-												className="vendor-login-name"
-												to="#"
-												onClick={this.dropDownHandler}
-											>
-												{user && user.firstName}
-											</Link>
+										<Link
+											className='vendor-login-name'
+											to='#'
+											onClick={this.dropDownHandler}
+										>
+											{user && user.firstName}
+										</Link>
 										<div
 											to='#'
 											className={`pxp-header-user pxp-signin-trigger ${
@@ -249,12 +255,17 @@ class header extends Component {
 															<li className='profile_header_dropdown_li'>
 																<div
 																	onClick={
-																		user && user.userStatusDesc === "Rejected" ?
-																		() => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc } due to ${user.rejectionReason}`)
-																		:() => this.props.modelHanlder(
-																			'subscriptionPlan',
-																			'upgradeBoth'
-																		)
+																		user && user.userStatusDesc === 'Rejected'
+																			? () =>
+																					this.props.modelHanlder(
+																						'alertPopup',
+																						`Your Account is been ${user.userStatusDesc} due to ${user.rejectionReason}`
+																					)
+																			: () =>
+																					this.props.modelHanlder(
+																						'subscriptionPlan',
+																						'upgradeBoth'
+																					)
 																	}
 																	style={{ cursor: 'pointer' }}
 																>
@@ -324,26 +335,29 @@ class header extends Component {
 										</div>
 									</>
 								) : (
-									<Link
+									<div
 										to='#'
 										className={`pxp-header-user pxp-signin-trigger ${
 											animateHeader ? '' : 'forborder'
 										}`}
 										onClick={() => this.props.modelHanlder('phoneSignin')}
 									>
-										<Link
-												className="vendor-login-name"
-												to="#"
-												onClick={() => this.props.modelHanlder('phoneSignin')}
-											>
-												Sign In / Sing Up
-											</Link>
+										<div
+											className='vendor-login-name'
+											to='#'
+											onClick={() => {
+												this.props.modelHanlder('phoneSignin');
+											}}
+										>
+											Sign In / Sing Up
+										</div>
 										{/* <span className="far fa-user" /> */}
 										<img
+											style={{cursor: "pointer"}}
 											src={require('../assets/images/ic_profile.svg')}
 											alt=''
 										/>
-									</Link>
+									</div>
 								)}
 							</div>
 						</div>

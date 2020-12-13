@@ -39,43 +39,33 @@ class form1 extends Component {
 	}
 
 	handleChange = (address) => {
-		// console.log('address from suggestion api', address)
 		this.setState({ address });
 	};
 
-	searchCity = (address , cities) => {
-		console.log("in search city function", cities)
-		console.log("in search city function", address)
-		for (let i=0; i < cities.length; i++) {
-        if (cities[i].name === address) {
-					return cities[i]
-				}
+	searchCity = (address, cities) => {
+		for (let i = 0; i < cities.length; i++) {
+			if (cities[i].name === address) {
+				return cities[i];
+			}
 		}
-	}
+	};
 
 	handleSelect = (address) => {
 		const { cities } = this.state;
-		// console.log("selected address from maps api",address)
-		const add1 = address.split(", ")
-		const cityName = add1[1]
+		const add1 = address.split(', ');
+		const cityName = add1[1];
+		const city = this.searchCity(cityName, cities);
 
-		console.log('city of selected address', cityName)
-
-		const city = this.searchCity(cityName, cities)
-		
-		console.log("city", city)
-		if(city){
-			this.setState({address : address})
-		}
-		else{
-						
-			this.props.modelHanlder('alertPopup',
-			'We are currently available in cities of Ontario Canada.'
-			)
+		if (city) {
+			this.setState({ address: address });
+		} else {
+			this.props.modelHanlder(
+				'alertPopup',
+				'We are currently available in cities of Ontario Canada.'
+			);
 			// alert("Sorry! We are currently available in cities of Ontario Canada.")
-			this.setState({address: ''})
+			this.setState({ address: '' });
 		}
-		
 
 		geocodeByAddress(address)
 			.then((results) => getLatLng(results[0]))
@@ -120,7 +110,6 @@ class form1 extends Component {
 		return null;
 	}
 	componentDidMount() {
-	
 		const { form1Data } = this.props;
 		this.setState({
 			address: form1Data.address ? form1Data.address : '',
@@ -128,9 +117,11 @@ class form1 extends Component {
 			latitude: form1Data.latitude ? form1Data.latitude : 32.57698,
 			state: form1Data.state ? form1Data.state : '',
 			city: form1Data.city ? form1Data.city : '',
-			image : form1Data ? form1Data.image:''
+			image: form1Data ? form1Data.image : '',
 		});
-		this.props.onGetCountries();
+		if (!this.state.countries.length) {
+			this.props.onGetCountries();
+		}
 	}
 
 	onDrop = (files) => {
@@ -153,7 +144,7 @@ class form1 extends Component {
 		if (images && images.length > index) {
 			const filteredImages = images.filter((image, idx) => idx !== index);
 			this.setState({
-				images: filteredImages,
+				previewImages: filteredImages,
 			});
 		}
 	};
@@ -250,8 +241,7 @@ class form1 extends Component {
 		this.imagesHandler(this.state.previewImages);
 	};
 	render() {
-		const { googleMapKey, previewImages , states , cities , address } = this.state;
-console.log("address  : ", address)
+		const { googleMapKey, previewImages, states, cities, address } = this.state;
 		return (
 			<React.Fragment>
 				<form onSubmit={this.onSubmit}>

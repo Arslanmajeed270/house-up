@@ -42,11 +42,9 @@ export const getVendorsData = () => (dispatch) => {
 //SingleVendor  - Get SingleVendor data from backend
 export const getSingleVendorData = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log('checking userData in getSingleVendorData: ', userData);
 	axios
 		.post(backendServerURL + '/getUser', userData)
 		.then((res) => {
-			console.log('checking response in getSingleVendorData',res)
 			dispatch({
 				type: SET_SINGLE_VENDOR,
 				payload:

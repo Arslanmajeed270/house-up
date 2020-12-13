@@ -13,9 +13,8 @@ class propertyPlan extends Component {
 			propertyPlanState: false,
 		};
 	}
-	componentDidMount(){
+	componentDidMount() {
 		this.props.onHideError();
-		console.log("clicked")
 	}
 
 	clickHandler = () => {

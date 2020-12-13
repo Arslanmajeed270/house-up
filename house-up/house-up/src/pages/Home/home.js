@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap'
+import { Carousel } from 'react-bootstrap';
 import AliceCarousel from 'react-alice-carousel';
 
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -15,13 +15,24 @@ class home extends Component {
 		this.state = {
 			homePageData: {},
 			loading: false,
+			user: {},
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
 		let page = props.page;
+		const auth = props.auth;
 
 		let stateChanged = false;
 		let changedState = {};
+
+		if (
+			auth &&
+			auth.user &&
+			JSON.stringify(state.user) !== JSON.stringify(auth.user)
+		) {
+			changedState.user = auth.user;
+			stateChanged = true;
+		}
 
 		if (
 			page &&
@@ -45,66 +56,63 @@ class home extends Component {
 	}
 
 	componentDidMount() {
-		this.props.onGetHomePageData();
+		if (!this.state.homePageData || !this.state.homePageData.properties) {
+			this.props.onGetHomePageData();
+		}
 	}
 
 	ProfessionalRenderer = (HomeData) => {
 		let professionalRender = [];
-		if( HomeData && HomeData.vendors ){
-			HomeData.vendors.map( (data, index) => 
-			{
-				if( data && data.userStatusDesc	=== "Active" && professionalRender.length < 4  ) {
+		if (HomeData && HomeData.vendors) {
+			HomeData.vendors.map((data, index) => {
+				if (
+					data &&
+					data.userStatusDesc === 'Active' &&
+					professionalRender.length < 4
+				) {
 					professionalRender.push(
-					<div
-						key={index}
-						className='col-sm-12 col-md-6 col-lg-3'
-					>
-						<Link
-							to={`/single-vendor-${
-								data && data.userId && data.userId
-							}`}
-							className='pxp-agents-1-item'
-						>
-							<div className='pxp-agents-1-item-fig-container rounded-lg'>
-								<div
-									className='pxp-agents-1-item-fig pxp-cover'
-									style={{
-										backgroundImage: `url(${
-											data.profilePictureUrl
-												? data.profilePictureUrl
-												: 'assets/images/agent-2.jpg'
-										})`,
-									}}
-								/>
-							</div>
-							<div className='pxp-agents-1-item-details rounded-lg'>
-								<div className='pxp-agents-1-item-details-name'>
-									{data.firstName} {data.lastName}
+						<div key={index} className='col-sm-12 col-md-6 col-lg-3'>
+							<Link
+								to={`/single-vendor-${data && data.userId && data.userId}`}
+								className='pxp-agents-1-item'
+							>
+								<div className='pxp-agents-1-item-fig-container rounded-lg'>
+									<div
+										className='pxp-agents-1-item-fig pxp-cover'
+										style={{
+											backgroundImage: `url(${
+												data.profilePictureUrl
+													? data.profilePictureUrl
+													: 'assets/images/agent-2.jpg'
+											})`,
+										}}
+									/>
 								</div>
-								<div className='pxp-agents-1-item-details-email'>
-									{' '}
-									{data.professionDesc}
+								<div className='pxp-agents-1-item-details rounded-lg'>
+									<div className='pxp-agents-1-item-details-name'>
+										{data.firstName} {data.lastName}
+									</div>
+									<div className='pxp-agents-1-item-details-email'>
+										{' '}
+										{data.professionDesc}
+									</div>
+									<div className='pxp-agents-1-item-details-spacer' />
+									<div className='pxp-agents-1-item-cta text-uppercase'>
+										More Details
+									</div>
 								</div>
-								<div className='pxp-agents-1-item-details-spacer' />
-								<div className='pxp-agents-1-item-cta text-uppercase'>
-									More Details
-								</div>
-							</div>
-						</Link>
-					</div>
+							</Link>
+						</div>
 					);
 				}
 				return data;
-			})									
-	}
-	return professionalRender;
-}
+			});
+		}
+		return professionalRender;
+	};
 
 	render() {
-		const { homePageData, loading } = this.state;
-		console.log(homePageData)
-		console.log("checking props in home page",this.props)
-
+		const { homePageData, loading, user } = this.state;
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;
@@ -112,55 +120,59 @@ class home extends Component {
 			pageContent = '';
 		}
 		const items = [];
+		console.log('checking homePageData: ', homePageData);
 		if (
 			homePageData &&
 			homePageData.properties &&
 			homePageData.properties.length
 		) {
 			for (let i = 0; i < homePageData.properties.length; i++) {
-				if(homePageData && homePageData.properties[i].propertyStatusDesc === "Approved"){
-				let item = (
-					<div>
-						<Link
-							to={`/single-prop-${homePageData.properties[i].propertId}`}
-							className='pxp-prop-card-1 rounded-lg'
-						>
-							<div
-								className='pxp-prop-card-1-fig pxp-cover'
-								style={{
-									backgroundImage: `url(${
-										homePageData.properties[i] &&
-										homePageData.properties[i].imageList &&
-										homePageData.properties[i].imageList[0] &&
-										homePageData.properties[i].imageList[0].imageURL
-											? homePageData.properties[i].imageList[0].imageURL
-											: require('../../assets/images/dashboard/ottawa.png')
-									})`,
-								}}
-							/>
-							<div className='pxp-prop-card-1-gradient pxp-animate' />
-							<div className='pxp-prop-card-1-details'>
-								<div className='pxp-prop-card-1-details-titles'>
-									{homePageData.properties[i].adTitle}
+				if (
+					homePageData &&
+					homePageData.properties[i].propertyStatusDesc === 'Approved'
+				) {
+					let item = (
+						<div>
+							<Link
+								to={`/single-prop-${homePageData.properties[i].propertId}`}
+								className='pxp-prop-card-1 rounded-lg'
+							>
+								<div
+									className='pxp-prop-card-1-fig pxp-cover'
+									style={{
+										backgroundImage: `url(${
+											homePageData.properties[i] &&
+											homePageData.properties[i].imageList &&
+											homePageData.properties[i].imageList[0] &&
+											homePageData.properties[i].imageList[0].imageURL
+												? homePageData.properties[i].imageList[0].imageURL
+												: require('../../assets/images/dashboard/ottawa.png')
+										})`,
+									}}
+								/>
+								<div className='pxp-prop-card-1-gradient pxp-animate' />
+								<div className='pxp-prop-card-1-details'>
+									<div className='pxp-prop-card-1-details-titles'>
+										{homePageData.properties[i].adTitle}
+									</div>
+									<div className='pxp-prop-card-1-details-price'>
+										{homePageData.properties[i].currency.symbol}
+										{homePageData.properties[i].price.toLocaleString()}
+									</div>
+									<div className='pxp-prop-card-1-details-features text-uppercase'>
+										{homePageData.properties[i].noOfBedrooms} BD <span>|</span>{' '}
+										{homePageData.properties[i].noOfBathrooms} BA <span>|</span>{' '}
+										{homePageData.properties[i].finishedSqftArea} SF
+									</div>
 								</div>
-								<div className='pxp-prop-card-1-details-price'>
-									{homePageData.properties[i].currency.symbol}
-									{homePageData.properties[i].price.toLocaleString()}
+								<div className='pxp-prop-card-1-details-cta text-uppercase'>
+									View Details
 								</div>
-								<div className='pxp-prop-card-1-details-features text-uppercase'>
-									{homePageData.properties[i].noOfBedrooms} BD <span>|</span>{' '}
-									{homePageData.properties[i].noOfBathrooms} BA <span>|</span>{' '}
-									{homePageData.properties[i].finishedSqftArea} SF
-								</div>
-							</div>
-							<div className='pxp-prop-card-1-details-cta text-uppercase'>
-								View Details
-							</div>
-						</Link>
-					</div>
-				)
-				items.push(item);
-							}
+							</Link>
+						</div>
+					);
+					items.push(item);
+				}
 			}
 		}
 		return (
@@ -239,7 +251,14 @@ class home extends Component {
 						</p>
 						<div className='container'>
 							<div className='pxp-services-container rounded-lg mt-4 mt-md-5'>
-								<Link to='/add-property' className='pxp-services-item'>
+								<Link
+									onClick={(e) => {
+										e.preventDefault();
+										this.props.modelHanlder('phoneSignin');
+									}}
+									to='/add-property'
+									className='pxp-services-item'
+								>
 									<div className='pxp-services-item-fig'>
 										<img src='assets/images/service-icon-1.svg' alt='...' />
 									</div>
@@ -253,12 +272,15 @@ class home extends Component {
 										</div>
 									</div>
 								</Link>
-								<Link to='#' className='pxp-services-item'>
-									<div
-										onClick={() =>
-											this.props.modelHanlder('phoneNumberVendorModel')
-										}
-									>
+								<Link
+									onClick={(e) => {
+										e.preventDefault();
+										this.props.modelHanlder('phoneNumberVendorModel');
+									}}
+									to='#'
+									className='pxp-services-item'
+								>
+									<div>
 										<div className='pxp-services-item-fig'>
 											<img src='assets/images/service-icon-2.svg' alt='...' />
 										</div>
@@ -316,36 +338,45 @@ class home extends Component {
 							{homePageData &&
 								homePageData.propertyCounts &&
 								homePageData.propertyCounts.length &&
-								homePageData.propertyCounts.map((data, index) => (
-									<div className='col-sm-12 col-md-6 col-lg-4'>
-										<Link
-											to='/properties'
-											className='pxp-areas-1-item rounded-lg'
-										>
-											<div
-												className='pxp-areas-1-item-fig pxp-cover'
-												style={{
-													backgroundImage: `url(${
-														data && data.properties && data.properties[0].imageList && data.properties[0].imageList[0].imageURL ? data.properties[0].imageList[0].imageURL 
-																			: 'assets/images/area-2.jpg'
-																	})`,
-												}}
-											/>
-											<div className='pxp-areas-1-item-details'>
-												<div className='pxp-areas-1-item-details-area'>
-													{data && data.cityName}
-												</div>
-												<div className='pxp-areas-1-item-details-area'>
-													<span>{data && data.propertyCount} Properties</span>
-												</div>
-												<div className='pxp-areas-1-item-details-city'></div>
+								homePageData.propertyCounts.map(
+									(data, index) =>
+										index < 6 && (
+											<div key={index} className='col-sm-12 col-md-6 col-lg-4'>
+												<Link
+													to='/properties'
+													className='pxp-areas-1-item rounded-lg'
+												>
+													<div
+														className='pxp-areas-1-item-fig pxp-cover'
+														style={{
+															backgroundImage: `url(${
+																data &&
+																data.properties &&
+																data.properties[0].imageList &&
+																data.properties[0].imageList[0].imageURL
+																	? data.properties[0].imageList[0].imageURL
+																	: 'assets/images/area-2.jpg'
+															})`,
+														}}
+													/>
+													<div className='pxp-areas-1-item-details'>
+														<div className='pxp-areas-1-item-details-area'>
+															{data && data.cityName}
+														</div>
+														<div className='pxp-areas-1-item-details-area'>
+															<span>
+																{data && data.propertyCount} Properties
+															</span>
+														</div>
+														<div className='pxp-areas-1-item-details-city'></div>
+													</div>
+													<div className='pxp-areas-1-item-cta text-uppercase'>
+														Explore
+													</div>
+												</Link>
 											</div>
-											<div className='pxp-areas-1-item-cta text-uppercase'>
-												Explore
-											</div>
-										</Link>
-									</div>
-								))}
+										)
+								)}
 						</div>
 						<Link
 							to='/properties'
@@ -389,7 +420,7 @@ class home extends Component {
 							Search for qualified professionals in your area
 						</p>
 						<div className='row mt-4 mt-md-5'>
-							{this.ProfessionalRenderer(homePageData).map(data => data)}
+							{this.ProfessionalRenderer(homePageData).map((data) => data)}
 							<div className='col-lg-12'>
 								<Link
 									to='/professionals'
@@ -471,6 +502,7 @@ const responsive = {
 const mapStateToProps = (state) => {
 	return {
 		page: state.page,
+		auth: state.auth,
 	};
 };
 

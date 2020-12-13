@@ -3,10 +3,6 @@ import { Modal } from 'react-bootstrap';
 
 class congrationPopup extends Component {
 	state = {};
-
-	componentDidMount (){
-		console.log("alert Pop up ")
-	}
 	render() {
 		return (
 			<Modal
@@ -17,7 +13,7 @@ class congrationPopup extends Component {
 				dialogClassName='modal-width'
 				onHide={() => this.props.closeCodelHanlder('alertPopup')}
 			>
-				<Modal.Body >
+				<Modal.Body>
 					<div className='form-group'>
 						<div
 							class='text-center'
@@ -32,42 +28,38 @@ class congrationPopup extends Component {
 							SORRY!
 						</div>
 					</div>
-					{
-						this.props.message ?
-					<div className='form-group'>
-						<div
-							class='text-center'
-							style={{ fontSize: '18px', color: '#000000' }}
-						>
-							{this.props.message}
+					{this.props.message ? (
+						<div className='form-group'>
+							<div
+								class='text-center'
+								style={{ fontSize: '18px', color: '#000000' }}
+							>
+								{this.props.message}
+							</div>
 						</div>
+					) : (
+						<div className='form-group'>
+							<div
+								class='text-center'
+								style={{ fontSize: '18px', color: '#000000' }}
+							>
+								Your account has been{' '}
+							</div>
+							<div
+								class='text-center'
+								style={{ fontSize: '18px', color: '#000000' }}
+							>
+								{' '}
+								successfully created.
+							</div>
 						</div>
-						:
-					<div className='form-group'>
-						<div
-							class='text-center'
-							style={{ fontSize: '18px', color: '#000000' }}
-						>
-							Your account has been{' '}
-						</div>
-						<div
-							class='text-center'
-							style={{ fontSize: '18px', color: '#000000' }}
-						>
-							{' '}
-							successfully created.
-						</div>
-					</div>
-					
-					}
+					)}
 					<div className='form-group'>
 						<button
 							style={{ fontSize: '16px' }}
 							className='pxp-agent-contact-modal-btn'
 							type='submit'
-							onClick={() =>
-								this.props.closeCodelHanlder('alertPopup')
-							}
+							onClick={() => this.props.closeCodelHanlder('alertPopup')}
 						>
 							THANKS
 						</button>
