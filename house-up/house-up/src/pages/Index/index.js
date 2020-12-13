@@ -138,7 +138,6 @@ class index extends Component {
 		const { user } = this.state
 			if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review")
 		{
-			console.log(this.state.user)
 				this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} due to ${user.rejectionReason}`)
 		}
 		else{
@@ -160,7 +159,6 @@ class index extends Component {
 		}
 	};
 	AddComment = (id, typeCategory, index) => {
-		console.log("add comment function called")
 		const userName =
 			this.state.user && this.state.user.userName
 				? this.state.user.userName
@@ -210,7 +208,6 @@ class index extends Component {
 		else{
 			this.props.onCommentAdded(data, index, userFullName, userName,profilePictureUrl,date );
 		}
-		console.log("ending comment function")
 	};
 
 	followUnfollwProfessionals = (id, index, follow, val) => (e) => {
@@ -265,7 +262,6 @@ class index extends Component {
 
 	handleDragStart = (e) => {
 		e.preventDefault();
-		console.log('checking i am here');
 	};
 
 	ProfessionalRenderer = (indexData) => {
@@ -366,8 +362,6 @@ class index extends Component {
 			storyToggle,
 			activeCommentId,
 		} = this.state;
-		console.log('indexPage data', this.state);
-
 		let pageContent = '';
 
 		if (loading) {

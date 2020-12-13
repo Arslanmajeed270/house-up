@@ -6926,3 +6926,7 @@ span.title-property {
 .subscription-card {
     padding: 20px 10px 28px;
 }
+
+.pxp-is-sticky .vendor-login-name {
+    color: black;
+}

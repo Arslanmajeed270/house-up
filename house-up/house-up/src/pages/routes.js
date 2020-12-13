@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import PrivateRoute from '../components/common/PrivateRoute';
 
 import About from './About/about';
 import AddProperty from './Properties/addProperty';
@@ -22,17 +21,19 @@ import SelectLocation from './selectLocation/selectLocation';
 
 class Routes extends React.Component {
 	render() {
-		console.log("checking this.props",this.props)
 		return (
 			<React.Fragment>
-				<Route exact path={'/'} component={() => <Home 
-				 	modelHanlder={this.props.modelHanlder} />} />
-				<PrivateRoute
+				<Route
+					exact
+					path={'/'}
+					component={() => <Home modelHanlder={this.props.modelHanlder} />}
+				/>
+				<Route
 					exact
 					path={'/index-:country&:state&:city'}
-					component={(route) => <Index
-						match={route.match}
-						modelHanlder={this.props.modelHanlder} />}
+					component={(route) => (
+						<Index match={route.match} modelHanlder={this.props.modelHanlder} />
+					)}
 				/>
 				<Route
 					exact
@@ -40,14 +41,14 @@ class Routes extends React.Component {
 					component={() => <Home modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/about'} component={About} />
-				<PrivateRoute
+				<Route
 					exact
 					path={'/add-property'}
 					component={() => (
-						<AddProperty 
-						modelHanlder={this.props.modelHanlder} 
-						history={this.props.history} 
-						closeCodelHanlder={this.props.closeCodelHanlder}
+						<AddProperty
+							modelHanlder={this.props.modelHanlder}
+							history={this.props.history}
+							closeCodelHanlder={this.props.closeCodelHanlder}
 						/>
 					)}
 				/>
@@ -69,9 +70,12 @@ class Routes extends React.Component {
 				<Route
 					exact
 					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
-					component={(routes) => <Comments
-					match={routes.match}
-					modelHanlder={this.props.modelHanlder} />}
+					component={(routes) => (
+						<Comments
+							match={routes.match}
+							modelHanlder={this.props.modelHanlder}
+						/>
+					)}
 				/>
 				<Route exact path={'/contact'} component={Contact} />
 				<Route exact path={'/privacy'} component={Privacy} />

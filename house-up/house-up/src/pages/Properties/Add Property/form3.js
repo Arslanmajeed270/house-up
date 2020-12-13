@@ -52,7 +52,7 @@ class form3 extends Component {
 		};
 	}
 	moreOptionToggle = () => {
-		console.log("clicked")
+		console.log('clicked');
 		this.setState({ moreInfo: !this.state.moreInfo });
 	};
 	componentDidMount() {
@@ -417,7 +417,7 @@ class form3 extends Component {
 							</div>
 							<div className='col-md-4'>
 								<h6 className='titles-property' required>
-									Rental listing
+									Rent/Sell
 								</h6>
 								<select
 									className='input-feilds-property'
@@ -425,7 +425,9 @@ class form3 extends Component {
 									onChange={this.onChange}
 									value={rentalListingYN}
 								>
-									<option value='No'>No </option>
+									<option value=''> --- </option>
+									<option value='No'>Sell</option>
+									<option value='Yes'>Rent </option>
 								</select>
 							</div>
 						</div>

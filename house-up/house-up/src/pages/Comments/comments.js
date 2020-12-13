@@ -22,13 +22,13 @@ class comments extends Component {
 			vendorId: '',
 			category: '',
 			data: [],
-			loading:false,
+			loading: false,
 			comments: [],
 			indexValue: '',
 			commentData: {},
-			cityName:'',
-			stateName:'',
-			countryName:''
+			cityName: '',
+			stateName: '',
+			countryName: '',
 		};
 	}
 
@@ -103,8 +103,7 @@ class comments extends Component {
 	}
 
 	componentDidMount() {
-		
-		const { user , countryName, stateName, cityName, } = this.state;
+		const { user, countryName, stateName, cityName } = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -123,9 +122,6 @@ class comments extends Component {
 		const city = this.props.match.params.city;
 		const state = this.props.match.params.state;
 		const country = this.props.match.params.country;
-		console.log("checking props", this.props)
-
-
 		this.setState({
 			id: id,
 			category: category,
@@ -139,22 +135,18 @@ class comments extends Component {
 		} else if (category === 'Vendor') {
 			this.setState({ vendorId: id });
 		}
-		console.log("heelpo")
-		if(!this.state.indexPageData.vendorPostPropertiesList ){
-			console.log("hello there")
+		if (!this.state.indexPageData.vendorPostPropertiesList) {
 			const data = {
-			state: state,
-			channel: 'web',
-			lat: 43.787083,
-			lng: -79.497369,
-			city: city,
-			limit: 10,
-			offset: 0,
-			loggedInuserId: userId,
-			country: country,
-		};
-			console.log("checking data packets", data)
-
+				state: state,
+				channel: 'web',
+				lat: 43.787083,
+				lng: -79.497369,
+				city: city,
+				limit: 10,
+				offset: 0,
+				loggedInuserId: userId,
+				country: country,
+			};
 			this.props.onGetIndexPageData(data);
 		}
 	}
@@ -195,19 +187,29 @@ class comments extends Component {
 		};
 		const userName = this.state.user.userName;
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
-		const { user} = this.state;
-		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review"){
-			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}`} for 7 days due to ${user.rejectionReason}`)
-		}
-		else{
-		this.props.onCommentAdded(
-			data,
-			indexValue,
-			userFullName,
-			userName,
-			profilePictureUrl,
-			date
-		);
+		const { user } = this.state;
+		if (
+			user.userStatusDesc === 'Inactive' ||
+			user.userStatusDesc === 'Rejected' ||
+			user.userStatusDesc === 'In Review'
+		) {
+			this.props.modelHanlder(
+				'alertPopup',
+				`Your Account is been ${
+					user.userStatusDesc === 'Inactive'
+						? `${user.userStatusDesc} for 7 days `
+						: `${user.userStatusDesc}`
+				} for 7 days due to ${user.rejectionReason}`
+			);
+		} else {
+			this.props.onCommentAdded(
+				data,
+				indexValue,
+				userFullName,
+				userName,
+				profilePictureUrl,
+				date
+			);
 		}
 	};
 
@@ -220,8 +222,6 @@ class comments extends Component {
 			indexValue,
 			commentData,
 		} = this.state;
-		console.log("checking index page data", indexPageData)
-
 		let pageContent = '';
 
 		if (loading) {

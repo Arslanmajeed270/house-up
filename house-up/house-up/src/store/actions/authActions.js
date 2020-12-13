@@ -105,7 +105,6 @@ export const createUser = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/registerUser', userData)
 		.then((res) => {
-			console.log("res for creating user", res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: REGISTER_USER_SUCCESS });
 				dispatch(clearErrors());
@@ -137,8 +136,6 @@ export const createVendor = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/registerUser', userData)
 		.then((res) => {
-			console.log('res from backend',res)
-
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: REGISTER_VENDOR_SUCCESS });
 				dispatch(clearErrors());
@@ -165,21 +162,20 @@ export const createVendor = (userData) => (dispatch) => {
 };
 
 // UpdateVendor - updateVendor from the web page
-export const updateVendor = (userData , history) => (dispatch) => {
+export const updateVendor = (userData, history) => (dispatch) => {
 	dispatch(setPageLoading());
 	axios
 		.post(backendServerURL + '/updateUser', userData)
 		.then((res) => {
-			console.log('res',res)
 			if (res && res.data && res.data.resultCode === '200') {
 				localStorage.removeItem('jwtToken');
 				setAuthToken(false);
-				dispatch({type : SHOW_POP_UP})
+				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearCurrentUser());
 				history.push(`/home`);
 				dispatch(clearErrors());
 			} else {
-				dispatch({type : HIDE_POP_UP})
+				dispatch({ type: HIDE_POP_UP });
 				dispatch({
 					type: SET_ERRORS,
 					payload: {
@@ -201,12 +197,11 @@ export const updateVendor = (userData , history) => (dispatch) => {
 };
 
 // UpdateUser - updateUser from the web page
-export const updateUser = (userData , history) => (dispatch) => {
+export const updateUser = (userData, history) => (dispatch) => {
 	dispatch(setPageLoading());
 	axios
 		.post(backendServerURL + '/updateUser', userData)
 		.then((res) => {
-			console.log('res',res)
 			if (res && res.data && res.data.resultCode === '200') {
 				localStorage.removeItem('jwtToken');
 				setAuthToken(false);

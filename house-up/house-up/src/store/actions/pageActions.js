@@ -17,12 +17,11 @@ import {
 	HIDE_POP_UP,
 	SHOW_POP_UP,
 	SET_PACKAGE_DETAILS,
-	SET_CURRENT_USERS_CARD
+	SET_CURRENT_USERS_CARD,
 } from './actionTypes';
 import { setCurrentUser } from './authActions';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
-
 
 export const setPageLoading = () => {
 	return {
@@ -40,7 +39,6 @@ export const clearErrors = () => {
 		type: CLEAR_ERRORS,
 	};
 };
-
 
 //INDEX  - Get indexPage data from backend
 export const getIndexPageData = (data) => (dispatch) => {
@@ -243,39 +241,44 @@ export const followProfessionals = (data, index, type) => (dispatch) => {
 		});
 };
 // add Comments to the post and property
-export const AddComments = (data, index, userFullName , userName , profilePictureUrl , date) => (dispatch) => {
-	console.log("add comment api called")
-	axios.post(backendServerURL + '/addComment', data).then((res) => {
-		if (res && res.data) {
-			console.log("res for comment in index page", res)
-			const payload = {
-				index: index,
-				category: data.category,
-				comment: data.commentText,
-				userFullName: userFullName,
-				userName : userName,
-				profilePictureUrl : profilePictureUrl,
-				createDateTime : date
-			};
-			console.log(payload)
-			dispatch({
-				type: ADD_COMMENTS,
-				payload: payload,
-			});
-			dispatch(clearErrors());
-		} else {
-			dispatch({
-				type: SET_ERRORS,
-				payload: {
-					message: res.data.message
-						? res.data.message
-						: 'Something went wrong! Please try again.',
-				},
-			});
-		}
-	})
-	.catch((err) => {
-			console.log('console.log in err of commen',err)
+export const AddComments = (
+	data,
+	index,
+	userFullName,
+	userName,
+	profilePictureUrl,
+	date
+) => (dispatch) => {
+	axios
+		.post(backendServerURL + '/addComment', data)
+		.then((res) => {
+			if (res && res.data) {
+				const payload = {
+					index: index,
+					category: data.category,
+					comment: data.commentText,
+					userFullName: userFullName,
+					userName: userName,
+					profilePictureUrl: profilePictureUrl,
+					createDateTime: date,
+				};
+				dispatch({
+					type: ADD_COMMENTS,
+					payload: payload,
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -290,7 +293,6 @@ export const contactUs = (data, index) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/contactUs', data)
 		.then((res) => {
-			console.log(res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
@@ -392,7 +394,6 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/createCreditCardToken', userData)
 		.then((res) => {
-			console.log("res",res)
 			if (res && res.data && res.data.resultCode === '200') {
 				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
 				dispatch(setCurrentUser(res.data.data.user));
@@ -426,9 +427,8 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 		.post(backendServerURL + '/chargeCustomer', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
-				console.log('res on charge customer using card',res)
 				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
-				dispatch(setCurrentUser(res.data.data.user))
+				dispatch(setCurrentUser(res.data.data.user));
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
 			} else {
@@ -454,9 +454,14 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 };
 
 // chargeCustomerForPropertyUsingCreditCard
-export const chargeCustomerForPropertyUsingCreditCard = (userData) => (dispatch) => {
+export const chargeCustomerForPropertyUsingCreditCard = (userData) => (
+	dispatch
+) => {
 	axios
-		.post(backendServerURL + '/chargeCustomerForPropertyUsingCreditCard', userData)
+		.post(
+			backendServerURL + '/chargeCustomerForPropertyUsingCreditCard',
+			userData
+		)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
@@ -486,16 +491,17 @@ export const chargeCustomerForPropertyUsingCreditCard = (userData) => (dispatch)
 // Get Package plan from backend
 export const getPackagePlan = () => (dispatch) => {
 	axios
-		.post(backendServerURL + '/GetPackagePlanAPI', {	
-			channel:"web"
-	})
+		.post(backendServerURL + '/GetPackagePlanAPI', {
+			channel: 'web',
+		})
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch(clearErrors());
 				dispatch({
-					type: SET_PACKAGE_DETAILS ,
-					payload : res && res.data && res.data.data && res.data.data.packageList 
-				 });
+					type: SET_PACKAGE_DETAILS,
+					payload:
+						res && res.data && res.data.data && res.data.data.packageList,
+				});
 			} else {
 				dispatch({
 					type: SET_ERRORS,

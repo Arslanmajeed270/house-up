@@ -121,6 +121,7 @@ body {
   float: right;
   margin-left: 5px !important;
   margin-top: 10px;
+  cursor: pointer;
 }
 
 .pxp-full .vendor-login-name {

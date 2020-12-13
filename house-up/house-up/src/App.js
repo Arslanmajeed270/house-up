@@ -18,9 +18,6 @@ class App extends Component {
 		} else {
 			this.props.onSetCurrentLocation(0, 0);
 		}
-		if (localStorage.jwtToken) {
-			this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
-		}
 	}
 
 	setCurrentLocation(lat, lon) {
@@ -35,17 +32,12 @@ class App extends Component {
 	}
 
 	render() {
+		if (localStorage.jwtToken) {
+			this.props.setCurrentUser(JSON.parse(localStorage.jwtToken));
+		}
 		return (
 			<Switch>
-				<PrivateRoute
-					exact
-					path={'/index-:country&:state&:city'}
-					component={Index}
-				/>
-				<PublicRoute exact path={'/'} component={Index} />
-				<Route exact path={'/home'} component={Index} />
 				<Route exact path={'/about'} component={Index} />
-				<PrivateRoute exact path={'/add-property'} component={Index} />
 				<Route exact path={'/add-coupon'} component={Index} />
 				<Route exact path={'/single-vendor-:id'} component={Index} />
 				<Route exact path={'/blogs'} component={Index} />
@@ -62,7 +54,15 @@ class App extends Component {
 				<Route exact path={'/single-post'} component={Index} />
 				<Route exact path={'/single-prop-:id'} component={Index} />
 				<Route exact path={'/professionals'} component={Index} />
-				<Redirect to='/' />
+				<PrivateRoute exact path={'/add-property'} component={Index} />
+				<PrivateRoute
+					exact
+					path={'/index-:country&:state&:city'}
+					component={Index}
+				/>
+				<PublicRoute exact path={'/home'} component={Index} />
+				<PublicRoute exact path={'/'} component={Index} />
+				{/* <Redirect to='/' /> */}
 			</Switch>
 		);
 	}

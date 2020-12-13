@@ -10,7 +10,7 @@ import ImagePreview from '../../components/Popups/ImagePreview';
 class singleProp extends Component {
 	constructor(props) {
 		super(props);
-		
+
 		this.state = {
 			contactModalState: false,
 			singlePropertyData: {},
@@ -124,7 +124,6 @@ class singleProp extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		console.log('cooment added')
 		const { id, commentText, userId, user } = this.state;
 
 		const data = {
@@ -135,28 +134,36 @@ class singleProp extends Component {
 			commentText: commentText,
 			userId: userId,
 			vendorId: 0,
-			phoneNo:user.msisdn,
-			channel:'web'
+			phoneNo: user.msisdn,
+			channel: 'web',
 		};
 		const indexValue = '';
 		const userFullName = `${user.firstName} ${user.lastName}`;
 		const userName = user.userName;
 		const profilePictureUrl = user.profilePictureUrl;
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
-		console.log('cooment added lower')
-		if(user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review" ){
-			this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days `: `${user.userStatusDesc}` } due to ${user.rejectionReason}`)
-		}
-		else{
-			console.log("commeent function")
+		if (
+			user.userStatusDesc === 'Inactive' ||
+			user.userStatusDesc === 'Rejected' ||
+			user.userStatusDesc === 'In Review'
+		) {
+			this.props.modelHanlder(
+				'alertPopup',
+				`Your Account is been ${
+					user.userStatusDesc === 'Inactive'
+						? `${user.userStatusDesc} for 7 days `
+						: `${user.userStatusDesc}`
+				} due to ${user.rejectionReason}`
+			);
+		} else {
 			this.props.onCommentAdded(
-			data,
-			indexValue,
-			userFullName,
-			userName,
-			profilePictureUrl,
-			date
-		);
+				data,
+				indexValue,
+				userFullName,
+				userName,
+				profilePictureUrl,
+				date
+			);
 		}
 	};
 
@@ -166,7 +173,6 @@ class singleProp extends Component {
 
 	render() {
 		const { singlePropertyData, commentText, imageToggle, user } = this.state;
-		console.log("checking this.state: ", this.state);
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -258,13 +264,11 @@ class singleProp extends Component {
 										)
 								  )
 								: ''}
-								<ImagePreview
-									show={imageToggle}
-									close={this.ImagePreviewHandler}
-									propertyImg={
-										singlePropertyData && singlePropertyData.imageList
-									}
-								/>
+							<ImagePreview
+								show={imageToggle}
+								close={this.ImagePreviewHandler}
+								propertyImg={singlePropertyData && singlePropertyData.imageList}
+							/>
 						</div>
 						<Link
 							onClick={(e) => {
@@ -771,36 +775,36 @@ class singleProp extends Component {
 													className='pxp-agent-comments-form mt-3 mt-md-4'
 													onSubmit={this.onSubmit}
 												>
-												{user && user.profilePictureUrl ? (
-													<>
-														<div className='row'>
-															<div className='col-sm-12 col-md-6'></div>
-														</div>
-														<div className='form-group comment-send-btn'>
-															<input
-																className='form-control'
-																placeholder='Write your review here...'
-																style={{ height: '75px' }}
-																name='commentText'
-																value={commentText}
-																onChange={this.onChange}
-															/>
-															<button
-															 type="submit"
-																className='send-btn-single-property'
-																onClick={this.onSubmit}
-															>
-																<img
-																	src={require( '../../assets/images/ic_sent.svg')}
-																	alt=''
+													{user && user.profilePictureUrl ? (
+														<>
+															<div className='row'>
+																<div className='col-sm-12 col-md-6'></div>
+															</div>
+															<div className='form-group comment-send-btn'>
+																<input
+																	className='form-control'
+																	placeholder='Write your review here...'
+																	style={{ height: '75px' }}
+																	name='commentText'
+																	value={commentText}
+																	onChange={this.onChange}
 																/>
-															</button>
-														</div>
-													</>
-												) : (
-													''
+																<button
+																	type='submit'
+																	className='send-btn-single-property'
+																	onClick={this.onSubmit}
+																>
+																	<img
+																		src={require('../../assets/images/ic_sent.svg')}
+																		alt=''
+																	/>
+																</button>
+															</div>
+														</>
+													) : (
+														''
 													)}
-													</form>
+												</form>
 											</div>
 										</div>
 									</div>
@@ -868,10 +872,19 @@ class singleProp extends Component {
 													className='pxp-sp-agent-btn-main'
 													data-toggle='modal'
 													onClick={
-														user && user.userStatusDesc === "Inactive" || user.userStatusDesc === "Rejected" || user.userStatusDesc === "In Review" ?
-														 () => this.props.modelHanlder('alertPopup', `Your Account is been ${user.userStatusDesc === "Inactive" ? `${user.userStatusDesc} for 7 days` : `${user.userStatusDesc}`} due to ${user.rejectionReason}` )
-														:
-														user && user.profilePictureUrl
+														(user && user.userStatusDesc === 'Inactive') ||
+														user.userStatusDesc === 'Rejected' ||
+														user.userStatusDesc === 'In Review'
+															? () =>
+																	this.props.modelHanlder(
+																		'alertPopup',
+																		`Your Account is been ${
+																			user.userStatusDesc === 'Inactive'
+																				? `${user.userStatusDesc} for 7 days`
+																				: `${user.userStatusDesc}`
+																		} due to ${user.rejectionReason}`
+																	)
+															: user && user.profilePictureUrl
 															? () =>
 																	this.modelHanlder(
 																		'contactModalState',

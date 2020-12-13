@@ -16,16 +16,12 @@ class propertyPlanSubscription extends Component {
 	}
 
 	componentDidMount() {
-		console.log('pros', this.props.dropDownData);
 		this.setState({
 			feeTypes:
-				
-				this.props.dropDownData &&
-				this.props.dropDownData.propertyPostingFees
+				this.props.dropDownData && this.props.dropDownData.propertyPostingFees
 					? this.props.dropDownData.propertyPostingFees
 					: '',
 		});
-		console.log('clicked 1');
 	}
 
 	autoRenewHandler = () => {
@@ -46,7 +42,6 @@ class propertyPlanSubscription extends Component {
 			form4DataHandler: this.props.message.form4DataHandler,
 			for: 'property',
 		};
-		console.log('data fro', data);
 	};
 	selectPlan = (id) =>
 		this.setState({
@@ -55,7 +50,6 @@ class propertyPlanSubscription extends Component {
 
 	render() {
 		const { feeTypes, packageSelection, feeId } = this.state;
-		console.log(`checking this.state: `, this.state);
 		return (
 			<React.Fragment>
 				<Modal

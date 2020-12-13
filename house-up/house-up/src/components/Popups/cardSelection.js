@@ -93,21 +93,17 @@ class cardSelection extends Component {
 	onSubmit = () => {
 		const { user } = this.state;
 		if (this.props.data.for === 'property') {
-			console.log('property if statement', this.props.data);
 			const data = {
 				propertyFeeId: this.props.data && this.props.data.propertyFeeId,
 				packageRenewal: this.props.data && this.props.data.packageRenewal,
 			};
-			console.log(data);
 			this.props.data && this.props.data.form4DataHandler(data);
 		} else if (this.props.data) {
-			console.log('credit card if statement');
 			const data = {
 				userId: user.userId,
 				packageId: this.props.data,
 				currency: 'cad',
 			};
-			console.log('data fro api', data);
 			this.props.onChargeCustomerUsingCreditCard(data);
 		}
 	};
