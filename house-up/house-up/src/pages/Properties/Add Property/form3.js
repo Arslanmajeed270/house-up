@@ -847,7 +847,7 @@ class form3 extends Component {
 													value={ac}
 													onChange={this.onChange}
 												/>
-												<span className='fa fa-sun-o' /> Air Conditioning
+												<span className='fa fa-sun' /> Air Conditioning
 											</label>
 										</div>
 									</div>
@@ -906,7 +906,7 @@ class form3 extends Component {
 													value={gym}
 													onChange={this.onChange}
 												/>
-												<span className='fa fa-futbol-o' /> Gym
+												<span className='fa fa-futbol' /> Gym
 											</label>
 										</div>
 									</div>
@@ -921,7 +921,7 @@ class form3 extends Component {
 													value={playroom}
 													onChange={this.onChange}
 												/>
-												<span className='fa fa-smile-o' /> Playroom
+												<span className='fa fa-smile' /> Playroom
 											</label>
 										</div>
 									</div>

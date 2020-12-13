@@ -335,12 +335,12 @@ class header extends Component {
 											)}
 										</div>
 										<Link
-											style={{
-												display: 'block',
-												paddingRight: '10px',
-												marginTop: '-8px',
-												float: 'none',
-											}}
+											// style={{
+											// 	display: 'block',
+											// 	paddingRight: '10px',
+											// 	marginTop: '-8px',
+											// 	float: 'none',
+											// }}
 											className='vendor-login-name'
 											to='#'
 											onClick={this.dropDownHandler}
@@ -356,6 +356,12 @@ class header extends Component {
 										}`}
 										onClick={() => this.props.modelHanlder('phoneSignin')}
 									>
+										{/* <span className="far fa-user" /> */}
+										<img
+											style={{ cursor: 'pointer', paddingRight: '22px' }}
+											src={require('../assets/images/ic_profile.svg')}
+											alt=''
+										/>
 										<div
 											className='vendor-login-name'
 											to='#'
@@ -363,14 +369,8 @@ class header extends Component {
 												this.props.modelHanlder('phoneSignin');
 											}}
 										>
-											Sign In / Sing Up
+											Login | Register
 										</div>
-										{/* <span className="far fa-user" /> */}
-										<img
-											style={{ cursor: 'pointer' }}
-											src={require('../assets/images/ic_profile.svg')}
-											alt=''
-										/>
 									</div>
 								)}
 							</div>

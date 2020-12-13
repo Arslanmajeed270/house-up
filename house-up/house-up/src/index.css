@@ -137,10 +137,13 @@ body {
 
 .vendor-login-name {
   color: #fff;
-  float: right;
+  /* float: right;
   margin-left: 5px !important;
-  margin-top: 10px;
+  margin-top: 10px; */
   cursor: pointer;
+  display: block;
+  /* padding-right: 10px;
+  margin-top: -8px; */
 }
 
 .pxp-full .vendor-login-name {
