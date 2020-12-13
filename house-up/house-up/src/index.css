@@ -91,6 +91,25 @@ body {
   background: #fff;
   padding: 20px 10px;
 }
+
+.infoWindowStyle:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  margin-left: -5px;
+  width: 9px;
+  height: 9px;
+  background: #fff;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  -ms-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 .card-selection {
   padding: 20px 10px;
 }
@@ -1005,9 +1024,9 @@ h1.titles-property {
   font-size: 12px;
   padding: 0px 10px;
 }
-.property-plan-div{
-    border: 1px solid #E5E5EA;
-    border-radius: 5px;
-    padding: 15px ;
-    margin: 10px 0px;
+.property-plan-div {
+  border: 1px solid #e5e5ea;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0px;
 }

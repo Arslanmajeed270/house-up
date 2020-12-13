@@ -6,6 +6,9 @@ import GoogleMapReact from 'google-map-react';
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/common/Spinner';
+import MarkerInfoWindow from './gMap';
+
+
 
 const AnyReactComponent = () => <div className='map-pointer'></div>;
 
@@ -21,6 +24,10 @@ class properties extends Component {
 			indexPageData: {},
 			currentLocation: {},
 		};
+		this.toggleFilterRef = React.createRef();
+		this.toggleContentRef = React.createRef();
+		this.toggleMapRef = React.createRef();
+		this.toggleDefaultContent = React.createRef();
 	}
 
 	static defaultProps = {
@@ -30,6 +37,7 @@ class properties extends Component {
 		},
 		zoom: 15,
 	};
+
 
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
@@ -118,12 +126,46 @@ class properties extends Component {
 		});
 	}
 
+	toggleFilter = (e) => {
+		e.preventDefault(e);
+		let classData = this.toggleFilterRef.current.classList;
+		if(classData.value.indexOf('active') === -1) {
+			this.toggleFilterRef.current.classList.add('active');
+			e.target.classList.add('pxp-active');
+		}
+		else {
+			this.toggleFilterRef.current.classList.remove('active');
+			e.target.classList.remove('pxp-active');
+		}
+	}
+
+	toggleFullWidth = (e) => { 
+		e.preventDefault(e);
+		this.toggleMapRef.current.classList.add('pxp-max');
+		this.toggleContentRef.current.classList.add('pxp-min');
+		this.toggleDefaultContent.current.classList.add('d-block');
+	};
+	
+	toggleDefaultWidth = (e) => { 
+		e.preventDefault(e);
+		this.toggleMapRef.current.classList.remove('pxp-max');
+		this.toggleContentRef.current.classList.remove('pxp-min');
+		this.toggleDefaultContent.current.classList.remove('d-block');
+    };
+
 	state = {};
 	render() {
 		const { loading, indexPageData } = this.state;
 		let { propertiesData } = this.state;
 		propertiesData =
 			indexPageData && indexPageData.properties ? indexPageData.properties : [];
+		// const propertyCounts = indexPageData && indexPageData.propertyCounts || null;
+		// let filterProperties = "";
+		// let mapProperties ="";
+		// if(propertyCounts) {
+		// 	filterProperties = propertyCounts.map(item => item.properties);
+		// 	mapProperties = [].concat(...Object.values(filterProperties));
+		// }
 
 		let googpleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_KEY;
 
@@ -155,21 +197,15 @@ class properties extends Component {
 							  ))
 							: ''}
 							</div> */}
-					<div className='pxp-map-side pxp-map-right pxp-half'>
-						<GoogleMapReact
-							bootstrapURLKeys={{ key: googpleMapApiKey }}
-							defaultCenter={this.props.center}
-							defaultZoom={this.props.zoom}
-						>
-							<AnyReactComponent lat={43.787083} lng={79.497369} />
-						</GoogleMapReact>
-						<Link to='' className='pxp-list-toggle'>
+					<div ref={this.toggleMapRef} className='pxp-map-side pxp-map-right pxp-half'>
+						<MarkerInfoWindow p={propertiesData}/>
+						<Link to='' className='pxp-list-toggle' ref={this.toggleDefaultContent} onClick={(e)=>this.toggleDefaultWidth(e)}>
 							<span className='fa fa-list' />
 						</Link>
 					</div>
-					<div className='pxp-content-side pxp-content-left pxp-half'>
+					<div ref={this.toggleContentRef} className='pxp-content-side pxp-content-left pxp-half'>
 						<div className='pxp-content-side-wrapper'>
-							{/* <div className='d-flex'>
+							<div className='d-flex pt-2'>
 								<div className='pxp-content-side-search-form'>
 									<div className='row pxp-content-side-search-form-row'>
 										<div className='col-5 col-sm-5 col-md-4 col-lg-3 pxp-content-side-search-form-col'>
@@ -197,17 +233,150 @@ class properties extends Component {
 									</div>
 								</div>
 								<div className='d-flex listing-icon-fix'>
-									<Link role='button' className='pxp-adv-toggle' to=''>
-										<span className='fa fa-sliders' />
+									<Link role='button' className='pxp-adv-toggle' onClick={(e) => this.toggleFilter(e)}>
+										<span className='fa fa-sliders-h' />
 									</Link>
-									<img
-										src={require('../../assets/images/ic_filter.svg')}
-										alt=''
-									/>
 								</div>
 							</div>
-							 */}
-							<div className='c-list'>
+							<div class="pxp-content-side-search-form-adv mb-3 pxp-content-side-search-form" ref={this.toggleFilterRef}>
+								<div class="row pxp-content-side-search-form-row">
+									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div class="form-group">
+											<label for="pxp-p-filter-price-min">Price</label>
+											<input type="text" class="form-control" placeholder="Min" id="pxp-p-filter-price-min" />
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div class="form-group">
+											<label for="pxp-p-filter-price-max" class="d-none d-sm-inline-block">&nbsp;</label>
+											<input type="text" class="form-control" placeholder="Max" id="pxp-p-filter-price-max" />
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div class="form-group">
+											<label for="pxp-p-filter-beds">Beds</label>
+											<select class="custom-select" id="pxp-p-filter-beds">
+												<option value="" selected="selected">Any</option>
+												<option value="">Studio</option>
+												<option value="">1</option>
+												<option value="">2</option>
+												<option value="">3</option>
+												<option value="">4</option>
+												<option value="">5+</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div class="form-group">
+											<label for="pxp-p-filter-baths">Baths</label>
+											<select class="custom-select" id="pxp-p-filter-baths">
+												<option value="" selected="selected">Any</option>
+												<option value="">1+</option>
+												<option value="">1.5+</option>
+												<option value="">2+</option>
+												<option value="">3+</option>
+												<option value="">4+</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+										<div class="form-group">
+											<label for="pxp-p-filter-type">Type</label>
+											<select class="custom-select" id="pxp-p-filter-type">
+												<option value="">Select type</option>
+												<option value="">Apartment</option>
+												<option value="">House</option>
+												<option value="">Townhome</option>
+												<option value="">Multi-Family</option>
+												<option value="">Land</option>
+											</select>
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+										<div class="form-group">
+											<label for="pxp-p-filter-size-min">Size (sq ft)</label>
+											<input type="text" class="form-control" id="pxp-p-filter-size-min" placeholder="Min" />
+										</div>
+									</div>
+									<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+										<div class="form-group">
+											<label for="pxp-p-filter-size-max" class="d-none d-sm-inline-block">&nbsp;</label>
+											<input type="text" class="form-control" id="pxp-p-filter-size-max" placeholder="Max" />
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="mb-2">Amenities</label>
+									<div class="row pxp-content-side-search-form-row">
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Internet</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Garage</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Air Conditioning</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Dishwasher</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Disposal</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Balcony</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Gym</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Playroom</label>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div class="form-group">
+												<div class="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Bar</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<a href="#" class="pxp-filter-btn">Apply Filters</a>
+							</div>
+							{/*<div className='c-list'>
 								{indexPageData &&
 								indexPageData.propertyCounts &&
 								indexPageData.propertyCounts.length
@@ -222,12 +391,29 @@ class properties extends Component {
 											</button>
 									  ))
 									: ''}
-							</div>
-							<div className='row pb-4 pt-4'>
+									</div> */}
+							<div className='row pb-4'>
 								<div className='col-sm-6'>
 									<h2 className='pxp-content-side-h2'>
 										{propertiesData && propertiesData.length} Properties
 									</h2>
+								</div>
+								<div className="col-sm-6">
+									<div className="pxp-sort-form form-inline float-right">
+										<div className="form-group">
+											<select className="custom-select" id="pxp-sort-results">
+												<option value="" selected="selected">Default Sort</option>
+												<option value="">Price (Lo-Hi)</option>
+												<option value="">Price (Hi-Lo)</option>
+												<option value="">Beds</option>
+												<option value="">Baths</option>
+												<option value="">Size</option>
+											</select>
+										</div>
+										<div className="form-group d-flex">
+											<a role="button" className="pxp-map-toggle" onClick={(e)=>this.toggleFullWidth(e)}><span className="far fa-map"></span></a>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div className='row'>
