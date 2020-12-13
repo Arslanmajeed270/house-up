@@ -100,9 +100,7 @@ class addProperty extends Component {
 	}
 
 	componentDidMount() {
-		console.log('checking this.state: ', this.state);
 		if (!this.state.dropDownData || !this.state.dropDownData.currencies) {
-			console.log('i am into if');
 			this.props.onDropDwonMenu();
 		}
 	}
@@ -202,8 +200,6 @@ class addProperty extends Component {
 
 	render() {
 		const { dropDownData, loading, errors, form3Data } = this.state;
-		console.log('checking this.state into render: ', this.state);
-
 		const data = {
 			dropDownData: dropDownData,
 			form4DataHandler: this.form4DataHandler,

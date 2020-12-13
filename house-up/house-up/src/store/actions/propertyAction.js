@@ -7,7 +7,7 @@ import {
 	SET_ERRORS,
 	PROPERTY_DROP_DWON,
 	GET_SINGLE_PROPERTY,
-	ADD_COMMENTS_PROP_USER
+	ADD_COMMENTS_PROP_USER,
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -37,7 +37,6 @@ export const dropDwonMenu = () => (dispatch) => {
 			channel: 'web',
 		})
 		.then((res) => {
-			console.log('res from backend', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({
 					type: PROPERTY_DROP_DWON,
@@ -66,12 +65,13 @@ export const dropDwonMenu = () => (dispatch) => {
 };
 
 //Add Property  - ADD property from front end
-export const addProperty = (userData, history, closeCodelHanlder) => (dispatch) => {
+export const addProperty = (userData, history, closeCodelHanlder) => (
+	dispatch
+) => {
 	dispatch(setPageLoading());
 	axios
 		.post(backendServerURL + '/AddProperty', userData)
 		.then((res) => {
-			console.log('res for add property', res);
 			if (res && res.data && res.data.resultCode === '200') {
 				closeCodelHanlder('cardSelection');
 				history.push(
@@ -141,39 +141,45 @@ export const getSingleProperty = (userData) => (dispatch) => {
 };
 
 // add Comments to the post and property
-export const AddCommentsUserProp = (data, index, userFullName , userName , profilePictureUrl , date) => (dispatch) => {
-	console.log("comment action")
-	axios.post(backendServerURL + '/addComment', data).then((res) => {
-			console.log(res)
-		if (res && res.data && res.data.resultCode === '200') {
-			const payload = {
-				index: index,
-				category: data.category,
-				comment: data.commentText,
-				userFullName: userFullName,
-				userName : userName,
-				profilePictureUrl : profilePictureUrl,
-				createDateTime : date
-			};
-			console.log(payload)
-			dispatch({
-				type: ADD_COMMENTS_PROP_USER,
-				payload: payload,
-			});
-			dispatch(clearErrors());
-		} else {
-			dispatch({
-				type: SET_ERRORS,
-				payload: {
-					message: res.data.message
-						? res.data.message
-						: 'Something went wrong! Please try again.',
-				},
-			});
-		}
-	})
+export const AddCommentsUserProp = (
+	data,
+	index,
+	userFullName,
+	userName,
+	profilePictureUrl,
+	date
+) => (dispatch) => {
+	axios
+		.post(backendServerURL + '/addComment', data)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				const payload = {
+					index: index,
+					category: data.category,
+					comment: data.commentText,
+					userFullName: userFullName,
+					userName: userName,
+					profilePictureUrl: profilePictureUrl,
+					createDateTime: date,
+				};
+				dispatch({
+					type: ADD_COMMENTS_PROP_USER,
+					payload: payload,
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
 		.catch((err) => {
-			console.log(err)
+			console.log(err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:

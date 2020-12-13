@@ -40,6 +40,7 @@ class subscriptionPlan extends Component {
 
 	render() {
 		const { packageDetails, message } = this.state;
+		console.log('checking this.state: : ', this.state);
 		return (
 			<React.Fragment>
 				<Modal
@@ -49,52 +50,10 @@ class subscriptionPlan extends Component {
 					centered
 				>
 					<Modal.Body style={{ paddingTop: '0px' }}>
-						{message === 'upgradeBoth' &&
-						packageDetails &&
-						packageDetails.length
-							? packageDetails.map((data, index) => (
-									<Link key={index}>
-										<div
-											className='subscription-card'
-											style={{ borderBottom: '1px solid #DEE2F2' }}
-										>
-											<div
-												className='dashboard-newsfeed-content'
-												onClick={() =>
-													this.props.modelHanlder(
-														'cardSelection',
-														`${data && data.packageId}`
-													)
-												}
-											>
-												<Link to='#'>
-													<div className='row'>
-														<div className='col-4 logo-modal'>
-															<img
-																src={data && data.packageIconURL}
-																alt=''
-																style={{ height: '60px' }}
-															/>
-														</div>
-														<div className='col-8'>
-															<div class='user '>
-																{data && data.packageName}
-															</div>
-															<div class='user-description'>
-																{data && data.packageDetail}
-															</div>
-														</div>
-													</div>
-												</Link>
-											</div>
-										</div>
-									</Link>
-							  ))
-							: message === 'annual' && packageDetails && packageDetails.length
-							? packageDetails.map((data, index) =>
-									data && data.packageName === 'Monthly' ? (
-										' '
-									) : (
+						{
+							// message === 'upgradeBoth' &&
+							packageDetails && packageDetails.length
+								? packageDetails.map((data, index) => (
 										<Link key={index}>
 											<div
 												className='subscription-card'
@@ -119,21 +78,79 @@ class subscriptionPlan extends Component {
 																/>
 															</div>
 															<div className='col-8'>
-																<div class='user '>
+																<div className='user '>
 																	{data && data.packageName}
 																</div>
-																<div class='user-description'>
+																<div className='user-description'>
 																	{data && data.packageDetail}
 																</div>
+																{message === 'annual' &&
+																data.packageName === 'Monthly' ? (
+																	<img
+																		src={require('../../assets/images/ic_check_sel.svg')}
+																		alt=''
+																	/>
+																) : message === 'annualAcitve' &&
+																  data.packageName === 'Annual' ? (
+																	<img
+																		src={require('../../assets/images/ic_check_sel.svg')}
+																		alt=''
+																	/>
+																) : (
+																	''
+																)}
 															</div>
 														</div>
 													</Link>
 												</div>
 											</div>
 										</Link>
-									)
-							  )
-							: ''}
+								  ))
+								: // message === 'annual' && packageDetails && packageDetails.length ? packageDetails.map((data, index) =>
+								  // 		data && data.packageName === 'Monthly' ? (
+								  // 			' '
+								  // 		) : (
+								  // 			<div to='#' key={index}>
+								  // 				<div
+								  // 					className='subscription-card'
+								  // 					style={{ borderBottom: '1px solid #DEE2F2' }}
+								  // 				>
+								  // 					<div
+								  // 						className='dashboard-newsfeed-content'
+								  // 						onClick={() =>
+								  // 							this.props.modelHanlder(
+								  // 								'cardSelection',
+								  // 								`${data && data.packageId}`
+								  // 							)
+								  // 						}
+								  // 					>
+								  // 						<Link to='#'>
+								  // 							<div className='row'>
+								  // 								<div className='col-4 logo-modal'>
+								  // 									<img
+								  // 										src={data && data.packageIconURL}
+								  // 										alt=''
+								  // 										style={{ height: '60px' }}
+								  // 									/>
+								  // 								</div>
+								  // 								<div className='col-8'>
+								  // 									<div className='user '>
+								  // 										{data && data.packageName}
+								  // 									</div>
+								  // 									<div className='user-description'>
+								  // 										{data && data.packageDetail}
+								  // 									</div>
+								  // 								</div>
+								  // 							</div>
+								  // 						</Link>
+								  // 					</div>
+								  // 				</div>
+								  // 			</div>
+								  // 		)
+								  //   )
+								  // :
+								  ''
+						}
 					</Modal.Body>
 				</Modal>
 			</React.Fragment>

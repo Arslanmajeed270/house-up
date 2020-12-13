@@ -160,6 +160,9 @@ class singleVendor extends Component {
 				} due to ${user.rejectionReason}`
 			);
 		} else {
+			this.setState({
+				commentText: '',
+			});
 			this.props.onCommentAdded(
 				data,
 				indexValue,
