@@ -18,6 +18,7 @@ class forgotPass extends Component {
 			userDetails: {},
 			confirmPassword: '',
 			newPassword: '',
+			showPopUp: false,
 			viewPass: false,
 			viewConfirmPass: false,
 		};
@@ -32,12 +33,29 @@ class forgotPass extends Component {
 			viewConfirmPass: !this.state.viewConfirmPass,
 		});
 	};
+
+	componentDidMount() {
+		this.props.onHidePassword();
+	}
+
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const auth = props.auth;
+		const page = props.page;
 
 		let stateChanged = false;
 		let changedState = {};
+
+		if (
+			page &&
+			JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp)
+		) {
+			changedState.showPopUp = page.showPopUp;
+			if (changedState.showPopUp === true) {
+				props.forgotPassCongratsHandler('forgotPassCongrats');
+			}
+			stateChanged = true;
+		}
 
 		if (
 			auth &&
@@ -93,7 +111,6 @@ class forgotPass extends Component {
 		};
 
 		this.props.onResetUserPassword(userData);
-		this.props.forgotPassCongratsHandler('forgotPassCongrats');
 	};
 
 	render() {
@@ -214,6 +231,7 @@ const mapStateToProps = (state) => {
 	return {
 		errors: state.errors,
 		auth: state.auth,
+		page: state.page,
 	};
 };
 
@@ -221,6 +239,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onGetUserDetails: (data) => dispatch(actions.getUserDeatils(data)),
 		onResetUserPassword: (data) => dispatch(actions.resetUserPassword(data)),
+		onHidePassword: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),

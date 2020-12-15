@@ -40,7 +40,6 @@ class subscriptionPlan extends Component {
 
 	render() {
 		const { packageDetails, message } = this.state;
-		console.log('checking this.state: : ', this.state);
 		return (
 			<React.Fragment>
 				<Modal

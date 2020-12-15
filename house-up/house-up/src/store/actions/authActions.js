@@ -78,12 +78,12 @@ export const logoutUser = (history) => (dispatch) => {
 
 export const resetUserPassword = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-
 	axios
 		.post(backendServerURL + '/forgotPassword', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch(clearErrors());
+				dispatch({ type: SHOW_POP_UP });
 			} else {
 				dispatch({
 					type: SET_ERRORS,
