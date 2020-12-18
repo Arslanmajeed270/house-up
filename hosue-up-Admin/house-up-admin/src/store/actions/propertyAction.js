@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 import {
-    GET_ALL_PROPERTIES,
+	GET_ALL_PROPERTIES,
+	GET_ALL_POSTS,
+	GET_ALL_STORIES,
     SET_ERRORS,
     GET_SINGLE_PROPERTY,
     SET_SINGLE_VENDORS_PROPERTIES
@@ -23,6 +25,52 @@ export const getPropertiesData = (data) => (dispatch) => {
 			dispatch({
 				type: GET_ALL_PROPERTIES,
 				payload: res.data && res.data.data && res.data.data.properties ? res.data.data.properties : {},
+			});
+			dispatch(clearErrors());
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
+//getPostData  - Get getPostData data from backend
+export const getPostData = (data) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+		.post(backendServerURL + '/home', data)
+		.then((res) => {
+			console.log('res for post data', res)
+			dispatch({
+				type: GET_ALL_POSTS,
+				payload: res.data && res.data.data && res.data.data.posts ? res.data.data.posts : {},
+			});
+			dispatch(clearErrors());
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
+//getStoriesData  - Get getStoriesData data from backend
+export const getStoriesData = (data) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+		.post(backendServerURL + '/home', data)
+		.then((res) => {
+			console.log('res for post data', res)
+			dispatch({
+				type: GET_ALL_STORIES,
+				payload: res.data && res.data.data && res.data.data.userStories ? res.data.data.userStories : {},
 			});
 			dispatch(clearErrors());
 		})

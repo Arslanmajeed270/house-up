@@ -4,9 +4,9 @@ import {BrowserRouter as Router , Route,  withRouter} from 'react-router-dom';
 
 import Index from './Dashboard';
 import Account from './Dashboard/account';
-import Boost from './Dashboard/boost';
+import Stories from './Stories/stories';
 import Charts from './Dashboard/charts';
-import Feature from './Dashboard/feature';
+import Posts from './Posts/posts';
 import Helper from './Dashboard/help';
 import SingleProperty from './Property/singleProperty';
 import Properties from './Property/properties';
@@ -37,8 +37,8 @@ class routes extends Component {
                 />
                 <Route      
                     exact 
-                    path={"/boost"} 
-                    component={Boost}
+                    path={"/stories"} 
+                    component={Stories}
                 />
                 <Route      
                     exact 
@@ -47,8 +47,8 @@ class routes extends Component {
                 />
                 <Route      
                     exact 
-                    path={"/feature"} 
-                    component={Feature}
+                    path={"/posts"} 
+                    component={Posts}
                 />
                 <Route      
                     exact 

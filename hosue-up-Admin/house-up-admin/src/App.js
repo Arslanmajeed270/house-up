@@ -42,7 +42,7 @@ class App extends Component {
                 />
                 <PrivateRoute      
                     exact 
-                    path={"/boost"} 
+                    path={"/stories"} 
                     component={Index}
                 />
                 <PrivateRoute      
@@ -52,7 +52,7 @@ class App extends Component {
                 />
                 <PrivateRoute      
                     exact 
-                    path={"/feature"} 
+                    path={"/posts"} 
                     component={Index}
                 />
                 <PrivateRoute      

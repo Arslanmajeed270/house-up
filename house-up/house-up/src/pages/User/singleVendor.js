@@ -128,7 +128,7 @@ class singleVendor extends Component {
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, commentText, userId, user } = this.state;
+		const { id, commentText, user } = this.state;
 
 		const data = {
 			postId: 0,

@@ -30,26 +30,13 @@ class propertyPlanSubscription extends Component {
 		});
 	};
 
-	onSubmit = (e) => {
-		e.preventDefault();
-		const from4Data = {
-			propertyFeeId: this.state.feeId,
-			packageRenewal: this.state.autoRenew,
-		};
-		const data = {
-			propertyFeeId: this.state.feeId,
-			packageRenewal: this.state.autoRenew,
-			form4DataHandler: this.props.message.form4DataHandler,
-			for: 'property',
-		};
-	};
 	selectPlan = (id) =>
 		this.setState({
 			feeId: id,
 		});
 
 	render() {
-		const { feeTypes, packageSelection, feeId } = this.state;
+		const { feeTypes, feeId } = this.state;
 		return (
 			<React.Fragment>
 				<Modal

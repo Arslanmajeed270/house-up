@@ -2,13 +2,17 @@ import {
 	
 	SET_SINGLE_VENDORS_PROPERTIES,
 	GET_SINGLE_PROPERTY,
-	GET_ALL_PROPERTIES
+	GET_ALL_PROPERTIES,
+	GET_ALL_POSTS,
+	GET_ALL_STORIES
 } from '../actions/actionTypes';
 
 const initialState = {
 	propertiesData:[],
+	postsData:[],
 	singlePropertyData:{},
-	singleVendorsPropertiesData:{}
+	singleVendorsPropertiesData:{},
+	storiesData:[]
 };
 
 export default function (state = initialState, action) {
@@ -17,6 +21,16 @@ export default function (state = initialState, action) {
 			return{
 				...state,
 				propertiesData:action.payload
+			};
+		case GET_ALL_POSTS : 
+			return{
+				...state,
+				postsData:action.payload
+			};
+		case GET_ALL_STORIES : 
+			return{
+				...state,
+				storiesData:action.payload
 			};
 		case SET_SINGLE_VENDORS_PROPERTIES:
 			return {

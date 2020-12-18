@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { Nav } from 'react-bootstrap';
 
 class form3 extends Component {
@@ -393,7 +392,6 @@ class form3 extends Component {
 								</Nav>
 							</div>
 						</div>
-
 						<div className='row border-property'>
 							<div className='col-md-4'>
 								<h6 className='titles-property'>*Property type</h6>

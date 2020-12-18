@@ -241,7 +241,7 @@ class form1 extends Component {
 		this.imagesHandler(this.state.previewImages);
 	};
 	render() {
-		const { googleMapKey, previewImages, states, cities, address } = this.state;
+		const { googleMapKey, previewImages } = this.state;
 		return (
 			<React.Fragment>
 				<form onSubmit={this.onSubmit}>

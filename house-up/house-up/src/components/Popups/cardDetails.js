@@ -70,7 +70,6 @@ class AddCard extends Component {
 	}
 
 	onChange = (e) => {
-		const { expiryDate } = this.state;
 		let targetName = e.target.name;
 		let targetValue = e.target.value;
 		if (targetName === 'expiryDate') {

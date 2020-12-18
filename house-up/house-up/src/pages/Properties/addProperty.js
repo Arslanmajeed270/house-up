@@ -200,10 +200,6 @@ class addProperty extends Component {
 
 	render() {
 		const { dropDownData, loading, errors, form3Data } = this.state;
-		const data = {
-			dropDownData: dropDownData,
-			form4DataHandler: this.form4DataHandler,
-		};
 		let pageContent = '';
 
 		if (loading) {

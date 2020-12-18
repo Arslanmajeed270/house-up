@@ -71,7 +71,6 @@ class form4 extends Component {
 	}
 
 	onChangeHandler = (e) => {
-		const { expiryDate } = this.state;
 		let targetName = e.target.name;
 		let targetValue = e.target.value;
 		if (targetName === 'expiryDate') {
@@ -159,8 +158,6 @@ class form4 extends Component {
 	render() {
 		const {
 			feeTypes,
-			packageSelection,
-			feeId,
 			user,
 			cardId,
 			cardNumber,
@@ -229,10 +226,11 @@ class form4 extends Component {
 						{feeTypes && feeTypes.length
 							? feeTypes.map((data, index) => (
 									<div
+									key={index}
 										className=' property-plan-div  row'
 										onClick={() => this.selectPlan(data.propertyPostingFeeId)}
 									>
-										<div key={index} className='col-md-11'>
+										<div  className='col-md-11'>
 											<div>
 												{data.propertyPostingFee === '10'
 													? 'BASIC PLAN'

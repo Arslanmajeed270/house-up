@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap';
 import AliceCarousel from 'react-alice-carousel';
 
 import 'react-alice-carousel/lib/alice-carousel.css';
@@ -111,7 +110,7 @@ class home extends Component {
 	};
 
 	render() {
-		const { homePageData, loading, user } = this.state;
+		const { homePageData, loading } = this.state;
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;

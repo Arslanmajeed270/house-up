@@ -1,17 +1,11 @@
 /* eslint-disable no-dupe-keys */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import GoogleMapReact from 'google-map-react';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/common/Spinner';
 import MarkerInfoWindow from './gMap';
-
-
-
-const AnyReactComponent = () => <div className='map-pointer'></div>;
-
 class properties extends Component {
 	constructor(props) {
 		super(props);
@@ -159,15 +153,7 @@ class properties extends Component {
 		let { propertiesData } = this.state;
 		propertiesData =
 			indexPageData && indexPageData.properties ? indexPageData.properties : [];
-		// const propertyCounts = indexPageData && indexPageData.propertyCounts || null;
-		// let filterProperties = "";
-		// let mapProperties ="";
-		// if(propertyCounts) {
-		// 	filterProperties = propertyCounts.map(item => item.properties);
-		// 	mapProperties = [].concat(...Object.values(filterProperties));
-		// }
 
-		let googpleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_KEY;
 
 		let pageContent = '';
 
@@ -233,30 +219,30 @@ class properties extends Component {
 									</div>
 								</div>
 								<div className='d-flex listing-icon-fix'>
-									<Link role='button' className='pxp-adv-toggle' onClick={(e) => this.toggleFilter(e)}>
+									<button className='pxp-adv-toggle' onClick={(e) => this.toggleFilter(e)}>
 										<span className='fa fa-sliders-h' />
-									</Link>
+									</button>
 								</div>
 							</div>
-							<div class="pxp-content-side-search-form-adv mb-3 pxp-content-side-search-form" ref={this.toggleFilterRef}>
-								<div class="row pxp-content-side-search-form-row">
-									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-										<div class="form-group">
-											<label for="pxp-p-filter-price-min">Price</label>
-											<input type="text" class="form-control" placeholder="Min" id="pxp-p-filter-price-min" />
+							<div className="pxp-content-side-search-form-adv mb-3 pxp-content-side-search-form" ref={this.toggleFilterRef}>
+								<div className="row pxp-content-side-search-form-row">
+									<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div className="form-group">
+											<label htmlFor="pxp-p-filter-price-min">Price</label>
+											<input type="text" className="form-control" placeholder="Min" id="pxp-p-filter-price-min" />
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-										<div class="form-group">
-											<label for="pxp-p-filter-price-max" class="d-none d-sm-inline-block">&nbsp;</label>
-											<input type="text" class="form-control" placeholder="Max" id="pxp-p-filter-price-max" />
+									<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div className="form-group">
+											<label htmlFor="pxp-p-filter-price-max" className="d-none d-sm-inline-block">&nbsp;</label>
+											<input type="text" className="form-control" placeholder="Max" id="pxp-p-filter-price-max" />
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-										<div class="form-group">
-											<label for="pxp-p-filter-beds">Beds</label>
-											<select class="custom-select" id="pxp-p-filter-beds">
-												<option value="" selected="selected">Any</option>
+									<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div className="form-group">
+											<label htmlFor="pxp-p-filter-beds">Beds</label>
+											<select className="custom-select" id="pxp-p-filter-beds">
+												<option value="">Any</option>
 												<option value="">Studio</option>
 												<option value="">1</option>
 												<option value="">2</option>
@@ -266,11 +252,11 @@ class properties extends Component {
 											</select>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-										<div class="form-group">
-											<label for="pxp-p-filter-baths">Baths</label>
-											<select class="custom-select" id="pxp-p-filter-baths">
-												<option value="" selected="selected">Any</option>
+									<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+										<div className="form-group">
+											<label htmlFor="pxp-p-filter-baths">Baths</label>
+											<select className="custom-select" id="pxp-p-filter-baths">
+												<option value="" >Any</option>
 												<option value="">1+</option>
 												<option value="">1.5+</option>
 												<option value="">2+</option>
@@ -279,10 +265,10 @@ class properties extends Component {
 											</select>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-										<div class="form-group">
-											<label for="pxp-p-filter-type">Type</label>
-											<select class="custom-select" id="pxp-p-filter-type">
+									<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+										<div className="form-group">
+											<label htmlFor="pxp-p-filter-type">Type</label>
+											<select className="custom-select" id="pxp-p-filter-type">
 												<option value="">Select type</option>
 												<option value="">Apartment</option>
 												<option value="">House</option>
@@ -292,89 +278,89 @@ class properties extends Component {
 											</select>
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-										<div class="form-group">
-											<label for="pxp-p-filter-size-min">Size (sq ft)</label>
-											<input type="text" class="form-control" id="pxp-p-filter-size-min" placeholder="Min" />
+									<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+										<div className="form-group">
+											<label htmlFor="pxp-p-filter-size-min">Size (sq ft)</label>
+											<input type="text" className="form-control" id="pxp-p-filter-size-min" placeholder="Min" />
 										</div>
 									</div>
-									<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-										<div class="form-group">
-											<label for="pxp-p-filter-size-max" class="d-none d-sm-inline-block">&nbsp;</label>
-											<input type="text" class="form-control" id="pxp-p-filter-size-max" placeholder="Max" />
+									<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+										<div className="form-group">
+											<label htmlFor="pxp-p-filter-size-max" className="d-none d-sm-inline-block">&nbsp;</label>
+											<input type="text" className="form-control" id="pxp-p-filter-size-max" placeholder="Max" />
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<label class="mb-2">Amenities</label>
-									<div class="row pxp-content-side-search-form-row">
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Internet</label>
+								<div className="form-group">
+									<label className="mb-2">Amenities</label>
+									<div className="row pxp-content-side-search-form-row">
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Internet</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Garage</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Garage</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Air Conditioning</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Air Conditioning</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Dishwasher</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Dishwasher</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Disposal</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Disposal</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Balcony</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Balcony</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Gym</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Gym</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Playroom</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Playroom</label>
 												</div>
 											</div>
 										</div>
-										<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-											<div class="form-group">
-												<div class="checkbox custom-checkbox">
-													<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Bar</label>
+										<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+											<div className="form-group">
+												<div className="checkbox custom-checkbox">
+													<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Bar</label>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 
-								<a href="#" class="pxp-filter-btn">Apply Filters</a>
+								<Link to="#" className="pxp-filter-btn">Apply Filters</Link>
 							</div>
 							{/*<div className='c-list'>
 								{indexPageData &&
@@ -402,7 +388,7 @@ class properties extends Component {
 									<div className="pxp-sort-form form-inline float-right">
 										<div className="form-group">
 											<select className="custom-select" id="pxp-sort-results">
-												<option value="" selected="selected">Default Sort</option>
+												<option value="">Default Sort</option>
 												<option value="">Price (Lo-Hi)</option>
 												<option value="">Price (Hi-Lo)</option>
 												<option value="">Beds</option>
@@ -411,7 +397,7 @@ class properties extends Component {
 											</select>
 										</div>
 										<div className="form-group d-flex">
-											<a role="button" className="pxp-map-toggle" onClick={(e)=>this.toggleFullWidth(e)}><span className="far fa-map"></span></a>
+											<button  className="pxp-map-toggle" onClick={(e)=>this.toggleFullWidth(e)}><span className="far fa-map"></span></button>
 										</div>
 									</div>
 								</div>

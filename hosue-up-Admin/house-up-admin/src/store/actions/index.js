@@ -26,6 +26,8 @@ export {
     getSingleVendorsPropertyData,
     getSingleProperty,
     getPropertiesData,
-    updatePropertyState
+    getPostData,
+    updatePropertyState,
+    getStoriesData
 }
 from './propertyAction'

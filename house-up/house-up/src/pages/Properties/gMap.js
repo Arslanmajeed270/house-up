@@ -136,9 +136,9 @@ class MarkerInfoWindow extends Component {
 						bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
 						onChildClick={this.onChildClickCallback}
 					>
-						{places.map((p) => (
+						{places.map((p,id) => (
 							<Marker
-								key={p.id}
+								key={id}
 								lat={p.latitude}
 								lng={p.longitude}
 								show={p.show}

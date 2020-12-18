@@ -394,7 +394,7 @@ class index extends Component {
 		) {
 			for (let i = 0; i < indexPageData.userStories.length; i++) {
 				let item = (
-					<Link to='#' onClick={this.storyHandler}>
+					<button onClick={this.storyHandler}>
 						<div style={{ width: '80px' }}>
 							<div
 								className='pxp-prop-card-dashboard'
@@ -416,7 +416,7 @@ class index extends Component {
 								{indexPageData.userStories[i].user.professionDesc}
 							</span>
 						</div>
-					</Link>
+					</button>
 				);
 				items.push(item);
 			}
