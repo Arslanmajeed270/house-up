@@ -4,28 +4,114 @@ import useSwr from "swr";
 import GoogleMapReact from "google-map-react";
 import useSupercluster from "use-supercluster";
 import "./App.css";
+import { Link } from 'react-router-dom';
+// examples:
+import GoogleMap from './GoogleMap';
+import PropTypes from 'prop-types';
 
-const fetcher = (...args) => fetch(...args).then(response => response.json());
+// InfoWindow component
+const InfoWindow = (props) => {
+	const { place } = props;
+	const infoWindowStyle = {
+		position: 'relative',
+		bottom: 107,
+		left: '-45px',
+		width: 270,
+		backgroundColor: 'white',
+		boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
+		padding: '0px 5px',
+		fontSize: 14,
+		zIndex: 100,
+		height: 72,
+		borderRadius: 5,
+	};
+
+	const bgImg = place.imageList[0] && place.imageList[0].imageURL;
+	return (
+		<div style={infoWindowStyle}>
+			<Link to={`/single-prop-${place && place.propertId}`}>
+				<div style={{ fontSize: 12 }}>
+					<div
+						className='pxp-marker-details-fig'
+						style={{
+							backgroundImage: 'url(' + bgImg + ')',
+							backgroundPosition: 'center',
+							backgroundSize: 'contain',
+						}}
+					></div>
+					<div className='pxp-marker-details-info'>
+						<div className='pxp-marker-details-info-title'>{place.adTitle}</div>
+						<div className='pxp-marker-details-info-price'>
+							{Math.abs(place.price) > 999
+								? Math.sign(place.price) *
+										(Math.abs(place.price) / 1000).toFixed(1) +
+								  'k'
+								: Math.sign(place.price) * Math.abs(place.price)}
+						</div>
+					</div>
+				</div>
+			</Link>
+		</div>
+	);
+};
+
+// const fetcher = (...args) => fetch(...args).then(response => response.json());
 
 const Marker = ({ children }) => children;
 
-export default function App() {
+// Marker component
+const Marker2 = ({ show, place }) => {
+  const markerStyle = {
+    color: '#333',
+    border: '2px solid #333',
+    backgroundColor: '#fff',
+    padding: '6px 10px',
+    fontWeight: 'bold',
+    borderRadius: '.3rem',
+    boxShadow: ' 0 3px 10px 0 rgba(0, 0, 0, 0.20)',
+    fontSize: '12px',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+    width: '60px',
+    textAlign: 'center',
+  };
+  
+	return (
+		<>
+			<div style={markerStyle}>
+				<span className='pxp-marker-short-price'>
+					{Math.abs(place.price) > 999
+						? Math.sign(place.price) *
+								(Math.abs(place.price) / 1000).toFixed(1) +
+						  'k'
+						: Math.sign(place.price) * Math.abs(place.price)}
+				</span>
+			</div>
+
+			{show && <InfoWindow place={place} />}
+		</>
+	);
+};
+
+export default function App(props) {
+  console.log('checking props: ', props);
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(10);
 
-  const url =
-    "https://data.police.uk/api/crimes-street/all-crime?lat=52.629729&lng=-1.131592&date=2019-10";
-  const { data, error } = useSwr(url, { fetcher });
-  const crimes = data && !error ? data.slice(0, 2000) : [];
-  const points = crimes.map(crime => ({
+  // const url =
+  //   "https://data.police.uk/api/crimes-street/all-crime?lat=52.629729&lng=-1.131592&date=2019-10";
+  // const { data, error } = useSwr(url, { fetcher });
+  // const crimes = data && !error ? data.slice(0, 2000) : [];
+  const places = props.places;
+  const points = places.map(data => ({
     type: "Feature",
-    properties: { cluster: false, crimeId: crime.id, category: crime.category },
+    properties: { cluster: false, placeId: data.id, category: data.category, show: data.show, place: data},
     geometry: {
       type: "Point",
       coordinates: [
-        parseFloat(crime.location.longitude),
-        parseFloat(crime.location.latitude)
+        parseFloat(data.longitude),
+        parseFloat(data.latitude)
       ]
     }
   }));
@@ -36,13 +122,14 @@ export default function App() {
     zoom,
     options: { radius: 75, maxZoom: 20 }
   });
-
+  console.log('checking cluster: ', clusters);
   return (
     <div style={{ height: "100vh", width: "100%" }}>
-      <GoogleMapReact
-        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_KEY }}
-        defaultCenter={{ lat: 52.6376, lng: -1.135171 }}
+      <GoogleMap
         defaultZoom={10}
+        defaultCenter={{ lat:43.7184038, lng: -79.518144 }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
+        onChildClick={props.onChildClickCallback}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
           mapRef.current = map;
@@ -93,18 +180,52 @@ export default function App() {
           }
 
           return (
-            <Marker
-              key={`crime-${cluster.properties.crimeId}`}
-              lat={latitude}
-              lng={longitude}
-            >
-              <button className="crime-marker">
-                <img src="/custody.svg" alt="crime doesn't pay" />
-              </button>
-            </Marker>
+            <Marker2
+            key={cluster.properties.placeId}
+            lat={latitude}
+            lng={longitude}
+            show={cluster.properties.show}
+            place={cluster.properties.place}
+          />
+            // <Marker
+            //   key={`crime-${cluster.properties.crimeId}`}
+            //   lat={latitude}
+            //   lng={longitude}
+            // >
+            //   <button className="crime-marker">
+            //     <img src="/custody.svg" alt="crime doesn't pay" />
+            //   </button>
+            // </Marker>
           );
         })}
-      </GoogleMapReact>
+      </GoogleMap>
     </div>
   );
 }
+
+InfoWindow.propTypes = {
+	place: PropTypes.shape({
+		name: PropTypes.string,
+		formatted_address: PropTypes.string,
+		rating: PropTypes.number,
+		types: PropTypes.arrayOf(PropTypes.string),
+		price_level: PropTypes.number,
+		opening_hours: PropTypes.shape({
+			open_now: PropTypes.bool,
+		}),
+	}).isRequired,
+};
+
+Marker.propTypes = {
+	show: PropTypes.bool.isRequired,
+	place: PropTypes.shape({
+		name: PropTypes.string,
+		formatted_address: PropTypes.string,
+		rating: PropTypes.number,
+		types: PropTypes.arrayOf(PropTypes.string),
+		price_level: PropTypes.number,
+		opening_hours: PropTypes.shape({
+			open_now: PropTypes.bool,
+		}),
+	}).isRequired,
+};

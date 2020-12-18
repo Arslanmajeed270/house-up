@@ -1,93 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-
-// examples:
-import GoogleMap from './GoogleMap';
-import { Link } from 'react-router-dom';
+import ClusterMaker from './marker';
 
 //
 // import LOS_ANGELES_CENTER from '../const/la_center';
-
-// InfoWindow component
-const InfoWindow = (props) => {
-	const { place } = props;
-	const infoWindowStyle = {
-		position: 'relative',
-		bottom: 107,
-		left: '-45px',
-		width: 270,
-		backgroundColor: 'white',
-		boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
-		padding: '0px 5px',
-		fontSize: 14,
-		zIndex: 100,
-		height: 72,
-		borderRadius: 5,
-	};
-
-	const bgImg = place.imageList[0] && place.imageList[0].imageURL;
-	return (
-		<div style={infoWindowStyle}>
-			<Link to={`/single-prop-${place && place.propertId}`}>
-				<div style={{ fontSize: 12 }}>
-					<div
-						className='pxp-marker-details-fig'
-						style={{
-							backgroundImage: 'url(' + bgImg + ')',
-							backgroundPosition: 'center',
-							backgroundSize: 'contain',
-						}}
-					></div>
-					<div className='pxp-marker-details-info'>
-						<div className='pxp-marker-details-info-title'>{place.adTitle}</div>
-						<div className='pxp-marker-details-info-price'>
-							{Math.abs(place.price) > 999
-								? Math.sign(place.price) *
-										(Math.abs(place.price) / 1000).toFixed(1) +
-								  'k'
-								: Math.sign(place.price) * Math.abs(place.price)}
-						</div>
-					</div>
-				</div>
-			</Link>
-		</div>
-	);
-};
-
-// Marker component
-const Marker = ({ show, place }) => {
-	const markerStyle = {
-		color: '#333',
-		border: '2px solid #333',
-		backgroundColor: '#fff',
-		padding: '6px 10px',
-		fontWeight: 'bold',
-		borderRadius: '.3rem',
-		boxShadow: ' 0 3px 10px 0 rgba(0, 0, 0, 0.20)',
-		fontSize: '12px',
-		cursor: 'pointer',
-		whiteSpace: 'nowrap',
-		width: '60px',
-		textAlign: 'center',
-	};
-
-	return (
-		<>
-			<div style={markerStyle}>
-				<span className='pxp-marker-short-price'>
-					{Math.abs(place.price) > 999
-						? Math.sign(place.price) *
-								(Math.abs(place.price) / 1000).toFixed(1) +
-						  'k'
-						: Math.sign(place.price) * Math.abs(place.price)}
-				</span>
-			</div>
-
-			{show && <InfoWindow place={place} />}
-		</>
-	);
-};
-
 class MarkerInfoWindow extends Component {
 	constructor(props) {
 		super(props);
@@ -126,10 +41,15 @@ class MarkerInfoWindow extends Component {
 
 	render() {
 		const { places } = this.state;
+		console.log("checking places: ", places);
 
 		return (
 			<>
-				{places.length > 0 && (
+			<ClusterMaker 
+			places={places}
+			onChildClickCallback={this.onChildClickCallback}
+			/>
+				{/* {places.length > 0 && (
 					<GoogleMap
 						defaultZoom={10}
 						defaultCenter={[43.7184038, -79.518144]}
@@ -146,37 +66,10 @@ class MarkerInfoWindow extends Component {
 							/>
 						))}
 					</GoogleMap>
-				)}
+				)} */}
 			</>
 		);
 	}
 }
-
-InfoWindow.propTypes = {
-	place: PropTypes.shape({
-		name: PropTypes.string,
-		formatted_address: PropTypes.string,
-		rating: PropTypes.number,
-		types: PropTypes.arrayOf(PropTypes.string),
-		price_level: PropTypes.number,
-		opening_hours: PropTypes.shape({
-			open_now: PropTypes.bool,
-		}),
-	}).isRequired,
-};
-
-Marker.propTypes = {
-	show: PropTypes.bool.isRequired,
-	place: PropTypes.shape({
-		name: PropTypes.string,
-		formatted_address: PropTypes.string,
-		rating: PropTypes.number,
-		types: PropTypes.arrayOf(PropTypes.string),
-		price_level: PropTypes.number,
-		opening_hours: PropTypes.shape({
-			open_now: PropTypes.bool,
-		}),
-	}).isRequired,
-};
 
 export default MarkerInfoWindow;
