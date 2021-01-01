@@ -815,13 +815,13 @@ class index extends Component {
                                                         <Popover id={`popover-positioned-top`}>
                                                           <Popover.Title as="h3">Share</Popover.Title>
                                                           <Popover.Content>
-                                                          <i className="fab fa-facebook-square" onClick={() => this.socialShareHanlder('facebook', `single-post-${data.object.postId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-twitter-square" onClick={() => this.socialShareHanlder('twitter', `single-post-${data.object.postId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-linkedin" onClick={() => this.socialShareHanlder('linkein', `single-post-${data.object.postId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-whatsapp" onClick={() => this.socialShareHanlder('whatsapp', `single-post-${data.object.postId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
-                                                          <i className="fa fa-envelope" onClick={() => this.socialShareHanlder('mail', `single-post-${data.object.postId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-telegram" onClick={() => this.socialShareHanlder('telegram', `single-post-${data.object.postId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-instagram" onClick={() => this.socialShareHanlder('instagram', `single-post-${data.object.postId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
+                                                          <i className="fab fa-facebook-square" onClick={() => this.socialShareHanlder('facebook', `single-post-${data.object.postId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-twitter-square" onClick={() => this.socialShareHanlder('twitter', `single-post-${data.object.postId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-linkedin" onClick={() => this.socialShareHanlder('linkein', `single-post-${data.object.postId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-whatsapp" onClick={() => this.socialShareHanlder('whatsapp', `single-post-${data.object.postId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fa fa-envelope" onClick={() => this.socialShareHanlder('mail', `single-post-${data.object.postId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-telegram" onClick={() => this.socialShareHanlder('telegram', `single-post-${data.object.postId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-instagram" onClick={() => this.socialShareHanlder('instagram', `single-post-${data.object.postId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
                                                           </Popover.Content>
                                                         </Popover>
                                                       }
@@ -1188,13 +1188,13 @@ class index extends Component {
                                                         <Popover id={`popover-positioned-top`}>
                                                           <Popover.Title as="h3">Share</Popover.Title>
                                                           <Popover.Content>
-                                                          <i className="fab fa-facebook-square" onClick={() => this.socialShareHanlder('facebook', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-twitter-square" onClick={() => this.socialShareHanlder('twitter', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-linkedin" onClick={() => this.socialShareHanlder('linkedin', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-whatsapp" onClick={() => this.socialShareHanlder('whatsapp', `single-prop-${data.object.propertId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
-                                                          <i className="fa fa-envelope" onClick={() => this.socialShareHanlder('mail', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-telegram" onClick={() => this.socialShareHanlder('telegram', `single-prop-${data.object.propertId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-instagram" onClick={() => this.socialShareHanlder('instagram', `single-prop-${data.object.propertId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
+                                                          <i className="fab fa-facebook-square" onClick={() => this.socialShareHanlder('facebook', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-twitter-square" onClick={() => this.socialShareHanlder('twitter', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-linkedin" onClick={() => this.socialShareHanlder('linkedin', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-whatsapp" onClick={() => this.socialShareHanlder('whatsapp', `single-prop-${data.object.propertId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fa fa-envelope" onClick={() => this.socialShareHanlder('mail', `single-prop-${data.object.propertId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-telegram" onClick={() => this.socialShareHanlder('telegram', `single-prop-${data.object.propertId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-instagram" onClick={() => this.socialShareHanlder('instagram', `single-prop-${data.object.propertId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
                                                           </Popover.Content>
                                                         </Popover>
                                                       }
@@ -1584,14 +1584,14 @@ class index extends Component {
                                                       overlay={
                                                         <Popover id={`popover-positioned-top`}>
                                                           <Popover.Title as="h3">Share</Popover.Title>
-                                                          <Popover.Content>
-                                                          <i className="fab fa-facebook-square" onClick={() => this.socialShareHanlder('facebook', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-twitter-square" onClick={() => this.socialShareHanlder('twitter', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-linkedin"  onClick={() => this.socialShareHanlder('linkedin', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-whatsapp" onClick={() => this.socialShareHanlder('whatsapp', `single-vendor-${data.object.userId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
-                                                          <i className="fa fa-envelope" onClick={() => this.socialShareHanlder('mail', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-telegram" onClick={() => this.socialShareHanlder('telegram', `single-vendor-${data.object.userId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
-                                                          <i className="fab fa-instagram" onClick={() => this.socialShareHanlder('instagram', `single-vendor-${data.object.userId}`)} aria-hidden="true" style={{fontSize:'40px'}}></i>
+                                                          <Popover.Content >
+                                                          <i className="fab fa-facebook-square" onClick={() => this.socialShareHanlder('facebook', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-twitter-square" onClick={() => this.socialShareHanlder('twitter', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-linkedin"  onClick={() => this.socialShareHanlder('linkedin', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-whatsapp" onClick={() => this.socialShareHanlder('whatsapp', `single-vendor-${data.object.userId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fa fa-envelope" onClick={() => this.socialShareHanlder('mail', `single-vendor-${data.object.userId}`)} style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-telegram" onClick={() => this.socialShareHanlder('telegram', `single-vendor-${data.object.userId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
+                                                          <i className="fab fa-instagram" onClick={() => this.socialShareHanlder('instagram', `single-vendor-${data.object.userId}`)} aria-hidden="true" style={{fontSize:'40px', marginRight:'10px', color:'#05B1EA'}}></i>
                                                           </Popover.Content>
                                                         </Popover>
                                                       }

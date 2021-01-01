@@ -31,31 +31,31 @@ class footer extends Component {
               style={{ textAlign: 'left' }}
             >
               <div className='col-md-4'>
-                <Link  to="#" className='social-icons'>
+                <a href="https://www.linkedin.com/in/houseup-ca-132ba8202" className='social-icons'>
                   <img
                     src={require('../assets/images/ic_linkedin.svg')}
                     alt=''
                   />
-                </Link>
-                <Link to="#" className='social-icons'>
+                </a>
+                <a href="https://www.facebook.com/houseup.ca/" className='social-icons'>
                   <img
                   style={{width: "34.45px", height: "34.45px"}}
                     src={require('../assets/images/ic_facebook.svg')}
                     alt=''
                   />
-                </Link>
-                <Link to="#"  className='social-icons'>
+                </a>
+                <a href="https://www.instagram.com/houseup.ca/"  className='social-icons'>
                   <img
                     src={require('../assets/images/ic_instagram.svg')}
                     alt=''
                   />
-                </Link>
-                <Link to="#" className='social-icons'>
+                </a>
+                <a href="https://twitter.com/home?logout=1609437552247" className='social-icons'>
                   <img
                     src={require('../assets/images/ic_twitter.svg')}
                     alt=''
                   />
-                </Link>
+                </a>
               </div>
               <div className='pxp-footer-copyright col-md-4'>
                 © HouseUP All Rights Reserved. 2020
