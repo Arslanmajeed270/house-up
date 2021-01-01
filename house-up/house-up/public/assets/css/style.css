@@ -3089,6 +3089,7 @@ a.pxp-list-toggle.pxp-active {
 .pxp-marker-details-info {
     float: left;
     font-size: 14px;
+    width: 180px;
 }
 .pxp-marker-details-info-title {
     font-size: 12px;

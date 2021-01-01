@@ -19,7 +19,7 @@ const InfoWindow = (props) => {
 		width: 270,
 		backgroundColor: 'white',
 		boxShadow: '0 2px 7px 1px rgba(0, 0, 0, 0.3)',
-		padding: '0px 5px',
+		padding: '0px 5px 0px 0px',
 		fontSize: 14,
 		zIndex: 100,
 		height: 72,
@@ -36,7 +36,8 @@ const InfoWindow = (props) => {
 						style={{
 							backgroundImage: 'url(' + bgImg + ')',
 							backgroundPosition: 'center',
-							backgroundSize: 'contain',
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
 						}}
 					></div>
 					<div className='pxp-marker-details-info'>
