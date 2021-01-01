@@ -108,7 +108,7 @@ class contacUsPopup extends Component {
 		} = this.state;
 
 		if (!checkDateFuture(meetingDate)) {
-			this.props.onErrorSet('Please Enter Valid Date Date Must Be In The Future!');
+			this.props.onErrorSet('Please Enter Valid Date Must Be In The Future!');
 			return;
 		}
 
@@ -123,6 +123,8 @@ class contacUsPopup extends Component {
 			meetingDate,
 			subject,
 			detail,
+			channel: "web",
+			phoneNo: phoneNumber,
 		};
 		this.props.onContactUs(userData);
 	};

@@ -24,6 +24,7 @@ import CardDetails from '../components/Popups/cardDetails';
 import PropertyPlanSelection from '../components/Popups/propertyPlanSelection';
 import ImagePreview from '../components/Popups/ImagePreview';
 import AlertPopup from '../components/Popups/alertPopup';
+import SharePopup from '../components/Popups/sharePopup';
 
 class index extends Component {
 	constructor(props) {
@@ -347,6 +348,7 @@ class index extends Component {
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
+				
 				<Header
 					history={this.props.history}
 					animateHeader={animateHeader}

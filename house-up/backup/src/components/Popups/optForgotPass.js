@@ -10,170 +10,177 @@ import * as actions from '../../store/actions/index';
 
 import { Alert } from 'react-bootstrap';
 class optForgotPass extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      errors: {},
-      otp: '',
-      otpAuthenticate: false,
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			errors: {},
+			otp: '',
+			otpAuthenticate: false,
+		};
+	}
 
-  static getDerivedStateFromProps(props, state) {
-    const otpAuthenticate = props.otpAuthenticate;
-    let errors = props.errors;
+	static getDerivedStateFromProps(props, state) {
+		const otpAuthenticate = props.otpAuthenticate;
+		let errors = props.errors;
 
-    let stateChanged = false;
-    let changedState = {};
+		let stateChanged = false;
+		let changedState = {};
 
-    if (
-      (otpAuthenticate || otpAuthenticate === false) &&
-      state.otpAuthenticate !== otpAuthenticate
-    ) {
-      changedState.otpAuthenticate = otpAuthenticate;
-      if (changedState.otpAuthenticate === true) {
-        props.onFalseOtpAutheticate();
-        props.forgotPassHandler('forgotPass');
-      }
-      stateChanged = true;
-    }
+		if (
+			(otpAuthenticate || otpAuthenticate === false) &&
+			state.otpAuthenticate !== otpAuthenticate
+		) {
+			changedState.otpAuthenticate = otpAuthenticate;
+			if (changedState.otpAuthenticate === true) {
+				props.onFalseOtpAutheticate();
+				props.forgotPassHandler('forgotPass');
+				props.onHidePopUp();
+			}
+			stateChanged = true;
+		}
 
-    if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
-      changedState.errors = errors;
-      stateChanged = true;
-    }
+		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
+			changedState.errors = errors;
+			stateChanged = true;
+		}
 
-    if (stateChanged) {
-      return changedState;
-    }
-    return null;
-  }
+		if (stateChanged) {
+			return changedState;
+		}
+		return null;
+	}
 
-  handleChange = (otp) => {
-    this.setState({ otp });
-    if (otp.length === 4) {
-      let data = {
-        msisdn: this.props.phNumber,
-        channel: 'HouseUp',
-        pin: otp,
-      };
-      this.props.onVerifyPin(data);
-    }
-  };
-  resendPin = (num) => {
-    const data = {
-      msisdn: num,
-      channel: 'HouseUp',
-      type: 'LOGIN_PIN_SMS',
-    };
-    this.props.onGeneratePin(data);
-  };
+	componentDidMount() {
+		this.props.onHideError();
+	}
 
-  render() {
-    const { errors } = this.state;
+	handleChange = (otp) => {
+		this.setState({ otp });
+		if (otp.length === 4) {
+			let data = {
+				msisdn: this.props.phNumber,
+				channel: 'HouseUp',
+				pin: otp,
+			};
+			this.props.onVerifyPin(data);
+		}
+	};
+	resendPin = (num) => {
+		const data = {
+			msisdn: num,
+			channel: 'HouseUp',
+			type: 'LOGIN_PIN_SMS',
+		};
+		this.props.onGeneratePin(data);
+	};
 
-    let phoneNumber = '';
-    if (this.props.phNumber) {
-      phoneNumber = this.props.phNumber;
-    }
-    return (
-      <Modal
-        show={this.props.show}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-        // size="md"
-        dialogClassName="modal-width"
-        onHide={() => this.props.closeCodelHanlder('optForgotPass')}
-      >
-        <Modal.Header
-          onClick={() => this.props.closeCodelHanlder('optForgotPass')}
-        ></Modal.Header>
+	render() {
+		const { errors } = this.state;
 
-        <Modal.Body style={{ padding: '30px 0px 10px' }}>
-          <div className="form-group">
-            {errors && errors.message && (
-              <Alert variant="danger">
-                <strong>Error!</strong> {errors.message}
-              </Alert>
-            )}
+		let phoneNumber = '';
+		if (this.props.phNumber) {
+			phoneNumber = this.props.phNumber;
+		}
+		return (
+			<Modal
+				show={this.props.show}
+				aria-labelledby='contained-modal-title-vcenter'
+				centered
+				// size="md"
+				dialogClassName='modal-width'
+				onHide={() => this.props.closeCodelHanlder('optForgotPass')}
+			>
+				<Modal.Header
+					onClick={() => this.props.closeCodelHanlder('optForgotPass')}
+				></Modal.Header>
 
-            <div
-              className="text-center"
-              style={{
-                fontSize: '22px',
-                fontWeight: '500',
-                color: '#000',
-                lineHeight: '20px;',
-              }}
-            >
-              We sent you a code to{' '}
-            </div>
-            <div
-              className="text-center"
-              style={{
-                fontSize: '22px',
-                fontWeight: '500',
-                color: '#000',
-                lineHeight: '20px;',
-              }}
-            >
-              verify your phone number
-            </div>
-          </div>
-          <div className="form-group">
-            <div
-              class="text-center"
-              style={{
-                fontSize: '20px',
-                marginBottom: '15px',
-                color: '#8E8E93',
-              }}
-            >
-              sent to {phoneNumber}{' '}
-            </div>
-            <div style={{ marginLeft: '14%', marginBottom: '15px' }}>
-              <OtpInput
-                value={this.state.otp}
-                onChange={this.handleChange}
-                numInputs={4}
-                separator={<span>&nbsp; &nbsp; &nbsp;</span>}
-                inputStyle={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '8px',
-                  border: '1px solid black',
-                }}
-              />
-            </div>
-          </div>
-          <div
-            className="text-center"
-            style={{ marginBottom: '10px', color: '#8E8E93' }}
-          >
-            I didn't receeive a code!
-            <Link to="#" onClick={() => this.resendPin(phoneNumber)}>
-              Resend
-            </Link>
-          </div>
-        </Modal.Body>
-      </Modal>
-    );
-  }
+				<Modal.Body style={{ padding: '20px 0px 5px' }}>
+					<div className='form-group'>
+						{errors && errors.message && (
+							<Alert variant='danger'>
+								<strong>Error!</strong> {errors.message}
+							</Alert>
+						)}
+
+						<div
+							className='text-center'
+							style={{
+								fontSize: '22px',
+								fontWeight: '500',
+								color: '#000',
+								lineHeight: '22px;',
+							}}
+						>
+							We sent you a code to{' '}
+						</div>
+						<div
+							className='text-center'
+							style={{
+								fontSize: '22px',
+								fontWeight: '500',
+								color: '#000',
+								lineHeight: '22px;',
+							}}
+						>
+							verify your phone number
+						</div>
+					</div>
+					<div className='form-group'>
+						<div
+							class='text-center'
+							style={{
+								fontSize: '20px',
+								marginBottom: '15px',
+								color: '#8E8E93',
+							}}
+						>
+							sent to {phoneNumber}{' '}
+						</div>
+						<div style={{ marginLeft: '14%', marginBottom: '15px' }}>
+							<OtpInput
+								value={this.state.otp}
+								onChange={this.handleChange}
+								numInputs={4}
+								separator={<span>&nbsp; &nbsp; &nbsp;</span>}
+								inputStyle={{
+									width: '50px',
+									height: '50px',
+									borderRadius: '8px',
+									border: '1px solid black',
+								}}
+							/>
+						</div>
+					</div>
+					<div
+						className='text-center'
+						style={{ marginBottom: '10px', color: '#8E8E93' }}
+					>
+						I didn't receeive a code!
+						<Link to='#' onClick={() => this.resendPin(phoneNumber)}>
+							Resend
+						</Link>
+					</div>
+				</Modal.Body>
+			</Modal>
+		);
+	}
 }
 const mapStateToProps = (state) => {
-  return {
-    otpAuthenticate: state.auth.otpAuthenticate,
-    errors: state.errors,
-  };
+	return {
+		otpAuthenticate: state.auth.otpAuthenticate,
+		errors: state.errors,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onFalseOtpAutheticate: () =>
-      dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),
-    onVerifyPin: (data) => dispatch(actions.verifyPin(data)),
-    onGeneratePin: (data) => dispatch(actions.generatePin(data)),
-  };
+	return {
+		onFalseOtpAutheticate: () =>
+			dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),
+		onVerifyPin: (data) => dispatch(actions.verifyPin(data)),
+		onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+		onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
+		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
+	};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(optForgotPass);

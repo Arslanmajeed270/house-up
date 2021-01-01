@@ -67,7 +67,7 @@ class blogs extends Component {
 								</div>
 								<div className='pxp-carousel-controls'>
 									<Link
-										to=''
+										to='#'
 										className='pxp-carousel-control-prev'
 										role='button'
 										data-slide='prev'
@@ -119,7 +119,7 @@ class blogs extends Component {
 										</svg>
 									</Link>
 									<Link
-										to=''
+										to='#'
 										className='pxp-carousel-control-next'
 										role='button'
 										data-slide='next'
@@ -425,22 +425,22 @@ class blogs extends Component {
 									</div>
 									<ul className='pagination pxp-paginantion mt-3 mt-md-4'>
 										<li className='page-item active'>
-											<Link className='page-link' to=''>
+											<Link className='page-link' to='#'>
 												1
 											</Link>
 										</li>
 										<li className='page-item'>
-											<Link className='page-link' to=''>
+											<Link className='page-link' to='#'>
 												2
 											</Link>
 										</li>
 										<li className='page-item'>
-											<Link className='page-link' to=''>
+											<Link className='page-link' to='#'>
 												3
 											</Link>
 										</li>
 										<li className='page-item'>
-											<Link className='page-link' to=''>
+											<Link className='page-link' to='#'>
 												Next <span className='fa fa-angle-right' />
 											</Link>
 										</li>
@@ -464,33 +464,33 @@ class blogs extends Component {
 										<h3>Categories</h3>
 										<ul className='pxp-blog-posts-side-v-list list-unstyled mt-3 mt-md-4'>
 											<li>
-												<Link to=''>Fashion (3)</Link>
+												<Link to='#'>Fashion (3)</Link>
 											</li>
 											<li>
-												<Link to=''>Lifestyle (2)</Link>
+												<Link to='#'>Lifestyle (2)</Link>
 											</li>
 											<li>
-												<Link to=''>Personal (2)</Link>
+												<Link to='#'>Personal (2)</Link>
 											</li>
 											<li>
-												<Link to=''>Stories (2)</Link>
+												<Link to='#'>Stories (2)</Link>
 											</li>
 											<li>
-												<Link to=''>Travel (4)</Link>
+												<Link to='#'>Travel (4)</Link>
 											</li>
 										</ul>
 									</div>
 									<div className='pxp-blog-posts-side-section mt-4 mt-md-5'>
 										<h3>Tags</h3>
 										<div className='pxp-blog-posts-side-tags mt-3 mt-md-4'>
-											<Link to=''>Premium (10)</Link>
-											<Link to=''>Interior (12)</Link>
-											<Link to=''>Stories (6)</Link>
-											<Link to=''>Fashion (2)</Link>
-											<Link to=''>Architecture (8)</Link>
-											<Link to=''>Lifestyle (5)</Link>
-											<Link to=''>Travel (10)</Link>
-											<Link to=''>Personal (11)</Link>
+											<Link to='#'>Premium (10)</Link>
+											<Link to='#'>Interior (12)</Link>
+											<Link to='#'>Stories (6)</Link>
+											<Link to='#'>Fashion (2)</Link>
+											<Link to='#'>Architecture (8)</Link>
+											<Link to='#'>Lifestyle (5)</Link>
+											<Link to='#'>Travel (10)</Link>
+											<Link to='#'>Personal (11)</Link>
 										</div>
 									</div>
 								</div>

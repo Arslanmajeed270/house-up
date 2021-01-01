@@ -30,16 +30,13 @@ class MarkerInfoWindow extends Component {
 
 	// onChildClick callback can take two arguments: key and childProps
 	onChildClickCallback = (key, childProps) => {
-		if(childProps && childProps.place && childProps.place.propertId){
-			this.setState((state) => {
-				const index = state.places.findIndex(
-					(e) => parseInt(e.propertId) === parseInt(childProps.place.propertId)
-				);
-				state.places[index].show = true; // !state.places[index].show
-				return { places: state.places };
-			});
-		
-		}
+		this.setState((state) => {
+			const index = state.places.findIndex(
+				(e) => parseInt(e.propertId) === parseInt(childProps.place.propertId)
+			);
+			state.places[index].show = true; // !state.places[index].show
+			return { places: state.places };
+		});
 	};
 
 	render() {

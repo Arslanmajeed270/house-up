@@ -2901,7 +2901,7 @@ iframe {border: none;}
 
 .modal-dialog.modal-lg.modal-dialog-centered .modal-content {
 	width: 90%;
-	height: 580px;
+	/* height: 580px; */
     overflow-y: scroll;
 }
 

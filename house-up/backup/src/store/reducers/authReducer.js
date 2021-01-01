@@ -8,6 +8,7 @@ import {
 	REGISTER_USER_SUCCESS,
 	REGISTER_USER_FAIL,
 	SET_USER_DETAIL,
+	SET_CURRENT_USERS_CARD
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -25,6 +26,11 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				isAuthenticated: true,
+				user: action.payload,
+			};
+		case SET_CURRENT_USERS_CARD:
+			return {
+				...state,
 				user: action.payload,
 			};
 		case CLEAR_CURRENT_USER:

@@ -70,11 +70,20 @@ class AddCard extends Component {
 	}
 
 	onChange = (e) => {
-		const targetName = e.target.name;
-		const targetvalue = e.target.value;
-		
-		this.setState({ [targetName]: targetvalue });
+		const { expiryDate } = this.state;
+		let targetName = e.target.name;
+		let targetValue = e.target.value;
+		if (targetName === 'expiryDate') {
+			this.setState({
+				[targetName]: targetValue.replace(/^(\d{2})(\d{2})/, '$1/$2/'),
+			});
+		}
+		this.setState({ [targetName]: targetValue });
 	};
+
+	componentDidMount() {
+		this.props.onHideError();
+	}
 
 	onSubmit = (e) => {
 		e.preventDefault();
@@ -189,6 +198,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 		onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
 		onCreateCardToken: (data) => dispatch(actions.createCreditCardToken(data)),
+		onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

@@ -28,7 +28,7 @@ class footer extends Component {
           <div className='container'>
             <div
               className='pxp-footer-bottom mt-2 row'
-              style={{ textAlign: 'center' }}
+              style={{ textAlign: 'left' }}
             >
               <div className='col-md-4'>
                 <Link  to="#" className='social-icons'>
@@ -39,6 +39,7 @@ class footer extends Component {
                 </Link>
                 <Link to="#" className='social-icons'>
                   <img
+                  style={{width: "34.45px", height: "34.45px"}}
                     src={require('../assets/images/ic_facebook.svg')}
                     alt=''
                   />

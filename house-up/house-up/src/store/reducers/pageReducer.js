@@ -1,3 +1,4 @@
+import __ from 'lodash';
 import {
 	PAGE_LOADING,
 	PAGE_LOADED,
@@ -127,25 +128,45 @@ export default function (state = initialState, action) {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPropertyLikedByLoggedInUser = action.payload.follow;
-					indexPageData.vendorPostPropertiesList[
-						action.payload.index
-					].object.propertyLikes.push({ userName: action.payload.userName });
+					if(action.payload.follow === true){
+						indexPageData.vendorPostPropertiesList[
+							action.payload.index
+						].object.propertyLikes.push({ userName: action.payload.userName });
+					}else{
+						__.remove(indexPageData.vendorPostPropertiesList[
+							action.payload.index
+						].object.propertyLikes, data => data.userName ===action.payload.userName );
+					}
+					
 				}
 				if (action.payload.category === 'Post') {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isPostLikedByLoggedInUser = action.payload.follow;
-					indexPageData.vendorPostPropertiesList[
-						action.payload.index
-					].object.postLikes.push({ userName: action.payload.userName });
+					if(action.payload.follow === true){
+						indexPageData.vendorPostPropertiesList[
+							action.payload.index
+						].object.postLikes.push({ userName: action.payload.userName });
+					}else{
+						__.remove(indexPageData.vendorPostPropertiesList[
+							action.payload.index
+						].object.postLikes, data => data.userName ===action.payload.userName );
+					}
 				}
 				if (action.payload.category === 'Vendor') {
 					indexPageData.vendorPostPropertiesList[
 						action.payload.index
 					].object.isUserLikedByLoggedInUser = action.payload.follow;
-					indexPageData.vendorPostPropertiesList[
-						action.payload.index
-					].object.vendorLikes.push({ userName: action.payload.userName });
+					
+					if(action.payload.follow === true){
+						indexPageData.vendorPostPropertiesList[
+							action.payload.index
+						].object.vendorLikes.push({ userName: action.payload.userName });
+					}else{
+						__.remove(indexPageData.vendorPostPropertiesList[
+							action.payload.index
+						].object.vendorLikes, data => data.userName ===action.payload.userName );
+					}
 				}
 			}
 			return {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 import Contact from '../../components/Popups/contactUsPopup';
 
@@ -9,6 +10,7 @@ import ImagePreview from '../../components/Popups/ImagePreview';
 class singleProp extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			contactModalState: false,
 			singlePropertyData: {},
@@ -17,9 +19,8 @@ class singleProp extends Component {
 			user: {},
 			userId: '',
 			imageToggle: false,
-			vendorId:'',
+			vendorId: '',
 			comments: [],
-
 		};
 	}
 
@@ -34,27 +35,40 @@ class singleProp extends Component {
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
+		if (
+			property &&
+			JSON.stringify(state.singleVendorData) !==
+				JSON.stringify(property.singleVendorData)
+		) {
+			changedState.singleVendorData = property.singleVendorData;
+			stateChanged = true;
 			if (
-				changedState.indexPageData &&
-				changedState.indexPageData &&
-				changedState.indexPageData.vendorPostPropertiesList.length
+				changedState.singleVendorData &&
+				changedState.singleVendorData.propertyComments.length
 			) {
-				changedState.comments = changedState.indexPageData.vendorPostPropertiesList.map(
-					(data) => {
-						if (
-							state.category === 'Property' &&
-							data.category === state.category &&
-							data.object &&
-							data.object.propertId &&
-							data.object.propertId === state.propertId
-						) {
-							changedState.comments = data.object.propertyComments
-								? data.object.propertyComments
-								: [];
-						}
-					}
-				);
+				changedState.comments = changedState.singleVendorData.propertyComments;
 			}
+		}
+		if (
+			changedState.indexPageData &&
+			changedState.indexPageData &&
+			changedState.indexPageData.vendorPostPropertiesList.length
+		) {
+			changedState.indexPageData.vendorPostPropertiesList.map((data) => {
+				if (
+					state.category === 'Property' &&
+					data.category === state.category &&
+					data &&
+					data.propertId &&
+					data.propertId === state.propertId
+				) {
+					changedState.comments = data.propertyComments
+						? data.propertyComments
+						: [];
+				}
+				return data;
+			});
+		}
 		if (
 			property &&
 			JSON.stringify(state.singlePropertyData) !==
@@ -70,12 +84,12 @@ class singleProp extends Component {
 		return null;
 	}
 
-		modelHanlder = (model, id) => {
-			this.setState({
-				[model]: !this.state[model],
-				vendorId: id
-			 });
-		}
+	modelHanlder = (model, id) => {
+		this.setState({
+			[model]: !this.state[model],
+			vendorId: id,
+		});
+	};
 	closeCodelHanlder = (model) => {
 		this.setState({
 			[model]: false,
@@ -87,7 +101,9 @@ class singleProp extends Component {
 		const id = this.props.match.params.id;
 
 		const userId = user.userId ? user.userId : '';
-		const profilePictureUrl = user.profilePictureUrl ? user.profilePictureUrl : ''
+		const profilePictureUrl = user.profilePictureUrl
+			? user.profilePictureUrl
+			: '';
 
 		this.setState({
 			id,
@@ -97,7 +113,7 @@ class singleProp extends Component {
 		let userData = {
 			propertyId: id,
 		};
-		this.props.onGetSinglePropertyData(userData , profilePictureUrl);
+		this.props.onGetSinglePropertyData(userData, profilePictureUrl);
 	}
 
 	onChange = (e) => {
@@ -108,7 +124,7 @@ class singleProp extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, commentText, userId } = this.state;
+		const { id, commentText, userId, user } = this.state;
 
 		const data = {
 			postId: 0,
@@ -118,8 +134,37 @@ class singleProp extends Component {
 			commentText: commentText,
 			userId: userId,
 			vendorId: 0,
+			phoneNo: user.msisdn,
+			channel: 'web',
 		};
-		this.props.onCommentAdded(data);
+		const indexValue = '';
+		const userFullName = `${user.firstName} ${user.lastName}`;
+		const userName = user.userName;
+		const profilePictureUrl = user.profilePictureUrl;
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
+		if (
+			user.userStatusDesc === 'Inactive' ||
+			user.userStatusDesc === 'Rejected' ||
+			user.userStatusDesc === 'In Review'
+		) {
+			this.props.modelHanlder(
+				'alertPopup',
+				`Your Account is been ${
+					user.userStatusDesc === 'Inactive'
+						? `${user.userStatusDesc} for 7 days `
+						: `${user.userStatusDesc}`
+				} due to ${user.rejectionReason}`
+			);
+		} else {
+			this.props.onCommentAdded(
+				data,
+				indexValue,
+				userFullName,
+				userName,
+				profilePictureUrl,
+				date
+			);
+		}
 	};
 
 	ImagePreviewHandler = () => {
@@ -127,7 +172,7 @@ class singleProp extends Component {
 	};
 
 	render() {
-		const { singlePropertyData, commentText, imageToggle } = this.state;
+		const { singlePropertyData, commentText, imageToggle, user } = this.state;
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -142,7 +187,9 @@ class singleProp extends Component {
 										{singlePropertyData &&
 											singlePropertyData.currency &&
 											singlePropertyData.currency.symbol}{' '}
-										{singlePropertyData && singlePropertyData.price ? singlePropertyData.price.toLocaleString() : ""}{' '}
+										{singlePropertyData && singlePropertyData.price
+											? singlePropertyData.price.toLocaleString()
+											: ''}{' '}
 										{singlePropertyData &&
 											singlePropertyData.currency &&
 											singlePropertyData.currency.lable}
@@ -164,7 +211,10 @@ class singleProp extends Component {
 								className='pxp-sp-gallery-main-img'
 							>
 								<Link
-									onClick={this.ImagePreviewHandler}
+									onClick={(e) => {
+										e.preventDefault();
+										this.ImagePreviewHandler();
+									}}
 									itemProp='contentUrl'
 									data-size='1920x1280'
 									className='pxp-cover'
@@ -194,7 +244,10 @@ class singleProp extends Component {
 												itemType='http://schema.org/ImageObject'
 											>
 												<Link
-													onClick={this.ImagePreviewHandler}
+													onClick={(e) => {
+														e.preventDefault();
+														this.ImagePreviewHandler();
+													}}
 													itemProp='contentUrl'
 													data-size='1920x1459'
 													className='pxp-cover'
@@ -211,20 +264,17 @@ class singleProp extends Component {
 										)
 								  )
 								: ''}
-							{imageToggle ? (
-								<ImagePreview
-									show={this.state.imageToggle}
-									close={this.ImagePreviewHandler}
-									propertyImg={
-										singlePropertyData && singlePropertyData.imageList
-									}
-								/>
-							) : (
-								''
-							)}
+							<ImagePreview
+								show={imageToggle}
+								close={this.ImagePreviewHandler}
+								propertyImg={singlePropertyData && singlePropertyData.imageList}
+							/>
 						</div>
 						<Link
-							onClick={this.ImagePreviewHandler}
+							onClick={(e) => {
+								e.preventDefault();
+								this.ImagePreviewHandler();
+							}}
 							className='pxp-sp-gallery-btn'
 						>
 							See All Photos
@@ -704,7 +754,7 @@ class singleProp extends Component {
 																		key={index}
 																		className='media mt-2 mt-md-3'
 																	>
-																		<img 
+																		<img
 																			src={da && da.profilePictureUrl}
 																			className='mr-3'
 																			alt='...'
@@ -722,30 +772,38 @@ class singleProp extends Component {
 														: ''}
 												</div>
 												<form
-													action='/single-vendor'
 													className='pxp-agent-comments-form mt-3 mt-md-4'
+													onSubmit={this.onSubmit}
 												>
-													<div className='row'>
-														<div className='col-sm-12 col-md-6'></div>
-													</div>
-													<div className='form-group comment-send-btn'>
-														<input
-															className='form-control'
-															placeholder='Write your review here...'
-															name='commentText'
-															value={commentText}
-															onChange={this.onChange}
-														/>
-														<span
-															className='send-btn-single-property'
-															onClick={this.onSubmit}
-														>
-															<img
-																src={require('../../assets/images/ic_sent.svg')}
-																alt=''
-															/>
-														</span>
-													</div>
+													{user && user.profilePictureUrl ? (
+														<>
+															<div className='row'>
+																<div className='col-sm-12 col-md-6'></div>
+															</div>
+															<div className='form-group comment-send-btn'>
+																<input
+																	className='form-control'
+																	placeholder='Write your review here...'
+																	style={{ height: '75px' }}
+																	name='commentText'
+																	value={commentText}
+																	onChange={this.onChange}
+																/>
+																<button
+																	type='submit'
+																	className='send-btn-single-property'
+																	onClick={this.onSubmit}
+																>
+																	<img
+																		src={require('../../assets/images/ic_sent.svg')}
+																		alt=''
+																	/>
+																</button>
+															</div>
+														</>
+													) : (
+														''
+													)}
 												</form>
 											</div>
 										</div>
@@ -757,11 +815,13 @@ class singleProp extends Component {
 									<h3>Listed By</h3>
 									<div className='pxp-sp-agent mt-3 mt-md-4'>
 										<Link
-											to={`/single-vendor-${singlePropertyData &&
-													singlePropertyData.user &&
-													singlePropertyData.user.userId
-														? singlePropertyData.user.userId
-														: ''}`}
+											to={`/single-vendor-${
+												singlePropertyData &&
+												singlePropertyData.user &&
+												singlePropertyData.user.userId
+													? singlePropertyData.user.userId
+													: ''
+											}`}
 											className='pxp-sp-agent-fig pxp-cover rounded-lg user-profile'
 											style={{
 												backgroundImage: `url(${
@@ -775,11 +835,15 @@ class singleProp extends Component {
 										/>
 										<div className='pxp-sp-agent-info'>
 											<div className='pxp-sp-agent-info-name'>
-												<Link to={`/single-vendor-${singlePropertyData &&
-													singlePropertyData.user &&
-													singlePropertyData.user.userId
-														? singlePropertyData.user.userId
-														: ''}`}>
+												<Link
+													to={`/single-vendor-${
+														singlePropertyData &&
+														singlePropertyData.user &&
+														singlePropertyData.user.userId
+															? singlePropertyData.user.userId
+															: ''
+													}`}
+												>
 													{singlePropertyData &&
 													singlePropertyData.user &&
 													singlePropertyData.user.firstName
@@ -803,20 +867,44 @@ class singleProp extends Component {
 										</div>
 										<div className='clearfix' />
 										<div className='pxp-sp-agent-btns mt-3 mt-md-4'>
-											<button
-												className='pxp-sp-agent-btn-main'
-												data-toggle='modal'
-												onClick={() =>this.modelHanlder('contactModalState',singlePropertyData.userId)}
-											>
-												Contact Us
-											</button>
+											{user.userId !== singlePropertyData.userId ? (
+												<button
+													className='pxp-sp-agent-btn-main'
+													data-toggle='modal'
+													onClick={
+														(user && user.userStatusDesc === 'Inactive') ||
+														user.userStatusDesc === 'Rejected' ||
+														user.userStatusDesc === 'In Review'
+															? () =>
+																	this.props.modelHanlder(
+																		'alertPopup',
+																		`Your Account is been ${
+																			user.userStatusDesc === 'Inactive'
+																				? `${user.userStatusDesc} for 7 days`
+																				: `${user.userStatusDesc}`
+																		} due to ${user.rejectionReason}`
+																	)
+															: user && user.profilePictureUrl
+															? () =>
+																	this.modelHanlder(
+																		'contactModalState',
+																		singlePropertyData.userId
+																	)
+															: () => this.props.modelHanlder('phoneSignin')
+													}
+												>
+													Contact Us
+												</button>
+											) : (
+												''
+											)}
 											{this.state.contactModalState ? (
-													<Contact
-														show={this.state.contactModalState}
-														closeCodelHanlder={this.closeCodelHanlder}
-														vendorId = {this.state.vendorId}
-													/>
-												) : null}
+												<Contact
+													show={this.state.contactModalState}
+													closeCodelHanlder={this.closeCodelHanlder}
+													vendorId={this.state.vendorId}
+												/>
+											) : null}
 										</div>
 									</div>
 								</div>
@@ -838,7 +926,24 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data , profilePictureUrl) => dispatch(actions.AddComments(data, profilePictureUrl)),
+		onCommentAdded: (
+			data,
+			index,
+			userFullName,
+			userName,
+			profilePictureUrl,
+			date
+		) =>
+			dispatch(
+				actions.AddCommentsUserProp(
+					data,
+					index,
+					userFullName,
+					userName,
+					profilePictureUrl,
+					date
+				)
+			),
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
 	};

@@ -6,6 +6,7 @@ import * as actions from '../../store/actions/index';
 import Form1 from './Add Property/form1';
 import Form2 from './Add Property/form2';
 import Form3 from './Add Property/form3';
+import Form4 from './Add Property/form4';
 import Spinner from '../../components/common/Spinner';
 
 import * as actionTypes from '../../store/actions/actionTypes';
@@ -21,7 +22,9 @@ class addProperty extends Component {
 			form1Data: {},
 			form2Data: {},
 			form3Data: {},
+			form4Data: {},
 			loading: false,
+			user: {},
 			error: {},
 			currentLocation: {},
 		};
@@ -35,13 +38,17 @@ class addProperty extends Component {
 		this.setState({ form2Data: form2Data });
 	};
 	form3DataHandler = (form3Data) => {
-		this.setState({ form3Data: form3Data }, () => this.addProperty());
+		this.setState({ form3Data: form3Data });
+	};
+	form4DataHandler = (form4Data) => {
+		this.setState({ form4Data: form4Data }, () => this.addProperty(form4Data));
 	};
 
 	static getDerivedStateFromProps(props, state) {
 		const errors = props.errors;
 		const property = props.property;
 		const page = props.page;
+		const auth = props.auth;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -52,6 +59,15 @@ class addProperty extends Component {
 				JSON.stringify(property.dropDownData)
 		) {
 			changedState.dropDownData = property.dropDownData;
+			stateChanged = true;
+		}
+
+		if (
+			auth &&
+			auth.user &&
+			JSON.stringify(state.user) !== JSON.stringify(auth.user)
+		) {
+			changedState.user = auth.user;
 			stateChanged = true;
 		}
 
@@ -84,13 +100,16 @@ class addProperty extends Component {
 	}
 
 	componentDidMount() {
-		this.props.onDropDwonMenu();
+		if (!this.state.dropDownData || !this.state.dropDownData.currencies) {
+			this.props.onDropDwonMenu();
+		}
 	}
 
 	addProperty = () => {
 		const form1Data = this.state.form1Data;
 		const form2Data = this.state.form2Data;
 		const form3Data = this.state.form3Data;
+		const form4Data = this.state.form4Data;
 
 		const formData = {
 			currencyId: form2Data.currencyId ? form2Data.currencyId : 2,
@@ -98,6 +117,7 @@ class addProperty extends Component {
 			contactEmail: form2Data.contactEmail ? form2Data.contactEmail : '',
 			adTitle: form2Data.adTitle ? form2Data.adTitle : '',
 			contactName: form2Data.contactName ? form2Data.contactName : '',
+			phoneNo: this.state.user.msisdn ? this.state.user.msisdn : '',
 			contactNumber: form2Data.contactNumber ? form2Data.contactNumber : 0,
 			userId: form2Data.userId ? form2Data.userId : 0,
 			price: form2Data.price ? form2Data.price : 0,
@@ -158,9 +178,18 @@ class addProperty extends Component {
 			propertyId: 0,
 			country: 'Canada',
 			state: form1Data.state ? form1Data.state : 'Ontario',
+
+			propertyFeeId: form4Data.propertyFeeId ? form4Data.propertyFeeId : 1,
+			packageRenewal: form4Data.packageRenewal
+				? form4Data.packageRenewal
+				: false,
 		};
 
-		this.props.onAddProperty(formData, this.props.history);
+		this.props.onAddProperty(
+			formData,
+			this.props.history,
+			this.props.closeCodelHanlder
+		);
 	};
 
 	formShowHandler = (num) => {
@@ -168,13 +197,13 @@ class addProperty extends Component {
 			formShow: num,
 		});
 	};
+
 	render() {
-		const {
-			dropDownData,
-			loading,
-			errors,
-			form3Data,
-		} = this.state;
+		const { dropDownData, loading, errors, form3Data } = this.state;
+		const data = {
+			dropDownData: dropDownData,
+			form4DataHandler: this.form4DataHandler,
+		};
 		let pageContent = '';
 
 		if (loading) {
@@ -195,6 +224,7 @@ class addProperty extends Component {
 						dropDownData={dropDownData}
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form1DataHandler={this.form1DataHandler}
+						modelHanlder={this.props.modelHanlder}
 						form1Data={this.state.form1Data}
 					/>
 				)}
@@ -212,7 +242,15 @@ class addProperty extends Component {
 						formShowHandler={(num) => this.formShowHandler(num)}
 						form3DataHandler={this.form3DataHandler}
 						form3Data={form3Data}
-						postCLicked={this.state.postCLicked}
+						modelHanlder={this.props.modelHanlder}
+					/>
+				)}
+				{this.state.formShow === 3 && (
+					<Form4
+						dropDownData={dropDownData}
+						formShowHandler={(num) => this.formShowHandler(num)}
+						form4DataHandler={this.form4DataHandler}
+						form4Data={this.state.form4Data}
 					/>
 				)}
 				{pageContent}
@@ -225,14 +263,15 @@ const mapStateToProps = (state) => {
 		property: state.property,
 		errors: state.errors,
 		page: state.page,
+		auth: state.auth,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onDropDwonMenu: () => dispatch(actions.dropDwonMenu()),
-		onAddProperty: (data, history) =>
-			dispatch(actions.addProperty(data, history)),
+		onAddProperty: (data, history, closeCodelHanlder) =>
+			dispatch(actions.addProperty(data, history, closeCodelHanlder)),
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
 	};

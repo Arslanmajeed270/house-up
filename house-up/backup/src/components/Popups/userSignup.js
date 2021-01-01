@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import fileUpload from 'fuctbase64';
+import cloneDeep from 'lodash/cloneDeep';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/authActions';
@@ -16,6 +17,7 @@ class userSignup extends Component {
 			errors: {},
 			loading: false,
 			profileImage: '',
+			profileImageDefault: '',
 			imagePreview: null,
 			firstName: '',
 			lastName: '',
@@ -68,6 +70,14 @@ class userSignup extends Component {
 			changedState.currentLocation = page.currentLocation;
 			stateChanged = true;
 		}
+		if (
+			auth &&
+			auth.user &&
+			JSON.stringify(state.user) !== JSON.stringify(auth.user)
+		) {
+			changedState.user = auth.user;
+			stateChanged = true;
+		}
 
 		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
 			changedState.errors = errors;
@@ -88,6 +98,21 @@ class userSignup extends Component {
 		return null;
 	}
 
+	componentDidMount() {
+		this.props.onHideError()
+		const userData = cloneDeep(this.props.userData);
+
+		this.setState({
+			profileImage: userData
+				? userData.profilePictureUrl
+				: this.state.profileImage,
+			firstName: userData ? userData.firstName : this.state.firstName,
+			lastName: userData ? userData.lastName : this.state.lastName,
+			userName: userData ? userData.userName : this.state.userName,
+			email: userData ? userData.emailAddress : this.state.email,
+		});
+	}
+
 	onChange = (e) => {
 		if (e.target.name === 'profileImage') {
 			let imagePreview = URL.createObjectURL(e.target.files[0]);
@@ -101,11 +126,16 @@ class userSignup extends Component {
 			this.setState({ [e.target.name]: e.target.value });
 		}
 	};
-	onSubmit = (e) => {
+
+	updateProfile = (e) => {
 		e.preventDefault();
 		const {
+			firstName,
+			lastName,
 			profileImage,
+			profileImageDefault,
 			password,
+			user,
 			confirmPassword,
 		} = this.state;
 		if (password !== confirmPassword) {
@@ -115,8 +145,54 @@ class userSignup extends Component {
 		if (profileImage === '') {
 			this.props.onErrorSet('Profile Picture is Missing');
 			return;
+		} else {
+			const userData = {
+				userId: user && user.userId,
+				firstName: firstName,
+				lastName: lastName,
+				phoneNumber: user && user.msisdn,
+				address: '',
+				currencyId: 1,
+				aboutYourSelf: '',
+				professionId: null,
+				businessName: '',
+				websiteLink: '',
+				qualification: '',
+				businessStartDate: '',
+				keywordsDescribeYourBusiness: '',
+				houseAppartmentSuiteNumber: '',
+				countryId: null,
+				provinceId: null,
+				stateId: null,
+				cityId: null,
+				city: '',
+				state: '',
+				country: '',
+				countyId: null,
+				streetAddress: '',
+				streetAddress1: '',
+				postalCode: '',
+				zipCode: '',
+				businessRegistrationDocument: '',
+				businessSupportingDocument: '',
+				profileImage: profileImage === profileImageDefault ? '' : profileImage,
+				userTypeId: 1,
+			};
+			this.props.onUpdateUser(userData, this.props.history);
 		}
-		else {
+	};
+
+	onSubmit = (e) => {
+		e.preventDefault();
+		const { profileImage, password, confirmPassword } = this.state;
+		if (password !== confirmPassword) {
+			this.props.onErrorSet('Password not matched!');
+			return;
+		}
+		if (profileImage === '') {
+			this.props.onErrorSet('Profile Picture is Missing');
+			return;
+		} else {
 			const userData = {
 				profileImage: this.state.profileImage,
 				firstName: this.state.firstName,
@@ -198,6 +274,8 @@ class userSignup extends Component {
 										src={
 											imagePreview
 												? imagePreview
+												: this.props.userData
+												? this.state.profileImage
 												: require('../../assets/images/ic_profile_placeholder.png')
 										}
 										alt=''
@@ -298,9 +376,18 @@ class userSignup extends Component {
 							</div>
 						</div>
 						<div className='form-group'>
-							<button className='pxp-agent-contact-modal-btn' type='submit'>
-								Submit
-							</button>
+							{this.props.userData ? (
+								<button
+									className='pxp-agent-contact-modal-btn'
+									onClick={this.updateProfile}
+								>
+									Update Profile
+								</button>
+							) : (
+								<button className='pxp-agent-contact-modal-btn' type='submit'>
+									Submit
+								</button>
+							)}
 						</div>
 						{pageContent}
 					</form>
@@ -324,6 +411,10 @@ const mapDispatchToProps = (dispatch) => {
 		onCreateUser: (userData) => dispatch(actions.createUser(userData)),
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
+		onUpdateUser: (userData, history) =>
+			dispatch(actions.updateUser(userData, history)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
+
 	};
 };
 

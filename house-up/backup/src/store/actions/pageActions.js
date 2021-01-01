@@ -17,7 +17,9 @@ import {
 	HIDE_POP_UP,
 	SHOW_POP_UP,
 	SET_PACKAGE_DETAILS,
+	SET_CURRENT_USERS_CARD,
 } from './actionTypes';
+import { setCurrentUser } from './authActions';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
 
@@ -239,32 +241,51 @@ export const followProfessionals = (data, index, type) => (dispatch) => {
 		});
 };
 // add Comments to the post and property
-export const AddComments = (data, index, contactName , profilePictureUrl) => (dispatch) => {
-	axios.post(backendServerURL + '/addComment', data).then((res) => {
-		if (res && res.data && res.data.resultCode === '200') {
-			const payload = {
-				index: index,
-				category: data.category,
-				comment: data.commentText,
-				contactName: contactName,
-				profilePictureUrl : profilePictureUrl
-			};
-			dispatch({
-				type: ADD_COMMENTS,
-				payload: payload,
-			});
-			dispatch(clearErrors());
-		} else {
+export const AddComments = (
+	data,
+	index,
+	userFullName,
+	userName,
+	profilePictureUrl,
+	date
+) => (dispatch) => {
+	axios
+		.post(backendServerURL + '/addComment', data)
+		.then((res) => {
+			if (res && res.data) {
+				const payload = {
+					index: index,
+					category: data.category,
+					comment: data.commentText,
+					userFullName: userFullName,
+					userName: userName,
+					profilePictureUrl: profilePictureUrl,
+					createDateTime: date,
+				};
+				dispatch({
+					type: ADD_COMMENTS,
+					payload: payload,
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
 			dispatch({
 				type: SET_ERRORS,
-				payload: {
-					message: res.data.message
-						? res.data.message
-						: 'Something went wrong! Please try again.',
-				},
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
 			});
-		}
-	});
+		})
+		.finally(() => dispatch(clearPageLoading()));
 };
 
 // Contact US
@@ -374,6 +395,8 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 		.post(backendServerURL + '/createCreditCardToken', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+				dispatch(setCurrentUser(res.data.data.user));
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
 			} else {
@@ -401,7 +424,44 @@ export const createCreditCardToken = (userData) => (dispatch) => {
 // CHARGE CUSTOMER USING CREDIT CARD
 export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 	axios
-		.post(backendServerURL + '/chargeCustomerUsingCreditCard', userData)
+		.post(backendServerURL + '/chargeCustomer', userData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.setItem('jwtToken', JSON.stringify(res.data.data.user));
+				dispatch(setCurrentUser(res.data.data.user));
+				dispatch({ type: SHOW_POP_UP });
+				dispatch(clearErrors());
+			} else {
+				dispatch({ type: HIDE_POP_UP });
+				dispatch({ type: SET_DEFAULT_ALL_CARDS });
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		});
+};
+
+// chargeCustomerForPropertyUsingCreditCard
+export const chargeCustomerForPropertyUsingCreditCard = (userData) => (
+	dispatch
+) => {
+	axios
+		.post(
+			backendServerURL + '/chargeCustomerForPropertyUsingCreditCard',
+			userData
+		)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
@@ -431,16 +491,17 @@ export const chargeCustomerUsingCreditCard = (userData) => (dispatch) => {
 // Get Package plan from backend
 export const getPackagePlan = () => (dispatch) => {
 	axios
-		.post(backendServerURL + '/GetPackagePlanAPI', {	
-			channel:"web"
-	})
+		.post(backendServerURL + '/GetPackagePlanAPI', {
+			channel: 'web',
+		})
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch(clearErrors());
 				dispatch({
-					type: SET_PACKAGE_DETAILS ,
-					payload : res && res.data && res.data.data && res.data.data.packageList 
-				 });
+					type: SET_PACKAGE_DETAILS,
+					payload:
+						res && res.data && res.data.data && res.data.data.packageList,
+				});
 			} else {
 				dispatch({
 					type: SET_ERRORS,

@@ -69,6 +69,10 @@ class OptUserVendor extends Component {
     }
   };
 
+  componentDidMount(){
+    this.props.onHideError()
+  }
+
   resendPin = (num) => {
     const data = {
       msisdn: num,
@@ -103,7 +107,7 @@ class OptUserVendor extends Component {
           onClick={() => this.props.closeCodelHanlder('optUserModelVendor')}
         ></Modal.Header>
 
-        <Modal.Body style={{ padding: '30px 0px 10px' }}>
+        <Modal.Body style={{ padding: '20px 0px 5px' }}>
           <div className="form-group">
             {errors && errors.message && (
               <Alert variant="danger">
@@ -112,7 +116,7 @@ class OptUserVendor extends Component {
             )}
             <div
               className="text-center"
-              style={{ fontSize: '22px', fontWeight: '500', color: '#000' }}
+              style={{ fontSize: '22px', lineHeight:'22px', fontWeight: '500', color: '#000' }}
             >
               We sent you a code to{' '}
             </div>
@@ -175,6 +179,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),
     onVerifyPin: (data) => dispatch(actions.verifyPin(data)),
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

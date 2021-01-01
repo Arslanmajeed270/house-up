@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import About from './About/about';
 import AddProperty from './Properties/addProperty';
@@ -22,33 +22,85 @@ import SelectLocation from './selectLocation/selectLocation';
 class Routes extends React.Component {
 	render() {
 		return (
-			<Router>
-				<Route exact path={'/'} component={Home} />
-				<Route exact path={'/index-:country&:state&:city'} component={Index} />
-				<Route exact path={'/home'} component={Home} />
+			<React.Fragment>
+				<Route
+					exact
+					path={'/'}
+					component={() => <Home modelHanlder={this.props.modelHanlder} />}
+				/>
+				<Route
+					exact
+					path={'/index-:country&:state&:city'}
+					component={(route) => (
+						<Index
+							match={route.match}
+							history={this.props.history}
+							modelHanlder={this.props.modelHanlder}
+						/>
+					)}
+				/>
+				<Route
+					exact
+					path={'/home'}
+					component={() => <Home modelHanlder={this.props.modelHanlder} />}
+				/>
 				<Route exact path={'/about'} component={About} />
-				<Route exact path={'/add-property'} component={AddProperty} />
+				<Route
+					exact
+					path={'/add-property'}
+					component={() => (
+						<AddProperty
+							modelHanlder={this.props.modelHanlder}
+							history={this.props.history}
+							closeCodelHanlder={this.props.closeCodelHanlder}
+						/>
+					)}
+				/>
 				<Route exact path={'/add-product'} component={AddProduct} />
 				<Route exact path={'/add-coupon'} component={AddCoupon} />
-				<Route exact path={'/single-vendor-:id'} component={SingleVendor} />
+				<Route
+					exact
+					path={'/single-vendor-:id'}
+					component={(route) => (
+						<SingleVendor
+							match={route.match}
+							modelHanlder={this.props.modelHanlder}
+						/>
+					)}
+				/>
 				<Route exact path={'/blogs'} component={Blogs} />
 				<Route exact path={'/about'} component={About} />
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
 				<Route
 					exact
-					path={'/comments-:id&:category&:indexValue'}
-					component={Comments}
+					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
+					component={(routes) => (
+						<Comments
+							match={routes.match}
+							modelHanlder={this.props.modelHanlder}
+						/>
+					)}
 				/>
 				<Route exact path={'/contact'} component={Contact} />
 				<Route exact path={'/privacy'} component={Privacy} />
 				<Route exact path={'/select-location'} component={SelectLocation} />
 				<Route exact path={'/properties'} component={Properties} />
 				<Route exact path={'/single-post'} component={SinglePost} />
-				<Route exact path={'/single-prop-:id'} component={SingleProp} />
+				<Route
+					exact
+					path={'/single-prop-:id'}
+					component={(props) => (
+						<SingleProp
+							history={props.history}
+							match={props.match}
+							modelHanlder={this.props.modelHanlder}
+						/>
+					)}
+				/>
 				<Route exact path={'/professionals'} component={Professionals} />
-			</Router>
+			</React.Fragment>
 		);
 	}
 }
 
-export default withRouter(Routes);
+export default Routes;

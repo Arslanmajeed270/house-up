@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 import cloneDeep from 'lodash/cloneDeep';
 import fileUpload from 'fuctbase64';
+import moment from 'moment';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 
-import { checkValidURL , checkDate } from '../../utils/regex';
+import { checkValidURL, checkDate } from '../../utils/regex';
 
 import { Alert } from 'react-bootstrap';
 import Spinner from '../../components/common/Spinner';
@@ -52,6 +53,13 @@ class vendorSignup extends Component {
 			viewConfirmPass: false,
 			currentLocation: {},
 			unitOther: '',
+			user: {},
+			profileImageDefault: '',
+			businessSupportingDocumentDefault: '',
+			businessRegistrationDocumentDefault: '',
+			businessRegistrationDocumentExist: false,
+			businessSupportingDocumentExist: false,
+			profileImageExist: false,
 		};
 	}
 
@@ -72,6 +80,15 @@ class vendorSignup extends Component {
 		const auth = props.auth;
 		let stateChanged = false;
 		let changedState = {};
+
+		if (
+			auth &&
+			auth.user &&
+			JSON.stringify(state.user) !== JSON.stringify(auth.user)
+		) {
+			changedState.user = auth.user;
+			stateChanged = true;
+		}
 
 		if (
 			auth &&
@@ -135,9 +152,86 @@ class vendorSignup extends Component {
 	}
 
 	componentDidMount() {
+		this.props.onHideError();
+		if (this.props.userData) {
+			const userData = cloneDeep(this.props.userData);
+			const date = userData && userData.businessStartDate.split('/');
+			const businessDate = date[2] + '-' + date[1] + '-' + date[0];
+			this.setState({
+				profileImage: userData
+					? userData.profilePictureUrl
+					: this.state.profileImage,
+				profileImageDefault: userData
+					? userData.profilePictureUrl
+					: this.state.profileImageDefault,
+				firstName: userData ? userData.firstName : this.state.firstName,
+				lastName: userData ? userData.lastName : this.state.lastName,
+				userName: userData ? userData.userName : this.state.userName,
+				emailAddress: userData
+					? userData.emailAddress
+					: this.state.emailAddress,
+				confirmPassword: this.state.confirmPassword,
+				password: this.state.password,
+				professionId: userData
+					? userData.professionId
+					: this.state.professionId,
+				businessSupportingDocument: userData
+					? userData.businessSupportingDocURL
+					: this.state.businessSupportingDocURL,
+				businessSupportingDocumentDefault: userData
+					? userData.businessSupportingDocURL
+					: this.state.businessSupportingDocURLDefault,
+				businessRegistrationDocumentDefault: userData
+					? userData.businessRegistrationDocURL
+					: this.state.businessRegistrationDocURLDefault,
+				businessRegistrationDocument: userData
+					? userData.businessRegistrationDocURL
+					: this.state.businessRegistrationDocURL,
+				keywordDescriptYourBusiness: userData
+					? userData.keywordsDescribeYourBusiness
+					: this.state.keywordDescriptYourBusiness,
+				countryId: userData ? userData.countryId : this.state.countryId,
+				provinceId: userData ? userData.stateId : this.state.provinceId,
+				websiteLink: userData ? userData.websiteLink : this.state.websiteLink,
+				cityId: userData ? userData.cityId : this.state.cityId,
+				unit: userData ? userData.unit : this.state.unit,
+				businessName: userData
+					? userData.businessName
+					: this.state.businessName,
+				qualification: userData
+					? userData.qualification
+					: this.state.qualification,
+				zipCode: userData ? userData.zipCode : this.state.zipCode,
+				streetAddress: userData
+					? userData.streetAddress
+					: this.state.streetAddress,
+				aboutBusiness: userData
+					? userData.aboutBusiness
+					: this.state.aboutBusiness,
+				businessStartDate: userData
+					? moment(businessDate).format('YYYY-MM-DD')
+					: this.state.businessStartDate,
+				unitOther: userData
+					? this.props.userData.unitOther
+					: this.state.unitOther,
+			});
+		}
 		this.props.onGetCountries();
 		this.props.onGetProfessionDetailAPI();
 	}
+
+	// limitWordHandler = (str) => {
+	// 	const arrayString = str.split('');
+	// 	let paragraph = '';
+	// 	const limit = arrayString.length < 20 ? arrayString.length : 20;
+	// 	for (let i = 0; i < limit; i++) {
+	// 		paragraph += arrayString[i] + ' ';
+	// 	}
+	// 	if (arrayString.length >= 30) {
+	// 		paragraph += '...';
+	// 	}
+	// 	return paragraph;
+	// };
 
 	onChange = (e) => {
 		if (e.target.name === 'profileImage') {
@@ -196,6 +290,117 @@ class vendorSignup extends Component {
 			this.setState({ [e.target.name]: e.target.value });
 		}
 	};
+	updateProfile = (e) => {
+		e.preventDefault();
+		const {
+			profileImage,
+			firstName,
+			lastName,
+			confirmPassword,
+			password,
+			professionId,
+			businessSupportingDocument,
+			businessRegistrationDocument,
+			keywordDescriptYourBusiness,
+			provinceId,
+			cityId,
+			zipCode,
+			streetAddress,
+			businessName,
+			websiteLink,
+			qualification,
+			aboutBusiness,
+			businessStartDate,
+			businessRegistrationDocumentDefault,
+			businessSupportingDocumentDefault,
+			profileImageDefault,
+			user,
+			businessRegistrationDocumentExist,
+			businessSupportingDocumentExist,
+			profileImageExist,
+		} = this.state;
+		const city = cityId.split(',')[1];
+		const cId = cityId.split(',')[0];
+
+		const province = provinceId.split(',')[1];
+		const pId = provinceId.split(',')[0];
+		if (password !== confirmPassword) {
+			this.props.onErrorSet('Password not matched!');
+			return;
+		} else if (profileImage === '') {
+			this.props.onErrorSet('Profile Picture is Missing');
+			return;
+		} else if (!checkValidURL(websiteLink)) {
+			this.props.onErrorSet('Please Enter Valid URL!');
+			return;
+		} else if (!checkDate(businessStartDate)) {
+			this.props.onErrorSet(
+				'Please Enter Valid Date Date Must Be In The Past!'
+			);
+			return;
+		} else {
+			const userData = {
+				userId: user && user.userId,
+				firstName: firstName,
+				lastName: lastName,
+				phoneNumber: user && user.msisdn,
+				address: streetAddress,
+				currencyId: 1,
+				aboutBusiness: aboutBusiness,
+				aboutYourSelf: aboutBusiness,
+				professionId: Number(professionId),
+				businessName: businessName,
+				websiteLink: websiteLink,
+				qualification: qualification,
+				businessStartDate: businessStartDate,
+				keywordsDescribeYourBusiness: keywordDescriptYourBusiness,
+				houseAppartmentSuiteNumber: '',
+				countryId: 39,
+				provinceId: Number(pId),
+				stateId: Number(pId),
+				cityId: Number(cId),
+				city: city,
+				state: province,
+				country: 'Canada',
+				streetAddress: streetAddress,
+				streetAddress1: streetAddress,
+				postalCode: zipCode,
+				zipCode: zipCode,
+				businessRegistrationDocument:
+					businessRegistrationDocument === businessRegistrationDocumentDefault
+						? ''
+						: businessRegistrationDocument,
+
+				businessRegistrationDocumentExist:
+					businessRegistrationDocument === businessRegistrationDocumentDefault
+						? businessRegistrationDocumentExist
+						: !businessRegistrationDocumentExist,
+
+				businessSupportingDocument:
+					businessSupportingDocument === businessSupportingDocumentDefault
+						? ''
+						: businessSupportingDocument,
+
+				businessSupportingDocumentExist:
+					businessSupportingDocument === businessSupportingDocumentDefault
+						? businessSupportingDocumentExist
+						: !businessSupportingDocumentExist,
+
+				profileImage: profileImage === profileImageDefault ? '' : profileImage,
+
+				profileImageExist:
+					profileImage === profileImageDefault
+						? profileImageExist
+						: !profileImageExist,
+
+				userTypeId: 2,
+
+				phoneNo: user.msisdn,
+				channel: 'web',
+			};
+			this.props.onUpdateVendor(userData, this.props.history);
+		}
+	};
 	onSubmit = (e) => {
 		e.preventDefault();
 		const {
@@ -235,12 +440,12 @@ class vendorSignup extends Component {
 		} else if (!checkValidURL(websiteLink)) {
 			this.props.onErrorSet('Please Enter Valid URL!');
 			return;
-		}
-		else if (!checkDate(businessStartDate)) {
-			this.props.onErrorSet('Please Enter Valid Date Date Must Be In The Past!');
+		} else if (!checkDate(businessStartDate)) {
+			this.props.onErrorSet(
+				'Please Enter Valid Date Date Must Be In The Past!'
+			);
 			return;
-		}
-		 else {
+		} else {
 			const userData = {
 				profileImage: profileImage,
 				firstName: firstName,
@@ -357,6 +562,8 @@ class vendorSignup extends Component {
 										src={
 											imagePreview
 												? imagePreview
+												: this.props.userData
+												? this.state.profileImage
 												: require('../../assets/images/ic_profile_placeholder.png')
 										}
 										alt=''
@@ -391,7 +598,7 @@ class vendorSignup extends Component {
 											type='text'
 											className='form-control'
 											id='pxp-signin-email'
-											placeholder='lastName'
+											placeholder='Last Name'
 											name='lastName'
 											value={lastName}
 											onChange={this.onChange}
@@ -409,14 +616,30 @@ class vendorSignup extends Component {
 									<div className='form-group'>
 										<input
 											type='text'
-											className='form-control'
+											className={`form-control ${
+												errors &&
+												errors.message &&
+												errors.message === 'User with this email already exist.'
+													? 'customError'
+													: ''
+											}`}
 											id='pxp-signin-email'
 											placeholder='Email'
 											name='emailAddress'
 											value={emailAddress}
+											disabled={this.props.userData ? true : false}
 											onChange={this.onChange}
 											required
 										/>
+										{errors &&
+										errors.message &&
+										errors.message === 'User with this email already exist.' ? (
+											<span className='text-danger error-text'>
+												{errors.message}
+											</span>
+										) : (
+											''
+										)}
 									</div>
 								</div>
 								<div
@@ -426,14 +649,32 @@ class vendorSignup extends Component {
 									<div className='form-group'>
 										<input
 											type='text'
-											className='form-control'
+											className={`form-control ${
+												errors &&
+												errors.message &&
+												errors.message ===
+													'User with this user name already exist'
+													? 'customError'
+													: ''
+											}`}
 											id='pxp-signin-email'
 											placeholder='Create UserName'
 											name='userName'
 											value={userName}
+											disabled={this.props.userData ? true : false}
 											onChange={this.onChange}
 											required
 										/>
+										{errors &&
+										errors.message &&
+										errors.message ===
+											'User with this user name already exist' ? (
+											<span className='text-danger error-text'>
+												{errors.message}
+											</span>
+										) : (
+											''
+										)}
 									</div>
 								</div>
 							</div>
@@ -449,6 +690,7 @@ class vendorSignup extends Component {
 											onChange={this.onChange}
 											name='professionId'
 											value={professionId}
+											defaultValue={professionId}
 											required
 										>
 											<option value=''> Please select profession </option>
@@ -482,9 +724,10 @@ class vendorSignup extends Component {
 											required
 										/>
 										<label for='file' className='btn-2'>
-											{' '}
 											{imagePreviewForRegister && imagePreviewForRegister.name
 												? imagePreviewForRegister.name
+												: this.props.userData
+												? 'Uploaded'
 												: 'Business registration document'}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
@@ -595,6 +838,9 @@ class vendorSignup extends Component {
 											{' '}
 											{imagePreviewForSupport && imagePreviewForSupport.name
 												? imagePreviewForSupport.name
+												: this.props.userData &&
+												  this.state.businessSupportingDocument
+												? 'Uploaded'
 												: 'Support document (optional)'}{' '}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
@@ -652,6 +898,7 @@ class vendorSignup extends Component {
 													placeholder='City'
 													name='provinceId'
 													value={provinceId}
+													defaultValue={provinceId}
 													onChange={this.onChange}
 												>
 													<option value=''> Province / state </option>
@@ -681,6 +928,7 @@ class vendorSignup extends Component {
 													name='cityId'
 													required
 													value={cityId}
+													// defaultValue={cityId}
 													onChange={this.onChange}
 												>
 													<option value=''> City </option>
@@ -738,72 +986,93 @@ class vendorSignup extends Component {
 									</div>
 								</div>
 							</div>
-							<div className='row' style={{ padding: '0px 15px' }}>
-								<div
-									className='col-md-6'
-									style={{ padding: '0px', paddingRight: '12px' }}
-								>
-									<div className='form-group'>
-										<input
-											type={viewPass ? 'text' : 'password'}
-											className={`form-control ${
-												errors && errors.message ? 'customError' : ''
-											}`}
-											id='pxp-signin-email'
-											placeholder='Password'
-											name='password'
-											value={password}
-											onChange={this.onChange}
-											required
-										/>
-										<span
-											className='pass-vendorSignup'
-											onClick={this.viewPassword}
-										>
-											<img
-												src={require('../../assets/images/icons/ic_view_password.png')}
-												alt=''
+							{this.props.userData ? (
+								''
+							) : (
+								<div className='row' style={{ padding: '0px 15px' }}>
+									<div
+										className='col-md-6'
+										style={{ padding: '0px', paddingRight: '12px' }}
+									>
+										<div className='form-group'>
+											<input
+												type={viewPass ? 'text' : 'password'}
+												className={`form-control ${
+													errors &&
+													errors.message &&
+													errors.message === 'Password not matched!'
+														? 'customError'
+														: ''
+												}`}
+												id='pxp-signin-email'
+												placeholder='Password'
+												name='password'
+												value={password}
+												onChange={this.onChange}
+												required
 											/>
-										</span>
+											<span
+												className='pass-vendorSignup'
+												onClick={this.viewPassword}
+											>
+												<img
+													src={require('../../assets/images/icons/ic_view_password.png')}
+													alt=''
+												/>
+											</span>
+										</div>
+									</div>
+									<div
+										className='col-md-6'
+										style={{ padding: '0px', paddingRight: '7px' }}
+									>
+										<div className='form-group'>
+											<input
+												type={viewConfirmPass ? 'text' : 'password'}
+												className={`form-control ${
+													errors &&
+													errors.message &&
+													errors.message === 'Password not matched!'
+														? 'customError'
+														: ''
+												}`}
+												id='pxp-signin-email'
+												placeholder='Confirm Password'
+												name='confirmPassword'
+												value={confirmPassword}
+												onChange={this.onChange}
+												required
+											/>
+											<span
+												className='pass-vendorSignup'
+												onClick={this.viewConfirmPassword}
+											>
+												<img
+													src={require('../../assets/images/icons/ic_view_password.png')}
+													alt=''
+												/>
+											</span>
+										</div>
 									</div>
 								</div>
-								<div
-									className='col-md-6'
-									style={{ padding: '0px', paddingRight: '7px' }}
-								>
-									<div className='form-group'>
-										<input
-											type={viewConfirmPass ? 'text' : 'password'}
-											className={`form-control ${
-												errors && errors.message ? 'customError' : ''
-											}`}
-											id='pxp-signin-email'
-											placeholder='Confirm Password'
-											name='confirmPassword'
-											value={confirmPassword}
-											onChange={this.onChange}
-											required
-										/>
-										<span
-											className='pass-vendorSignup'
-											onClick={this.viewConfirmPassword}
-										>
-											<img
-												src={require('../../assets/images/icons/ic_view_password.png')}
-												alt=''
-											/>
-										</span>
-									</div>
-								</div>
-							</div>
+							)}
 						</div>
 						<div
 							className='form-group'
 							style={{ paddingTop: '15px', height: '56px' }}
 						>
-							<button className='pxp-agent-contact-modal-btn' type='submit'>
-								Sign up
-							</button>
+							{this.props.userData ? (
+								<button
+									className='pxp-agent-contact-modal-btn'
+									onClick={this.updateProfile}
+								>
+									Update Profile
+								</button>
+							) : (
+								<button className='pxp-agent-contact-modal-btn' type='submit'>
+									Sign up
+								</button>
+							)}
 						</div>
 						{pageContent}
 					</form>
@@ -830,6 +1099,9 @@ const mapDispatchToProps = (dispatch) => {
 		onCreateVendor: (userData) => dispatch(actions.createVendor(userData)),
 		onErrorSet: (msg) =>
 			dispatch({ type: actionTypes.SET_ERRORS, payload: { message: msg } }),
+		onUpdateVendor: (userData, history) =>
+			dispatch(actions.updateVendor(userData, history)),
+		onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
 	};
 };
 

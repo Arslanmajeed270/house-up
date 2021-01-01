@@ -21,6 +21,9 @@ import ForgotPassCongrats from '../components/Popups/forgotPassCongrats';
 import SubscriptionPlan from '../components/Popups/subscriptionPlan';
 import CardSelection from '../components/Popups/cardSelection';
 import CardDetails from '../components/Popups/cardDetails';
+import PropertyPlanSelection from '../components/Popups/propertyPlanSelection';
+import ImagePreview from '../components/Popups/ImagePreview';
+import AlertPopup from '../components/Popups/alertPopup';
 
 class index extends Component {
 	constructor(props) {
@@ -41,13 +44,17 @@ class index extends Component {
 			vendorSignupModel: false,
 			congratulationModel: false,
 			phNumber: '',
+			imageToggle: false,
 			vendorCongrats: false,
 			subscriptionPlan: false,
 			cardSelection: false,
 			cardDetails: false,
 			animateHeader: false,
-			packageId: '',
+			imagePreview: false,
+			alertPopup: false,
 			message: '',
+			data: '',
+			propertyPlanSelection: false,
 		};
 	}
 
@@ -62,12 +69,18 @@ class index extends Component {
 		} else if (model === 'emailSignin') {
 			this.setState({ phoneSignin: false, [model]: !this.state[model] });
 		} else if (model === 'subscriptionPlan') {
-			this.setState({ [model]: !this.state[model] });
+			this.setState({ [model]: !this.state[model], message: data });
 		} else if (model === 'cardSelection') {
 			this.setState({
 				subscriptionPlan: false,
+				propertyPlanSelection: false,
 				[model]: !this.state[model],
-				packageId: data,
+				data: data,
+			});
+		} else if (model === 'propertyPlanSelection') {
+			this.setState({
+				[model]: !this.state[model],
+				message: data,
 			});
 		} else if (model === 'cardDetails') {
 			this.setState({ cardSelection: false, [model]: !this.state[model] });
@@ -105,9 +118,17 @@ class index extends Component {
 				[model]: !this.state[model],
 			});
 		} else if (model === 'userSignupModel') {
-			this.setState({ optUserModel: false, [model]: !this.state[model] });
+			this.setState({
+				optUserModel: false,
+				[model]: !this.state[model],
+				message: data,
+			});
 		} else if (model === 'vendorSignupModel') {
-			this.setState({ optUserModelVendor: false, [model]: !this.state[model] });
+			this.setState({
+				optUserModelVendor: false,
+				[model]: !this.state[model],
+				message: data,
+			});
 		} else if (model === 'congratulationModel') {
 			this.setState({
 				userSignupModel: false,
@@ -116,9 +137,18 @@ class index extends Component {
 				[model]: !this.state[model],
 				message: data,
 			});
+		} else if (model === 'alertPopup') {
+			this.setState({
+				[model]: !this.state[model],
+				message: data,
+			});
 		} else if (model === 'vendorCongrats') {
 			this.setState({
 				vendorSignupModel: false,
+				[model]: !this.state[model],
+			});
+		} else if (model === 'imageToggle') {
+			this.setState({
 				[model]: !this.state[model],
 			});
 		} else if (model === 'alreadyHaveAccount') {
@@ -165,11 +195,12 @@ class index extends Component {
 						show={this.state.subscriptionPlan}
 						modelHanlder={this.modelHanlder}
 						closeCodelHanlder={this.closeCodelHanlder}
+						message={this.state.message}
 					/>
 				)}
 				{this.state.cardSelection && (
 					<CardSelection
-						packageId={this.state.packageId}
+						data={this.state.data}
 						show={this.state.cardSelection}
 						closeCodelHanlder={this.closeCodelHanlder}
 						cardDetailsHandler={this.modelHanlder}
@@ -205,6 +236,14 @@ class index extends Component {
 						closeCodelHanlder={this.closeCodelHanlder}
 						phNumber={this.state.phNumber}
 						forgotPassHandler={this.modelHanlder}
+					/>
+				)}
+				{this.state.propertyPlanSelection && (
+					<PropertyPlanSelection
+						show={this.state.propertyPlanSelection}
+						modelHanlder={this.modelHanlder}
+						message={this.state.message}
+						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
 				{this.state.forgotPass && (
@@ -265,17 +304,21 @@ class index extends Component {
 				{this.state.userSignupModel && (
 					<UserSignup
 						show={this.state.userSignupModel}
+						history={this.props.history}
 						closeCodelHanlder={this.closeCodelHanlder}
 						congratulationHandler={this.modelHanlder}
 						phNumber={this.state.phNumber}
+						userData={this.state.message}
 					/>
 				)}
 				{this.state.vendorSignupModel && (
 					<VendorSignup
 						show={this.state.vendorSignupModel}
+						history={this.props.history}
 						closeCodelHanlder={this.closeCodelHanlder}
 						congratulationHandler={this.modelHanlder}
 						phNumber={this.state.phNumber}
+						userData={this.state.message}
 					/>
 				)}
 				{this.state.congratulationModel && (
@@ -291,12 +334,29 @@ class index extends Component {
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
+				{this.state.imageToggle && (
+					<ImagePreview
+						show={this.state.imageToggle}
+						closeCodelHanlder={this.closeCodelHanlder}
+					/>
+				)}
+				{this.state.alertPopup && (
+					<AlertPopup
+						show={this.state.alertPopup}
+						message={this.state.message}
+						closeCodelHanlder={this.closeCodelHanlder}
+					/>
+				)}
 				<Header
 					history={this.props.history}
 					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>
-				<Routes />
+				<Routes
+					modelHanlder={this.modelHanlder}
+					history={this.props.history}
+					closeCodelHanlder={this.closeCodelHanlder}
+				/>
 				{hideFooter === true ? ' ' : <Footer />}
 			</React.Fragment>
 		);

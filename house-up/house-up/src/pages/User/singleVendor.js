@@ -195,7 +195,7 @@ class singleVendor extends Component {
 						className='btn btn-primary mb-10'
 						onClick={() => this.props.modelHanlder('vendorSignupModel', user)}
 					>
-						edit Profile
+						Edit Profile
 					</button>
 				</div>
 			);
@@ -211,7 +211,7 @@ class singleVendor extends Component {
 						className='btn btn-primary mb-10'
 						onClick={() => this.props.modelHanlder('userSignupModel', user)}
 					>
-						edit Profile
+						Edit Profile
 					</button>
 				</div>
 			);

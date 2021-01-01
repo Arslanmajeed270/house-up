@@ -7,6 +7,7 @@ import {
 	SET_ERRORS,
 	PROPERTY_DROP_DWON,
 	GET_SINGLE_PROPERTY,
+	ADD_COMMENTS_PROP_USER,
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -64,12 +65,15 @@ export const dropDwonMenu = () => (dispatch) => {
 };
 
 //Add Property  - ADD property from front end
-export const addProperty = (userData, history) => (dispatch) => {
+export const addProperty = (userData, history, closeCodelHanlder) => (
+	dispatch
+) => {
 	dispatch(setPageLoading());
 	axios
 		.post(backendServerURL + '/AddProperty', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
+				closeCodelHanlder('cardSelection');
 				history.push(
 					`/index-${userData.country}&${userData.state}&${userData.city}`
 				);
@@ -86,6 +90,7 @@ export const addProperty = (userData, history) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
+			console.log(err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -126,6 +131,55 @@ export const getSingleProperty = (userData) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
+// add Comments to the post and property
+export const AddCommentsUserProp = (
+	data,
+	index,
+	userFullName,
+	userName,
+	profilePictureUrl,
+	date
+) => (dispatch) => {
+	axios
+		.post(backendServerURL + '/addComment', data)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				const payload = {
+					index: index,
+					category: data.category,
+					comment: data.commentText,
+					userFullName: userFullName,
+					userName: userName,
+					profilePictureUrl: profilePictureUrl,
+					createDateTime: date,
+				};
+				dispatch({
+					type: ADD_COMMENTS_PROP_USER,
+					payload: payload,
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			console.log(err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:

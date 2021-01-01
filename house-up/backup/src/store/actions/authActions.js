@@ -78,12 +78,12 @@ export const logoutUser = (history) => (dispatch) => {
 
 export const resetUserPassword = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-
 	axios
 		.post(backendServerURL + '/forgotPassword', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch(clearErrors());
+				dispatch({ type: SHOW_POP_UP });
 			} else {
 				dispatch({
 					type: SET_ERRORS,
@@ -141,6 +141,74 @@ export const createVendor = (userData) => (dispatch) => {
 				dispatch(clearErrors());
 			} else {
 				dispatch({ type: REGISTER_VENDOR_FAIL });
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
+// UpdateVendor - updateVendor from the web page
+export const updateVendor = (userData, history) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+		.post(backendServerURL + '/updateUser', userData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.removeItem('jwtToken');
+				setAuthToken(false);
+				dispatch({ type: SHOW_POP_UP });
+				dispatch(clearCurrentUser());
+				history.push(`/home`);
+				dispatch(clearErrors());
+			} else {
+				dispatch({ type: HIDE_POP_UP });
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
+// UpdateUser - updateUser from the web page
+export const updateUser = (userData, history) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+		.post(backendServerURL + '/updateUser', userData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				localStorage.removeItem('jwtToken');
+				setAuthToken(false);
+				dispatch(clearCurrentUser());
+				history.push(`/home`);
+				dispatch(clearErrors());
+			} else {
 				dispatch({
 					type: SET_ERRORS,
 					payload: {

@@ -335,7 +335,7 @@ class vendorSignup extends Component {
 			return;
 		} else if (!checkDate(businessStartDate)) {
 			this.props.onErrorSet(
-				'Please Enter Valid Date Date Must Be In The Past!'
+				'Please Enter Valid Date Must Be In The Past!'
 			);
 			return;
 		} else {
@@ -442,7 +442,7 @@ class vendorSignup extends Component {
 			return;
 		} else if (!checkDate(businessStartDate)) {
 			this.props.onErrorSet(
-				'Please Enter Valid Date Date Must Be In The Past!'
+				'Please Enter Valid Date Must Be In The Past!'
 			);
 			return;
 		} else {
@@ -658,7 +658,7 @@ class vendorSignup extends Component {
 													: ''
 											}`}
 											id='pxp-signin-email'
-											placeholder='Create UserName'
+											placeholder='Create Username'
 											name='userName'
 											value={userName}
 											disabled={this.props.userData ? true : false}

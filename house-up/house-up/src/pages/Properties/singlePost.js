@@ -37,22 +37,22 @@ class singlePost extends Component {
 										<div className='pxp-blog-post-share-label'>Share</div>
 										<ul className='list-unstyled mt-3'>
 											<li>
-												<Link to=''>
+												<Link to='#'>
 													<span className='fa fa-facebook' />
 												</Link>
 											</li>
 											<li>
-												<Link to=''>
+												<Link to='#'>
 													<span className='fa fa-twitter' />
 												</Link>
 											</li>
 											<li>
-												<Link to=''>
+												<Link to='#'>
 													<span className='fa fa-pinterest' />
 												</Link>
 											</li>
 											<li>
-												<Link to=''>
+												<Link to='#'>
 													<span className='fa fa-linkedin' />
 												</Link>
 											</li>
@@ -83,7 +83,7 @@ class singlePost extends Component {
 									</div>
 									<div className='pxp-blog-post-block pxp-full mt-4 mt-md-5'>
 										<Link
-											to=''
+											to='#'
 											className='pxp-blog-post-video pxp-cover'
 											style={{
 												backgroundImage: 'url(assets/images/hero-prop-12.jpg)',
@@ -176,7 +176,7 @@ class singlePost extends Component {
 							<h2 className='pxp-section-h2'>Related Articles</h2>
 							<div className='row mt-4 mt-md-5'>
 								<div className='col-sm-12 col-md-6 col-lg-4'>
-									<Link to='' className='pxp-posts-1-item'>
+									<Link to='#' className='pxp-posts-1-item'>
 										<div className='pxp-posts-1-item-fig-container'>
 											<div
 												className='pxp-posts-1-item-fig pxp-cover'
@@ -202,7 +202,7 @@ class singlePost extends Component {
 									</Link>
 								</div>
 								<div className='col-sm-12 col-md-6 col-lg-4'>
-									<Link to='' className='pxp-posts-1-item'>
+									<Link to='#' className='pxp-posts-1-item'>
 										<div className='pxp-posts-1-item-fig-container'>
 											<div
 												className='pxp-posts-1-item-fig pxp-cover'
@@ -228,7 +228,7 @@ class singlePost extends Component {
 									</Link>
 								</div>
 								<div className='col-sm-12 col-md-6 col-lg-4'>
-									<Link to='' className='pxp-posts-1-item'>
+									<Link to='#' className='pxp-posts-1-item'>
 										<div className='pxp-posts-1-item-fig-container'>
 											<div
 												className='pxp-posts-1-item-fig pxp-cover'
@@ -372,7 +372,7 @@ class singlePost extends Component {
 														defaultValue={''}
 													/>
 												</div>
-												<Link to='' className='pxp-blog-post-comments-form-btn'>
+												<Link to='#' className='pxp-blog-post-comments-form-btn'>
 													Post Comment
 												</Link>
 											</form>

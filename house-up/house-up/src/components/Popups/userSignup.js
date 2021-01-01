@@ -151,6 +151,7 @@ class userSignup extends Component {
 				firstName: firstName,
 				lastName: lastName,
 				phoneNumber: user && user.msisdn,
+				phoneNo: user && user.msisdn,
 				address: '',
 				currencyId: 1,
 				aboutYourSelf: '',
@@ -177,6 +178,7 @@ class userSignup extends Component {
 				businessSupportingDocument: '',
 				profileImage: profileImage === profileImageDefault ? '' : profileImage,
 				userTypeId: 1,
+				channel: 'web',
 			};
 			this.props.onUpdateUser(userData, this.props.history);
 		}
@@ -279,7 +281,7 @@ class userSignup extends Component {
 												: require('../../assets/images/ic_profile_placeholder.png')
 										}
 										alt=''
-										style={{ height: '98px', borderRadius: '50px' }}
+										style={{  borderRadius: '50px' }}
 									/>
 								</label>
 							</div>
@@ -312,7 +314,7 @@ class userSignup extends Component {
 									type='text'
 									className='form-control'
 									id={userName}
-									placeholder='Create UserName'
+									placeholder='Create Username'
 									name='userName'
 									value={userName}
 									onChange={this.onChange}

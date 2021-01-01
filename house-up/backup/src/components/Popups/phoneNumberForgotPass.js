@@ -4,6 +4,7 @@ import { Modal } from 'react-bootstrap';
 // importing actions
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
 
@@ -30,6 +31,10 @@ class phonenumberForgotPass extends Component {
     if (stateChanged) {
       return changedState;
     }
+  }
+
+  componentDidMount(){
+    this.props.onHideError()
   }
 
   onChange = (e) => {
@@ -67,13 +72,13 @@ class phonenumberForgotPass extends Component {
           closeButton
           onClick={() => this.props.closeCodelHanlder('phoneNoForgotPass')}
         ></Modal.Header>
-        <Modal.Body style={{ padding: '30px 15px 10px' }}>
+        <Modal.Body style={{ padding: '20px 15px 5px' }}>
           {errors && errors.message && (
             <Alert variant="danger">
               <strong>Error!</strong> {errors.message}
             </Alert>
           )}
-          <div className="logo-modal">
+          <div className="logo-modal img-large">
             <img
               src={require('../../assets/images/icons/ic_logo.svg')}
               alt=""
@@ -137,6 +142,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

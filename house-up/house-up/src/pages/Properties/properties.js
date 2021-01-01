@@ -1,16 +1,10 @@
 /* eslint-disable no-dupe-keys */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import GoogleMapReact from 'google-map-react';
-
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import Spinner from '../../components/common/Spinner';
 import MarkerInfoWindow from './gMap';
-
-
-
-const AnyReactComponent = () => <div className='map-pointer'></div>;
 
 class properties extends Component {
 	constructor(props) {
@@ -166,8 +160,6 @@ class properties extends Component {
 		// 	filterProperties = propertyCounts.map(item => item.properties);
 		// 	mapProperties = [].concat(...Object.values(filterProperties));
 		// }
-
-		let googpleMapApiKey = process.env.REACT_APP_GOOGLE_MAP_KEY;
 
 		let pageContent = '';
 
@@ -476,7 +468,7 @@ class properties extends Component {
 													</div>
 												)
 									  )
-									: []}
+									: ""}
 							</div>
 							{/* <ul className='pagination pxp-paginantion mt-2 mt-md-4'>
 								<li className='page-item active'>

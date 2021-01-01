@@ -89,8 +89,27 @@ body {
 }
 .subscription-card {
   background: #fff;
-  padding: 30px 10px;
+  padding: 20px 10px;
 }
+
+.infoWindowStyle:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  margin-left: -5px;
+  width: 9px;
+  height: 9px;
+  background: #fff;
+  border-right: 2px solid #333;
+  border-bottom: 2px solid #333;
+  -ms-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
 .card-selection {
   padding: 20px 10px;
 }
@@ -110,10 +129,27 @@ body {
 .user {
   font-family: "Regular", sans-serif;
   text-transform: uppercase;
-  font-size: 16px;
+  font-size: 16px !important;
   color: #000;
   padding: 8px 0 6px 0;
+  font-weight: bold;
 }
+
+.vendor-login-name {
+  color: #fff;
+  /* float: right;
+  margin-left: 5px !important;
+  margin-top: 10px; */
+  cursor: pointer;
+  display: block;
+  /* padding-right: 10px;
+  margin-top: -8px; */
+}
+
+.pxp-full .vendor-login-name {
+  color: #000;
+}
+
 .user-description {
   font-family: "Condensed", sans-serif;
   font-size: 14px;
@@ -200,6 +236,13 @@ body {
   text-align: -webkit-center;
 }
 
+.subscription-card .logo-modal {
+  text-align: left;
+}
+.subscription-card .logo-modal img {
+  width: auto;
+}
+
 .signin-popup {
   width: 400px !important;
 }
@@ -244,12 +287,17 @@ body {
   cursor: pointer;
   display: block;
   font-size: 14px;
-  /* font-weight: 500; */
+  /*font-weight: 500;
+  */
   outline: none;
   padding: 10px 10px 8px;
   position: relative;
   transition: all 0.3s;
   vertical-align: middle;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -ms-transition: all 0.3s;
+  -o-transition: all 0.3s;
 }
 .input-file .fa {
   text-align: right;
@@ -263,12 +311,20 @@ body {
   height: 100px;
   width: 100px;
   border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
 }
 
 .profile-pic-user {
   height: 100px;
   width: 100px;
   border-radius: 50px;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
 }
 
 .input-file input[type="file"] + label.btn-2:before,
@@ -281,6 +337,10 @@ body {
   position: absolute;
   top: 0px;
   transition: all 0.3s;
+  -webkit-transition: ;
+  -moz-transition: ;
+  -ms-transition: ;
+  -o-transition: ;
 }
 .logo-modal .image-upload-container {
   display: grid;
@@ -485,13 +545,23 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   vertical-align: sub;
   border-radius: 50px;
   max-width: 100%;
+  -webkit-border-radius: 50px;
+  -moz-border-radius: 50px;
+  -ms-border-radius: 50px;
+  -o-border-radius: 50px;
 }
 .fas {
   color: red;
 }
 .alice-carousel__stage-item {
   /* width: 309.833px !important; */
-  /* margin-right: 20px !important; */
+  margin-right: 20px !important;
+}
+
+.explore-our-neighbours .alice-carousel__stage-item,
+.newsfeed .alice-carousel__stage-item {
+  /* width: 309.833px !important; */
+  margin-right: 0px !important;
 }
 .pxp-prop-card-1-fig .pxp-cover {
   width: 280px !important;
@@ -529,12 +599,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .password-forgotPass {
   position: absolute;
   right: 25px;
-  bottom: 162px !important;
+  bottom: 156px !important;
 }
 .confirmPass-forgotPass {
   position: absolute;
   right: 25px;
-  bottom: 100px !important;
+  bottom: 94px !important;
 }
 .confirmPass-userSignup {
   position: absolute;
@@ -635,7 +705,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .container-fluid.pxp-props-carousel-right.mt-100 {
   padding-left: 0 !important;
-  margin-top: 61px !important;
+  margin-top: 30px !important;
 }
 
 .pxp-prop-card-1-details-title {
@@ -849,10 +919,10 @@ pxp-blog-post-block h2,
   bottom: 167px;
 }
 .country-code-forgotPass {
-  bottom: 173px;
+  bottom: 169px;
 }
 .country-code-forgot-page {
-  bottom: 130.75px;
+  bottom: 125.75px;
 }
 .pi-200 {
   padding-left: 200px !important;
@@ -952,4 +1022,14 @@ h1.titles-property {
   background-repeat: no-repeat;
   width: 100px;
   height: 100px;
+}
+.error-text {
+  font-size: 12px;
+  padding: 0px 10px;
+}
+.property-plan-div {
+  border: 1px solid #e5e5ea;
+  border-radius: 5px;
+  padding: 15px;
+  margin: 10px 0px;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ class singleVendor extends Component {
 			commentText: '',
 			user: {},
 			hideContact: true,
+			showPropertyPackage: false,
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
@@ -33,6 +35,22 @@ class singleVendor extends Component {
 			changedState.singleVendorData = vendor.singleVendorData;
 			stateChanged = true;
 		}
+		if (
+			vendor &&
+			JSON.stringify(state.singleVendorData) !==
+				JSON.stringify(vendor.singleVendorData)
+		) {
+			changedState.singleVendorData = vendor.singleVendorData;
+			stateChanged = true;
+			if (
+				changedState.singleVendorData &&
+				changedState.singleVendorData.vendorComments &&
+				changedState.singleVendorData.vendorComments.length
+			) {
+				changedState.comments = changedState.singleVendorData.vendorComments;
+			}
+		}
+
 		if (
 			vendor &&
 			JSON.stringify(state.singleVendorsPropertiesData) !==
@@ -54,27 +72,26 @@ class singleVendor extends Component {
 	}
 
 	componentDidMount() {
-		const id = this.props.match.params.id;
+		const uId = this.props.match.params.id;
 		this.setState({
-			id: id,
-		});
-
-		this.setState({
-			userId: this.state.user.userId ? this.state.user.userId : '',
+			id: uId,
 		});
 
 		let userData = {
-			userId: id,
+			userId: uId,
 		};
+		this.props.onGetSingleVendorsData(userData);
+
 		const data = {
 			offset: '0',
 			lat: '43.787083',
-			userId: id,
+			userId: uId,
 			channel: 'web',
 			lng: '-79.497369',
 			limit: '10',
+			showPropertyPackage:
+				Number(this.state.user.userId) !== Number(uId) ? false : true,
 		};
-		this.props.onGetSingleVendorsData(userData);
 		this.props.onGetSingleVendorsPropertiesData(data);
 	}
 
@@ -111,7 +128,7 @@ class singleVendor extends Component {
 	};
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, commentText, userId } = this.state;
+		const { id, commentText, userId, user } = this.state;
 
 		const data = {
 			postId: 0,
@@ -119,11 +136,42 @@ class singleVendor extends Component {
 			storyImageId: 0,
 			propertyId: 0,
 			commentText: commentText,
-			userId: userId,
+			userId: user.userId,
 			vendorId: Number(id),
+			phoneNo: user.msisdn,
+			channel: 'web',
 		};
-
-		this.props.onCommentAdded(data);
+		const indexValue = '';
+		const userFullName = `${user.firstName} ${user.lastName}`;
+		const userName = user.userName;
+		const profilePictureUrl = user.profilePictureUrl;
+		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
+		if (
+			user.userStatusDesc === 'Inactive' ||
+			user.userStatusDesc === 'Rejected' ||
+			user.userStatusDesc === 'In Review'
+		) {
+			this.props.modelHanlder(
+				'alertPopup',
+				`Your Account is been ${
+					user.userStatusDesc === 'Inactive'
+						? `${user.userStatusDesc} for 7 days`
+						: `${user.userStatusDesc}`
+				} due to ${user.rejectionReason}`
+			);
+		} else {
+			this.setState({
+				commentText: '',
+			});
+			this.props.onCommentAdded(
+				data,
+				indexValue,
+				userFullName,
+				userName,
+				profilePictureUrl,
+				date
+			);
+		}
 	};
 
 	render() {
@@ -132,7 +180,42 @@ class singleVendor extends Component {
 			singleVendorsPropertiesData,
 			commentText,
 			hideContact,
+			user,
 		} = this.state;
+		let editProfile = '';
+		if (
+			user &&
+			user.userTypeId &&
+			user.userTypeId === 2 &&
+			user.userId === singleVendorData.userId
+		) {
+			editProfile = (
+				<div>
+					<button
+						className='btn btn-primary mb-10'
+						onClick={() => this.props.modelHanlder('vendorSignupModel', user)}
+					>
+						edit Profile
+					</button>
+				</div>
+			);
+		} else if (
+			user &&
+			user.userTypeId &&
+			user.userTypeId !== 2 &&
+			user.userId === singleVendorData.userId
+		) {
+			editProfile = (
+				<div>
+					<button
+						className='btn btn-primary mb-10'
+						onClick={() => this.props.modelHanlder('userSignupModel', user)}
+					>
+						edit Profile
+					</button>
+				</div>
+			);
+		}
 
 		return (
 			<React.Fragment>
@@ -148,10 +231,18 @@ class singleVendor extends Component {
 									<div className='clearfix' />
 									{singleVendorData && singleVendorData.userTypeId === 2 ? (
 										<div>
-											<h5 style={{fontSize:'18px', padding:'10px 0px'}}>
+											<h5 style={{ fontSize: '18px', padding: '10px 0px' }}>
 												{singleVendorData && singleVendorData.businessName}
 											</h5>
-											<h5 style={{fontSize:'18px', padding:'0px 0px 15px', color:'#000'}}>{singleVendorData && singleVendorData.address}</h5>
+											<h5
+												style={{
+													fontSize: '18px',
+													padding: '0px 0px 15px',
+													color: '#000',
+												}}
+											>
+												{singleVendorData && singleVendorData.address}
+											</h5>
 										</div>
 									) : (
 										<div className='row'>
@@ -175,34 +266,65 @@ class singleVendor extends Component {
 													{singleVendorData && singleVendorData.emailAddress}
 												</p>
 											</div>
+											{singleVendorData &&
+											singleVendorData.userStatusDesc === 'Inactive' ? (
+												<div className='col-md-12'>
+													<p className='text-danger'>
+														Your Account is been Inactive for 7 days due to{' '}
+														{singleVendorData.rejectionReason}.
+													</p>
+												</div>
+											) : (
+												''
+											)}
 										</div>
 									)}
-
-									<div className=''>
-										<button
-											to='#pxp-work-with'
-											className='pxp-agent-contact-btn'
-											data-toggle='modal'
-											data-target='#pxp-work-with'
-											onClick={() =>
-												this.modelHanlder(
-													'contactModalState',
-													singleVendorData.userId
-												)
-											}
-										>
-											CONTACTS US{' '}
-										</button>
-										{this.state.contactModalState ? (
-											<Contact
-												show={this.state.contactModalState}
-												closeCodelHanlder={this.closeCodelHanlder}
-												vendorId={this.state.vendorId}
-											/>
-										) : null}
-									</div>
+									{user.userId !== singleVendorData.userId ? (
+										<div className=''>
+											<button
+												to='#pxp-work-with'
+												className='pxp-agent-contact-btn'
+												data-toggle='modal'
+												data-target='#pxp-work-with'
+												onClick={
+													user.userStatusDesc === 'Inactive' ||
+													user.userStatusDesc === 'Rejected' ||
+													user.userStatusDesc === 'In Review'
+														? () =>
+																this.props.modelHanlder(
+																	'alertPopup',
+																	`Your Account is been ${
+																		user.userStatusDesc === 'Inactive'
+																			? `${user.userStatusDesc} for 7 days`
+																			: `${user.userStatusDesc}`
+																	} due to ${user.rejectionReason}`
+																)
+														: user && user.profilePictureUrl
+														? () =>
+																this.modelHanlder(
+																	'contactModalState',
+																	singleVendorData.userId
+																)
+														: () => this.props.modelHanlder('phoneSignin')
+												}
+											>
+												CONTACT US{' '}
+											</button>
+											{this.state.contactModalState ? (
+												<Contact
+													show={this.state.contactModalState}
+													closeCodelHanlder={this.closeCodelHanlder}
+													vendorId={this.state.vendorId}
+												/>
+											) : null}
+										</div>
+									) : (
+										''
+									)}
 								</div>
+
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
+									{editProfile}
 									<div
 										className={
 											singleVendorData && singleVendorData.userTypeId === 1
@@ -260,7 +382,12 @@ class singleVendor extends Component {
 											</div>
 											<div className='col-6 detail-info'>
 												{hideContact ? (
-													<Link onClick={this.contactHandler}>
+													<Link
+														onClick={(e) => {
+															e.preventDefault();
+															this.contactHandler();
+														}}
+													>
 														click to show
 													</Link>
 												) : (
@@ -275,6 +402,26 @@ class singleVendor extends Component {
 													{singleVendorData && singleVendorData.userStatusDesc}
 												</p>
 											</div>
+											{singleVendorData &&
+											singleVendorData.packageSubscribed ? (
+												<>
+													<div className='col-md-6'>
+														<p>Package</p>
+													</div>
+													<div className='col-md-6'>
+														<p>
+															{singleVendorData &&
+																singleVendorData.packageSubscribed &&
+																singleVendorData.packageSubscribed
+																	.packageDetail &&
+																singleVendorData.packageSubscribed.packageDetail
+																	.packageName}
+														</p>
+													</div>
+												</>
+											) : (
+												''
+											)}
 										</div>
 									</div>
 								</div>
@@ -293,73 +440,74 @@ class singleVendor extends Component {
 							<div className='row mt-4 mt-md-5'>
 								{singleVendorsPropertiesData &&
 								singleVendorsPropertiesData.length
-									? singleVendorsPropertiesData.map((data, idx) =>
-											data && data.category === 'Property' ? (
-												<>
-													<div
-														key={idx}
-														className='col-sm-12 col-md-6 col-lg-4'
-													>
-														<Link
-															to={`/single-prop-${
-																data && data.object && data.object.propertId
-															}`}
-															className='pxp-prop-card-1 rounded-lg mb-4'
+									? singleVendorsPropertiesData.map(
+											(data, idx) =>
+												data &&
+												data.category === 'Property' &&
+												data.object.propertyStatusDesc === 'Approved' && (
+													<>
+														<div
+															key={idx}
+															className='col-sm-12 col-md-6 col-lg-4'
 														>
-															<div
-																className='pxp-prop-card-1-fig pxp-cover'
-																style={{
-																	backgroundImage: `url(${
-																		data &&
-																		data.object.imageList &&
-																		data &&
-																		data.object.imageList.length
-																			? data.object.imageList[0] &&
-																			  data.object.imageList[0].imageURL
-																			: ''
-																	})`,
-																}}
-															/>
-															<div className='pxp-prop-card-1-gradient pxp-animate' />
-															<div className='pxp-prop-card-1-details'>
-																<div className='pxp-prop-card-1-details-title'>
-																	{data && data.object && data.object.adTitle}
+															<Link
+																to={`/single-prop-${
+																	data && data.object && data.object.propertId
+																}`}
+																className='pxp-prop-card-1 rounded-lg mb-4'
+															>
+																<div
+																	className='pxp-prop-card-1-fig pxp-cover'
+																	style={{
+																		backgroundImage: `url(${
+																			data &&
+																			data.object.imageList &&
+																			data &&
+																			data.object.imageList.length
+																				? data.object.imageList[0] &&
+																				  data.object.imageList[0].imageURL
+																				: ''
+																		})`,
+																	}}
+																/>
+																<div className='pxp-prop-card-1-gradient pxp-animate' />
+																<div className='pxp-prop-card-1-details'>
+																	<div className='pxp-prop-card-1-details-title'>
+																		{data && data.object && data.object.adTitle}
+																	</div>
+																	<div className='pxp-prop-card-1-details-price'>
+																		{' '}
+																		{data &&
+																			data.object &&
+																			data.object.currency &&
+																			data.object.currency.symbol}{' '}
+																		{data &&
+																			data.object &&
+																			data.object.price &&
+																			data.object.price.toLocaleString()}
+																	</div>
+																	<div className='pxp-prop-card-1-details-features text-uppercase'>
+																		{data &&
+																			data.object &&
+																			data.object.noOfBedrooms}{' '}
+																		BD <span>|</span>{' '}
+																		{data &&
+																			data.object &&
+																			data.object.noOfBathroomsValue}{' '}
+																		BA <span>|</span>{' '}
+																		{data &&
+																			data.object &&
+																			data.object.finishedSqftArea}{' '}
+																		SF
+																	</div>
 																</div>
-																<div className='pxp-prop-card-1-details-price'>
-																	{' '}
-																	{data &&
-																		data.object &&
-																		data.object.currency &&
-																		data.object.currency.symbol}{' '}
-																	{data &&
-																		data.object &&
-																		data.object.price &&
-																		data.object.price.toLocaleString()}
+																<div className='pxp-prop-card-1-details-cta text-uppercase'>
+																	View Details
 																</div>
-																<div className='pxp-prop-card-1-details-features text-uppercase'>
-																	{data &&
-																		data.object &&
-																		data.object.noOfBedrooms}{' '}
-																	BD <span>|</span>{' '}
-																	{data &&
-																		data.object &&
-																		data.object.noOfBathroomsValue}{' '}
-																	BA <span>|</span>{' '}
-																	{data &&
-																		data.object &&
-																		data.object.finishedSqftArea}{' '}
-																	SF
-																</div>
-															</div>
-															<div className='pxp-prop-card-1-details-cta text-uppercase'>
-																View Details
-															</div>
-														</Link>
-													</div>
-												</>
-											) : (
-												''
-											)
+															</Link>
+														</div>
+													</>
+												)
 									  )
 									: ''}
 							</div>
@@ -409,32 +557,37 @@ class singleVendor extends Component {
 														</div>
 												  ))
 												: ''}
-											<form
-												action='/single-vendor'
-												className='pxp-agent-comments-form mt-3 mt-md-4'
-											>
-												<div className='row'>
-													<div className='col-sm-12 col-md-6'></div>
-												</div>
-												<div className='form-group comment-send-btn'>
-													<input
-														className='form-control'
-														placeholder='Write your review here...'
-														name='commentText'
-														value={commentText}
-														onChange={this.onChange}
-													/>
-													<span
-														className='send-btn-single-property'
-														onClick={this.onSubmit}
-													>
-														<img
-															src={require('../../assets/images/ic_sent.svg')}
-															alt=''
+											{user && user.profilePictureUrl ? (
+												<form
+													action='/single-vendor'
+													className='pxp-agent-comments-form mt-3 mt-md-4'
+													onSubmit={this.onSubmit}
+												>
+													<div className='row'>
+														<div className='col-sm-12 col-md-6'></div>
+													</div>
+													<div className='form-group comment-send-btn'>
+														<input
+															className='form-control'
+															placeholder='Write your review here...'
+															name='commentText'
+															value={commentText}
+															onChange={this.onChange}
 														/>
-													</span>
-												</div>
-											</form>
+														<span
+															className='send-btn-single-property'
+															onClick={this.onSubmit}
+														>
+															<img
+																src={require('../../assets/images/ic_sent.svg')}
+																alt=''
+															/>
+														</span>
+													</div>
+												</form>
+											) : (
+												''
+											)}
 										</div>
 									</div>
 								</div>
@@ -456,7 +609,24 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onCommentAdded: (data) => dispatch(actions.AddComments(data)),
+		onCommentAdded: (
+			data,
+			index,
+			userFullName,
+			userName,
+			profilePictureUrl,
+			date
+		) =>
+			dispatch(
+				actions.AddCommentsUserProp(
+					data,
+					index,
+					userFullName,
+					userName,
+					profilePictureUrl,
+					date
+				)
+			),
 		onGetSingleVendorsData: (userData) =>
 			dispatch(actions.getSingleVendorData(userData)),
 		onGetSingleVendorsPropertiesData: (data) =>

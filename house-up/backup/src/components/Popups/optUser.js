@@ -72,6 +72,10 @@ class OptUser extends Component {
     }
   };
 
+  componentDidMount(){
+    this.props.onHideError()
+  }
+
   resendPin = (num) => {
     const data = {
       msisdn: num,
@@ -102,7 +106,7 @@ class OptUser extends Component {
         dialogClassName="modal-width"
         onHide={() => this.props.closeCodelHanlder('optUserModel')}
       >
-        <Modal.Body style={{ padding: '30px 0px 10px' }}>
+        <Modal.Body style={{ padding: '20px 0px 5px' }}>
           <div className="form-group">
             {errors && errors.message && (
               <Alert variant="danger">
@@ -111,13 +115,13 @@ class OptUser extends Component {
             )}
             <div
               className="text-center"
-              style={{ fontSize: '22px', fontWeight: '500', color: '#000' }}
+              style={{ fontSize: '22px', lineHeight:'22px', fontWeight: '500', color: '#000' }}
             >
               We sent you a code to{' '}
             </div>
             <div
               className="text-center"
-              style={{ fontSize: '22px', fontWeight: '500', color: '#000' }}
+              style={{ fontSize: '22px', lineHeight:'22px', fontWeight: '500', color: '#000' }}
             >
               verify your phone number
             </div>
@@ -179,6 +183,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: actionTypes.OTP_AUTHENTICATE_FAIL }),
     onVerifyPin: (data) => dispatch(actions.verifyPin(data)),
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 

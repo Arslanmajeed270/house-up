@@ -35,9 +35,6 @@ class selectLocation extends Component {
 		) {
 			changedState.countries = page.countries;
 			stateChanged = true;
-			let states = [];
-			states = cloneDeep(changedState.countries[0]);
-			changedState.states = states.states;
 		}
 
 		if (
@@ -93,7 +90,7 @@ class selectLocation extends Component {
 			}
 			this.setState({
 				[e.target.name]: e.target.value,
-				states: states.states,
+				states: states && states.states,
 			});
 		} else if (e.target.name === 'state') {
 			let ind = 0;
@@ -106,7 +103,7 @@ class selectLocation extends Component {
 			}
 			this.setState({
 				[e.target.name]: e.target.value,
-				cities: cities.cities,
+				cities: cities && cities.cities,
 			});
 		} else {
 			this.setState({ [e.target.name]: e.target.value });
@@ -131,16 +128,7 @@ class selectLocation extends Component {
 	};
 
 	render() {
-		const {
-			states,
-			cities,
-			city,
-			state,
-			countries,
-			country,
-		} = this.state;
-
-
+		const { states, cities, city, state, countries, country } = this.state;
 		return (
 			<React.Fragment>
 				<div className='pxp-hero vh-100'>

@@ -358,18 +358,19 @@ class header extends Component {
 									>
 										{/* <span className="far fa-user" /> */}
 										<img
-											style={{ cursor: 'pointer', paddingRight: '22px' }}
+											style={{ cursor: 'pointer', paddingRight: '34px' }}
 											src={require('../assets/images/ic_profile.svg')}
 											alt=''
 										/>
 										<div
 											className='vendor-login-name'
 											to='#'
-											onClick={() => {
-												this.props.modelHanlder('phoneSignin');
-											}}
 										>
-											Login | Register
+											<span onClick={() => {
+												this.props.modelHanlder('phoneSignin');
+											}}>Login</span> | <span onClick={() => {
+												this.props.modelHanlder('signupSelectionModel');
+											}}>Register</span>
 										</div>
 									</div>
 								)}

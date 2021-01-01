@@ -64,9 +64,19 @@ class form2 extends Component {
 	}
 
 	onChange = (e) => {
-		this.setState({
-			[e.target.name]: e.target.value,
-		});
+		if(e.target.name === 'price'){
+			if(e.target.value > 0){
+				this.setState({
+					[e.target.name]: e.target.value,
+				});	
+			}
+		}
+		else{
+			this.setState({
+				[e.target.name]: e.target.value,
+			});
+		}
+		
 	};
 
 	dropDownDatahandler = (currencyData) => {
