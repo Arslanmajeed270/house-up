@@ -22,14 +22,14 @@ class sharePopup extends Component {
 			>
 			<Popover id="popover-contained" >
 				<Popover.Title as="h3">Popover bottom</Popover.Title>
-					<Popover.Content>
-						<i className="fab fa-facebook-square" style={{fontSize:'40px'}}></i>
-						<i className="fab fa-twitter-square" style={{fontSize:'40px'}}></i>
-						<i className="fab fa-linkedin" style={{fontSize:'40px'}}></i>
-						<i className="fab fa-whatsapp" aria-hidden="true" style={{fontSize:'40px'}}></i>
-						<i className="fa fa-envelope" style={{fontSize:'40px'}}></i>
-						<i className="fab fa-telegram" aria-hidden="true" style={{fontSize:'40px'}}></i>
-						<i className="fab fa-instagram" aria-hidden="true" style={{fontSize:'40px'}}></i>
+					<Popover.Content style={{width:'400px'}}>
+						<i className="fab fa-facebook-square" style={{fontSize:'40px', marginRight:'10px !important'}}></i>
+						<i className="fab fa-twitter-square" style={{fontSize:'40px', marginRight:'10px'}}></i>
+						<i className="fab fa-linkedin" style={{fontSize:'40px', marginRight:'10px'}}></i>
+						<i className="fab fa-whatsapp" aria-hidden="true" style={{fontSize:'40px', marginRight:'10px'}}></i>
+						<i className="fa fa-envelope" style={{fontSize:'40px', marginRight:'10px'}}></i>
+						<i className="fab fa-telegram" aria-hidden="true" style={{fontSize:'40px', marginRight:'10px'}}></i>
+						<i className="fab fa-instagram" aria-hidden="true" style={{fontSize:'40px', marginRight:'10px'}}></i>
 					</Popover.Content>
 				</Popover>
 			</Overlay>
