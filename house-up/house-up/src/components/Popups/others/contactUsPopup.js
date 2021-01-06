@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 
-import { checkDateFuture } from '../../utils/regex';
+import { checkDateFuture } from '../../../utils/regex';
 
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actionTypes from '../../../store/actions/actionTypes';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
-import * as actions from '../../store/actions/pageActions';
+import * as actions from '../../../store/actions/pageActions';
 
 class contacUsPopup extends Component {
 	constructor(props) {

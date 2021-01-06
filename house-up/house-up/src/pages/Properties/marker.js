@@ -1,7 +1,5 @@
 
 import React, { useState, useRef } from "react";
-import useSwr from "swr";
-import GoogleMapReact from "google-map-react";
 import useSupercluster from "use-supercluster";
 import "./App.css";
 import { Link } from 'react-router-dom';

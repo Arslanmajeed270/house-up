@@ -26,7 +26,7 @@ class Routes extends React.Component {
 				<Route
 					exact
 					path={'/'}
-					component={() => <Home modelHanlder={this.props.modelHanlder} />}
+					component={() => <Home history={this.props.history}  modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route
 					exact
@@ -42,7 +42,7 @@ class Routes extends React.Component {
 				<Route
 					exact
 					path={'/home'}
-					component={() => <Home modelHanlder={this.props.modelHanlder} />}
+					component={() => <Home history={this.props.history} modelHanlder={this.props.modelHanlder} />}
 				/>
 				<Route exact path={'/about'} component={About} />
 				<Route

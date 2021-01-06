@@ -1,30 +1,51 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../../../store/actions/index';
+import * as actionTypes from '../../../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
+import Spinner from '../../../../components/common/Spinner';
 
-class phonenumberForgotPass extends Component {
+class phoneNumber extends Component {
   constructor(props) {
     super(props);
     this.state = {
       errors: {},
+      loading: false,
       number: '',
+      showPopUp: false,
     };
   }
 
   static getDerivedStateFromProps(props, state) {
     let errors = props.errors;
+    let page = props.page;
 
     let stateChanged = false;
     let changedState = {};
+    if (JSON.stringify(state.showPopUp) !== JSON.stringify(page.showPopUp)) {
+      changedState.showPopUp = page.showPopUp;
+      if (changedState.showPopUp) {
+        props.onHidePopUp();
+        props.optUserHandler('optUserModel');
+      }
+      stateChanged = true;
+    }
 
     if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
       changedState.errors = errors;
+      stateChanged = true;
+    }
+
+    if (
+      page &&
+      JSON.stringify(state.loading) !== JSON.stringify(page.loading)
+    ) {
+      changedState.loading = page.loading;
       stateChanged = true;
     }
 
@@ -32,11 +53,6 @@ class phonenumberForgotPass extends Component {
       return changedState;
     }
   }
-
-  componentDidMount(){
-    this.props.onHideError()
-  }
-
   onChange = (e) => {
     if (e.target.value >= 0) {
       this.setState({
@@ -45,19 +61,31 @@ class phonenumberForgotPass extends Component {
     }
   };
 
-  onSubmit = () => {
+  componentDidMount(){
+    this.props.onHideError()
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
     let number = '+' + 1 + this.state.number;
     this.props.phoneNumberHandler(number);
     let data = {
       msisdn: number,
-      action: 'forget',
+      channel: 'HouseUp',
       type: 'LOGIN_PIN_SMS',
     };
     this.props.onGeneratePin(data);
-    this.props.optForgotPassHandler('optForgotPass');
   };
   render() {
-    const { errors } = this.state;
+    const { errors, loading } = this.state;
+
+    let pageContent = '';
+
+    if (loading) {
+      pageContent = <Spinner />;
+    } else {
+      pageContent = '';
+    }
 
     return (
       <Modal
@@ -66,13 +94,13 @@ class phonenumberForgotPass extends Component {
         centered
         // size="sm"
         dialogClassName="modal-width"
-        onHide={() => this.props.closeCodelHanlder('phoneNoForgotPass')}
+        onHide={() => this.props.closeCodelHanlder('phoneNumberModel')}
       >
         <Modal.Header
           closeButton
-          onClick={() => this.props.closeCodelHanlder('phoneNoForgotPass')}
+          onClick={() => this.props.closeCodelHanlder('phoneNumberModel')}
         ></Modal.Header>
-        <Modal.Body style={{ padding: '20px 15px 5px' }}>
+        <Modal.Body style={{ paddingTop: '20px' }}>
           {errors && errors.message && (
             <Alert variant="danger">
               <strong>Error!</strong> {errors.message}
@@ -80,8 +108,9 @@ class phonenumberForgotPass extends Component {
           )}
           <div className="logo-modal img-large">
             <img
-              src={require('../../assets/images/icons/ic_logo.svg')}
+              src={require('../../../../assets/images/icons/ic_logo.svg')}
               alt=""
+              className="logo-signupModal"
               style={{ marginBottom: '20px' }}
             />
           </div>
@@ -100,33 +129,34 @@ class phonenumberForgotPass extends Component {
                 maxLength="10"
                 required
               />
-              <span className="country-code-forgotPass">
+              <span className="country-code">
                 <img
                   src="assets/images/053-canada.svg"
                   alt=""
-                  style={{ marginLeft: '-23px', marginBottom: '-82px' }}
+                  style={{ marginLeft: '-23px', marginBottom: '-68px' }}
                 />
               </span>
-              <span className="country-code-forgot-page"> +1</span>
+              <span className="country-code-user-page"> +1</span>
             </div>
             <div className="form-group">
               <button className="pxp-agent-contact-modal-btn" type="submit">
-                Next
+                NEXT
               </button>
-            </div>
-            <div
-              className="text-center pxp-modal-small"
-              style={{ marginBottom: '10px' }}
-            >
-              <a
-                className="pxp-modal-link pxp-signup-trigger"
-                href="/home"
-                style={{ fontWeight: 'bold' }}
-              >
-                Create an account
-              </a>
+              <div style={{ textAlign: 'center', paddingTop: '10px' }}>
+                <Link
+                  to="#"
+                  className="pxp-modal-link pxp-signup-trigger text-center"
+                  style={{ fontWeight: 'bold' }}
+                  onClick={() =>
+                    this.props.alreadyHaveAccountHandler('alreadyHaveAccount')
+                  }
+                >
+                  Already have an account
+                </Link>
+              </div>
             </div>
           </form>
+          {pageContent}
         </Modal.Body>
       </Modal>
     );
@@ -135,6 +165,7 @@ class phonenumberForgotPass extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    page: state.page,
     errors: state.errors,
   };
 };
@@ -142,11 +173,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onGeneratePin: (data) => dispatch(actions.generatePin(data)),
+    onHidePopUp: () => dispatch({ type: actionTypes.HIDE_POP_UP }),
     onHideError: () => dispatch({ type: actionTypes.CLEAR_ERRORS }),
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(phonenumberForgotPass);
+export default connect(mapStateToProps, mapDispatchToProps)(phoneNumber);

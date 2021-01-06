@@ -3109,7 +3109,9 @@ img.search {
 }
 
 .neighbours-height {
-	height: 150px !important;
+	height: 80px !important;
+	cursor: pointer;
+	top: 70px;
 }
 
 .neighbours-height h2 {

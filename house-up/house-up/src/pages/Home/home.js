@@ -1,180 +1,66 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Carousel } from 'react-bootstrap';
-import AliceCarousel from 'react-alice-carousel';
-
-import 'react-alice-carousel/lib/alice-carousel.css';
-
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 
 import Spinner from '../../components/common/Spinner';
+import ProfessionalRender from './components/professionalRender'
+import Carousel from './components/carousel'
+import NeighborhoodRender from './components/neighborhoodRender';
+
 class home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			homePageData: {},
 			loading: false,
+			errors: {},
+			homePageData: {},
 			user: {},
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
-		let page = props.page;
-		const auth = props.auth;
-
+		const {page, errors, auth } = props;
 		let stateChanged = false;
 		let changedState = {};
 
-		if (
-			auth &&
-			auth.user &&
-			JSON.stringify(state.user) !== JSON.stringify(auth.user)
-		) {
+		if (auth && auth.user && JSON.stringify(state.user) !== JSON.stringify(auth.user)) 
+		{
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
 
-		if (
-			page &&
-			JSON.stringify(state.loading) !== JSON.stringify(page.loading)
-		) {
-			changedState.loading = page.loading;
-			stateChanged = true;
-		}
-		if (
-			page &&
+		if ( page && 
 			JSON.stringify(state.homePageData) !== JSON.stringify(page.homePageData)
-		) {
+			) {
 			changedState.homePageData = page.homePageData;
 			stateChanged = true;
 		}
 
-		if (stateChanged) {
-			return changedState;
+		if ( page && JSON.stringify(state.loading) !== JSON.stringify(page.loading) ) {
+			changedState.loading = page.loading;
+			stateChanged = true;
 		}
+		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
+			changedState.errors = errors;
+			stateChanged = true;
+		  }
+
+		if (stateChanged) return changedState;
 		return null;
 	}
 
 	componentDidMount() {
-		if (!this.state.homePageData || !this.state.homePageData.properties) {
+		if (!this.state.homePageData || !this.state.homePageData.properties)
 			this.props.onGetHomePageData();
-		}
 	}
 
-	ProfessionalRenderer = (HomeData) => {
-		let professionalRender = [];
-		if (HomeData && HomeData.vendors) {
-			HomeData.vendors.map((data, index) => {
-				if (
-					(data && data.userStatusDesc === 'Active') ||
-					(data.userStatusDesc === 'Approved' && professionalRender.length < 4)
-				) {
-					professionalRender.push(
-						<div key={index} className='col-sm-12 col-md-6 col-lg-3'>
-							<Link
-								to={`/single-vendor-${data && data.userId && data.userId}`}
-								className='pxp-agents-1-item'
-							>
-								<div className='pxp-agents-1-item-fig-container rounded-lg'>
-									<div
-										className='pxp-agents-1-item-fig pxp-cover'
-										style={{
-											backgroundImage: `url(${
-												data.profilePictureUrl
-													? data.profilePictureUrl
-													: 'assets/images/agent-2.jpg'
-											})`,
-										}}
-									/>
-								</div>
-								<div className='pxp-agents-1-item-details rounded-lg'>
-									<div className='pxp-agents-1-item-details-name'>
-										{data.firstName} {data.lastName}
-									</div>
-									<div className='pxp-agents-1-item-details-email'>
-										{' '}
-										{data.professionDesc}
-									</div>
-									<div className='pxp-agents-1-item-details-spacer' />
-									<div className='pxp-agents-1-item-cta text-uppercase'>
-										More Details
-									</div>
-								</div>
-							</Link>
-						</div>
-					);
-				}
-				return data;
-			});
-		}
-		return professionalRender;
-	};
-
 	render() {
-		const { homePageData, loading, user } = this.state;
+		const { homePageData, loading } = this.state;
 		let pageContent = '';
-		if (loading) {
+		if (loading)
 			pageContent = <Spinner />;
-		} else {
-			pageContent = '';
-		}
-		const items = [];
-		if (
-			homePageData &&
-			homePageData.properties &&
-			homePageData.properties.length
-		) {
-			for (let i = 0; i < homePageData.properties.length; i++) {
-				if (
-					homePageData &&
-					homePageData.properties[i].propertyStatusDesc === 'Approved'
-				) {
-					let item = (
-						<div>
-							<Link
-								to={`/single-prop-${homePageData.properties[i].propertId}`}
-								className='pxp-prop-card-1 rounded-lg'
-							>
-								<div
-									className='pxp-prop-card-1-fig pxp-cover'
-									style={{
-										backgroundImage: `url(${
-											homePageData.properties[i] &&
-											homePageData.properties[i].imageList &&
-											homePageData.properties[i].imageList[0] &&
-											homePageData.properties[i].imageList[0].imageURL
-												? homePageData.properties[i].imageList[0].imageURL
-												: require('../../assets/images/dashboard/ottawa.png')
-										})`,
-									}}
-								/>
-								<div className='pxp-prop-card-1-gradient pxp-animate' />
-								<div className='pxp-prop-card-1-details'>
-									<div className='pxp-prop-card-1-details-titles'>
-										{homePageData.properties[i].adTitle}
-									</div>
-									<div className='pxp-prop-card-1-details-price'>
-										{homePageData.properties[i].currency.symbol}
-										{homePageData.properties[i].price.toLocaleString()}
-									</div>
-									<div className='pxp-prop-card-1-details-features text-uppercase'>
-										{homePageData.properties[i].noOfBedrooms} BD <span>|</span>{' '}
-										{homePageData.properties[i].noOfBathrooms} BA <span>|</span>{' '}
-										{homePageData.properties[i].finishedSqftArea} SF
-									</div>
-								</div>
-								<div className='pxp-prop-card-1-details-cta text-uppercase'>
-									View Details
-								</div>
-							</Link>
-						</div>
-					);
-					items.push(item);
-				}
-			}
-		}
-		return (
-			<React.Fragment>
+		else {
+			pageContent = (<React.Fragment>
 				<div className='pxp-content'>
 					<div className='pxp-hero vh-100'>
 						<div
@@ -222,20 +108,16 @@ class home extends Component {
 						<p className='pxp-text-light'>Browse our latest hot offers</p>
 						<div className='container-fluid pxp-props-carousel-right mt-60'>
 							<div className='pxp-props-carousel-right-container mt-4 mt-md-5'>
-								<div className='owl-carousel pxp-props-carousel-right-stage'>
-									<AliceCarousel
-										mouseTracking
-										responsive={responsive}
-										items={items}
-										disableDotsControls={true}
-									/>
-									<Link
+								<Carousel 
+								homePageData={homePageData} 
+								history={this.props.history} 
+								/>
+								<Link
 										to='/properties'
 										className='pxp-primary-cta text-uppercase mt-4 mt-md-5 pxp-animate'
 									>
 										Browse All
 									</Link>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -332,50 +214,7 @@ class home extends Component {
 						<p className='pxp-text-light'>
 							Browse listings curated by neighborhoods
 						</p>
-						<div className='row mt-4 mt-md-5'>
-							{homePageData &&
-								homePageData.propertyCounts &&
-								homePageData.propertyCounts.length &&
-								homePageData.propertyCounts.map(
-									(data, index) =>
-										index < 6 && (
-											<div key={index} className='col-sm-12 col-md-6 col-lg-4'>
-												<Link
-													to='/properties'
-													className='pxp-areas-1-item rounded-lg'
-												>
-													<div
-														className='pxp-areas-1-item-fig pxp-cover'
-														style={{
-															backgroundImage: `url(${
-																data &&
-																data.properties &&
-																data.properties[0].imageList &&
-																data.properties[0].imageList[0].imageURL
-																	? data.properties[0].imageList[0].imageURL
-																	: 'assets/images/area-2.jpg'
-															})`,
-														}}
-													/>
-													<div className='pxp-areas-1-item-details'>
-														<div className='pxp-areas-1-item-details-area'>
-															{data && data.cityName}
-														</div>
-														<div className='pxp-areas-1-item-details-area'>
-															<span>
-																{data && data.propertyCount} Properties
-															</span>
-														</div>
-														<div className='pxp-areas-1-item-details-city'></div>
-													</div>
-													<div className='pxp-areas-1-item-cta text-uppercase'>
-														Explore
-													</div>
-												</Link>
-											</div>
-										)
-								)}
-						</div>
+						<NeighborhoodRender homePageData={homePageData} />
 						<Link
 							to='/properties'
 							className='pxp-primary-cta text-uppercase mt-2 mt-md-4 pxp-animate'
@@ -418,7 +257,7 @@ class home extends Component {
 							Search for qualified professionals in your area
 						</p>
 						<div className='row mt-4 mt-md-5'>
-							{this.ProfessionalRenderer(homePageData).map((data) => data)}
+							<ProfessionalRender homePageData={homePageData} />
 							<div className='col-lg-12'>
 								<Link
 									to='/professionals'
@@ -485,17 +324,12 @@ class home extends Component {
 						</div>
 					</div>
 				</div>
-				{pageContent}
 			</React.Fragment>
 		);
+		}		
+		return pageContent;
 	}
 }
-
-const responsive = {
-	0: { items: 1 },
-	568: { items: 2 },
-	1024: { items: 4.7 },
-};
 
 const mapStateToProps = (state) => {
 	return {

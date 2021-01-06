@@ -83,8 +83,8 @@ class propertyPlanSubscription extends Component {
 										<div className='col-md-2'>
 											<img
 												src={require(feeId === data.propertyPostingFeeId
-													? '../../assets/images/ic_check_sel.svg'
-													: '../../assets/images/ic_check.svg')}
+													? '../../../assets/images/ic_check_sel.svg'
+													: '../../../assets/images/ic_check.svg')}
 												alt=''
 											/>
 										</div>
@@ -100,8 +100,8 @@ class propertyPlanSubscription extends Component {
 							>
 								<img
 									src={require(this.state.autoRenew
-										? '../../assets/images/ic_allow_sel.svg'
-										: '../../assets/images/ic_allow.svg')}
+										? '../../../assets/images/ic_allow_sel.svg'
+										: '../../../assets/images/ic_allow.svg')}
 									alt=''
 								/>
 							</div>

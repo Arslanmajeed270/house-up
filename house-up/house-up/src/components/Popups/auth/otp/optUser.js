@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
-import * as actions from '../../store/actions/index';
+import * as actionTypes from '../../../../store/actions/actionTypes';
+import * as actions from '../../../../store/actions/index';
 
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../../components/common/Spinner';
 
 class OptUser extends Component {
   constructor(props) {

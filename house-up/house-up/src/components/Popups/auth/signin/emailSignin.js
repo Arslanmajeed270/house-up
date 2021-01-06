@@ -3,10 +3,10 @@ import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/authActions';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../../../store/actions/authActions';
+import * as actionTypes from '../../../../store/actions/actionTypes';
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../../components/common/Spinner';
 import cloneDeep from 'lodash/cloneDeep';
 
 class emailSignin extends Component {
@@ -165,7 +165,7 @@ class emailSignin extends Component {
 									onClick={this.viewPassword}
 								>
 									<img
-										src={require('../../assets/images/icons/ic_view_password.png')}
+										src={require('../../../../assets/images/icons/ic_view_password.png')}
 										alt=''
 									/>
 								</span>

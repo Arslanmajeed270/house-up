@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../../../store/actions/index';
+import * as actionTypes from '../../../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../../components/common/Spinner';
 
 class phoneNumberVendor extends Component {
 	constructor(props) {
@@ -100,7 +100,7 @@ class phoneNumberVendor extends Component {
 					)}
 					<div className='logo-modal img-large'>
 						<img
-							src={require('../../assets/images/icons/ic_logo.svg')}
+							src={require('../../../../assets/images/icons/ic_logo.svg')}
 							alt=''
 							className='logo-signupModal'
 							style={{ marginBottom: '20px' }}

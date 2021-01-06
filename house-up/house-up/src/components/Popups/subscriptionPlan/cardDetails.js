@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../../store/actions/index';
+import * as actionTypes from '../../../store/actions/actionTypes';
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../components/common/Spinner';
 var jwt = require('jsonwebtoken');
 
 class AddCard extends Component {
@@ -70,7 +70,6 @@ class AddCard extends Component {
 	}
 
 	onChange = (e) => {
-		const { expiryDate } = this.state;
 		let targetName = e.target.name;
 		let targetValue = e.target.value;
 		if (targetName === 'expiryDate') {

@@ -4,11 +4,11 @@ import fileUpload from 'fuctbase64';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/authActions';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../../../store/actions/authActions';
+import * as actionTypes from '../../../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../../components/common/Spinner';
 
 class userSignup extends Component {
 	constructor(props) {
@@ -278,7 +278,7 @@ class userSignup extends Component {
 												? imagePreview
 												: this.props.userData
 												? this.state.profileImage
-												: require('../../assets/images/ic_profile_placeholder.png')
+												: require('../../../../assets/images/ic_profile_placeholder.png')
 										}
 										alt=''
 										style={{  borderRadius: '50px' }}
@@ -348,7 +348,7 @@ class userSignup extends Component {
 								/>
 								<span className='pass-userSignup' onClick={this.viewPassword}>
 									<img
-										src={require('../../assets/images/icons/ic_view_password.png')}
+										src={require('../../../../assets/images/icons/ic_view_password.png')}
 										alt=''
 									/>
 								</span>
@@ -371,7 +371,7 @@ class userSignup extends Component {
 									onClick={this.viewConfirmPassword}
 								>
 									<img
-										src={require('../../assets/images/icons/ic_view_password.png')}
+										src={require('../../../../assets/images/icons/ic_view_password.png')}
 										alt=''
 									/>
 								</span>

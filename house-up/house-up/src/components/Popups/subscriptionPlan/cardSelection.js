@@ -3,9 +3,9 @@ import { Modal } from 'react-bootstrap';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
-import * as actions from '../../store/actions/index';
-import Spinner from '../common/Spinner';
+import * as actionTypes from '../../../store/actions/actionTypes';
+import * as actions from '../../../store/actions/index';
+import Spinner from '../../common/Spinner';
 
 class cardSelection extends Component {
 	constructor(props) {
@@ -142,8 +142,8 @@ class cardSelection extends Component {
 															<img
 																src={
 																	data.brand === 'Visa'
-																		? require('../../assets/images/ic_visa.svg')
-																		: require('../../assets/images/ic_visa_master_card.svg')
+																		? require('../../../assets/images/ic_visa.svg')
+																		: require('../../../assets/images/ic_visa_master_card.svg')
 																}
 																alt=''
 																style={{
@@ -169,7 +169,7 @@ class cardSelection extends Component {
 															</div>
 															{cardId === data.cardId ? (
 																<img
-																	src={require('../../assets/images/ic_check_sel.svg')}
+																	src={require('../../../assets/images/ic_check_sel.svg')}
 																	alt=''
 																/>
 															) : (

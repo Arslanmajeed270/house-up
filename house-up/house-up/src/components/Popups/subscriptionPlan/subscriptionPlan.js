@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import * as actions from '../../../store/actions/index';
 class subscriptionPlan extends Component {
 	constructor(props) {
 		super(props);
@@ -86,13 +86,13 @@ class subscriptionPlan extends Component {
 																{message === 'annual' &&
 																data.packageName === 'Monthly' ? (
 																	<img
-																		src={require('../../assets/images/ic_check_sel.svg')}
+																		src={require('../../../assets/images/ic_check_sel.svg')}
 																		alt=''
 																	/>
 																) : message === 'annualAcitve' &&
 																  data.packageName === 'Annual' ? (
 																	<img
-																		src={require('../../assets/images/ic_check_sel.svg')}
+																		src={require('../../../assets/images/ic_check_sel.svg')}
 																		alt=''
 																	/>
 																) : (

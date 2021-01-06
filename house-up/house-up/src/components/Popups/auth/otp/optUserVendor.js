@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as actionTypes from '../../store/actions/actionTypes';
-import * as actions from '../../store/actions/authActions';
+import * as actionTypes from '../../../../store/actions/actionTypes';
+import * as actions from '../../../../store/actions/authActions';
 
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../../components/common/Spinner';
 
 class OptUserVendor extends Component {
   constructor(props) {

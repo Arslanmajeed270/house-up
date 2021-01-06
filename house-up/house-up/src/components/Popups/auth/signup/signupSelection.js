@@ -39,7 +39,7 @@ class signupSelection extends Component {
                   <div className="logo-modal">
                     <img
                       className="vendor-img"
-                      src={require('../../assets/images/icons/ic_user_account.svg')}
+                      src={require('../../../../assets/images/icons/ic_user_account.svg')}
                       alt=""
                     />
                   </div>
@@ -67,7 +67,7 @@ class signupSelection extends Component {
                   <div className="logo-modal">
                     <img
                       className="vendor-img"
-                      src={require('../../assets/images/icons/ic_business_account.svg')}
+                      src={require('../../../../assets/images/icons/ic_business_account.svg')}
                       alt=""
                     />
                   </div>

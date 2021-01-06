@@ -1,35 +1,46 @@
 import React, { Component } from 'react';
 import Routes from './routes';
-import Header from '../components/header';
-import Footer from '../components/footer';
+import Header from '../components/layout/header';
+import Footer from '../components/layout/footer';
 
 // Model Imports
-import PhoneSignIn from '../components/Popups/phoneSignin';
-import EmailSignIn from '../components/Popups/emailSignin';
-import SignupSelection from '../components/Popups/signupSelection';
-import PhoneNumber from '../components/Popups/phoneNumber';
-import PhoneNumberVendor from '../components/Popups/phoneNumberVendor';
-import OptUser from '../components/Popups/optUser';
-import OptUserVendor from '../components/Popups/optUserVendor';
-import UserSignup from '../components/Popups/userSignup';
-import VendorSignup from '../components/Popups/vendorSignup';
-import Congratulation from '../components/Popups/congratulation';
-import PhoneNumberForgotPass from '../components/Popups/phoneNumberForgotPass';
-import OptForgotPass from '../components/Popups/optForgotPass';
-import ForgotPass from '../components/Popups/forgotPass';
-import ForgotPassCongrats from '../components/Popups/forgotPassCongrats';
-import SubscriptionPlan from '../components/Popups/subscriptionPlan';
-import CardSelection from '../components/Popups/cardSelection';
-import CardDetails from '../components/Popups/cardDetails';
-import PropertyPlanSelection from '../components/Popups/propertyPlanSelection';
-import ImagePreview from '../components/Popups/ImagePreview';
-import AlertPopup from '../components/Popups/alertPopup';
-import SharePopup from '../components/Popups/sharePopup';
+// Auth Popup
+import OptUser from '../components/Popups/auth/otp/optUser';
+import OptUserVendor from '../components/Popups/auth/otp/optUserVendor';
+import PhoneNumber from '../components/Popups/auth/phoneNumber/phoneNumber';
+import PhoneNumberVendor from '../components/Popups/auth/phoneNumber/phoneNumberVendor';
+import PhoneSignIn from '../components/Popups/auth/signin/phoneSignin';
+import EmailSignIn from '../components/Popups/auth/signin/emailSignin';
+import SignupSelection from '../components/Popups/auth/signup/signupSelection';
+import UserSignup from '../components/Popups/auth/signup/userSignup';
+import VendorSignup from '../components/Popups/auth/signup/vendorSignup';
+
+// Congratulations popup
+import Congratulation from '../components/Popups/congratulations/congratulation';
+import ForgotPassCongrats from '../components/Popups/congratulations/forgotPassCongrats';
+
+// Forgot password popup
+import ForgotPass from '../components/Popups/forgotPassword/forgotPass';
+import OptForgotPass from '../components/Popups/forgotPassword/optForgotPass';
+import PhoneNumberForgotPass from '../components/Popups/forgotPassword/phoneNumberForgotPass';
+
+// Others popup
+import AlertPopup from '../components/Popups/others/alertPopup';
+import ImagePreview from '../components/Popups/others/ImagePreview';
+
+// Property Plan popup
+import PropertyPlanSelection from '../components/Popups/propertyPlan/propertyPlanSelection';
+
+// Subscription Plan popup
+import SubscriptionPlan from '../components/Popups/subscriptionPlan/subscriptionPlan';
+import CardSelection from '../components/Popups/subscriptionPlan/cardSelection';
+import CardDetails from '../components/Popups/subscriptionPlan/cardDetails';
 
 class index extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			hideFooter: false,
 			phoneSignin: false,
 			emailSignin: false,
 			forgotPass: false,
@@ -166,19 +177,16 @@ class index extends Component {
 		});
 	};
 
-	render() {
-		let animateHeader = false;
-		let hideFooter = false;
-
+	componentDidMount(){
 		if (this.props.location.pathname.indexOf('/index') >= 0) {
-			hideFooter = true;
+			this.setState({
+				hideFooter: true
+			});
 		}
-		if (
-			this.props.location.pathname === '/home' ||
-			this.props.location.pathname === '/'
-		) {
-			animateHeader = true;
-		}
+	}
+
+	render() {
+		const {hideFooter} = this.state;
 		return (
 			<React.Fragment>
 				{this.state.phoneSignin && (
@@ -350,8 +358,8 @@ class index extends Component {
 				)}
 				
 				<Header
+					location={this.props.location}
 					history={this.props.history}
-					animateHeader={animateHeader}
 					modelHanlder={this.modelHanlder}
 				/>
 				<Routes
