@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import AliceCarousel from "react-alice-carousel";
-
 import "react-alice-carousel/lib/alice-carousel.css";
 
 import { connect } from "react-redux";
@@ -12,9 +11,8 @@ import * as actionTypes from "../../store/actions/actionTypes";
 import { Alert, OverlayTrigger, Popover } from "react-bootstrap";
 import Spinner from "../../components/common/Spinner";
 
-import StoryPrevivew from "../../components/Popups/storyPrevivew";
-import Contact from "../../components/Popups/contactUsPopup";
-import SharePopup from '../../components/Popups/sharePopup';
+import StoryPrevivew from "../../components/Popups/others/storyPrevivew";
+import Contact from "../../components/Popups/others/contactUsPopup";
 
 class index extends Component {
   constructor(props) {
@@ -463,7 +461,7 @@ class index extends Component {
       for (let i = 0; i < indexPageData.propertyCounts.length; i++) {
         let locationItem = (
           <div className="neighbourhoods_slider">
-            <div onDoubleClick={() => this.props.history.push("/properties")}>
+            <div>
               <div
                 className="pxp-prop-card-explore"
                 style={{
@@ -481,7 +479,7 @@ class index extends Component {
                 }}
               >
                 <div className="d-table w-100 ">
-                  <div className="d-table-cell va-bottom neighbours-height paddg">
+                  <div onClick={() => this.props.history.push("/properties")} className="d-table-cell va-bottom neighbours-height paddg">
                     <h2>
                       {indexPageData.propertyCounts[i] &&
                         indexPageData.propertyCounts[i].cityName}

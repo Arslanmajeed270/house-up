@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import Contact from '../../components/Popups/contactUsPopup';
+import Contact from '../../components/Popups/others/contactUsPopup';
 
 class singleVendor extends Component {
 	constructor(props) {

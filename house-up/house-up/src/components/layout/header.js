@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../store/actions';
+import * as actions from '../../store/actions';
 
 class header extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: false,
 			user: {},
 			dropDownShow: false,
 			currentLocation: {},
 			showNav: false,
+			animateHeader: false
 		};
 	}
 
@@ -40,6 +42,11 @@ class header extends Component {
 			stateChanged = true;
 		}
 
+		if ( page && JSON.stringify(state.loading) !== JSON.stringify(page.loading) ) {
+			changedState.loading = page.loading;
+			stateChanged = true;
+		}
+
 		if (stateChanged) {
 			return changedState;
 		}
@@ -59,15 +66,27 @@ class header extends Component {
 		});
 	};
 
+	componentDidMount(){
+		if (
+			this.props.location.pathname === '/home' ||
+			this.props.location.pathname === '/'
+		) {
+			this.setState({
+				animateHeader: true
+			});
+		}
+	}
+
 	render() {
-		const animateHeader = this.props.animateHeader;
+		const { animateHeader, loading } = this.state
+
 		const { user, dropDownShow, currentLocation, showNav } = this.state;
 		return (
 			<React.Fragment>
 				<div
 					className={
 						'pxp-header fixed-top ' +
-						(animateHeader ? 'pxp-animate' : 'pxp-full') +
+						((animateHeader && !loading) ? 'pxp-animate' : 'pxp-full') +
 						(showNav ? ' pxp-mobile ' : '')
 					}
 				>
@@ -82,7 +101,7 @@ class header extends Component {
 									}
 									className='pxp-logo text-decoration-none'
 								>
-									{animateHeader ? (
+									{(animateHeader && !loading ) ? (
 										<>
 											<img
 												className='img black-logo'
@@ -109,7 +128,7 @@ class header extends Component {
 									style={{ color: '#007bff' }}
 								>
 									<img
-										src={require('../assets/images/ic_address.f245f826.svg')}
+										src={require('../../assets/images/ic_address.f245f826.svg')}
 										alt=''
 									/>
 									{currentLocation && currentLocation.city
@@ -119,7 +138,7 @@ class header extends Component {
 							</div>
 							<div className='col-1 col-md-6'>
 								<div
-									className={`flex-center-nav ${animateHeader ? 'veTop' : ''}`}
+									className={`flex-center-nav ${ (animateHeader && !loading) ? 'veTop' : ''}`}
 								>
 									<ul
 										className={`pxp-nav list-inline for-pad ${
@@ -185,7 +204,6 @@ class header extends Component {
 										</li>
 									</ul>
 									{
-										animateHeader ? '' : ''
 										// <div className='form-group has-search mb-0'>
 										// 	{/* <span className="fa fa-search form-control-feedback" /> */}
 										// 	<input
@@ -216,7 +234,7 @@ class header extends Component {
 										<div
 											to='#'
 											className={`pxp-header-user pxp-signin-trigger ${
-												animateHeader ? 'forborder' : ''
+												(animateHeader && !loading) ? 'forborder' : ''
 											}`}
 											style={{
 												width: '44px',
@@ -263,7 +281,7 @@ class header extends Component {
 																	style={{ cursor: 'pointer' }}
 																>
 																	<img
-																		src={require('../assets/images/icons/ic_upgrade.svg')}
+																		src={require('../../assets/images/icons/ic_upgrade.svg')}
 																		alt='upgradeIcon'
 																	/>
 																	upgrade
@@ -285,7 +303,7 @@ class header extends Component {
 																	style={{ cursor: 'pointer' }}
 																>
 																	<img
-																		src={require('../assets/images/icons/ic_upgrade.svg')}
+																		src={require('../../assets/images/icons/ic_upgrade.svg')}
 																		alt='upgradeIcon'
 																	/>
 																	{user &&
@@ -352,7 +370,7 @@ class header extends Component {
 									<div
 										to='#'
 										className={`pxp-header-user pxp-signin-trigger ${
-											animateHeader ? '' : 'forborder'
+											(animateHeader && !loading) ? '' : 'forborder'
 										}`}
 										onClick={() => this.props.modelHanlder('phoneSignin')}
 									>
@@ -365,7 +383,7 @@ class header extends Component {
 												textAlign: 'center',
 												display: 'block' 
 											}}
-											src={require('../assets/images/ic_profile.svg')}
+											src={require('../../assets/images/ic_profile.svg')}
 											alt=''
 										/>
 										<div

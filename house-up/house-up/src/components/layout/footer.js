@@ -33,26 +33,26 @@ class footer extends Component {
               <div className='col-md-4'>
                 <a href="https://www.linkedin.com/in/houseup-ca-132ba8202" className='social-icons'>
                   <img
-                    src={require('../assets/images/ic_linkedin.svg')}
+                    src={require('../../assets/images/ic_linkedin.svg')}
                     alt=''
                   />
                 </a>
                 <a href="https://www.facebook.com/houseup.ca/" className='social-icons'>
                   <img
                   style={{width: "34.45px", height: "34.45px"}}
-                    src={require('../assets/images/ic_facebook.svg')}
+                    src={require('../../assets/images/ic_facebook.svg')}
                     alt=''
                   />
                 </a>
                 <a href="https://www.instagram.com/houseup.ca/"  className='social-icons'>
                   <img
-                    src={require('../assets/images/ic_instagram.svg')}
+                    src={require('../../assets/images/ic_instagram.svg')}
                     alt=''
                   />
                 </a>
                 <a href="https://twitter.com/home?logout=1609437552247" className='social-icons'>
                   <img
-                    src={require('../assets/images/ic_twitter.svg')}
+                    src={require('../../assets/images/ic_twitter.svg')}
                     alt=''
                   />
                 </a>

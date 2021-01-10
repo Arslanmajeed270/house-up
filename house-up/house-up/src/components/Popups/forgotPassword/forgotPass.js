@@ -3,10 +3,10 @@ import { Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/authActions';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../../store/actions/authActions';
+import * as actionTypes from '../../../store/actions/actionTypes';
 
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../components/common/Spinner';
 
 import { Alert } from 'react-bootstrap';
 
@@ -181,7 +181,7 @@ class forgotPass extends Component {
 									onClick={this.viewPassword}
 								>
 									<img
-										src={require('../../assets/images/icons/ic_view_password.png')}
+										src={require('../../../assets/images/icons/ic_view_password.png')}
 										alt=''
 									/>
 								</span>
@@ -204,7 +204,7 @@ class forgotPass extends Component {
 									onClick={this.viewConfirmPassword}
 								>
 									<img
-										src={require('../../assets/images/icons/ic_view_password.png')}
+										src={require('../../../assets/images/icons/ic_view_password.png')}
 										alt=''
 									/>
 								</span>

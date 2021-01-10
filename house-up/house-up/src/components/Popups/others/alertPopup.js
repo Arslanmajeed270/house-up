@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 
-class congrationPopup extends Component {
+class CongratulationPopUp extends Component {
 	state = {};
 	render() {
 		return (
@@ -70,4 +70,4 @@ class congrationPopup extends Component {
 	}
 }
 
-export default congrationPopup;
+export default CongratulationPopUp;

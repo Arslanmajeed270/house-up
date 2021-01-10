@@ -5,13 +5,13 @@ import fileUpload from 'fuctbase64';
 import moment from 'moment';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
-import * as actionTypes from '../../store/actions/actionTypes';
+import * as actions from '../../../../store/actions/index';
+import * as actionTypes from '../../../../store/actions/actionTypes';
 
-import { checkValidURL, checkDate } from '../../utils/regex';
+import { checkValidURL, checkDate } from '../../../../utils/regex';
 
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../components/common/Spinner';
+import Spinner from '../../../../components/common/Spinner';
 
 class vendorSignup extends Component {
 	constructor(props) {
@@ -564,7 +564,7 @@ class vendorSignup extends Component {
 												? imagePreview
 												: this.props.userData
 												? this.state.profileImage
-												: require('../../assets/images/ic_profile_placeholder.png')
+												: require('../../../../assets/images/ic_profile_placeholder.png')
 										}
 										alt=''
 										style={{ height: '98px', borderRadius: '5px' }}
@@ -731,7 +731,7 @@ class vendorSignup extends Component {
 												: 'Business registration document'}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
-													src={require('../../assets/images/icons/ic_upload.svg')}
+													src={require('../../../../assets/images/icons/ic_upload.svg')}
 													alt=''
 												/>
 											</div>
@@ -844,7 +844,7 @@ class vendorSignup extends Component {
 												: 'Support document (optional)'}{' '}
 											<div style={{ textAlign: 'right', float: 'right' }}>
 												<img
-													src={require('../../assets/images/icons/ic_upload.svg')}
+													src={require('../../../../assets/images/icons/ic_upload.svg')}
 													alt=''
 												/>
 											</div>
@@ -1016,7 +1016,7 @@ class vendorSignup extends Component {
 												onClick={this.viewPassword}
 											>
 												<img
-													src={require('../../assets/images/icons/ic_view_password.png')}
+													src={require('../../../../assets/images/icons/ic_view_password.png')}
 													alt=''
 												/>
 											</span>
@@ -1048,7 +1048,7 @@ class vendorSignup extends Component {
 												onClick={this.viewConfirmPassword}
 											>
 												<img
-													src={require('../../assets/images/icons/ic_view_password.png')}
+													src={require('../../../../assets/images/icons/ic_view_password.png')}
 													alt=''
 												/>
 											</span>
