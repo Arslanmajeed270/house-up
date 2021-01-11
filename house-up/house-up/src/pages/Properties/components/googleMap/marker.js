@@ -1,9 +1,9 @@
 
 import React, { useState, useRef } from "react";
 import useSupercluster from "use-supercluster";
-import "./App.css";
+import "../../App.css";
 import { Link } from 'react-router-dom';
-// examples:
+
 import GoogleMap from './GoogleMap';
 import PropTypes from 'prop-types';
 
@@ -54,8 +54,6 @@ const InfoWindow = (props) => {
 	);
 };
 
-// const fetcher = (...args) => fetch(...args).then(response => response.json());
-
 const Marker = ({ children }) => children;
 
 // Marker component
@@ -93,15 +91,10 @@ const Marker2 = ({ show, place }) => {
 };
 
 export default function App(props) {
-  console.log('checking props: ', props);
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(10);
 
-  // const url =
-  //   "https://data.police.uk/api/crimes-street/all-crime?lat=52.629729&lng=-1.131592&date=2019-10";
-  // const { data, error } = useSwr(url, { fetcher });
-  // const crimes = data && !error ? data.slice(0, 2000) : [];
   const places = props.places;
   const points = places.map(data => ({
     type: "Feature",
@@ -121,7 +114,6 @@ export default function App(props) {
     zoom,
     options: { radius: 75, maxZoom: 20 }
   });
-  console.log('checking cluster: ', clusters);
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <GoogleMap
@@ -186,15 +178,6 @@ export default function App(props) {
             show={cluster.properties.show}
             place={cluster.properties.place}
           />
-            // <Marker
-            //   key={`crime-${cluster.properties.crimeId}`}
-            //   lat={latitude}
-            //   lng={longitude}
-            // >
-            //   <button className="crime-marker">
-            //     <img src="/custody.svg" alt="crime doesn't pay" />
-            //   </button>
-            // </Marker>
           );
         })}
       </GoogleMap>

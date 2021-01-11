@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import * as actionTypes from '../../store/actions/actionTypes';
 import cloneDeep from 'lodash/cloneDeep';
+import Spinner from '../../components/common/Spinner';
 
 class selectLocation extends Component {
 	constructor(props) {
@@ -128,9 +129,12 @@ class selectLocation extends Component {
 	};
 
 	render() {
-		const { states, cities, city, state, countries, country } = this.state;
-		return (
-			<React.Fragment>
+		const { loading, states, cities, city, state, countries, country } = this.state;
+		let pageContent = "";
+		if(loading){
+			pageContent = <Spinner />
+		}else{
+			pageContent = (<React.Fragment>
 				<div className='pxp-hero vh-100'>
 					<div
 						className='pxp-hero-bg pxp-cover pxp-cover-bottom'
@@ -231,6 +235,8 @@ class selectLocation extends Component {
 				</div>
 			</React.Fragment>
 		);
+		}
+		return pageContent;
 	}
 }
 const mapStateToProps = (state) => {
