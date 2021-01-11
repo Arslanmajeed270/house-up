@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { checkDateFuture } from '../../../utils/regex';
 
@@ -7,6 +8,7 @@ import * as actionTypes from '../../../store/actions/actionTypes';
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
 import * as actions from '../../../store/actions/pageActions';
+
 
 class contacUsPopup extends Component {
 	constructor(props) {
@@ -137,9 +139,11 @@ class contacUsPopup extends Component {
 			subject,
 			detail,
 			meetingDate,
-			errors
+			errors,
+			showPopUp
 		} = this.state;
 		return (
+			
 			<Modal
 				show={this.props.show}
 				aria-labelledby='contained-modal-title-vcenter'

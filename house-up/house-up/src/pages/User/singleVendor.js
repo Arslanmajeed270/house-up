@@ -139,13 +139,14 @@ class singleVendor extends Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { id, commentText, userId, user } = this.state;
+		const { id, commentText, userId, user, singleVendorData } = this.state;
 
 		const data = {
 			postId: 0,
 			category: 'Vendor',
 			storyImageId: 0,
 			propertyId: 0,
+			commentedOnUserId: singleVendorData.userId,
 			commentText: commentText,
 			userId: user.userId,
 			vendorId: Number(id),
@@ -234,9 +235,14 @@ class singleVendor extends Component {
 											</div>
 											<div className='col-md-6'>
 												{hideContact ? (
-													<Link onClick={this.contactHandler}>
-														click to show
-													</Link>
+													<Link
+													onClick={(e) => {
+														e.preventDefault();
+														this.contactHandler();
+													}}
+												>
+													click to show
+												</Link>
 												) : (
 													<p>{singleVendorData && singleVendorData.msisdn}</p>
 												)}

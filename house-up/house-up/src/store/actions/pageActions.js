@@ -20,6 +20,7 @@ import {
 	SET_CURRENT_USERS_CARD,
 } from './actionTypes';
 import { setCurrentUser } from './authActions';
+import { Success, Error } from '../../components/common/toastify'
 
 let backendServerURL = process.env.REACT_APP_API_URL;
 
@@ -293,14 +294,17 @@ export const contactUs = (data, index) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/contactUs', data)
 		.then((res) => {
+			console.log(res);
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearErrors());
+				Success('Successfully sent meeting request!');
 			} else {
 				dispatch({ type: HIDE_POP_UP });
 			}
 		})
 		.catch((err) => {
+			Error('Sorry error in scheduling meeting!');
 			dispatch({
 				type: SET_ERRORS,
 				payload:

@@ -19,7 +19,7 @@ export default function editProfileRenderer(props) {
                 <div>
                     <button
                         className='btn btn-primary mb-10'
-                        onClick={() => this.props.modelHanlder('userSignupModel', user)}
+                        onClick={() => modelHanlder('userSignupModel', user)}
                     >
                         Edit Profile
                     </button>

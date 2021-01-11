@@ -192,7 +192,7 @@ class index extends Component {
       });
     }
   };
-  AddComment = (id, typeCategory, index) => {
+  AddComment = (id, typeCategory, index, commentedOnUserId) => {
     const userName =
       this.state.user && this.state.user.userName
         ? this.state.user.userName
@@ -219,6 +219,7 @@ class index extends Component {
       category: typeCategory,
       storyImageId: Number(storyImageId),
       propertyId: Number(propertyId),
+      commentedOnUserId: commentedOnUserId,
       commentText: commentText,
       userId: userId,
       vendorId: vendorId,
@@ -252,6 +253,7 @@ class index extends Component {
         index,
         userFullName,
         userName,
+        commentedOnUserId,
         profilePictureUrl,
         date
       );
@@ -798,7 +800,9 @@ class index extends Component {
                                                         data.object.postId
                                                       }&${
                                                         data && data.category
-                                                      }&${index}&${cityName}&${stateName}&${countryName}`}
+                                                      }&${index}&${cityName}&${stateName}&${countryName}&${data &&
+                                                        data.object &&
+                                                        data.object.user && data.object.user.userId}`}
                                                       style={{
                                                         color: "#706666",
                                                       }}
@@ -943,7 +947,9 @@ class index extends Component {
                                                         data.object.postId
                                                       }&${
                                                         data && data.category
-                                                      }&${index}&${cityName}&${stateName}&${countryName}`}
+                                                      }&${index}&${cityName}&${stateName}&${countryName}&${data &&
+                                                      data.object &&
+                                                      data.object.user && data.object.user.userId}`}
                                                     >
                                                       View all{" "}
                                                       {
@@ -1011,7 +1017,10 @@ class index extends Component {
                                                                 .postId,
                                                             data &&
                                                               data.category,
-                                                            index
+                                                            index,
+                                                            data &&
+                                                              data.object &&
+                                                              data.object.user && data.object.user.userId
                                                           )
                                                         }
                                                       >
@@ -1170,7 +1179,9 @@ class index extends Component {
                                                         data.object.propertId
                                                       }&${
                                                         data && data.category
-                                                      }&${index}&${cityName}&${stateName}&${countryName}`}
+                                                      }&${index}&${cityName}&${stateName}&${countryName}&${data &&
+                                                        data.object &&
+                                                        data.object.user && data.object.user.userId}`}
                                                       style={{
                                                         color: "#706666",
                                                       }}
@@ -1390,7 +1401,10 @@ class index extends Component {
                                                                 .propertId,
                                                             data &&
                                                               data.category,
-                                                            index
+                                                            index,
+                                                            data &&
+                                                              data.object &&
+                                                              data.object.user && data.object.user.userId
                                                           )
                                                         }
                                                       >
@@ -1707,7 +1721,9 @@ class index extends Component {
                                                     data.object.userId
                                                   }&${
                                                     data && data.category
-                                                  }&${index}&${cityName}&${stateName}&${countryName}`}
+                                                  }&${index}&${cityName}&${stateName}&${countryName}&${data &&
+                                                    data.object &&
+                                                    data.object.userId}`}
                                                 >
                                                   View all{" "}
                                                   {
@@ -1768,7 +1784,10 @@ class index extends Component {
                                                           data.object &&
                                                           data.object.userId,
                                                         data && data.category,
-                                                        index
+                                                        index,
+                                                        data &&
+                                                          data.object &&
+                                                          data.object.userId,
                                                       )
                                                     }
                                                   >
@@ -1821,7 +1840,7 @@ class index extends Component {
                               </p>
                               <span>
                                 {user && user.userName
-                                  ? `@ ${user.userName}`
+                                  ? `@${user.userName}`
                                   : ""}
                               </span>
                             </div>

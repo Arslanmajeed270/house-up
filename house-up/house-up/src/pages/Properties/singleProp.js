@@ -134,13 +134,14 @@ class singleProp extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { id, commentText, userId, user } = this.state;
+    const { id, commentText, userId, user, singlePropertyData } = this.state;
 
     const data = {
       postId: 0,
       category: "Property",
       storyImageId: 0,
       propertyId: Number(id),
+      commentedOnUserId: singlePropertyData.user.userId,
       commentText: commentText,
       userId: userId,
       vendorId: 0,

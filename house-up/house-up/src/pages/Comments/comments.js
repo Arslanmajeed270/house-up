@@ -29,6 +29,7 @@ class comments extends Component {
 			cityName: '',
 			stateName: '',
 			countryName: '',
+			commentedOnUserId:''
 		};
 	}
 
@@ -103,7 +104,7 @@ class comments extends Component {
 	}
 
 	componentDidMount() {
-		const { user, countryName, stateName, cityName } = this.state;
+		const { user, countryName, stateName, cityName ,commentedOnUserId } = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -122,6 +123,7 @@ class comments extends Component {
 		const city = this.props.match.params.city;
 		const state = this.props.match.params.state;
 		const country = this.props.match.params.country;
+
 		this.setState({
 			id: id,
 			category: category,
@@ -174,6 +176,7 @@ class comments extends Component {
 			vendorId,
 			category,
 			userFullName,
+			commentedOnUserId
 		} = this.state;
 
 		const data = {
@@ -184,6 +187,9 @@ class comments extends Component {
 			commentText: commentText,
 			userId: userId,
 			vendorId: Number(vendorId),
+			commentedOnUserId:this.props.match.params.commentedOnUserId,
+			channel:'web',
+			phoneNo:this.state.user.msisdn
 		};
 		const userName = this.state.user.userName;
 		const date = moment(Date()).format('YYYY-MM-DD hh:mm:ss');
@@ -211,6 +217,9 @@ class comments extends Component {
 				date
 			);
 		}
+		this.setState({
+			commentText: ""
+		  });
 	};
 
 	render() {
