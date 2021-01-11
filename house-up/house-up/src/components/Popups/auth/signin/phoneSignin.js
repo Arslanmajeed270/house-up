@@ -225,7 +225,6 @@ class phoneSignIn extends Component {
               </div>
             </form>
           </div>
-          {loading ? <Spinner /> : ''}
         </Modal.Body>
       </Modal>
     );
