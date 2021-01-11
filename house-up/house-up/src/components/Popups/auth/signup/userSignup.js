@@ -317,6 +317,7 @@ class userSignup extends Component {
 									placeholder='Create Username'
 									name='userName'
 									value={userName}
+									disabled={this.props.userData ? true : false}
 									onChange={this.onChange}
 									required
 								/>
@@ -329,10 +330,14 @@ class userSignup extends Component {
 									placeholder='Enter Your Email'
 									name='email'
 									value={email}
+									disabled={this.props.userData ? true : false}
 									onChange={this.onChange}
 									required
 								/>
 							</div>
+							{this.props.userData ? (
+								''
+							) : (
 							<div className='form-group'>
 								<input
 									type={viewPass ? 'text' : 'password'}
@@ -353,6 +358,10 @@ class userSignup extends Component {
 									/>
 								</span>
 							</div>
+							)}
+							{this.props.userData ? (
+								''
+							) : (
 							<div className='form-group'>
 								<input
 									type={viewConfirmPass ? 'text' : 'password'}
@@ -376,6 +385,7 @@ class userSignup extends Component {
 									/>
 								</span>
 							</div>
+							)}
 						</div>
 						<div className='form-group'>
 							{this.props.userData ? (

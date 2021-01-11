@@ -73,7 +73,7 @@ class Routes extends React.Component {
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
 				<Route
 					exact
-					path={'/comments-:id&:category&:indexValue&:city&:state&:country'}
+					path={'/comments-:id&:category&:indexValue&:city&:state&:country&:commentedOnUserId'}
 					component={(routes) => (
 						<Comments
 							match={routes.match}
