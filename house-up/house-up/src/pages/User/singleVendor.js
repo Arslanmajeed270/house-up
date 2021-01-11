@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from '../../store/actions/index';
-import Contact from '../../components/Popups/others/contactUsPopup';
+import ContactUsPopUp from '../../components/Popups/others/contactUsPopup';
+import Spinner from '../../components/common/Spinner';
+import EditProfileRenderer from './components/editProfileRenderer';
 
 class singleVendor extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			loading: false,
 			singleVendorData: {},
 			id: null,
 			contactModalState: false,
@@ -20,9 +23,9 @@ class singleVendor extends Component {
 			showPropertyPackage: false,
 		};
 	}
+
 	static getDerivedStateFromProps(props, state) {
-		let vendor = props.vendor;
-		let auth = props.auth;
+		const {vendor,auth, page } = props;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -64,6 +67,10 @@ class singleVendor extends Component {
 			changedState.user = auth.user;
 			stateChanged = true;
 		}
+		if ( page && JSON.stringify(state.loading) !== JSON.stringify(page.loading) ) {
+			changedState.loading = page.loading;
+			stateChanged = true;
+		}
 
 		if (stateChanged) {
 			return changedState;
@@ -100,6 +107,7 @@ class singleVendor extends Component {
 			workModalState: !this.state.workModalState,
 		});
 	};
+
 	closeCodelHanlder = () => {
 		this.setState({
 			workModalState: false,
@@ -115,17 +123,20 @@ class singleVendor extends Component {
 	contactHandler = () => {
 		this.setState({ hideContact: !this.state.hideContact });
 	};
+
 	modelHanlder = (model, id) => {
 		this.setState({
 			[model]: !this.state[model],
 			vendorId: id,
 		});
 	};
+
 	closeCodelHanlder = (model) => {
 		this.setState({
 			[model]: false,
 		});
 	};
+
 	onSubmit = (e) => {
 		e.preventDefault();
 		const { id, commentText, userId, user } = this.state;
@@ -174,51 +185,23 @@ class singleVendor extends Component {
 		}
 	};
 
+
 	render() {
 		const {
+			loading,
 			singleVendorData,
 			singleVendorsPropertiesData,
 			commentText,
 			hideContact,
 			user,
 		} = this.state;
-		let editProfile = '';
-		if (
-			user &&
-			user.userTypeId &&
-			user.userTypeId === 2 &&
-			user.userId === singleVendorData.userId
-		) {
-			editProfile = (
-				<div>
-					<button
-						className='btn btn-primary mb-10'
-						onClick={() => this.props.modelHanlder('vendorSignupModel', user)}
-					>
-						Edit Profile
-					</button>
-				</div>
-			);
-		} else if (
-			user &&
-			user.userTypeId &&
-			user.userTypeId !== 2 &&
-			user.userId === singleVendorData.userId
-		) {
-			editProfile = (
-				<div>
-					<button
-						className='btn btn-primary mb-10'
-						onClick={() => this.props.modelHanlder('userSignupModel', user)}
-					>
-						Edit Profile
-					</button>
-				</div>
-			);
-		}
 
-		return (
-			<React.Fragment>
+		let pageContent = "";
+		if(loading){
+			pageContent = <Spinner />;
+		}
+		else {
+			pageContent = (<React.Fragment>
 				<div className='pxp-content'>
 					<div className='pxp-agents mt-100'>
 						<div className='container'>
@@ -311,7 +294,7 @@ class singleVendor extends Component {
 												CONTACT US{' '}
 											</button>
 											{this.state.contactModalState ? (
-												<Contact
+												<ContactUsPopUp
 													show={this.state.contactModalState}
 													closeCodelHanlder={this.closeCodelHanlder}
 													vendorId={this.state.vendorId}
@@ -324,7 +307,11 @@ class singleVendor extends Component {
 								</div>
 
 								<div className='col-sm-12 offset-lg-1 col-lg-3'>
-									{editProfile}
+									<EditProfileRenderer 
+										user={user} 
+										singleVendorData={singleVendorData} 
+										modelHanlder={this.props.modelHanlder} 
+									/>
 									<div
 										className={
 											singleVendorData && singleVendorData.userTypeId === 1
@@ -597,6 +584,9 @@ class singleVendor extends Component {
 				</div>
 			</React.Fragment>
 		);
+		}
+
+		return pageContent;
 	}
 }
 
@@ -604,6 +594,7 @@ const mapStateToProps = (state) => {
 	return {
 		vendor: state.vendor,
 		auth: state.auth,
+		page: state.page,
 	};
 };
 

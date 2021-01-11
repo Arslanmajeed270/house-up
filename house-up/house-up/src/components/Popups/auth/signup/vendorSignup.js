@@ -523,10 +523,7 @@ class vendorSignup extends Component {
 		if (loading) {
 			pageContent = <Spinner />;
 		} else {
-			pageContent = '';
-		}
-		return (
-			<Modal
+			pageContent = (<Modal
 				show={this.props.show}
 				aria-labelledby='contained-modal-title-vcenter'
 				centered
@@ -1074,11 +1071,12 @@ class vendorSignup extends Component {
 								</button>
 							)}
 						</div>
-						{pageContent}
 					</form>
 				</Modal.Body>
 			</Modal>
 		);
+		}
+		return pageContent;
 	}
 }
 

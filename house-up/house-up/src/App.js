@@ -6,7 +6,6 @@ import * as actions from './store/actions/index';
 import PrivateRoute from './components/common/PrivateRoute';
 import PublicRoute from './components/common/PublicRoute';
 import Index from './pages';
-import SampleMap from './pages/Properties/marker';
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -38,7 +37,6 @@ class App extends Component {
 		}
 		return (
 			<Switch>
-				<Route exact path={'/sample-map'} component={SampleMap} />
 				<Route exact path={'/about'} component={Index} />
 				<Route exact path={'/add-coupon'} component={Index} />
 				<Route exact path={'/single-vendor-:id'} component={Index} />

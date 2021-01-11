@@ -186,185 +186,208 @@ class index extends Component {
 	}
 
 	render() {
-		const {hideFooter} = this.state;
+		const {
+			hideFooter, phoneSignin, subscriptionPlan, message, 
+			cardSelection, data, emailSignin, phoneNoForgotPass,
+			forgotPass, forgotPassCongrats, signupSelectionModel,
+			phoneNumberModel, phoneNumberVendorModel,
+			optUserModel, optUserModelVendor,
+			userSignupModel, vendorSignupModel, congratulationModel,
+			vendorCongrats, imageToggle, alertPopup
+		} = this.state;
+		const { history, location, cardDetails, optForgotPass,
+			phNumber, propertyPlanSelection,  } = this.props;
 		return (
 			<React.Fragment>
-				{this.state.phoneSignin && (
+				{ phoneSignin && (
 					<PhoneSignIn
-						show={this.state.phoneSignin}
+						show={ phoneSignin }
 						closeCodelHanlder={this.closeCodelHanlder}
 						emailSigninHandler={this.modelHanlder}
 						phoneNoForgotHandler={this.modelHanlder}
 						signupSelectionHandler={this.modelHanlder}
-						history={this.props.history}
+						history={history}
 					/>
 				)}
-				{this.state.subscriptionPlan && (
+
+				{ subscriptionPlan && (
 					<SubscriptionPlan
-						show={this.state.subscriptionPlan}
+						show={ subscriptionPlan}
 						modelHanlder={this.modelHanlder}
 						closeCodelHanlder={this.closeCodelHanlder}
-						message={this.state.message}
+						message={ message }
 					/>
 				)}
-				{this.state.cardSelection && (
+
+				{ cardSelection && (
 					<CardSelection
-						data={this.state.data}
-						show={this.state.cardSelection}
+						data={ data }
+						show={ cardSelection}
 						closeCodelHanlder={this.closeCodelHanlder}
 						cardDetailsHandler={this.modelHanlder}
 					/>
 				)}
-				{this.state.cardDetails && (
+				{ cardDetails && (
 					<CardDetails
-						show={this.state.cardDetails}
+						show={ cardDetails}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
-				{this.state.emailSignin && (
+				{ emailSignin && (
 					<EmailSignIn
-						show={this.state.emailSignin}
+						show={ emailSignin }
 						closeCodelHanlder={this.closeCodelHanlder}
 						phoneNoForgotHandler={this.modelHanlder}
 						phoneSigninHandler={this.modelHanlder}
 						signupSelectionHandler={this.modelHanlder}
-						history={this.props.history}
+						history={ history }
 					/>
 				)}
-				{this.state.phoneNoForgotPass && (
+				{ phoneNoForgotPass && (
 					<PhoneNumberForgotPass
-						show={this.state.phoneNoForgotPass}
+						show={ phoneNoForgotPass }
 						closeCodelHanlder={this.closeCodelHanlder}
 						phoneNumberHandler={this.phoneNumberHandler}
 						optForgotPassHandler={this.modelHanlder}
 					/>
 				)}
-				{this.state.optForgotPass && (
+				{ optForgotPass && (
 					<OptForgotPass
-						show={this.state.optForgotPass}
+						show={optForgotPass}
 						closeCodelHanlder={this.closeCodelHanlder}
-						phNumber={this.state.phNumber}
+						phNumber={phNumber}
 						forgotPassHandler={this.modelHanlder}
 					/>
 				)}
-				{this.state.propertyPlanSelection && (
+
+				{propertyPlanSelection && (
 					<PropertyPlanSelection
-						show={this.state.propertyPlanSelection}
+						show={propertyPlanSelection}
 						modelHanlder={this.modelHanlder}
-						message={this.state.message}
+						message={message}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
-				{this.state.forgotPass && (
+
+				{forgotPass && (
 					<ForgotPass
-						show={this.state.forgotPass}
+						show={forgotPass}
 						closeCodelHanlder={this.closeCodelHanlder}
 						forgotPassCongratsHandler={this.modelHanlder}
-						phNumber={this.state.phNumber}
+						phNumber={phNumber}
 					/>
 				)}
-				{this.state.forgotPassCongrats && (
+
+				{forgotPassCongrats && (
 					<ForgotPassCongrats
-						show={this.state.forgotPassCongrats}
+						show={forgotPassCongrats}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
-				{this.state.signupSelectionModel && (
+
+				{signupSelectionModel && (
 					<SignupSelection
-						show={this.state.signupSelectionModel}
+						show={signupSelectionModel}
 						closeCodelHanlder={this.closeCodelHanlder}
 						phoneNumberHandler={this.modelHanlder}
 					/>
 				)}
-				{this.state.phoneNumberModel && (
+
+				{phoneNumberModel && (
 					<PhoneNumber
-						show={this.state.phoneNumberModel}
+						show={phoneNumberModel}
 						closeCodelHanlder={this.closeCodelHanlder}
 						optUserHandler={this.modelHanlder}
 						alreadyHaveAccountHandler={this.modelHanlder}
 						phoneNumberHandler={this.phoneNumberHandler}
 					/>
 				)}
-				{this.state.phoneNumberVendorModel && (
+
+				{phoneNumberVendorModel && (
 					<PhoneNumberVendor
-						show={this.state.phoneNumberVendorModel}
+						show={phoneNumberVendorModel}
 						closeCodelHanlder={this.closeCodelHanlder}
 						optUserVendorHandler={this.modelHanlder}
 						alreadyHaveAccountHandler={this.modelHanlder}
 						phoneNumberHandler={this.phoneNumberHandler}
 					/>
 				)}
-				{this.state.optUserModel && (
+
+				{optUserModel && (
 					<OptUser
-						show={this.state.optUserModel}
+						show={optUserModel}
 						closeCodelHanlder={this.closeCodelHanlder}
 						userSignupHandler={this.modelHanlder}
-						phNumber={this.state.phNumber}
+						phNumber={phNumber}
 					/>
 				)}
-				{this.state.optUserModelVendor && (
+
+				{optUserModelVendor && (
 					<OptUserVendor
-						show={this.state.optUserModelVendor}
+						show={optUserModelVendor}
 						closeCodelHanlder={this.closeCodelHanlder}
 						vendorSignupHandler={this.modelHanlder}
-						phNumber={this.state.phNumber}
+						phNumber={phNumber}
 					/>
 				)}
-				{this.state.userSignupModel && (
+
+				{userSignupModel && (
 					<UserSignup
-						show={this.state.userSignupModel}
-						history={this.props.history}
+						show={userSignupModel}
+						history={history}
 						closeCodelHanlder={this.closeCodelHanlder}
 						congratulationHandler={this.modelHanlder}
-						phNumber={this.state.phNumber}
-						userData={this.state.message}
+						phNumber={phNumber}
+						userData={message}
 					/>
 				)}
-				{this.state.vendorSignupModel && (
+
+				{vendorSignupModel && (
 					<VendorSignup
-						show={this.state.vendorSignupModel}
-						history={this.props.history}
+						show={vendorSignupModel}
+						history={history}
 						closeCodelHanlder={this.closeCodelHanlder}
 						congratulationHandler={this.modelHanlder}
-						phNumber={this.state.phNumber}
-						userData={this.state.message}
+						phNumber={phNumber}
+						userData={message}
 					/>
 				)}
-				{this.state.congratulationModel && (
+
+				{congratulationModel && (
 					<Congratulation
-						show={this.state.congratulationModel}
-						message={this.state.message}
+						show={congratulationModel}
+						message={message}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
-				{this.state.vendorCongrats && (
+				{vendorCongrats && (
 					<Congratulation
-						show={this.state.vendorCongrats}
+						show={vendorCongrats}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
-				{this.state.imageToggle && (
+				{imageToggle && (
 					<ImagePreview
-						show={this.state.imageToggle}
+						show={imageToggle}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
-				{this.state.alertPopup && (
+				{alertPopup && (
 					<AlertPopup
-						show={this.state.alertPopup}
-						message={this.state.message}
+						show={alertPopup}
+						message={message}
 						closeCodelHanlder={this.closeCodelHanlder}
 					/>
 				)}
 				
 				<Header
-					location={this.props.location}
-					history={this.props.history}
+					location={location}
+					history={history}
 					modelHanlder={this.modelHanlder}
 				/>
 				<Routes
 					modelHanlder={this.modelHanlder}
-					history={this.props.history}
+					history={history}
 					closeCodelHanlder={this.closeCodelHanlder}
 				/>
 				{hideFooter === true ? ' ' : <Footer />}
