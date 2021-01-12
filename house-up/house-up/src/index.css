@@ -1034,3 +1034,17 @@ h1.titles-property {
   padding: 15px;
   margin: 10px 0px;
 }
+.rightImages img {
+  float: left;
+  width: 50%;
+}
+.rightImages img, .leftBigImage img{
+  max-width: 100%;
+}
+@media screen and (max-width: 768px){
+  
+}
+@media screen and (max-width: 485px){
+  
+}
+
