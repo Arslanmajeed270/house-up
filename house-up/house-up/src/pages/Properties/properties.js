@@ -16,6 +16,8 @@ class properties extends Component {
 			propertyPrice: '',
 			indexPageData: {},
 			currentLocation: {},
+			properties:[],
+			user:{}
 		};
 		this.toggleFilterRef = React.createRef();
 		this.toggleContentRef = React.createRef();
@@ -24,10 +26,19 @@ class properties extends Component {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		const {errors, page } = props;
+		const {errors, page, property, auth } = props;
 
 		let stateChanged = false;
 		let changedState = {};
+
+
+		if (
+			property &&
+			JSON.stringify(state.properties) !== JSON.stringify(property.properties)
+		) {
+			changedState.properties = property.properties;
+			stateChanged = true;
+		}
 
 		if (
 			page &&
@@ -61,6 +72,10 @@ class properties extends Component {
 			changedState.currentLocation = page.currentLocation;
 			stateChanged = true;
 		}
+		if (auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)) {
+			changedState.user = auth.user;
+			stateChanged = true;
+		  }
 
 		if (stateChanged) {
 			return changedState;
@@ -69,23 +84,39 @@ class properties extends Component {
 	}
 
 	componentDidMount() {
-		const userId =
-			this.state.user && this.state.user.userId ? this.state.user.userId : null;
-		const { currentLocation } = this.state;
+		const { currentLocation , user } = this.state;
 
-		const data = {
-			state: '',
-			channel: 'web',
-			lat: 43.787083,
-			lng: 79.497369,
+		// const data = {
+		// 	state: '',
+		// 	channel: 'web',
+		// 	lat: 43.787083,
+		// 	lng: 79.497369,
+		// 	city: currentLocation && currentLocation.city,
+		// 	limit: 10,
+		// 	offset: 0,
+		// 	loggedInuserId: user.userId,
+		// 	country: '',
+		// };
+
+		// this.props.onGetData(data);
+
+		const ReqPacket = {
+			channel:"web",
+			lat:43.787083,
+			lng:-79.497369,
 			city: currentLocation && currentLocation.city,
-			limit: 10,
-			offset: 0,
-			loggedInuserId: userId,
-			country: '',
-		};
+			state: currentLocation && currentLocation.province,
+			country: currentLocation && currentLocation.country,
+			rentalListingYN:"No",
+			pageNum:1,
+			loggedInuserId: user.userId,
+			searchText:"",
+			phoneNo: user.msisdn
+			}
+			
+			this.props.onGetPropertyData(ReqPacket);
 
-		this.props.onGetData(data);
+
 	}
 
 	getSelectedCityData = (cityName) => {
@@ -105,6 +136,8 @@ class properties extends Component {
 		};
 
 		this.props.onGetData(data);
+
+		
 	};
 
 	toggleFilter = (e) => {
@@ -135,7 +168,8 @@ class properties extends Component {
     };
 
 	render() {
-		const { loading, propertiesData } = this.state;
+		const { loading, propertiesData, properties } = this.state;
+		console.log("property data form backend",properties)
 
 		let pageContent = '';
 
@@ -320,7 +354,7 @@ class properties extends Component {
 				<div className='row pb-4'>
 					<div className='col-sm-6'>
 						<h2 className='pxp-content-side-h2'>
-							{propertiesData && propertiesData.length} Properties
+							{properties && properties.length} Properties
 						</h2>
 					</div>
 					<div className="col-sm-6">
@@ -344,8 +378,8 @@ class properties extends Component {
 					</div>
 				</div>
 				<div className='row'>
-					{propertiesData && propertiesData.length
-						? propertiesData.map(
+					{properties && properties.length
+						? properties.map(
 								(data, index) =>
 									data.propertyStatusDesc === 'Approved' && (
 										<div
@@ -444,12 +478,15 @@ class properties extends Component {
 const mapStateToProps = (state) => {
 	return {
 		page: state.page,
+		property : state.property,
+		auth: state.auth,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onGetData: (data) => dispatch(actions.getIndexPageData(data)),
+		onGetPropertyData: (data) => dispatch(actions.getProperties(data)),
 	};
 };
 

@@ -183,9 +183,9 @@ class header extends Component {
 										<li className='list-inline-item'>
 											<Link to='/professionals'>Find a Professional</Link>
 										</li>
-										<li className='list-inline-item'>
+										{/* <li className='list-inline-item'>
 											<Link to='/blogs'>Resources</Link>
-										</li>
+										</li> */}
 										<li className='list-inline-item pxp-has-btns'>
 											<div className='pxp-user-btns'>
 												<Link

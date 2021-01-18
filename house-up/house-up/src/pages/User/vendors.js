@@ -13,12 +13,15 @@ class vendor extends Component {
 			errors: {},
 			loading: false,
 			vendorsData: [],
+			user:{},
+			currentLocation:{},
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
 		let vendor = props.vendor;
 		const errors = props.errors;
 		const page = props.page;
+		const auth = props.auth;
 
 		let stateChanged = false;
 		let changedState = {};
@@ -30,6 +33,10 @@ class vendor extends Component {
 			changedState.vendorsData = vendor.vendorsData;
 			stateChanged = true;
 		}
+		if (auth && JSON.stringify(state.user) !== JSON.stringify(auth.user)) {
+			changedState.user = auth.user;
+			stateChanged = true;
+		  }
 
 		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
 			changedState.errors = errors;
@@ -43,6 +50,14 @@ class vendor extends Component {
 			changedState.loading = page.loading;
 			stateChanged = true;
 		}
+		if (
+			page &&
+			JSON.stringify(state.currentLocation) !==
+				JSON.stringify(page.currentLocation)
+		) {
+			changedState.currentLocation = page.currentLocation;
+			stateChanged = true;
+		}
 
 		if (stateChanged) {
 			return changedState;
@@ -51,23 +66,37 @@ class vendor extends Component {
 	}
 
 	componentDidMount() {
-		this.props.onGetVendorsData();
+		const { user, currentLocation } = this.state;
+		const reqPacket = {
+			channel:"web",
+			lat:43.787083,
+			lng:-79.497369,
+			city: currentLocation.city,
+			state: currentLocation.province,
+			country: currentLocation.country,
+			pageNum:3,
+			loggedInuserId: user.userId,
+			searchText:"",
+			phoneNo:user.msisdn
+			}
+		this.props.onGetVendorsData(reqPacket);
 	}
 
 	render() {
 		const { errors, loading, vendorsData } = this.state;
+		console.log("vendor data ", vendorsData)
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;
 		} else {
 			pageContent = (
-				<React.Fragment>
+				<React.Fragment>                       
 					<div className='pxp-content'>
 						<div className='pxp-agents pxp-content-wrapper mt-60'>
 							<div className='container'>
 								<div className='row'>
 									<div className='col-sm-12 col-md-7'>
-										<h1
+										<h1  
 											className='pxp-page-header'
 											style={{ paddingLeft: '10px' }}
 										>
@@ -243,12 +272,13 @@ const mapStateToProps = (state) => {
 	return {
 		vendor: state.vendor,
 		page: state.page,
+		auth:state.auth
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onGetVendorsData: () => dispatch(actions.getVendorsData()),
+		onGetVendorsData: (data) => dispatch(actions.getVendorsData(data)),
 	};
 };
 

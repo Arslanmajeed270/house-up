@@ -4,11 +4,13 @@ import {
 	PROPERTY_DROP_DWON,
 	GET_SINGLE_PROPERTY,
 	ADD_COMMENTS_PROP_USER,
+	GET_ALL_PROPERTIES
 } from '../actions/actionTypes';
 
 const initialState = {
 	dropDownData: {},
 	singlePropertyData: {},
+	properties: []
 };
 
 export default function (state = initialState, action) {
@@ -27,6 +29,11 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				dropDownData: action.payload,
+			};
+		case GET_ALL_PROPERTIES:
+			return {
+				...state,
+				properties: action.payload,
 			};
 		case GET_SINGLE_PROPERTY:
 			return {
