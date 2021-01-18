@@ -11,7 +11,9 @@ import Contact from "../../components/Popups/others/contactUsPopup";
 import ImagePreview from "../../components/Popups/others/ImagePreview";
 import SimpleReactLightbox, { SRLWrapper } from "simple-react-lightbox";
 import Spinner from '../../components/common/Spinner';
-import ButtonImagePreview from './components/buttonImagePreview'
+import ButtonImagePreview from './components/buttonImagePreview';
+import Carousel from './components/carousel';
+
 class singleProp extends Component {
   constructor(props) {
     super(props);
@@ -26,8 +28,17 @@ class singleProp extends Component {
       imageToggle: false,
       vendorId: "",
       comments: [],
+      windowWidth: false
     };
   }
+
+resize() {
+    this.setState({windowWidth: window.innerWidth < 400});
+}
+
+componentWillUnmount() {
+    window.removeEventListener("resize", this.resize.bind(this));
+}
 
   static getDerivedStateFromProps(props, state) {
 		const {page, auth, property} = props;
@@ -107,6 +118,8 @@ class singleProp extends Component {
   };
 
   componentDidMount() {
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
     const { user } = this.state;
     const id = this.props.match.params.id;
 
@@ -186,9 +199,9 @@ class singleProp extends Component {
   };
 
   render() {
-    const { loading, singlePropertyData, commentText, imageToggle, user } = this.state;
+    const { loading, singlePropertyData, commentText, imageToggle, user, windowWidth } = this.state;
     let pageContent = '';
-
+    console.log('checking  window.innerWidth: ',  window.innerWidth);
 		if (loading)
       pageContent = <Spinner />;
       else{
@@ -223,7 +236,13 @@ class singleProp extends Component {
                 itemType="http://schema.org/ImageGallery"
               >
                 <SRLWrapper>
-                  <div style={{float: "left", width: "50%", height: '648px'}}>
+                  {windowWidth ?
+                  <Carousel 
+                    singlePropertyData={singlePropertyData} 
+                  />
+                  :
+                  <React.Fragment>
+  <div className="leftBigImage" style={{float: "left", width: "50%", height: '648px'}}>
                   <img 
                   width="647"
                   height="648"
@@ -236,7 +255,7 @@ class singleProp extends Component {
                   singlePropertyData.imageList[0].imageURL} 
                 />
                   </div>
-                  <div style={{float: "right", width: "50%"}} >
+                  <div className="rightImages" style={{float: "right", width: "50%", borderLeft: "2px solid #fff"}} >
                 {singlePropertyData &&
                 singlePropertyData.imageList &&
                 singlePropertyData.imageList.length
@@ -250,6 +269,8 @@ class singleProp extends Component {
                     )
                   : ""}
                   </div>
+                  </React.Fragment>
+                  }
                 <ImagePreview
                   show={imageToggle}
                   close={this.ImagePreviewHandler}

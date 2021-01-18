@@ -481,7 +481,7 @@ class index extends Component {
                 }}
               >
                 <div className="d-table w-100 ">
-                  <div onClick={() => this.props.history.push("/properties")} className="d-table-cell va-bottom neighbours-height paddg">
+                  <div onClick={() => this.props.history.push(`/properties`)} className="d-table-cell va-bottom neighbours-height paddg">
                     <h2>
                       {indexPageData.propertyCounts[i] &&
                         indexPageData.propertyCounts[i].cityName}
@@ -592,11 +592,11 @@ class index extends Component {
                                     )}
 
                                     {(data.category &&
-                                      data.category === "Post") ||
-                                    (data &&
+                                      data.category === "Post" && data.object.user.userStatusDesc !== 'Suspended' && data.object.user.userStatusDesc !== 'Rejected') ||
+                                    ( data &&
                                       data.category === "Property" &&
                                       data.object.propertyStatusDesc ===
-                                        "Approved") ? (
+                                        "Approved" && data.object.user.userStatusDesc !== 'Suspended' && data.object.user.userStatusDesc !== 'Rejected') ? (
                                       <div className="dashboard-newsfeed">
                                         <div className="dashboard-newsfeed-content">
                                           <ul className="news-feed-user-ul">
@@ -715,7 +715,7 @@ class index extends Component {
                                             </li>
                                           </ul>
                                           {data.category &&
-                                          data.category === "Post" ? (
+                                          data.category === "Post"  ? (
                                             <>
                                               {data.object &&
                                               data.object.postImages[0] &&
@@ -743,7 +743,7 @@ class index extends Component {
 
                                               <div className="dashboard-newsfeed-details">
                                                 {data &&
-                                                data.category === "Post"
+                                                data.category === "Post" && data.object.user.userStatusDesc !== 'Suspended' && data.object.user.userStatusDesc !== 'Rejected' 
                                                   ? data &&
                                                     data.object &&
                                                     this.limitWordHandler(
@@ -1037,7 +1037,7 @@ class index extends Component {
                                           ) : data.category &&
                                             data.category === "Property" &&
                                             data.object.propertyStatusDesc ===
-                                              "Approved" ? (
+                                              "Approved" && data.object.user.userStatusDesc !== 'Suspended' && data.object.user.userStatusDesc !== 'Rejected' ? (
                                             <>
                                               <Link
                                                 to={`/single-prop-${
@@ -1424,7 +1424,7 @@ class index extends Component {
                                         </div>
                                       </div>
                                     ) : data.category &&
-                                      data.category === "Vendor" ? (
+                                      data.category === "Vendor" && data.object.userStatusDesc !== "Suspended" && data.object.userStatusDesc !== "Rejected" ? (
                                       <>
                                         <div className="vendor-box">
                                           <Link
@@ -1584,7 +1584,9 @@ class index extends Component {
                                                     data.object.userId
                                                   }&${
                                                     data && data.category
-                                                  }&${index}&${cityName}&${stateName}&${countryName}`}
+                                                  }&${index}&${cityName}&${stateName}&${countryName}&${data &&
+                                                    data.object &&
+                                                    data.object.userId}`}
                                                   style={{ color: "#706666" }}
                                                 >
                                                   <i className="far fa-comment-alt" />

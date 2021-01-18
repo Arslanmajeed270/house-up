@@ -41,5 +41,6 @@ export {
 	dropDwonMenu,
 	addProperty,
 	getSingleProperty,
-	AddCommentsUserProp 
+	AddCommentsUserProp,
+	getProperties
 } from './propertyAction';

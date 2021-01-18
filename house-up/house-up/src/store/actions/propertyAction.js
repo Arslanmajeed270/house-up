@@ -8,6 +8,7 @@ import {
 	PROPERTY_DROP_DWON,
 	GET_SINGLE_PROPERTY,
 	ADD_COMMENTS_PROP_USER,
+	GET_ALL_PROPERTIES
 } from './actionTypes';
 
 let backendServerURL = process.env.REACT_APP_API_URL;
@@ -99,6 +100,48 @@ export const addProperty = (userData, history, closeCodelHanlder) => (
 		})
 		.finally(() => dispatch(clearPageLoading()));
 };
+
+//Get Properties
+export const getProperties = (userData) => (dispatch) => {
+	dispatch(setPageLoading());
+	console.log("request packed for property data", userData)
+
+	axios
+		.post(backendServerURL + '/getpropertiessearchfilterspagination', userData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				console.log("backedn response on getProperty FData",res)
+				dispatch({
+					type: GET_ALL_PROPERTIES,
+					payload:
+						res &&
+						res.data &&
+						res.data.properties.length ?
+						res.data.properties : []
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			console.log('error in get Property data',err)
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
 
 //Get Singel Property
 export const getSingleProperty = (userData) => (dispatch) => {

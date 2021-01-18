@@ -55,9 +55,10 @@ class home extends Component {
 	}
 
 	render() {
+		
 		const { homePageData, loading } = this.state;
 		let pageContent = '';
-		if (loading)
+		if (loading && !homePageData.properties)
 			pageContent = <Spinner />;
 		else {
 			pageContent = (<React.Fragment>

@@ -12,19 +12,18 @@ import { setPageLoading, clearPageLoading, clearErrors } from './pageActions';
 let backendServerURL = process.env.REACT_APP_API_URL;
 
 //Vendors  - Get vendors data from backend
-export const getVendorsData = () => (dispatch) => {
+export const getVendorsData = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
 
 	axios
-		.post(backendServerURL + '/getUsers', {
-			userTypeId: 2,
-		})
+		.post(backendServerURL + '/getvendorsbysearchpagination', userData)
 		.then((res) => {
-			dispatch({
+			console.log("getting vendor dtaa",res);
+			dispatch({ 	
 				type: SET_VENDORS,
 				payload:
-					res.data && res.data.data && res.data.data.users
-						? res.data.data.users
+					res && res.data && res.data.vendors
+						? res.data.vendors
 						: [],
 			});
 			dispatch(clearErrors());
