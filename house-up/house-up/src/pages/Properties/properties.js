@@ -19,7 +19,17 @@ class Properties extends Component {
 			properties: [],
 			pagesCount: 0,
 			user:{},
-			currentPage: 1
+			currentPage: 1,
+
+			// Search and filters data
+			searchAddress: "",
+			rentalListingYN: "No",
+			searchText:"",
+			"storeys":1,
+			bedrooms:0,
+			bathrooms:0,
+			minPrice:0,
+			mxPrice:0
 		};
 
 		this.toggleFilterRef = React.createRef();

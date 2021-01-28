@@ -115,13 +115,13 @@ class selectLocation extends Component {
 		e.preventDefault();
 		const { city, state, country, user } = this.state;
 
+		const userData = {
+			country: country,
+			city: city,
+			province: state,
+		};
+		this.props.onUpdateCurrentLocaiton(userData);
 		if (user && user.userId) {
-			const userData = {
-				country: country,
-				city: city,
-				province: state,
-			};
-			this.props.onUpdateCurrentLocaiton(userData);
 			this.props.history.push(`/index-${country}&${state}&${city}`);
 		} else {
 			this.props.history.goBack();

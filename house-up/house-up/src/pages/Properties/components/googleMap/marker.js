@@ -123,7 +123,7 @@ export default function App(props) {
         defaultCenter={{ lat:43.7184038, lng: -79.518144 }}
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
         onChildClick={props.onChildClickCallback}
-        yesIWantToUseGoogleMapApiInternals
+        yesIWantToUseGoogleMapApiInternals={true}
         onGoogleApiLoaded={({ map }) => {
           mapRef.current = map;
         }}
