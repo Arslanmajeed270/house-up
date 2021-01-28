@@ -9,14 +9,15 @@ class MarkerInfoWindow extends Component {
 		};
 	}
 
-	UNSAFE_componentWillReceiveProps(nextProps) {
-		const { p } = nextProps;
-		console.log('checking into UNSAFE_componentWillReceiveProps: ');
+	componentDidUpdate() {
+		console.log('i am into componentDidUpdate');
+		const { p } = this.props;
+		const { places } = this.state;
 		if (p.length > 0) {
 			p.forEach((result) => {
 				result.show = false; // eslint-disable-line no-param-reassign
 			});
-			if (this.state.places.length === 0) {
+			if ( places.length === 0 ) {
 				this.setState({ places: p });
 			}
 		}
@@ -38,15 +39,12 @@ class MarkerInfoWindow extends Component {
 
 	render() {
 		const { places } = this.state;
-		console.log('checking places: ', places);
-
+		
 		return (
-			<>
 			<ClusterMaker 
-			places={places}
-			onChildClickCallback={this.onChildClickCallback}
+				places={places}
+				onChildClickCallback={this.onChildClickCallback}
 			/>
-			</>
 		);
 	}
 }

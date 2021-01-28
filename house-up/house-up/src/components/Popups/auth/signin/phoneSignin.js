@@ -7,7 +7,6 @@ import * as actions from '../../../../store/actions/authActions';
 import * as actionTypes from '../../../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../../../components/common/Spinner';
 import cloneDeep from 'lodash/cloneDeep';
 
 class phoneSignIn extends Component {
@@ -110,7 +109,7 @@ class phoneSignIn extends Component {
   };
 
   render() {
-    const { errors, loading, viewPass, msisdn, password } = this.state;
+    const { errors, viewPass, msisdn, password } = this.state;
     return (
       <Modal
         show={this.props.show}

@@ -71,7 +71,6 @@ class form4 extends Component {
 	}
 
 	onChangeHandler = (e) => {
-		const { expiryDate } = this.state;
 		let targetName = e.target.name;
 		let targetValue = e.target.value;
 		if (targetName === 'expiryDate') {
@@ -159,8 +158,6 @@ class form4 extends Component {
 	render() {
 		const {
 			feeTypes,
-			packageSelection,
-			feeId,
 			user,
 			cardId,
 			cardNumber,

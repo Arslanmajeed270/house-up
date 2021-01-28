@@ -1,7 +1,7 @@
 
+import "../../App.css";
 import React, { useState, useRef } from "react";
 import useSupercluster from "use-supercluster";
-import "../../App.css";
 import { Link } from 'react-router-dom';
 
 import GoogleMap from './GoogleMap';
@@ -9,7 +9,8 @@ import PropTypes from 'prop-types';
 
 // InfoWindow component
 const InfoWindow = (props) => {
-	const { place } = props;
+  const { place } = props;
+  
 	const infoWindowStyle = {
 		position: 'relative',
 		bottom: 107,
@@ -24,7 +25,8 @@ const InfoWindow = (props) => {
 		borderRadius: 5,
 	};
 
-	const bgImg = place.imageList[0] && place.imageList[0].imageURL;
+  const bgImg = place.imageList[0] && place.imageList[0].imageURL;
+  
 	return (
 		<div style={infoWindowStyle}>
 			<Link to={`/single-prop-${place && place.propertId}`}>

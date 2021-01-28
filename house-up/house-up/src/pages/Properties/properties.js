@@ -2,23 +2,26 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import { getProperties } from '../../store/actions';
 import Spinner from '../../components/common/Spinner';
 import MarkerInfoWindow from './components/googleMap/gMap';
+import  PropertiesPaginationRenderer from './components/propertiesPaginationRenderer'
 
-class properties extends Component {
+class Properties extends Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			errors: {},
 			loading: false,
-			propertiesData: [],
-			propertyPrice: '',
-			indexPageData: {},
 			currentLocation: {},
-			properties:[],
-			user:{}
+			propertiesData:{},
+			properties: [],
+			pagesCount: 0,
+			user:{},
+			currentPage: 1
 		};
+
 		this.toggleFilterRef = React.createRef();
 		this.toggleContentRef = React.createRef();
 		this.toggleMapRef = React.createRef();
@@ -26,31 +29,22 @@ class properties extends Component {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		const {errors, page, property, auth } = props;
+
+		const { errors, page, property, auth } = props;
 
 		let stateChanged = false;
 		let changedState = {};
 
-
 		if (
 			property &&
-			JSON.stringify(state.properties) !== JSON.stringify(property.properties)
+			JSON.stringify(state.propertiesData) !== JSON.stringify(property.propertiesData)
 		) {
-			changedState.properties = property.properties;
+			changedState.propertiesData = property.propertiesData || {};
+			changedState.properties = property.propertiesData.properties || [];
+			changedState.pagesCount =  property.propertiesData.pagesCount || 0;
 			stateChanged = true;
 		}
 
-		if (
-			page &&
-			JSON.stringify(state.indexPageData) !== JSON.stringify(page.indexPageData)
-		) {
-			const indexPageData = page.indexPageData;
-			changedState.indexPageData = indexPageData;
-			stateChanged = true;
-			if(indexPageData && indexPageData.properties){
-				changedState.propertiesData = indexPageData.properties;
-			}
-		}
 		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
 			changedState.errors = errors;
 			stateChanged = true;
@@ -85,44 +79,26 @@ class properties extends Component {
 
 	componentDidMount() {
 		const { currentLocation , user } = this.state;
-
-		// const data = {
-		// 	state: '',
-		// 	channel: 'web',
-		// 	lat: 43.787083,
-		// 	lng: 79.497369,
-		// 	city: currentLocation && currentLocation.city,
-		// 	limit: 10,
-		// 	offset: 0,
-		// 	loggedInuserId: user.userId,
-		// 	country: '',
-		// };
-
-		// this.props.onGetData(data);
-
+		const { onGetPropertyData } = this.props;
 		const ReqPacket = {
 			channel:"web",
-			lat:43.787083,
-			lng:-79.497369,
-			city: currentLocation && currentLocation.city,
-			state: currentLocation && currentLocation.province,
-			country: currentLocation && currentLocation.country,
+			lat: 43.787083,
+			lng: -79.497369,
+			city: currentLocation && currentLocation.city ? currentLocation.city : 'Toronto',
+			state: currentLocation && currentLocation.province ? currentLocation.province : "Ontario",
+			country: currentLocation && currentLocation.country ? currentLocation.country : "Canada",
 			rentalListingYN:"No",
 			pageNum:1,
-			loggedInuserId: user.userId,
+			loggedInuserId: user.userId ? user.userId : "11",
 			searchText:"",
-			phoneNo: user.msisdn
+			phoneNo: user.msisdn ? user.msisdn : "03335425231"
 			}
-			
-			this.props.onGetPropertyData(ReqPacket);
-
-
+			onGetPropertyData(ReqPacket);
 	}
 
 	getSelectedCityData = (cityName) => {
-		const userId =
-			this.state.user && this.state.user.userId ? this.state.user.userId : null;
-
+		const { user } = this.state;
+		const userId = user && user.userId ? user.userId : "11";
 		const data = {
 			state: 'Ontario',
 			channel: 'web',
@@ -136,8 +112,6 @@ class properties extends Component {
 		};
 
 		this.props.onGetData(data);
-
-		
 	};
 
 	toggleFilter = (e) => {
@@ -165,11 +139,32 @@ class properties extends Component {
 		this.toggleMapRef.current.classList.remove('pxp-max');
 		this.toggleContentRef.current.classList.remove('pxp-min');
 		this.toggleDefaultContent.current.classList.remove('d-block');
-    };
+	};
+
+	paginationHandler = ( pageNum ) => {
+		const { currentLocation , user } = this.state;
+		const { onGetPropertyData } = this.props;
+		const ReqPacket = {
+			channel:"web",
+			lat: 43.787083,
+			lng: -79.497369,
+			city: currentLocation && currentLocation.city ? currentLocation.city : 'Toronto',
+			state: currentLocation && currentLocation.province ? currentLocation.province : "Ontario",
+			country: currentLocation && currentLocation.country ? currentLocation.country : "Canada",
+			rentalListingYN:"No",
+			pageNum:pageNum,
+			loggedInuserId: user.userId ? user.userId : "11",
+			searchText:"",
+			phoneNo: user.msisdn ? user.msisdn : "03335425231"
+			}
+			onGetPropertyData(ReqPacket);
+			this.setState({
+				currentPage: pageNum
+			});
+	}
 
 	render() {
-		const { loading, propertiesData, properties } = this.state;
-		console.log("property data form backend",properties)
+		const { loading, currentPage, properties, pagesCount } = this.state;
 
 		let pageContent = '';
 
@@ -207,30 +202,30 @@ class properties extends Component {
 						</div>
 					</div>
 					<div className='d-flex listing-icon-fix'>
-						<Link role='button' className='pxp-adv-toggle' onClick={(e) => this.toggleFilter(e)}>
+						<Link to="#" role='button' className='pxp-adv-toggle' onClick={(e) => this.toggleFilter(e)}>
 							<span className='fa fa-sliders-h' />
 						</Link>
 					</div>
 				</div>
-				<div class="pxp-content-side-search-form-adv mb-3 pxp-content-side-search-form" ref={this.toggleFilterRef}>
-					<div class="row pxp-content-side-search-form-row">
-						<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-							<div class="form-group">
-								<label for="pxp-p-filter-price-min">Price</label>
-								<input type="text" class="form-control" placeholder="Min" id="pxp-p-filter-price-min" />
+				<div className="pxp-content-side-search-form-adv mb-3 pxp-content-side-search-form" ref={this.toggleFilterRef}>
+					<div className="row pxp-content-side-search-form-row">
+						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+							<div className="form-group">
+								<label htmlFor="pxp-p-filter-price-min">Price</label>
+								<input type="text" className="form-control" placeholder="Min" id="pxp-p-filter-price-min" />
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-							<div class="form-group">
-								<label for="pxp-p-filter-price-max" class="d-none d-sm-inline-block">&nbsp;</label>
-								<input type="text" class="form-control" placeholder="Max" id="pxp-p-filter-price-max" />
+						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+							<div className="form-group">
+								<label htmlFor="pxp-p-filter-price-max" className="d-none d-sm-inline-block">&nbsp;</label>
+								<input type="text" className="form-control" placeholder="Max" id="pxp-p-filter-price-max" />
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-							<div class="form-group">
-								<label for="pxp-p-filter-beds">Beds</label>
-								<select class="custom-select" id="pxp-p-filter-beds">
-									<option value="" selected="selected">Any</option>
+						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+							<div className="form-group">
+								<label htmlFor="pxp-p-filter-beds">Beds</label>
+								<select className="custom-select" id="pxp-p-filter-beds">
+									<option value="">Any</option>
 									<option value="">Studio</option>
 									<option value="">1</option>
 									<option value="">2</option>
@@ -240,11 +235,11 @@ class properties extends Component {
 								</select>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-3 pxp-content-side-search-form-col">
-							<div class="form-group">
-								<label for="pxp-p-filter-baths">Baths</label>
-								<select class="custom-select" id="pxp-p-filter-baths">
-									<option value="" selected="selected">Any</option>
+						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
+							<div className="form-group">
+								<label htmlFor="pxp-p-filter-baths">Baths</label>
+								<select className="custom-select" id="pxp-p-filter-baths">
+									<option value="">Any</option>
 									<option value="">1+</option>
 									<option value="">1.5+</option>
 									<option value="">2+</option>
@@ -253,10 +248,10 @@ class properties extends Component {
 								</select>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-							<div class="form-group">
-								<label for="pxp-p-filter-type">Type</label>
-								<select class="custom-select" id="pxp-p-filter-type">
+						<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+							<div className="form-group">
+								<label htmlFor="pxp-p-filter-type">Type</label>
+								<select className="custom-select" id="pxp-p-filter-type">
 									<option value="">Select type</option>
 									<option value="">Apartment</option>
 									<option value="">House</option>
@@ -266,89 +261,89 @@ class properties extends Component {
 								</select>
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-							<div class="form-group">
-								<label for="pxp-p-filter-size-min">Size (sq ft)</label>
-								<input type="text" class="form-control" id="pxp-p-filter-size-min" placeholder="Min" />
+						<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+							<div className="form-group">
+								<label htmlFor="pxp-p-filter-size-min">Size (sq ft)</label>
+								<input type="text" className="form-control" id="pxp-p-filter-size-min" placeholder="Min" />
 							</div>
 						</div>
-						<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-							<div class="form-group">
-								<label for="pxp-p-filter-size-max" class="d-none d-sm-inline-block">&nbsp;</label>
-								<input type="text" class="form-control" id="pxp-p-filter-size-max" placeholder="Max" />
+						<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+							<div className="form-group">
+								<label htmlFor="pxp-p-filter-size-max" className="d-none d-sm-inline-block">&nbsp;</label>
+								<input type="text" className="form-control" id="pxp-p-filter-size-max" placeholder="Max" />
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<label class="mb-2">Amenities</label>
-						<div class="row pxp-content-side-search-form-row">
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Internet</label>
+					<div className="form-group">
+						<label className="mb-2">Amenities</label>
+						<div className="row pxp-content-side-search-form-row">
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Internet</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Garage</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Garage</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Air Conditioning</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Air Conditioning</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Dishwasher</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Dishwasher</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Disposal</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Disposal</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Balcony</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Balcony</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Gym</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Gym</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Playroom</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Playroom</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-6 col-md-4 pxp-content-side-search-form-col">
-								<div class="form-group">
-									<div class="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span class="fa fa-check"></span> Bar</label>
+							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
+								<div className="form-group">
+									<div className="checkbox custom-checkbox">
+										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Bar</label>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<Link to="#" class="pxp-filter-btn">Apply Filters</Link>
+					<Link to="#" className="pxp-filter-btn">Apply Filters</Link>
 				</div>
 
 				<div className='row pb-4'>
@@ -361,7 +356,7 @@ class properties extends Component {
 						<div className="pxp-sort-form form-inline float-right">
 							<div className="form-group">
 								<select className="custom-select" id="pxp-sort-results">
-									<option value="" selected="selected">Default Sort</option>
+									<option value="">Default Sort</option>
 									<option value="">Price (Lo-Hi)</option>
 									<option value="">Price (Hi-Lo)</option>
 									<option value="">Beds</option>
@@ -439,23 +434,7 @@ class properties extends Component {
 						  )
 						: ""}
 				</div>
-				{/* <ul className='pagination pxp-paginantion mt-2 mt-md-4'>
-					<li className='page-item active'>
-						<Link className='page-link' to=''>
-							1
-						</Link>
-					</li>
-					<li className='page-item'>
-						<Link className='page-link' to=''>
-							2
-						</Link>
-					</li>
-					<li className='page-item'>
-						<Link className='page-link' to=''>
-							Next <span className='fa fa-angle-right' />
-						</Link>
-					</li>
-				</ul> */}
+				{ pagesCount > 0 && <PropertiesPaginationRenderer pagesCount={pagesCount} paginationHandler={this.paginationHandler} currentPage={currentPage}  />}
 			</div>
 		</div>
 	);
@@ -463,8 +442,8 @@ class properties extends Component {
 		return (<React.Fragment>
 			<div className='pxp-content pxp-full-height'>
 				<div ref={this.toggleMapRef} className='pxp-map-side pxp-map-right pxp-half'>
-					<MarkerInfoWindow p={propertiesData}/>
-					<Link to='' className='pxp-list-toggle' ref={this.toggleDefaultContent} onClick={(e)=>this.toggleDefaultWidth(e)}>
+					<MarkerInfoWindow p={properties}/>
+					<Link to='#' className='pxp-list-toggle' ref={this.toggleDefaultContent} onClick={(e)=>this.toggleDefaultWidth(e)}>
 						<span className='fa fa-list' />
 					</Link>
 				</div>
@@ -485,9 +464,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onGetData: (data) => dispatch(actions.getIndexPageData(data)),
-		onGetPropertyData: (data) => dispatch(actions.getProperties(data)),
+		onGetPropertyData: (data) => dispatch(getProperties(data)),
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(properties);
+export default connect(mapStateToProps, mapDispatchToProps)(Properties);

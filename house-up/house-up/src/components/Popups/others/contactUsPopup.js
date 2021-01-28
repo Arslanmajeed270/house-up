@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
-
 import { checkDateFuture } from '../../../utils/regex';
 
 import * as actionTypes from '../../../store/actions/actionTypes';
@@ -140,7 +138,6 @@ class contacUsPopup extends Component {
 			detail,
 			meetingDate,
 			errors,
-			showPopUp
 		} = this.state;
 		return (
 			

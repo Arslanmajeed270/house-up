@@ -107,7 +107,7 @@ export const getProperties = (userData) => (dispatch) => {
 	console.log("request packed for property data", userData)
 
 	axios
-		.post(backendServerURL + '/getpropertiessearchfilterspagination', userData)
+		.post(backendServerURL + '/getpropertiessearchpagination', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
 				console.log("backedn response on getProperty FData",res)
@@ -117,7 +117,10 @@ export const getProperties = (userData) => (dispatch) => {
 						res &&
 						res.data &&
 						res.data.properties.length ?
-						res.data.properties : []
+						{
+							properties: res.data.properties,
+							pagesCount: res.data.pagesCount 
+						}  : {}
 				});
 				dispatch(clearErrors());
 			} else {

@@ -11,7 +11,7 @@ import * as actionTypes from "../../store/actions/actionTypes";
 import { Alert, OverlayTrigger, Popover } from "react-bootstrap";
 import Spinner from "../../components/common/Spinner";
 
-import StoryPrevivew from "../../components/Popups/others/storyPrevivew";
+import StoryPreview from "../../components/Popups/others/storyPrevivew";
 import Contact from "../../components/Popups/others/contactUsPopup";
 
 class index extends Component {
@@ -128,7 +128,7 @@ class index extends Component {
     }else if(platform === 'twitter'){
       window.open(`https://twitter.com/intent/tweet?${window.location.hostname}/${id}`)
     }else if(platform === 'linkedin'){
-      window.opne(`https://www.linkedin.com/shareArticle?mini=true&url=${window.location.hostname}/${id}`)
+      window.open(`https://www.linkedin.com/shareArticle?mini=true&url=${window.location.hostname}/${id}`)
     }else if(platform === 'whatsapp'){
       window.open(`https://api.whatsapp.com/send?text=${window.location.hostname}/${id}`)
     }else if(platform === 'instagram'){
@@ -538,7 +538,7 @@ class index extends Component {
                                     responsive={responsive}
                                   />
                                   {storyToggle ? (
-                                    <StoryPrevivew
+                                    <StoryPreview
                                       show={this.state.storyToggle}
                                       close={this.storyHandler}
                                       storys={

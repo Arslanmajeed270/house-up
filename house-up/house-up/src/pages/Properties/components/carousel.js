@@ -10,7 +10,8 @@ const carouselItemMapper = (singlePropertyData) => {
         singlePropertyData.imageList.length
     ) {
         for (let i = 0; i < 5; i++) {
-                const item = ( <img  
+                const item = ( <img
+                    alt=""
                     width='322.5' 
                     height="323" 
                     style={{

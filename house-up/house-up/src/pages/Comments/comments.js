@@ -104,7 +104,7 @@ class comments extends Component {
 	}
 
 	componentDidMount() {
-		const { user, countryName, stateName, cityName ,commentedOnUserId } = this.state;
+		const { user } = this.state;
 		const contactEmail = user.emailAddress ? user.emailAddress : '';
 		const firstName = user.firstName ? user.firstName : '';
 		const lastName = user.lastName ? user.lastName : '';
@@ -175,8 +175,7 @@ class comments extends Component {
 			storyImageId,
 			vendorId,
 			category,
-			userFullName,
-			commentedOnUserId
+			userFullName
 		} = this.state;
 
 		const data = {

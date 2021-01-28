@@ -35,7 +35,7 @@ export const loginUser = (userData, currentLocation, history) => (dispatch) => {
 				// history.push(
 				// 	`/index-${currentLocation.country}&${currentLocation.province}&${currentLocation.city}`
 				// );
-				history.push(`/index-Canada&Ontario&Toronto`);
+				history.replace(`/index-Canada&Ontario&Toronto`);
 			} else {
 				dispatch({ type: HIDE_POP_UP });
 				dispatch({
@@ -172,7 +172,7 @@ export const updateVendor = (userData, history) => (dispatch) => {
 				setAuthToken(false);
 				dispatch({ type: SHOW_POP_UP });
 				dispatch(clearCurrentUser());
-				history.push(`/home`);
+				history.replace(`/home`);
 				dispatch(clearErrors());
 			} else {
 				dispatch({ type: HIDE_POP_UP });

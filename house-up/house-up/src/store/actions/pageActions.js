@@ -17,7 +17,6 @@ import {
 	HIDE_POP_UP,
 	SHOW_POP_UP,
 	SET_PACKAGE_DETAILS,
-	SET_CURRENT_USERS_CARD,
 } from './actionTypes';
 import { setCurrentUser } from './authActions';
 import { Success, Error } from '../../components/common/toastify'

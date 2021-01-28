@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import * as actions from '../../../../store/actions/authActions';
 import * as actionTypes from '../../../../store/actions/actionTypes';
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../../../components/common/Spinner';
 import cloneDeep from 'lodash/cloneDeep';
 
 class emailSignin extends Component {
@@ -105,7 +104,7 @@ class emailSignin extends Component {
 		);
 	};
 	render() {
-		const { viewPass, emailAddress, password, errors, loading } = this.state;
+		const { viewPass, emailAddress, password, errors} = this.state;
 		return (
 			<Modal
 				show={this.props.show}

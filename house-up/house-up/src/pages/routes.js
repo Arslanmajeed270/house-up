@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom';
 import About from './About/about';
 import AddProperty from './Properties/addProperty';
 import SingleVendor from './User/singleVendor';
-import Blogs from './Blogs/blogs';
 import Comments from './Comments/comments';
 import Contact from './Contact/contact';
 import Home from './Home/home';

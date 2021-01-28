@@ -10,7 +10,7 @@ import {
 const initialState = {
 	dropDownData: {},
 	singlePropertyData: {},
-	properties: []
+	propertiesData: {}
 };
 
 export default function (state = initialState, action) {
@@ -33,7 +33,7 @@ export default function (state = initialState, action) {
 		case GET_ALL_PROPERTIES:
 			return {
 				...state,
-				properties: action.payload,
+				propertiesData: action.payload,
 			};
 		case GET_SINGLE_PROPERTY:
 			return {
