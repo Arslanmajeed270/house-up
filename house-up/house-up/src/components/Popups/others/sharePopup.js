@@ -6,9 +6,7 @@ class sharePopup extends Component {
 		super(props);
 		this.myRef = React.createRef();
 	}
-	componentDidMount(){
-		console.log('in share componenet')
-	}
+	
 	state = {};
 	render() {
 		return (

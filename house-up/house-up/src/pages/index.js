@@ -76,6 +76,8 @@ class index extends Component {
 		});
 	};
 	modelHanlder = (model, data) => {
+		console.log('checking model: ', model);
+		console.log('checking data: ', data);
 		if (model === 'phoneSignin') {
 			this.setState({ emailSignin: false, [model]: !this.state[model] });
 		} else if (model === 'emailSignin') {
@@ -197,6 +199,8 @@ class index extends Component {
 		} = this.state;
 		const { history, location, cardDetails, optForgotPass,
 			phNumber, propertyPlanSelection,  } = this.props;
+
+			console.log('checking this.state: ', this.state);
 		return (
 			<React.Fragment>
 				{ phoneSignin && (

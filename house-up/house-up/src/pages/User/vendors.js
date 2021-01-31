@@ -84,7 +84,6 @@ class vendor extends Component {
 
 	render() {
 		const { errors, loading, vendorsData } = this.state;
-		console.log("vendor data ", vendorsData)
 		let pageContent = '';
 		if (loading) {
 			pageContent = <Spinner />;

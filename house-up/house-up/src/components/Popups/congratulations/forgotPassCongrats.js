@@ -19,7 +19,7 @@ class forgotPassCongrats extends Component {
         >
           <div className="">
             <div
-              class="text-center"
+              className="text-center"
               style={{
                 fontSize: '25px',
                 color: '#1082FF',
@@ -32,13 +32,13 @@ class forgotPassCongrats extends Component {
           </div>
           <div className="form-group">
             <div
-              class="text-center"
+              className="text-center"
               style={{ fontSize: '20px', lineHeight: '26px' }}
             >
               Your Password has been{' '}
             </div>
             <div
-              class="text-center"
+              className="text-center"
               style={{ fontSize: '20px', lineHeight: '26px' }}
             >
               {' '}

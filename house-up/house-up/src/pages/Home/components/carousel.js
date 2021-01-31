@@ -4,7 +4,6 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 
 const carouselItemMapper = (homePageData, history) => {
     const carouselItems = [];
-    console.log('checking history: ', history);
     if (
         homePageData &&
         homePageData.properties &&
@@ -72,7 +71,6 @@ const responsive = {
 };
 
 export default function carousel({homePageData, history}) {
-    console.log('checking history into function: ', history);
     const carouselItems = carouselItemMapper(homePageData, history)
     return (
     <div className='owl-carousel pxp-props-carousel-right-stage'>

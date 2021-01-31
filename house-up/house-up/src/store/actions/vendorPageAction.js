@@ -18,7 +18,6 @@ export const getVendorsData = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/getvendorsbysearchpagination', userData)
 		.then((res) => {
-			console.log("getting vendor dtaa",res);
 			dispatch({ 	
 				type: SET_VENDORS,
 				payload:

@@ -54,6 +54,7 @@ class App extends Component {
 				<Route exact path={'/single-post'} component={Index} />
 				<Route exact path={'/single-prop-:id'} component={Index} />
 				<Route exact path={'/professionals'} component={Index} />
+				<Route exact path={'/meeting-list'} component={Index} />
 				<PrivateRoute exact path={'/add-property'} component={Index} />
 				<PrivateRoute
 					exact

@@ -75,7 +75,8 @@ class home extends Component {
 								<h3 className='text-White title'>
 									Own the way you sell your home
 								</h3>
-								<form className='pxp-hero-search mt-4' action=''>
+							
+								{/* <form className='pxp-hero-search mt-4' action=''>
 									<div className='row'>
 										<div className='col-sm-12 col-md-4'>
 											<div className='form-group'>
@@ -101,6 +102,7 @@ class home extends Component {
 										</div>
 									</div>
 								</form>
+							 */}
 							</div>
 						</div>
 					</div>

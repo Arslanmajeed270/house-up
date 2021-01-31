@@ -128,7 +128,7 @@ class OptUser extends Component {
           </div>
           <div className="form-group">
             <div
-              class="text-center"
+              className="text-center"
               style={{
                 fontSize: '20px',
                 marginBottom: '15px',

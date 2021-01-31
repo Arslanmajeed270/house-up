@@ -10,7 +10,6 @@ class MarkerInfoWindow extends Component {
 	}
 
 	componentDidUpdate() {
-		console.log('i am into componentDidUpdate');
 		const { p } = this.props;
 		const { places } = this.state;
 		if (p.length > 0) {

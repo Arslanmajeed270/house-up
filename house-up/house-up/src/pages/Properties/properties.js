@@ -22,14 +22,25 @@ class Properties extends Component {
 			currentPage: 1,
 
 			// Search and filters data
-			searchAddress: "",
-			rentalListingYN: "No",
 			searchText:"",
-			"storeys":1,
+			rentalListingYN: "No",
+			minPrice:0,
+			mxPrice:0,
 			bedrooms:0,
 			bathrooms:0,
-			minPrice:0,
-			mxPrice:0
+			type: '',
+			minSquareFeet: 0,
+			maxSquareFeet: 0,
+			internet: false,
+			garbage: false,
+			airConditioning: false,
+			dishWasher: false,
+			disposal: false,
+			balcony: false,
+			gym: false,
+			playroom: false,
+			bar: false,
+			storeys:1,
 		};
 
 		this.toggleFilterRef = React.createRef();
@@ -174,7 +185,11 @@ class Properties extends Component {
 	}
 
 	render() {
-		const { loading, currentPage, properties, pagesCount } = this.state;
+		const { loading, currentPage, properties, pagesCount, searchText,
+		rentalListingYN, minPrice, mxPrice, bedrooms, bathrooms,
+		type, minSquareFeet, maxSquareFeet, internet, garbage, airConditioning,
+		dishWasher, disposal, balcony, gym, playroom, bar,
+		storeys } = this.state;
 
 		let pageContent = '';
 
@@ -191,9 +206,12 @@ class Properties extends Component {
 								<select
 									className='custom-select'
 									id='pxp-p-search-status'
+									onChange={this.onChange}
+									name='rentalListingYN'
+									value={rentalListingYN}
 								>
-									<option value='buy'>Buy</option>
-									<option value='rent'>Rent</option>
+									<option value={false} >Buy</option>
+									<option value={true} >Rent</option>
 								</select>
 							</div>
 							<div className='col-7 col-sm-7 col-md-8 col-lg-9 pxp-content-side-search-form-col'>
@@ -202,6 +220,9 @@ class Properties extends Component {
 									className='form-control pxp-is-address'
 									placeholder='Search by City, Neighborhood, or Address'
 									id='pxp-p-search-address'
+									onChange={this.onChange}
+									name='searchText'
+									value={searchText}
 								/>
 								<img
 									src={require('../../assets/images/ic_search@2x.png')}
@@ -222,13 +243,29 @@ class Properties extends Component {
 						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
 							<div className="form-group">
 								<label htmlFor="pxp-p-filter-price-min">Price</label>
-								<input type="text" className="form-control" placeholder="Min" id="pxp-p-filter-price-min" />
+								<input 
+								type="number" 
+								className="form-control" 
+								placeholder="Min" 
+								id="pxp-p-filter-price-min"
+								onChange={this.onChange}
+								name='minPrice'
+								value={minPrice}
+								/>
 							</div>
 						</div>
 						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
 							<div className="form-group">
 								<label htmlFor="pxp-p-filter-price-max" className="d-none d-sm-inline-block">&nbsp;</label>
-								<input type="text" className="form-control" placeholder="Max" id="pxp-p-filter-price-max" />
+								<input 
+								type="text" 
+								className="form-control" 
+								placeholder="Max" 
+								id="pxp-p-filter-price-max"
+								onChange={this.onChange}
+								name='mxPrice'
+								value={mxPrice}
+								/>
 							</div>
 						</div>
 						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">

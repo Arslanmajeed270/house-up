@@ -16,7 +16,7 @@ class signupSelection extends Component {
           onClick={() => this.props.closeCodelHanlder('signupSelectionModel')}
         ></Modal.Header>
         <Modal.Body style={{ paddingBottom: '20px', paddingTop: '20px' }}>
-          <Link>
+          <div>
             <p
               style={{
                 color: '#000',
@@ -43,19 +43,19 @@ class signupSelection extends Component {
                       alt=""
                     />
                   </div>
-                  <div class="text-center user">Users</div>
-                  <div class="text-center user-description">
+                  <div className="text-center user">Users</div>
+                  <div className="text-center user-description">
                     List home for sale, rental
                   </div>
-                  <div class="text-center user-description">
+                  <div className="text-center user-description">
                     {' '}
                     browse Professionals,buy&sell
                   </div>
                 </Link>
               </div>
             </div>
-          </Link>
-          <Link>
+          </div>
+          <div>
             <div className="signupCards">
               <div
                 className="dashboard-newsfeed-content"
@@ -71,17 +71,17 @@ class signupSelection extends Component {
                       alt=""
                     />
                   </div>
-                  <div class="text-center user ">Professionals</div>
-                  <div class="text-center user-description ">
+                  <div className="text-center user ">Professionals</div>
+                  <div className="text-center user-description ">
                     Promote your business, find customers,{' '}
                   </div>
-                  <div class="text-center user-description">
+                  <div className="text-center user-description">
                     network, post product & services
                   </div>
                 </Link>
               </div>
             </div>
-          </Link>
+          </div>
         </Modal.Body>
       </Modal>
     );

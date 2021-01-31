@@ -17,6 +17,7 @@ import Index from './Index/index';
 import AddProduct from './wizards/addProduct';
 import AddCoupon from './wizards/addCoupon';
 import SelectLocation from './selectLocation/selectLocation';
+import MeetingList from './meetingList';
 
 class Routes extends React.Component {
 	render() {
@@ -96,7 +97,9 @@ class Routes extends React.Component {
 						/>
 					)}
 				/>
+				
 				<Route exact path={'/professionals'} component={Professionals} />
+				<Route exact path={'/meeting-list'} component={MeetingList} />
 			</React.Fragment>
 		);
 	}

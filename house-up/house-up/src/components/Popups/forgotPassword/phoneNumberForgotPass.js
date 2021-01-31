@@ -7,6 +7,7 @@ import * as actions from '../../../store/actions/index';
 import * as actionTypes from '../../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 class phonenumberForgotPass extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class phonenumberForgotPass extends Component {
     if (stateChanged) {
       return changedState;
     }
+    return null;
   }
 
   componentDidMount(){
@@ -45,7 +47,8 @@ class phonenumberForgotPass extends Component {
     }
   };
 
-  onSubmit = () => {
+  onSubmit = (e) => {
+    e.preventDefault();
     let number = '+' + 1 + this.state.number;
     this.props.phoneNumberHandler(number);
     let data = {
@@ -53,7 +56,7 @@ class phonenumberForgotPass extends Component {
       action: 'forget',
       type: 'LOGIN_PIN_SMS',
     };
-    this.props.onGeneratePin(data);
+    // this.props.onGeneratePin(data);
     this.props.optForgotPassHandler('optForgotPass');
   };
   render() {
@@ -118,13 +121,13 @@ class phonenumberForgotPass extends Component {
               className="text-center pxp-modal-small"
               style={{ marginBottom: '10px' }}
             >
-              <a
+              <Link
                 className="pxp-modal-link pxp-signup-trigger"
-                href="/home"
+                to="/home"
                 style={{ fontWeight: 'bold' }}
               >
                 Create an account
-              </a>
+              </Link>
             </div>
           </form>
         </Modal.Body>

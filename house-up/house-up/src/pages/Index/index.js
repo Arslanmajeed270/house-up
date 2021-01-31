@@ -414,7 +414,6 @@ class index extends Component {
       storyToggle,
       activeCommentId,
     } = this.state;
-    console.log('THIS.state.share', this.state.shareModalState)
     let pageContent = "";
 
     const items = [];
@@ -807,7 +806,7 @@ class index extends Component {
                                                         color: "#706666",
                                                       }}
                                                     >
-                                                      <i class="far fa-comment-alt"></i>
+                                                      <i className="far fa-comment-alt"></i>
                                                     </Link>
                                                       <OverlayTrigger
                                                       trigger="click"

@@ -69,7 +69,6 @@ componentWillUnmount() {
       changedState.indexPageData &&
       changedState.indexPageData.vendorPostPropertiesList.length
     ) {
-      console.log('checking changedState.indexPageData.vendorPostPropertiesList: ',changedState.indexPageData.vendorPostPropertiesList );
       changedState.indexPageData.vendorPostPropertiesList.map((data) => {
         if (
           state.category === "Property" &&
@@ -201,7 +200,6 @@ componentWillUnmount() {
   render() {
     const { loading, singlePropertyData, commentText, imageToggle, user, windowWidth } = this.state;
     let pageContent = '';
-    console.log('checking  window.innerWidth: ',  window.innerWidth);
 		if (loading)
       pageContent = <Spinner />;
       else{
@@ -246,7 +244,7 @@ componentWillUnmount() {
                   <img 
                   width="647"
                   height="648"
-                  style={{paddingTop: '2px'}}
+                  style={{paddingTop: '2px', width: "100%"}}
                 src={
                   singlePropertyData && 
                   singlePropertyData.imageList && 
@@ -568,8 +566,6 @@ componentWillUnmount() {
                               <div className="pt-2 text-secondary">
                                 {singlePropertyData &&
                                   singlePropertyData.condoFee}
-  
-                                {console.log(singlePropertyData)}
                               </div>
                             </div>
                           </div>

@@ -91,7 +91,6 @@ export const addProperty = (userData, history, closeCodelHanlder) => (
 			}
 		})
 		.catch((err) => {
-			console.log(err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -104,13 +103,11 @@ export const addProperty = (userData, history, closeCodelHanlder) => (
 //Get Properties
 export const getProperties = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
-	console.log("request packed for property data", userData)
 
 	axios
 		.post(backendServerURL + '/getpropertiessearchpagination', userData)
 		.then((res) => {
 			if (res && res.data && res.data.resultCode === '200') {
-				console.log("backedn response on getProperty FData",res)
 				dispatch({
 					type: GET_ALL_PROPERTIES,
 					payload:
@@ -135,7 +132,6 @@ export const getProperties = (userData) => (dispatch) => {
 			}
 		})
 		.catch((err) => {
-			console.log('error in get Property data',err)
 			dispatch({
 				type: SET_ERRORS,
 				payload:
@@ -225,7 +221,6 @@ export const AddCommentsUserProp = (
 			}
 		})
 		.catch((err) => {
-			console.log(err);
 			dispatch({
 				type: SET_ERRORS,
 				payload:

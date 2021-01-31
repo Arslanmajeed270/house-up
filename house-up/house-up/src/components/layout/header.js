@@ -372,7 +372,6 @@ class header extends Component {
 										className={`pxp-header-user pxp-signin-trigger ${
 											(animateHeader && !loading) ? '' : 'forborder'
 										}`}
-										onClick={() => this.props.modelHanlder('phoneSignin')}
 									>
 										{/* <span className="far fa-user" /> */}
 										<img
