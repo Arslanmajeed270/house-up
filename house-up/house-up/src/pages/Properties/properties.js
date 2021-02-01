@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getProperties } from '../../store/actions';
+import { getProperties, dropDwonMenu, getPropertiesByFilters } from '../../store/actions';
 import Spinner from '../../components/common/Spinner';
 import MarkerInfoWindow from './components/googleMap/gMap';
 import  PropertiesPaginationRenderer from './components/propertiesPaginationRenderer'
@@ -23,16 +23,16 @@ class Properties extends Component {
 
 			// Search and filters data
 			searchText:"",
-			rentalListingYN: "No",
+			rentalListingYN: "",
 			minPrice:0,
 			mxPrice:0,
 			bedrooms:0,
 			bathrooms:0,
-			type: '',
+			propertyTypeId: null,
 			minSquareFeet: 0,
 			maxSquareFeet: 0,
 			internet: false,
-			garbage: false,
+			garage: false,
 			airConditioning: false,
 			dishWasher: false,
 			disposal: false,
@@ -40,7 +40,14 @@ class Properties extends Component {
 			gym: false,
 			playroom: false,
 			bar: false,
-			storeys:1,
+			storeys:0,
+
+			dropDownData: {},
+			propertyType: [],
+			propertyType: [],
+			bedroomCount: [],
+			bathroomCount: [],
+			storeysCount: [],
 		};
 
 		this.toggleFilterRef = React.createRef();
@@ -64,6 +71,32 @@ class Properties extends Component {
 			changedState.properties = property.propertiesData.properties || [];
 			changedState.pagesCount =  property.propertiesData.pagesCount || 0;
 			stateChanged = true;
+		}
+
+		if (
+			property &&
+			JSON.stringify(state.dropDownData) !==
+				JSON.stringify(property.dropDownData)
+		) {
+			changedState.dropDownData = property.dropDownData;
+			stateChanged = true;
+			const dropDownData = changedState.dropDownData;
+			changedState.propertyType = 
+					dropDownData && dropDownData.propertyType
+						? dropDownData.propertyType
+						: [];
+			changedState.bedroomCount = 
+					dropDownData && dropDownData.bedroomCount
+						? dropDownData.bedroomCount
+						: [];
+						changedState.bathroomCount = 
+					dropDownData && dropDownData.bathroomCount
+						? dropDownData.bathroomCount
+						: [];
+						changedState.storeysCount = 
+					dropDownData && dropDownData.storeysCount
+						? dropDownData.storeysCount
+						: [];
 		}
 
 		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
@@ -98,9 +131,15 @@ class Properties extends Component {
 		return null;
 	}
 
+
 	componentDidMount() {
-		const { currentLocation , user } = this.state;
-		const { onGetPropertyData } = this.props;
+		const { currentLocation , user, dropDownData } = this.state;
+		const { onGetPropertyData, onDropDownMenu } = this.props;
+
+		if (!dropDownData || !dropDownData.currencies) {
+			onDropDownMenu();
+		}
+
 		const ReqPacket = {
 			channel:"web",
 			lat: 43.787083,
@@ -116,24 +155,6 @@ class Properties extends Component {
 			}
 			onGetPropertyData(ReqPacket);
 	}
-
-	getSelectedCityData = (cityName) => {
-		const { user } = this.state;
-		const userId = user && user.userId ? user.userId : "11";
-		const data = {
-			state: 'Ontario',
-			channel: 'web',
-			lat: 43.787083,
-			lng: 79.497369,
-			city: cityName,
-			limit: 10,
-			offset: 0,
-			loggedInuserId: userId,
-			country: 'Canada',
-		};
-
-		this.props.onGetData(data);
-	};
 
 	toggleFilter = (e) => {
 		e.preventDefault(e);
@@ -162,35 +183,107 @@ class Properties extends Component {
 		this.toggleDefaultContent.current.classList.remove('d-block');
 	};
 
+
 	paginationHandler = ( pageNum ) => {
-		const { currentLocation , user } = this.state;
-		const { onGetPropertyData } = this.props;
-		const ReqPacket = {
+		const { currentLocation , user, 
+			searchText, rentalListingYN, minPrice, mxPrice, bedrooms, bathrooms, 
+		} = this.state;
+		const { onGetPropertyData, onGetPropertiesByFilters } = this.props;
+		if( Number(minPrice) > 0 || Number(mxPrice) > 0 || 
+		 Number(bedrooms) > 0 || Number(bathrooms) > 0 ){
+			const data = {
+				channel:"web",
+				lat: 43.787083,
+				lng: -79.497369,
+				city: currentLocation && currentLocation.city ? currentLocation.city : 'Toronto',
+				state: currentLocation && currentLocation.province ? currentLocation.province : "Ontario",
+				country: currentLocation && currentLocation.country ? currentLocation.country : "Canada",
+				pageNum: pageNum,
+				loggedInuserId: user.userId ? user.userId : "11",
+				searchText: searchText,
+				phoneNo: user.msisdn ? user.msisdn : "03335425231",
+				storeys:1,
+				bedrooms: Number(bedrooms),
+				bathrooms: Number(bathrooms),
+				rentalListingYN: rentalListingYN,
+				minPrice: Number(minPrice),
+				mxPrice: Number(mxPrice)
+			}
+			onGetPropertiesByFilters(data);
+		}
+		else{
+			const ReqPacket = {
+				channel:"web",
+				lat: 43.787083,
+				lng: -79.497369,
+				city: currentLocation && currentLocation.city ? currentLocation.city : 'Toronto',
+				state: currentLocation && currentLocation.province ? currentLocation.province : "Ontario",
+				country: currentLocation && currentLocation.country ? currentLocation.country : "Canada",
+				rentalListingYN: rentalListingYN,
+				pageNum:pageNum,
+				loggedInuserId: user.userId ? user.userId : "11",
+				searchText: searchText,
+				phoneNo: user.msisdn ? user.msisdn : "03335425231"
+				}
+				onGetPropertyData(ReqPacket);
+				this.setState({
+					currentPage: pageNum
+				});
+		}
+	}
+
+	onChange = (e) => {
+		const { name, value, type } = e.target;
+		if (type === 'checkbox') {
+			const value = !this.state[name];
+			this.setState({
+				[name]: value,
+			});
+		} else {
+			this.setState({
+				[name]: value,
+			});
+		}
+	};
+
+
+	applyFilterHandler = () => {
+		const { 
+			searchText, rentalListingYN, minPrice, mxPrice, bedrooms, bathrooms,
+			// propertyTypeId, minSquareFeet, maxSquareFeet, internet, garage, airConditioning,
+			// dishWasher, disposal, balcony, gym, playroom, bar,
+			currentLocation , user 
+		} = this.state;
+		const { onGetPropertiesByFilters } = this.props;
+		const data = {
 			channel:"web",
 			lat: 43.787083,
 			lng: -79.497369,
 			city: currentLocation && currentLocation.city ? currentLocation.city : 'Toronto',
 			state: currentLocation && currentLocation.province ? currentLocation.province : "Ontario",
 			country: currentLocation && currentLocation.country ? currentLocation.country : "Canada",
-			rentalListingYN:"No",
-			pageNum:pageNum,
+			pageNum:1,
 			loggedInuserId: user.userId ? user.userId : "11",
-			searchText:"",
-			phoneNo: user.msisdn ? user.msisdn : "03335425231"
-			}
-			onGetPropertyData(ReqPacket);
-			this.setState({
-				currentPage: pageNum
-			});
+			searchText: searchText,
+			phoneNo: user.msisdn ? user.msisdn : "03335425231",
+			storeys:1,
+			bedrooms: Number(bedrooms),
+			bathrooms: Number(bathrooms),
+			rentalListingYN: rentalListingYN,
+			minPrice: Number(minPrice),
+			mxPrice: Number(mxPrice)
+		}
+		onGetPropertiesByFilters(data);
 	}
 
 	render() {
 		const { loading, currentPage, properties, pagesCount, searchText,
 		rentalListingYN, minPrice, mxPrice, bedrooms, bathrooms,
-		type, minSquareFeet, maxSquareFeet, internet, garbage, airConditioning,
+		propertyTypeId, minSquareFeet, maxSquareFeet, internet, garage, airConditioning,
 		dishWasher, disposal, balcony, gym, playroom, bar,
-		storeys } = this.state;
+		propertyType, bedroomCount, bathroomCount } = this.state;
 
+		console.log('checking this.state: ', this.state);
 		let pageContent = '';
 
 		if (loading) {
@@ -210,8 +303,9 @@ class Properties extends Component {
 									name='rentalListingYN'
 									value={rentalListingYN}
 								>
-									<option value={false} >Buy</option>
-									<option value={true} >Rent</option>
+									<option value=""> --- </option>
+									<option value='No'>Sell</option>
+									<option value='Yes'>Rent </option>
 								</select>
 							</div>
 							<div className='col-7 col-sm-7 col-md-8 col-lg-9 pxp-content-side-search-form-col'>
@@ -250,7 +344,7 @@ class Properties extends Component {
 								id="pxp-p-filter-price-min"
 								onChange={this.onChange}
 								name='minPrice'
-								value={minPrice}
+								value={minPrice === 0 ? "" : minPrice}
 								/>
 							</div>
 						</div>
@@ -264,60 +358,101 @@ class Properties extends Component {
 								id="pxp-p-filter-price-max"
 								onChange={this.onChange}
 								name='mxPrice'
-								value={mxPrice}
+								value={mxPrice === 0 ? "" : mxPrice}
 								/>
 							</div>
 						</div>
 						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
 							<div className="form-group">
 								<label htmlFor="pxp-p-filter-beds">Beds</label>
-								<select className="custom-select" id="pxp-p-filter-beds">
-									<option value="">Any</option>
-									<option value="">Studio</option>
-									<option value="">1</option>
-									<option value="">2</option>
-									<option value="">3</option>
-									<option value="">4</option>
-									<option value="">5+</option>
+								<select 
+								className="custom-select" 
+								id="pxp-p-filter-beds"
+								name='bedrooms'
+								onChange={this.onChange}
+								value={bedrooms}
+								>
+									{bedroomCount && bedroomCount.length
+										? bedroomCount.map((noOfBedrooms, idx) => (
+												<option key={idx} value={noOfBedrooms.id}>
+													{noOfBedrooms.value}
+												</option>
+											))
+									: ''}
 								</select>
 							</div>
 						</div>
 						<div className="col-sm-6 col-md-3 pxp-content-side-search-form-col">
 							<div className="form-group">
 								<label htmlFor="pxp-p-filter-baths">Baths</label>
-								<select className="custom-select" id="pxp-p-filter-baths">
-									<option value="">Any</option>
-									<option value="">1+</option>
-									<option value="">1.5+</option>
-									<option value="">2+</option>
-									<option value="">3+</option>
-									<option value="">4+</option>
+								<select 
+								className="custom-select" 
+								id="pxp-p-filter-baths"
+								name='bathrooms'
+								onChange={this.onChange}
+								value={bathrooms}
+								>
+									{bathroomCount && bathroomCount.length
+										? bathroomCount.map((noOfBathrooms, idx) => (
+												<option key={idx} value={noOfBathrooms.id}>
+													{noOfBathrooms.value}
+												</option>
+											))
+									: ''}
 								</select>
+								
 							</div>
 						</div>
 						<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 							<div className="form-group">
 								<label htmlFor="pxp-p-filter-type">Type</label>
-								<select className="custom-select" id="pxp-p-filter-type">
-									<option value="">Select type</option>
-									<option value="">Apartment</option>
-									<option value="">House</option>
-									<option value="">Townhome</option>
-									<option value="">Multi-Family</option>
-									<option value="">Land</option>
+								<select 
+								className="custom-select" 
+								id="pxp-p-filter-type"
+								name='propertyTypeId'
+								onChange={this.onChange}
+								value={propertyTypeId}
+								>
+								{propertyType && propertyType.length
+										? propertyType.map((propertyTypeId, idx) => (
+												<option key={idx} value={propertyTypeId.id}>
+													{' '}
+													{propertyTypeId.value}
+												</option>
+										  ))
+										: ''}
 								</select>
+
 							</div>
 						</div>
 						<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 							<div className="form-group">
 								<label htmlFor="pxp-p-filter-size-min">Size (sq ft)</label>
-								<input type="text" className="form-control" id="pxp-p-filter-size-min" placeholder="Min" />
+								<input 
+								type="text" 
+								className="form-control" 
+								id="pxp-p-filter-size-min" 
+								placeholder="Min"
+								onChange={this.onChange}
+								name='minSquareFeet'
+								value={minSquareFeet === 0 ? "" : minSquareFeet}
+								
+
+								/>
 							</div>
 						</div>
 						<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 							<div className="form-group">
 								<label htmlFor="pxp-p-filter-size-max" className="d-none d-sm-inline-block">&nbsp;</label>
-								<input type="text" className="form-control" id="pxp-p-filter-size-max" placeholder="Max" />
+								<input 
+								type="text" 
+								className="form-control" 
+								id="pxp-p-filter-size-max" 
+								placeholder="Max" 
+								onChange={this.onChange}
+								name='maxSquareFeet'
+								value={maxSquareFeet === 0 ? "" : maxSquareFeet}
+								/>
 							</div>
 						</div>
 					</div>
@@ -327,70 +462,117 @@ class Properties extends Component {
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Internet</label>
+										<label>
+											<input 
+											type="checkbox" 
+											name='internet'
+											value={internet}
+											onChange={this.onChange}
+											/>
+											<span className="fa fa-check"></span> Internet</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Garage</label>
+										<label><input 
+										type="checkbox" 
+										name='garage'
+										value={garage}
+										onChange={this.onChange}
+										/><span className="fa fa-check"></span> Garage</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Air Conditioning</label>
+										<label><input 
+										type="checkbox" 
+										name='airConditioning'
+										value={airConditioning}
+										onChange={this.onChange}
+										/><span className="fa fa-check"></span> Air Conditioning</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Dishwasher</label>
+										<label><input 
+										type="checkbox" 
+										name='dishWasher'
+										value={dishWasher}
+										onChange={this.onChange}
+										/><span className="fa fa-check"></span> Dishwasher</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Disposal</label>
+										<label><input 
+										type="checkbox" 
+										name='disposal'
+										value={disposal}
+										onChange={this.onChange}
+										/><span className="fa fa-check"></span> Disposal</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Balcony</label>
+										<label><input 
+										type="checkbox"
+										value={balcony}
+										name='balcony'
+										onClick={this.onChange}
+										/><span className="fa fa-check"></span> Balcony</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Gym</label>
+										<label><input 
+										type="checkbox" 
+										name='gym'
+										value={gym}
+										onChange={this.onChange} 
+										/><span className="fa fa-check"></span> Gym</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Playroom</label>
+										<label><input 
+										type="checkbox" 
+										name='playroom'
+										value={playroom}
+										onChange={this.onChange}
+										/><span className="fa fa-check"></span> Playroom</label>
 									</div>
 								</div>
 							</div>
 							<div className="col-sm-6 col-md-4 pxp-content-side-search-form-col">
 								<div className="form-group">
 									<div className="checkbox custom-checkbox">
-										<label><input type="checkbox" value="1" /><span className="fa fa-check"></span> Bar</label>
+										<label><input 
+										type="checkbox" 
+										value={bar}
+										name='bar'
+										onChange={this.onChange} 
+										/><span className="fa fa-check"></span> Bar</label>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<Link to="#" className="pxp-filter-btn">Apply Filters</Link>
+					<button onClick={this.applyFilterHandler} type="button"  className="pxp-filter-btn">Apply Filters</button>
 				</div>
 
 				<div className='row pb-4'>
@@ -512,6 +694,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onGetPropertyData: (data) => dispatch(getProperties(data)),
+		onGetPropertiesByFilters: (data) => dispatch(getPropertiesByFilters(data)),
+		onDropDownMenu: () => dispatch(dropDwonMenu()),
 	};
 };
 

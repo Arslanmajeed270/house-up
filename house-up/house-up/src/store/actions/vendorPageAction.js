@@ -5,6 +5,7 @@ import {
 	SET_SINGLE_VENDOR,
 	SET_ERRORS,
 	SET_SINGLE_VENDORS_PROPERTIES,
+	SET_MEETINGS_LIST
 } from './actionTypes';
 
 import { setPageLoading, clearPageLoading, clearErrors } from './pageActions';
@@ -87,3 +88,38 @@ export const getSingleVendorsPropertyData = (userData) => (dispatch) => {
 		})
 		.finally(() => dispatch(clearPageLoading()));
 };
+
+//getMeetingList  - Get getMeetingList data from backend
+export const getMeetingList = (requestData) => (dispatch) => {
+	dispatch(setPageLoading());
+
+	axios
+		.post(backendServerURL + '/getMeetingList', requestData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch({
+					type: SET_MEETINGS_LIST,
+					payload: res.data.data
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+

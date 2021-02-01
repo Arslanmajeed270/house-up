@@ -183,6 +183,11 @@ class header extends Component {
 										<li className='list-inline-item'>
 											<Link to='/professionals'>Find a Professional</Link>
 										</li>
+										{user && user.userId &&
+											<li className='list-inline-item'>
+												<Link to='/meeting-list'>Meeting List</Link>
+											</li>
+										}
 										{/* <li className='list-inline-item'>
 											<Link to='/blogs'>Resources</Link>
 										</li> */}

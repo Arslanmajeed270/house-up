@@ -56,7 +56,7 @@ class phonenumberForgotPass extends Component {
       action: 'forget',
       type: 'LOGIN_PIN_SMS',
     };
-    // this.props.onGeneratePin(data);
+    this.props.onGeneratePin(data);
     this.props.optForgotPassHandler('optForgotPass');
   };
   render() {

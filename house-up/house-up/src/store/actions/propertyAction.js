@@ -141,6 +141,47 @@ export const getProperties = (userData) => (dispatch) => {
 		.finally(() => dispatch(clearPageLoading()));
 };
 
+//Get getpropertiesbyfilters
+export const getPropertiesByFilters = (userData) => (dispatch) => {
+	dispatch(setPageLoading());
+
+	axios
+		.post(backendServerURL + '/getpropertiesbyfilters', userData)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch({
+					type: GET_ALL_PROPERTIES,
+					payload:
+						res &&
+						res.data &&
+						res.data.properties.length ?
+						{
+							properties: res.data.properties,
+							pagesCount: res.data.pagesCount 
+						}  : {}
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
+};
+
 
 //Get Singel Property
 export const getSingleProperty = (userData) => (dispatch) => {

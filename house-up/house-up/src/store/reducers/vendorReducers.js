@@ -3,12 +3,15 @@ import {
 	SET_SINGLE_VENDOR,
 	SET_SINGLE_VENDORS_PROPERTIES,
 	ADD_COMMENTS_PROP_USER,
+	SET_MEETINGS_LIST
 } from '../actions/actionTypes';
 
 const initialState = {
 	vendorsData: [],
 	singleVendorData: {},
 	singleVendorsPropertiesData: {},
+	meetingsListSelfInvite: [],
+	meetingsListInvitedBy: []
 };
 
 export default function (state = initialState, action) {
@@ -47,9 +50,17 @@ export default function (state = initialState, action) {
 					});
 				}
 			}
+			
 			return {
 				...state,
 				singleVendorData,
+			};
+		}
+		case SET_MEETINGS_LIST: {
+			return {
+				...state,
+				meetingsListSelfInvite: action.payload.meetingsListSelfInvite,
+				meetingsListInvitedBy: action.payload.meetingsListInvitedBy,
 			};
 		}
 		default:

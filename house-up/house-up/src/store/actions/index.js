@@ -35,6 +35,7 @@ export {
 	getVendorsData,
 	getSingleVendorData,
 	getSingleVendorsPropertyData,
+	getMeetingList
 } from './vendorPageAction';
 
 export { 
@@ -42,5 +43,6 @@ export {
 	addProperty,
 	getSingleProperty,
 	AddCommentsUserProp,
-	getProperties
+	getProperties,
+	getPropertiesByFilters
 } from './propertyAction';

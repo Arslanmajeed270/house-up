@@ -14,6 +14,9 @@ body {
 	margin: 20px auto;
 	padding: 0px 0px;	
 }
+.meeting_list_page{
+    padding: 130px 0 100px;
+}
 .my_request_main h2, .request_callback h2{
     font-size: 18px;
     color: #000;
@@ -99,7 +102,10 @@ body {
 	    float: none;
 	    width: 100%;
 	    padding: 0px 20px;
-	}	
+    }	
+    .meeting_list_page{
+        padding: 100px 0 100px;
+    }
 }
 
 
