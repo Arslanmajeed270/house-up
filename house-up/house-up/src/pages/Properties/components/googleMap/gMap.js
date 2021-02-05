@@ -9,17 +9,31 @@ class MarkerInfoWindow extends Component {
 		};
 	}
 
-	componentDidUpdate() {
-		const { p } = this.props;
-		const { places } = this.state;
+
+	static getDerivedStateFromProps(props, state) {
+
+		const { p } = props;
 		if (p.length > 0) {
 			p.forEach((result) => {
 				result.show = false; // eslint-disable-line no-param-reassign
 			});
-			if ( places.length === 0 ) {
-				this.setState({ places: p });
-			}
 		}
+
+		let stateChanged = false;
+		let changedState = {};
+
+		if (
+			p &&
+			JSON.stringify(state.places) !== JSON.stringify(p)
+		) {
+			changedState.places = p;
+			stateChanged = true;
+		}
+
+		if (stateChanged) {
+			return changedState;
+		}
+		return null;
 	}
 
 	// onChildClick callback can take two arguments: key and childProps
@@ -29,6 +43,7 @@ class MarkerInfoWindow extends Component {
 				const index = state.places.findIndex(
 					(e) => parseInt(e.propertId) === parseInt(childProps.place.propertId)
 				);
+				console.log("checking state.places[index].show: ", state.places[index].show);
 				state.places[index].show = true; // !state.places[index].show
 				return { places: state.places };
 			});
@@ -38,7 +53,6 @@ class MarkerInfoWindow extends Component {
 
 	render() {
 		const { places } = this.state;
-		
 		return (
 			<ClusterMaker 
 				places={places}

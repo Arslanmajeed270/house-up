@@ -11,9 +11,6 @@ const Wrapper = styled.main`
 const GoogleMap = ({ children, ...props }) => (
   <Wrapper>
     <GoogleMapReact
-      bootstrapURLKeys={{
-        key: process.env.REACT_APP_MAP_KEY,
-      }}
       {...props}
     >
       {children}

@@ -76,8 +76,6 @@ class index extends Component {
 		});
 	};
 	modelHanlder = (model, data) => {
-		console.log('checking model: ', model);
-		console.log('checking data: ', data);
 		if (model === 'phoneSignin') {
 			this.setState({ emailSignin: false, [model]: !this.state[model] });
 		} else if (model === 'emailSignin') {
@@ -195,12 +193,11 @@ class index extends Component {
 			phoneNumberModel, phoneNumberVendorModel,
 			optUserModel, optUserModelVendor,
 			userSignupModel, vendorSignupModel, congratulationModel,
-			vendorCongrats, imageToggle, alertPopup
+			vendorCongrats, imageToggle, alertPopup, phNumber,
+			cardDetails, optForgotPass, propertyPlanSelection
 		} = this.state;
-		const { history, location, cardDetails, optForgotPass,
-			phNumber, propertyPlanSelection,  } = this.props;
+		const { history, location } = this.props;
 
-			console.log('checking this.state: ', this.state);
 		return (
 			<React.Fragment>
 				{ phoneSignin && (

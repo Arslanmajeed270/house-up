@@ -185,6 +185,7 @@ class Properties extends Component {
 
 
 	paginationHandler = ( pageNum ) => {
+
 		const { currentLocation , user, 
 			searchText, rentalListingYN, minPrice, mxPrice, bedrooms, bathrooms, 
 		} = this.state;
@@ -282,9 +283,9 @@ class Properties extends Component {
 		propertyTypeId, minSquareFeet, maxSquareFeet, internet, garage, airConditioning,
 		dishWasher, disposal, balcony, gym, playroom, bar,
 		propertyType, bedroomCount, bathroomCount } = this.state;
-
-		console.log('checking this.state: ', this.state);
 		let pageContent = '';
+
+		const googleMap = <MarkerInfoWindow p={properties}/>;
 
 		if (loading) {
 			pageContent = <Spinner />;
@@ -411,7 +412,7 @@ class Properties extends Component {
 								id="pxp-p-filter-type"
 								name='propertyTypeId'
 								onChange={this.onChange}
-								value={propertyTypeId}
+								value={propertyTypeId ? propertyTypeId : ""}
 								>
 								{propertyType && propertyType.length
 										? propertyType.map((propertyTypeId, idx) => (
@@ -671,7 +672,7 @@ class Properties extends Component {
 		return (<React.Fragment>
 			<div className='pxp-content pxp-full-height'>
 				<div ref={this.toggleMapRef} className='pxp-map-side pxp-map-right pxp-half'>
-					<MarkerInfoWindow p={properties}/>
+					{googleMap}
 					<Link to='#' className='pxp-list-toggle' ref={this.toggleDefaultContent} onClick={(e)=>this.toggleDefaultWidth(e)}>
 						<span className='fa fa-list' />
 					</Link>
