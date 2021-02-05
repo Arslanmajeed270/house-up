@@ -51,7 +51,6 @@ class optForgotPass extends Component {
 	}
 
 	componentDidMount() {
-		console.log('i am into otpForgotpasswod');
 		this.props.onHideError();
 	}
 

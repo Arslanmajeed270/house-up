@@ -71,13 +71,13 @@ class vendor extends Component {
 			channel:"web",
 			lat:43.787083,
 			lng:-79.497369,
-			city: currentLocation.city,
-			state: currentLocation.province,
-			country: currentLocation.country,
-			pageNum:3,
-			loggedInuserId: user.userId,
+			city: currentLocation.city ? currentLocation.city : "Toronto",
+			state: currentLocation.province ? currentLocation.province  : "Ontario",
+			country: currentLocation.country ? currentLocation.country : "Canada",
+			pageNum:1,
 			searchText:"",
-			phoneNo:user.msisdn
+			phoneNo:user.msisdn ? user.msisdn : "03335425231",
+			isUserLoggedIn: user.msisdn ? true : false
 			}
 		this.props.onGetVendorsData(reqPacket);
 	}

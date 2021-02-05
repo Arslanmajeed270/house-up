@@ -12,6 +12,7 @@ import { Alert } from 'react-bootstrap';
 import Spinner from '../../../../components/common/Spinner';
 
 class OptUser extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -24,8 +25,7 @@ class OptUser extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const otpAuthenticate = props.otpAuthenticate;
-    let errors = props.errors;
-    let page = props.page;
+    const { errors, page, onFalseOtpAutheticate, userSignupHandler } = props;
 
     let stateChanged = false;
     let changedState = {};
@@ -36,11 +36,12 @@ class OptUser extends Component {
     ) {
       changedState.otpAuthenticate = otpAuthenticate;
       if (changedState.otpAuthenticate === true) {
-        props.onFalseOtpAutheticate();
-        props.userSignupHandler('userSignupModel');
-      }
+        onFalseOtpAutheticate();
+        userSignupHandler('userSignupModel');
+      
       stateChanged = true;
     }
+  }
 
     if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
       changedState.errors = errors;
@@ -60,20 +61,22 @@ class OptUser extends Component {
     }
     return null;
   }
+
   handleChange = (otp) => {
+    const { onVerifyPin, phNumber } = this.props;
     this.setState({ otp });
     if (otp.length === 4) {
       let data = {
-        msisdn: this.props.phNumber,
+        msisdn: phNumber,
         channel: 'HouseUp',
         pin: otp,
       };
-      this.props.onVerifyPin(data);
+      onVerifyPin(data);
     }
-  };
+  }
 
   componentDidMount(){
-    this.props.onHideError()
+    this.props.onHideError();
   }
 
   resendPin = (num) => {
@@ -84,8 +87,10 @@ class OptUser extends Component {
     };
     this.props.onGeneratePin(data);
   };
+
   render() {
     const { errors, loading } = this.state;
+    const { phNumber } = this.props;
     let pageContent = '';
 
     if (loading) {
@@ -94,9 +99,10 @@ class OptUser extends Component {
       pageContent = '';
     }
     let phoneNumber = '';
-    if (this.props.phNumber) {
-      phoneNumber = this.props.phNumber;
+    if (phNumber) {
+      phoneNumber = phNumber;
     }
+
     return (
       <Modal
         show={this.props.show}

@@ -1,6 +1,6 @@
 
 import "../../App.css";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import useSupercluster from "use-supercluster";
 import { Link } from 'react-router-dom';
 
@@ -96,8 +96,14 @@ export default function App(props) {
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [zoom, setZoom] = useState(10);
+  const [places, setPlaces] = useState([]);
 
-  const places = props.places;
+  useEffect(() => {
+    if( props.places && JSON.stringify(places) !== JSON.stringify(props.places) ){
+      setPlaces(props.places);
+    }
+ }, [places, props.places]);
+
   const points = places.map(data => ({
     type: "Feature",
     properties: { cluster: false, placeId: data.id, category: data.category, show: data.show, place: data},
@@ -123,8 +129,9 @@ export default function App(props) {
         defaultCenter={{ lat:43.7184038, lng: -79.518144 }}
         bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_KEY }}
         onChildClick={props.onChildClickCallback}
-        yesIWantToUseGoogleMapApiInternals={true}
+        yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
+          console.log('i am into onGoogleApiLoaded')
           mapRef.current = map;
         }}
         onChange={({ zoom, bounds }) => {

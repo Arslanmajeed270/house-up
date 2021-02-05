@@ -24,8 +24,7 @@ class form1 extends Component {
 			latitude: 32.57698,
 			longitude: 78.68576,
 			googleMapKey:
-				process.env.REACT_APP_GOOGLE_MAP_KEY |
-				'AIzaSyCMNT51gPtbeVnUWr4j56UzuQqMioSuwAk',
+				process.env.REACT_APP_GOOGLE_MAP_KEY,
 			propertyPlanState: false,
 			errors: {},
 			loading: false,
