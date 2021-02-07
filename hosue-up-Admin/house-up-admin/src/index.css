@@ -46,3 +46,8 @@ code {
 .custom-switch {
   padding-left: 0px !important;
 }
+
+.sidebar-link.sub-menu {
+  padding-left: 62px;
+  display: none;
+}

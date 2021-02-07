@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 
 import Header from '../components/header';
 import Sidebar from '../components/sideBar';
+import Footer from '../components/footer';
 import Routes from './routes';
+import Loader from '../components/common/Loader'
 
 import BusinessRegDoc from '../components/Popups/BusinessRegistrationDoc'
 import BusinessSupportDoc from '../components/Popups/BusinessSupportDoc'
@@ -13,23 +15,43 @@ import Confirmation from '../components/Popups/confirmation';
 import RejectedReason from '../components/Popups/RejectedReason';
 
 
-class index extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          sideBarShow : false,
-          notificationShow : false,
-          userShow : false,
-          businessRegDoc:false,
-          businessSuppDoc:false,
-          data:'',
-          userStatus:false,
-          vendorStatus:false,
-          confirmation:false,
-          rejectedReason:false
-        };
+class Index extends Component {
+
+    state = {
+        sideBarShow : false,
+        notificationShow : false,
+        userShow : false,
+        businessRegDoc:false,
+        businessSuppDoc:false,
+        data:'',
+        userStatus:false,
+        vendorStatus:false,
+        confirmation:false,
+        rejectedReason:false,
+
+        loading: false
     }
 
+    static getDerivedStateFromProps(props, state) {
+  
+        const { page } = props;
+        const { loading } = state;
+    
+        let stateChanged = false;
+        let changedState = {};
+    
+        if( page && loading !== page.loading){
+          changedState.loading = page.loading;  
+          stateChanged = true;
+        }
+    
+        if(stateChanged){
+          return changedState;
+        }
+        return null;
+    }
+
+        
     sideBarHandler = () =>{
             this.setState ({
                 sideBarShow : !this.state.sideBarShow 
@@ -46,12 +68,13 @@ class index extends Component {
         })
       }
 
-      closeCodelHanlder = (model) => {
+      closeModelHandler = (model) => {
 		this.setState({
 			[model]: false,
 		});
-	};
-	modelHanlder = (model, data) => {
+    };
+    
+	modelHandler = (model, data) => {
 		if (model === 'businessRegDoc') {
 			this.setState({ [model]: !this.state[model] , data:data });
 		} else if (model === 'businessSuppDoc') {
@@ -83,54 +106,55 @@ class index extends Component {
       
 
     render() {
+        const { loading, businessRegDoc, data, businessSuppDoc, userStatus,
+        vendorStatus, confirmation, rejectedReason} = this.state;
         return (
             <React.Fragment>
-                {this.state.businessRegDoc && (
+                { businessRegDoc && (
 					<BusinessRegDoc
-						show={this.state.businessRegDoc}
-                        closeCodelHanlder={this.closeCodelHanlder}
-                        data={this.state.data}
+						show={businessRegDoc}
+                        closeModelHandler={this.closeModelHandler}
+                        data={data}
 					/>
 				)}
-                {this.state.businessSuppDoc && (
+                { businessSuppDoc && (
 					<BusinessSupportDoc
-						show={this.state.businessSuppDoc}
-						closeCodelHanlder={this.closeCodelHanlder}
-                        data={this.state.data}
+						show={businessSuppDoc}
+						closeModelHandler={this.closeModelHandler}
+                        data={data}
 					/>
 				)}
-                {this.state.userStatus && (
+                {userStatus && (
 					<UserStatusAction
-                        show={this.state.userStatus}
-                        modelHanlder={this.modelHanlder}
-                        closeCodelHanlder={this.closeCodelHanlder}
+                        show={userStatus}
+                        modelHandler={this.modelHandler}
+                        closeModelHandler={this.closeModelHandler}
                         data={this.state.data}
 					/>
 				)}
-                {this.state.vendorStatus && (
+                {vendorStatus && (
 					<VendorStatusAction
-                        modelHanlder={this.modelHanlder}
-						show={this.state.vendorStatus}
-                        closeCodelHanlder={this.closeCodelHanlder}
-                        data={this.state.data}
+                        modelHandler={this.modelHandler}
+						show={vendorStatus}
+                        closeModelHandler={this.closeModelHandler}
+                        data={data}
 					/>
 				)}
-                {this.state.confirmation && (
+                {confirmation && (
 					<Confirmation
-						show={this.state.confirmation}
-                        closeCodelHanlder={this.closeCodelHanlder}
-                        data={this.state.data}
+						show={confirmation}
+                        closeModelHandler={this.closeModelHandler}
+                        data={data}
 					/>
 				)}
-                {this.state.rejectedReason && (
+                {rejectedReason && (
 					<RejectedReason
-						show={this.state.rejectedReason}
-                        closeCodelHanlder={this.closeCodelHanlder}
-                        data={this.state.data}
+						show={rejectedReason}
+                        closeModelHandler={this.closeModelHandler}
+                        data={data}
 					/>
 				)}
-
-                
+                <Loader loading={loading} />
                 <Header sideBarHandler = {()=>this.sideBarHandler()}
                  notificationToggle = { () => this.notificationToggle()} 
                  userToggleHandler = { () => this.userToggleHandler()} 
@@ -145,4 +169,12 @@ class index extends Component {
         )
     }
 }
-export default index;
+
+
+const mapStateToProps = state => {
+    return {
+      page: state.page
+    }
+  };
+   
+  export default connect(mapStateToProps,null)(Index);

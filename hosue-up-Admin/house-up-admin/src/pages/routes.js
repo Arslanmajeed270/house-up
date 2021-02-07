@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router , Route,  withRouter} from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 
 import Index from './Dashboard';
@@ -19,7 +19,7 @@ import Vendors from './Users/vendor';
 class routes extends Component {
     render() {
         return (
-            <Router>
+            <>
                 <Route      
                     exact 
                     path={"/"} 
@@ -90,8 +90,8 @@ class routes extends Component {
                     component={()=> <Vendors modelHanlder={this.props.modelHanlder} />}
                 />
 
-        </Router>
+        </>
         )
     }
 }
-export default withRouter(routes);
+export default routes;

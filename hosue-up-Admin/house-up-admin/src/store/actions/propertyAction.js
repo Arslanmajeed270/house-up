@@ -11,20 +11,36 @@ import {
 import {clearErrors , clearPageLoading , setPageLoading} from './pageActions'
 const backendServerURL = process.env.REACT_APP_API_URL;
 
-
-
-//getPropertiesData  - Get getPropertiesData data from backend
-export const getPropertiesData = (data) => (dispatch) => {
+//Get Properties
+export const getProperties = (userData) => (dispatch) => {
 	dispatch(setPageLoading());
+
 	axios
-		.post(backendServerURL + '/home', data)
+		.post(backendServerURL + '/getpropertiessearchpagination', userData)
 		.then((res) => {
-			console.log('res for properties data', res)
-			dispatch({
-				type: GET_ALL_PROPERTIES,
-				payload: res.data && res.data.data && res.data.data.properties ? res.data.data.properties : {},
-			});
-			dispatch(clearErrors());
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch({
+					type: GET_ALL_PROPERTIES,
+					payload:
+						res &&
+						res.data &&
+						res.data.properties.length ?
+						{
+							properties: res.data.properties,
+							pagesCount: res.data.pagesCount 
+						}  : {}
+				});
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
 		})
 		.catch((err) => {
 			dispatch({
@@ -35,6 +51,7 @@ export const getPropertiesData = (data) => (dispatch) => {
 		})
 		.finally(() => dispatch(clearPageLoading()));
 };
+
 
 //SingleVendorsProperty  - Get SingleVendorsProperty data from backend
 export const getSingleVendorsPropertyData = (userData) => (dispatch) => {
@@ -104,7 +121,7 @@ export const getSingleProperty = (userData) => (dispatch) => {
 };
 
 //Properties  - Update property State
-export const updatePropertyState = (userData) => dispatch => {
+export const updateProperty = (userData) => dispatch => {
 	console.log("checking userData: ", userData);
     axios
     .post(backendServerURL+'/updatePropertyStatus',userData)

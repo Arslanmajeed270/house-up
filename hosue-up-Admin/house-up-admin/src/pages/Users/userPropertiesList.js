@@ -174,7 +174,7 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => {
     return {
-      onUpdatePropertyState : (userData)=> dispatch(actions.updatePropertyState(userData)),
+      onUpdatePropertyState : (userData)=> dispatch(actions.updateProperty(userData)),
       onGetSingleVendorsPropertyData: (userData) => dispatch(actions.getSingleVendorsPropertyData(userData)),
   
     }

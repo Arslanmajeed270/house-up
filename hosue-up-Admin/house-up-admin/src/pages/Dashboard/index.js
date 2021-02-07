@@ -1,30 +1,33 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import { getDashboardData } from '../../store/actions/index';
 
 class index extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      dashboardData: []
+      dashboardData: [],
+      loading: false
     };
 }
 
   static getDerivedStateFromProps(props, state) {
   
-    let page = props.page;
+    const { page } = props;
+    const { loading, dashboardData } = state;
 
     let stateChanged = false;
     let changedState = {};
 
 
-    if(page && JSON.stringify(state.loading) !== JSON.stringify(page.loading)){
+    if( loading !== page.loading ){
       changedState.loading = page.loading;  
       stateChanged = true;
     }
-    if(page && JSON.stringify(state.dashboardData) !== JSON.stringify(page.dashboardData)){
+
+    if(page && JSON.stringify( dashboardData ) !== JSON.stringify(page.dashboardData)){
       changedState.dashboardData = page.dashboardData;  
       stateChanged = true;
     }
@@ -36,17 +39,19 @@ class index extends Component {
 
   }
 
-componentDidMount() {
-  this.props.onGetDashboardData();
-}
+  componentDidMount() {
+    const { onGetDashboardData } = this.props;
+    onGetDashboardData();
+  }
 
 
     render() { 
-      const { dashboardData } = this.state;
-      console.log(dashboardData);
+      const { loading, dashboardData } = this.state;
      
         return ( 
             <React.Fragment>
+              {
+                !loading &&
                 <div className="page-holder w-100 d-flex flex-wrap">
                 <div className="container-fluid px-xl-5">
                   <section className="py-5">
@@ -137,7 +142,7 @@ componentDidMount() {
                           <div className="flex-grow-1 d-flex align-items-center">
                             <div className="dot mr-3 bg-red" />
                             <div className="text">
-        <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountUnitLabel} {dashboardData && dashboardData.length && dashboardData[7].dashboardCount }</span>
+                            <h6 className="mb-0">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountLabel }</h6><span className="text-gray">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountUnitLabel} {dashboardData && dashboardData.length && dashboardData[7].dashboardCount }</span>
                             </div>
                           </div>
                           <div className="icon text-white bg-red"><i className="fas fa-receipt" /></div>
@@ -145,97 +150,6 @@ componentDidMount() {
                       </div>
                     </div>
                   </section>
-                  
-                  {/* <section>
-                    <div className="row mb-4">
-                      <div className="col-lg-7 mb-4 mb-lg-0">
-                        <div className="card">
-                          <div className="card-header">
-                            <h2 className="h6 text-uppercase mb-0">Vendor Progress</h2>
-                          </div>
-                          <div className="card-body">
-                            <p className="text-gray">Admin Can See Vendors Daily Progress.</p>
-                            <div className="chart-holder">
-                              <canvas id="lineChart1" style={{maxHeight: '14rem !important'}} className="w-100" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-5 mb-4 mb-lg-0 pl-lg-0">
-                        <div className="card mb-3">
-                          <div className="card-body">
-                            <div className="row align-items-center flex-row">
-                              <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>{dashboardData && dashboardData.length && dashboardData[4].dashboardCount }</span><span className="dot bg-green d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{ dashboardData && dashboardData.length && dashboardData[4].dashboardCountLabel }</span>
-                                <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
-                              </div>
-                              <div className="col-lg-7">
-                                <canvas id="pieChartHome1" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="card">
-                          <div className="card-body">
-                            <div className="row align-items-center flex-row">
-                              <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>{ dashboardData && dashboardData.length && dashboardData[5].dashboardCount }</span><span className="dot bg-violet d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{ dashboardData && dashboardData.length && dashboardData[5].dashboardCountLabel }</span>
-                                <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
-                              </div>
-                              <div className="col-lg-7">
-                                <canvas id="pieChartHome2" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-lg-5 mb-4 mb-lg-0">
-                        <div className="card mb-3">
-                          <div className="card-body">
-                            <div className="row align-items-center mb-3 flex-row">
-                              <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>${dashboardData && dashboardData.length && dashboardData[6].dashboardCount }</span><span className="dot bg-violet d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData && dashboardData.length && dashboardData[6].dashboardCountLabel }</span>
-                                <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
-                              </div>
-                              <div className="col-lg-7">
-                                <canvas id="pieChartHome3" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="card">
-                          <div className="card-body">
-                            <div className="row align-items-center flex-row">
-                              <div className="col-lg-5">
-                                <h2 className="mb-0 d-flex align-items-center"><span>${dashboardData && dashboardData.length && dashboardData[7].dashboardCount }</span><span className="dot bg-green d-inline-block ml-3" /></h2><span className="text-muted text-uppercase small">{dashboardData && dashboardData.length && dashboardData[7].dashboardCountLabel }</span>
-                                <hr /><small className="text-muted">Lorem ipsum dolor sit</small>
-                              </div>
-                              <div className="col-lg-7">
-                                <canvas id="pieChartHome4" />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-7">
-                        <div className="card">
-                          <div className="card-header">
-                            <h2 className="h6 text-uppercase mb-0">Total Overdue</h2>
-                          </div>
-                          <div className="card-body">
-                            <p className="text-gray">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            <div className="chart-holder">
-                              <canvas id="lineChart2" style={{maxHeight: '14rem !important'}} className="w-100" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </section>                 
-                  <section className="py-5">
-                  </section> */}
                 </div>
                 <footer className="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
                   <div className="container-fluid">
@@ -246,7 +160,7 @@ componentDidMount() {
                     </div>
                   </div></footer>
               </div>
-
+            }
             </React.Fragment>
          );
     }
@@ -261,7 +175,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetDashboardData: () => dispatch(actions.getDashboardData())
+      onGetDashboardData: () => dispatch(getDashboardData())
   }
 };
 

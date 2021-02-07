@@ -904,7 +904,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onGetSinglePropertyData: (userData) =>
 			dispatch(actions.getSingleProperty(userData)),
-			onUpdatePropertyState : (userData)=> dispatch(actions.updatePropertyState(userData))
+			onUpdatePropertyState : (userData)=> dispatch(actions.updateProperty(userData))
 	};
 };
 

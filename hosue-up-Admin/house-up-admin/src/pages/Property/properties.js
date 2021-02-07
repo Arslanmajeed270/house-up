@@ -2,23 +2,34 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import { updateProperty, getProperties } from '../../store/actions';
+import { limitWordHandler, dateHandler } from '../../utils/common'
 class properties extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      propertiesData:[]
+
+    state = {
+      propertiesData:[],
+      properties: [],
+			pagesCount: 0,
+      loading: false
     };
-  }
+
   static getDerivedStateFromProps(props, state) {
   
-    let propPage = props.propPage;
+    const { property, page } = props;
+    const { loading, propertiesData, properties, pagesCount} = state;
 
     let stateChanged = false;
     let changedState = {};
 
-    if(propPage && JSON.stringify(state.propertiesData) !== JSON.stringify(propPage.propertiesData)){
-      changedState.propertiesData = propPage.propertiesData;  
+    if(property && JSON.stringify(propertiesData) !== JSON.stringify(property.propertiesData)){
+      changedState.propertiesData = property.propertiesData; 
+      changedState.properties = property.propertiesData.properties || [];
+			changedState.pagesCount =  property.propertiesData.pagesCount || 0; 
+      stateChanged = true;
+    }
+
+    if( loading !== page.loading ){
+      changedState.loading = page.loading;  
       stateChanged = true;
     }
 
@@ -26,73 +37,62 @@ class properties extends Component {
       return changedState;
     }
     return null;
-
   }
 
   componentDidMount() {
-    const data = {
-			state: '',
-			channel: 'web',
+    const { onGetProperties } = this.props;
+    const ReqPacket = {
+			channel:"web",
 			lat: 43.787083,
 			lng: -79.497369,
-			city: '',
-			limit: 10,
-			offset: 0,
-			country: '',
-		};
-    this.props.onGetPropertiesData(data);
+			city: 'Toronto',
+			state: "Ontario",
+			country: "Canada",
+			rentalListingYN:"No",
+			pageNum:1,
+			loggedInuserId: "11",
+			searchText:"",
+			phoneNo: "03335425231"
+			}
+			onGetProperties(ReqPacket);
   }
-
-  limitWordHandler = (str) => {
-		const arrayString = str.split(' ');
-		let paragraph = '';
-		const limit = arrayString.length < 3 ? arrayString.length : 3;
-		for (let i = 0; i < limit; i++) {
-			paragraph += arrayString[i] + ' ';
-		}
-		if (arrayString.length >= 3) {
-			paragraph += '...';
-		}
-		return paragraph;
-  };
+  
   
   updatePropertyState = (propertyStatusDesc , propertyId) =>
   {
-    let userData = {
+    const { onUpdateProperty } = this.props;
+    const userData = {
       propertyId,
       propertyStatusDesc
     };
     console.log(userData);
-    this.props.onUpdatePropertyState(userData);
-  }
-
-  dateHandler = (date) => {
-    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
-    return <strong className="h5 mb-0">{date.split('-')[2]}<sup className="smaller text-gray font-weight-normal">{months[date.split('-')[1]-1]}</sup></strong>;
+    onUpdateProperty(userData);
   }
 
     render() { 
-      const { propertiesData  } = this.state;
-      console.log(propertiesData)
+      const { properties, pagesCount, loading  } = this.state;
+      console.log('checking this.state: ', this.state);
+
         return ( 
             <React.Fragment>
+              {!loading &&
                 <div className="page-holder w-100 d-flex flex-wrap">
                 <div className="container-fluid px-xl-5">
                   <section className="py-5">
                     <div className="row">
-                    {propertiesData && propertiesData.length ? 
-                      propertiesData.map( (data, index) =>
+                    {properties && properties.length ? 
+                      properties.map( (data, index) =>
                           <div key={index} className="col-lg-12 message card px-5 py-3 mb-4">
                             <div className="row">
                               <div className="col-md-9">
                               <Link to={`/single-prop-${data && data.propertId}`} className="no-anchor-style" >
                                 <div className="row">
                                 <div className="col-lg-6 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
-                                  {this.dateHandler(data.createDate)}
+                                  {dateHandler(data.createDate)}
                                   <img src={data.imageList && data.imageList[0] && data.imageList[0].imageURL ? data.imageList[0].imageURL : "assets/img/demo.png"} 
                                   alt="Profile" style={{maxWidth: '48px', maxHeight:'48px' , backgroundColor:'#008CF8'}} 
                                   className="mx-3 my-2 my-lg-0" />
-                                  <h6 className="mb-0">{this.	limitWordHandler(data.adTitle)}</h6>
+                                  <h6 className="mb-0">{limitWordHandler(data.adTitle)}</h6>
                               </div>
                               <div className="col-lg-2 d-flex align-items-center flex-column flex-lg-row text-center text-md-left">
                                 <h6 className="mb-0">{data.propertyType}</h6>
@@ -174,6 +174,7 @@ class properties extends Component {
                     </div>
                   </div></footer>
               </div>
+              }
             </React.Fragment>
          );
     }
@@ -182,14 +183,15 @@ class properties extends Component {
 
 const mapStateToProps = state => {
   return {
-    propPage: state.propPage
+    property: state.property,
+    page: state.page
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      onGetPropertiesData: (data) => dispatch(actions.getPropertiesData(data)),
-      onUpdatePropertyState : (userData)=> dispatch(actions.updatePropertyState(userData))
+      onGetProperties: (data) => dispatch(getProperties(data)),
+      onUpdateProperty : (userData)=> dispatch(updateProperty(userData))
   }
 };
  
