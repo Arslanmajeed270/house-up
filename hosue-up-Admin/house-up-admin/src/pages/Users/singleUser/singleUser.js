@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import UserPropertiesList from './userPropertiesList';
-import UserPostsList from './userPostsList';
+import UserPropertiesList from '../userPropertiesList';
+import UserPostsList from '../userPostsList';
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
+import * as actions from '../../../store/actions/index';
 class singleUser extends Component {
   constructor(props) {
     super(props);
@@ -50,12 +50,10 @@ class singleUser extends Component {
       userId,
       userStateDesc
     };
-    console.log(userData);
     this.props.onUpdateUserState(userData);
   }
 
   componentDidMount() {
-    console.log(this.props)
     const id = this.props.match.params.id;
     this.setState({
       id: id
@@ -78,8 +76,6 @@ class singleUser extends Component {
 
     render() { 
       const { singleUserData } = this.state;
-      console.log("single user data", singleUserData)
-      
         return ( 
           <React.Fragment>
           <div className="page-holder w-100 d-flex flex-wrap">
@@ -89,7 +85,7 @@ class singleUser extends Component {
                 <div className="row ">
                   <div className="col-sm-12 col-lg-1">
                       <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
-                      style={{backgroundImage: `url(${singleUserData && singleUserData.profilePictureUrl ? singleUserData.profilePictureUrl :  require("../../assets/images/ic_profile_placeholder.png") })`, backgroundPosition: '50% 0%'}} />
+                      style={{backgroundImage: `url(${singleUserData && singleUserData.profilePictureUrl ? singleUserData.profilePictureUrl :  require("../../../assets/images/ic_profile_placeholder.png") })`, backgroundPosition: '50% 0%'}} />
                   </div>
                   <div className="col-md-11 ">
                     <div className="row">

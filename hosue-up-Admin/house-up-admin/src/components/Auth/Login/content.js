@@ -23,8 +23,6 @@ onChange = e => {
 
 
  onSubmit = e => {
-  console.log('checking click handler');
-
        e.preventDefault();
 
        const userData = {

@@ -1,15 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 
-// importing actions
-import { connect } from 'react-redux';
-import * as action from '../../../store/actions/index'
-
 class index extends Component {
-
-	componentDidMount ( ) {
-        console.log("this.props",this.props.data)
-	}
 	
 	onSubmit = () =>
 	{
@@ -17,14 +9,11 @@ class index extends Component {
             userId : this.props.data.userId,
             userStateDesc: this.props.data.userStateDesc
         };
-        console.log(userData);
         if(this.props.data.for === 'vendor'){
-			console.log('vendor statement');
 			
 			this.props.data.updateVendor(userData)
 		}
 		else{
-			console.log('user statement');
 			this.props.data.updateUser(userData)
 		}
 	}

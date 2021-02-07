@@ -6,18 +6,33 @@ import { logoutUser } from '../store/actions/authActions';
 
 
 class sideBar extends Component {
-
+    state = {
+        showSubMenu: false
+    }
     logoutHandler =(e)=>{
        e.preventDefault();
        const { onLogoutUser, history } = this.props;
        onLogoutUser(history);
     }
 
+    componentDidMount(){
+        const { location } = this.props;
+        const currentPathIs = location && location.pathname ? location.pathname : ''; 
+        if( currentPathIs === "/account" || 
+        currentPathIs === "/upgrade-account" || 
+        currentPathIs === "/property-fees" || 
+        currentPathIs === "/account-boost"){
+            this.setState({
+                showSubMenu: true
+            });
+        }
+    }
+
     render() {
         const { sideBarState, location } = this.props;
-        const currentPathIs = location && location.pathname ? location.pathname : '';
-        const showSubMenu  = currentPathIs === "/account";
-
+        const { showSubMenu } = this.state;
+        const currentPathIs = location && location.pathname ? location.pathname : ''; 
+        
         return (
 
             <React.Fragment>
@@ -36,18 +51,18 @@ class sideBar extends Component {
                             </Link>
                         </li>
                          <li className="sidebar-list-item">
-                             <Link to="/user" className={`sidebar-link ${ currentPathIs === '/user' ? '' : 'text-muted' }`} >
+                             <Link to="/users" className={`sidebar-link ${ currentPathIs === '/users' ? '' : 'text-muted' }`} >
                                  <i className="o-user-1 mr-3 text-gray"></i>
                                  <span>User</span>
                             </Link>
                         </li>
                          <li className="sidebar-list-item">
-                             <Link to="/properties" className={`sidebar-link ${ currentPathIs === '/properties' ? '' : 'text-muted' }`} >
+                             <Link to="/properties"  className={`sidebar-link ${ currentPathIs === '/properties' ? '' : 'text-muted' }`} >
                                  <i className="o-earth-globe-1 mr-3 text-gray"></i>
                                  <span>Properties</span>
                             </Link>
                         </li>
-                         <li className="sidebar-list-item">
+                         {/* <li className="sidebar-list-item">
                              <Link to="/feature" className={`sidebar-link ${ currentPathIs === '/feature' ? '' : 'text-muted' }`} >
                                  <i className="o-trophy-1 mr-3 text-gray"></i>
                                  <span>Feature Post</span>
@@ -58,15 +73,18 @@ class sideBar extends Component {
                                  <i className="o-sales-up-1 mr-3 text-gray"></i>
                                  <span>Post Bost</span>
                             </Link>
-                        </li>
+                        </li> */}
                          <li className="sidebar-list-item">
-                             <Link to="/account" className={`sidebar-link ${ currentPathIs === '/account' ? '' : 'text-muted' }`} >
+                             <Link to="/account" onClick={(e) => {
+                                e.preventDefault();
+                                this.setState({ showSubMenu: !showSubMenu });
+                             }} className={`sidebar-link ${ currentPathIs === '/account' ? '' : 'text-muted' }`} >
                                  <i className="o-document-1 mr-3 text-gray"></i>
                                  <span>Accounts</span>
                             </Link>
                         </li>
                          <li className="sidebar-list-item">
-                             <Link to="/upgrade-account"  style={{ display: showSubMenu ? 'block' : 'none' }} className={`sidebar-link sub-menu ${ currentPathIs === '/' ? '' : 'text-muted' }`} >
+                             <Link to="/upgrade-account"  style={{ display: showSubMenu ? 'block' : 'none' }} className={`sidebar-link sub-menu ${ currentPathIs === '/upgrade-account' ? '' : 'text-muted' }`} >
                                  <span>Upgrade Account</span>
                             </Link>
                         </li>
@@ -75,11 +93,11 @@ class sideBar extends Component {
                                  <span>Property Fees</span>
                             </Link>
                         </li>
-                         <li className="sidebar-list-item">
+                         {/* <li className="sidebar-list-item">
                              <Link to="/account-boost" style={{ display: showSubMenu ? 'block' : 'none' }} className={`sidebar-link sub-menu ${ currentPathIs === '/account-boost' ? '' : 'text-muted' }`} >
                                  <span>Boost</span>
                             </Link>
-                        </li>
+                        </li> */}
                          <li className="sidebar-list-item">
                              <Link to="/helper" className={`sidebar-link ${ currentPathIs === '/helper' ? '' : 'text-muted' }`} >
                                 <i className="o-clock-1 mr-3 text-gray"></i>

@@ -61,7 +61,6 @@ class singleProp extends Component {
 	// };
 
 	componentDidMount() {
-		console.log('hello')
 		// const { user } = this.state;
 		const id = this.props.match.params.id;
 
@@ -87,7 +86,6 @@ class singleProp extends Component {
       propertyId,
       propertyStatusDesc
     };
-    console.log(userData);
     this.props.onUpdatePropertyState(userData);
   }
 
@@ -118,8 +116,7 @@ class singleProp extends Component {
 	};
 
 	render() {
-		const { singlePropertyData, commentText, imageToggle, user } = this.state;
-		console.log(this.state)
+		const { singlePropertyData, imageToggle } = this.state;
 		return (
 			<React.Fragment>
 				<div className='pxp-content'>
@@ -146,7 +143,7 @@ class singleProp extends Component {
 								<div className='col-sm-12 col-md-4' style={{textAlign:'right'}}>
 									<h4>Premium Plan</h4>
 									<div style={{float:'right'}}>
-										{ singlePropertyData && singlePropertyData.propertyStatusDesc === "Approved" || singlePropertyData && singlePropertyData.propertyStatusDesc === "Active" ?
+										{ singlePropertyData && (singlePropertyData.propertyStatusDesc === "Approved" || singlePropertyData.propertyStatusDesc === "Active") ?
 										<button className="btn btn-success status-btn" 
 										>
 											ACTIVE

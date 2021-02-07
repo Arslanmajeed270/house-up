@@ -15,13 +15,14 @@ render() {
                     </Link>
                   <ul className="ml-auto d-flex align-items-center list-unstyled mb-0">
                     <li className="nav-item">
-                      <form id="searchForm" className="ml-auto d-none d-lg-block">
+                      {/* <form id="searchForm" className="ml-auto d-none d-lg-block">
                         <div className="form-group position-relative mb-0">
                           <button type="submit" style={{top: '-3px', left: 0}} className="position-absolute bg-white border-0 p-0"><i className="o-search-magnify-1 text-gray text-lg" /></button>
                           <input type="search" placeholder="Search ..." className="form-control form-control-sm border-0 no-shadow pl-4" />
                         </div>
-                      </form>
+                      </form> */}
                     </li>
+{/*                     
                     <li className= { this.props.notificationState ?  "nav-item dropdown mr-3 show" : "nav-item dropdown mr-3"} >
                       <Link id="notifications" to="" 
                       data-toggle="dropdown" 
@@ -63,6 +64,7 @@ render() {
                           <small className="font-weight-bold headings-font-family text-uppercase">View all notifications</small></Link>
                       </div>
                     </li>
+                     */}
                     <li className={this.props.userShowState ? "nav-item dropdown ml-auto show" : "nav-item dropdown ml-auto"}>
                       <Link id="userInfo" to="" 
                       data-toggle="dropdown" aria-haspopup="true" 
@@ -72,8 +74,10 @@ render() {
                         <img src="assets/img/avatar-6.jpg" alt="Jason Doe" style={{maxWidth: '2.5rem'}} className="img-fluid rounded-circle shadow" /></Link>
                       <div aria-labelledby="userInfo" 
                       className={this.props.userShowState ? "dropdown-menu show" : "dropdown-menu"}>
-                        <Link to="#" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">Mark Stephen</strong><small>Web Developer</small></Link>
-                        <div className="dropdown-divider" /><Link to="#" className="dropdown-item">Settings</Link><Link to="#" className="dropdown-item">Activity log     </Link>
+                        <Link to="#" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">Admin</strong>
+                        {/* <small>Web Developer</small> */}
+                        </Link>
+                        {/* <div className="dropdown-divider" /><Link to="#" className="dropdown-item">Settings</Link><Link to="#" className="dropdown-item">Activity log     </Link> */}
                         <div className="dropdown-divider" /><Link to="/login" className="dropdown-item">Logout</Link>
                       </div>
                     </li>

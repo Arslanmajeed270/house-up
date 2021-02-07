@@ -37,7 +37,6 @@ class userPropertiesList extends Component {
       }
     
       componentDidMount() {
-      console.log('hello')
       const id = this.props.id
         this.setState({
           id: id
@@ -58,7 +57,6 @@ class userPropertiesList extends Component {
       propertyId,
       propertyStatusDesc
     };
-    console.log(userData);
     this.props.onUpdatePropertyState(userData);
   }
     render() {

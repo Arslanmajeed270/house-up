@@ -3,7 +3,6 @@ import { Modal } from 'react-bootstrap';
 
 class index extends Component {
     render() {
-		console.log('props data',this.props.data)
         return (
             <Modal
 				show={this.props.show}

@@ -37,7 +37,6 @@ class userPostsList extends Component {
       }
     
       componentDidMount() {
-      console.log('hello')
       const id = this.props.id
         this.setState({
           id: id

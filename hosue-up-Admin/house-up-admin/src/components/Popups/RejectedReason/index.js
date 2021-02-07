@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
-
-// importing actions
-import { connect } from 'react-redux';
-import * as action from '../../../store/actions/index'
-
 class index extends Component {
 	constructor(props) {
 		super(props);
@@ -14,7 +9,6 @@ class index extends Component {
 	}
 
 	componentDidMount ( ) {
-        console.log("this.props",this.props.data)
 	}
 	
 	onChange = e => {
@@ -28,22 +22,17 @@ class index extends Component {
 			userStateDesc: this.props.data.userStateDesc,
 			rejectedReason: this.state.rejectionReason
 		};
-        console.log(userData);
 		
 		if(this.props.data.for === 'vendor'){
-			console.log('vendor statement');
-			
 			this.props.data.updateVendor(userData)
 		}
 		else{
-			console.log('user statement');
 			this.props.data.updateUser(userData)
 		}
 	}
   
 	render() {
 		const {  rejectionReason } = this.state;
-		console.log(`checking this.state: `, this.state);
 		return (
 			<React.Fragment>
 				<Modal

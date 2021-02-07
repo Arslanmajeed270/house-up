@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import { getDashboardData } from '../../store/actions/index';
+import Footer from '../../components/footer';
 
 class index extends Component {
 
@@ -151,14 +152,7 @@ class index extends Component {
                     </div>
                   </section>
                 </div>
-                <footer className="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
-                  <div className="container-fluid">
-                    <div className="row">
-                      <div className="col-md-6 text-center text-md-left text-primary">
-                        <p className="mb-2 mb-md-0">HouseUp © 2018-2020</p>
-                      </div>
-                    </div>
-                  </div></footer>
+                <Footer />
               </div>
             }
             </React.Fragment>

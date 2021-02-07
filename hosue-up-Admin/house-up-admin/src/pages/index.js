@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import Header from '../components/header';
 import Sidebar from '../components/sideBar';
-import Footer from '../components/footer';
 import Routes from './routes';
 import Loader from '../components/common/Loader'
 

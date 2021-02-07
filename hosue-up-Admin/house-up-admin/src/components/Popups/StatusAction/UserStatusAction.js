@@ -29,7 +29,6 @@ class UserStatusAction extends Component {
 		  updateUser: this.props.onUpdateUserStatus,
 		  for:'user'
 	  };
-	  console.log(userData);
 	  if(userStateDesc === "Active"){
 		this.props.modelHanlder('confirmation', userData)
 	  }
@@ -45,7 +44,6 @@ class UserStatusAction extends Component {
 
 	render() {
 		const {  userStateDesc } = this.state;
-		console.log(`checking this.state: `, this.state);
 		return (
 			<React.Fragment>
 				<Modal

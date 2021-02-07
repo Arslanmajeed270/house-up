@@ -13,11 +13,9 @@ import { store } from './store/reducers/index'
 
 const app = (
   <Provider store={store}>
-  <React.StrictMode>
       <BrowserRouter>
           <App />
       </BrowserRouter>
-      </React.StrictMode>
   </Provider>
 );
 

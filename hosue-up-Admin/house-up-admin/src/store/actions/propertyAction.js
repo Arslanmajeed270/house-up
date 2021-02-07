@@ -86,7 +86,6 @@ export const getSingleProperty = (userData) => (dispatch) => {
 	axios
 		.post(backendServerURL + '/getProperty', userData)
 		.then((res) => {
-			console.log(res)
 			if (res && res.data && res.data.resultCode === '200') {
 				dispatch({
 					type: GET_SINGLE_PROPERTY,
@@ -122,11 +121,9 @@ export const getSingleProperty = (userData) => (dispatch) => {
 
 //Properties  - Update property State
 export const updateProperty = (userData) => dispatch => {
-	console.log("checking userData: ", userData);
     axios
     .post(backendServerURL+'/updatePropertyStatus',userData)
     .then(res => {
-		console.log('checking resonse data ',res);
     })
     .catch(err => {
 		dispatch({type: SET_ERRORS, 

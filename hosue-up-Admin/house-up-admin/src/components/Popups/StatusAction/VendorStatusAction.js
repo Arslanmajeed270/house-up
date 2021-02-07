@@ -28,13 +28,11 @@ class UserStatusAction extends Component {
 			updateVendor:this.props.onUpdateVendorsStatus,
 			for:'vendor'
         };
-		console.log(userData);
 		if(userStateDesc === "Rejected" || userStateDesc === "Suspended" || userStateDesc === "Inactive")
 		{
 			this.props.modelHanlder('rejectedReason',userData)
 		}
 		else{
-			console.log("hello")
 			this.props.modelHanlder('confirmation', userData)
 		}
 	}
@@ -46,7 +44,6 @@ class UserStatusAction extends Component {
 
 	render() {
 		const {  userStateDesc } = this.state;
-		console.log(`checking this.state: `, this.state);
 		return (
 			<React.Fragment>
 				<Modal

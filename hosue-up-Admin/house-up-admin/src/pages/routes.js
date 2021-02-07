@@ -3,17 +3,20 @@ import { Route } from 'react-router-dom';
 
 
 import Index from './Dashboard';
-import Account from './Dashboard/account';
+import Account from './Accounts/account';
+import UpgradeAccount from './Accounts/UpgradeAccount';
+import PropertyFees from './Accounts/PropertyFees';
+import AccountBoost from './Accounts/Boost';
 import Boost from './Dashboard/boost';
 import Charts from './Dashboard/charts';
 import Feature from './Dashboard/feature';
 import Helper from './Dashboard/help';
 import SingleProperty from './Property/singleProperty';
 import Properties from './Property/properties';
-import SingleUser from './Users/singleUser';
-import SingleVendor from './Users/singleVendor';
-import User from './Users/user';
-import Vendors from './Users/vendor';
+import SingleUser from './Users/singleUser/singleUser';
+import Users from './Users/users';
+import Vendors from './Vendor/vendors';
+import SingleVendor from './Vendor/singleVendor/singleVendor';
 
 
 class routes extends Component {
@@ -27,13 +30,23 @@ class routes extends Component {
                 />
                 <Route      
                     exact 
-                    path={"/index"} 
-                    component={Index}
+                    path={"/account"} 
+                    component={Account}
                 />
                 <Route      
                     exact 
-                    path={"/account"} 
-                    component={Account}
+                    path={"/upgrade-account"} 
+                    component={UpgradeAccount}
+                />
+                <Route      
+                    exact 
+                    path={"/property-fees"} 
+                    component={PropertyFees}
+                />
+                <Route      
+                    exact 
+                    path={"/account-boost"} 
+                    component={AccountBoost}
                 />
                 <Route      
                     exact 
@@ -68,26 +81,22 @@ class routes extends Component {
                 <Route      
                     exact 
                     path={"/single-user-:id"} 
-                    component={(route) => <SingleUser
-                                             modelHanlder={this.props.modelHanlder} 
-                                             match={route.match} />}
+                    component={SingleUser}
                 />
                 <Route      
                     exact 
                     path={"/single-vendor-:id"} 
-                    component={(route)=> <SingleVendor 
-							match={route.match}
-                            modelHanlder={this.props.modelHanlder} />}
+                    component={SingleVendor}
                 />
                 <Route      
                     exact 
-                    path={"/user"} 
-                    component={User}
+                    path={"/users"} 
+                    component={Users}
                 />
                 <Route      
                     exact 
                     path={"/Vendors"} 
-                    component={()=> <Vendors modelHanlder={this.props.modelHanlder} />}
+                    component={Vendors}
                 />
 
         </>

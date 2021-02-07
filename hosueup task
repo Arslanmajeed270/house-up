@@ -1,0 +1,9 @@
+House up task:
+1: update map key.
+2: slider on homepage ("getAppFeatures")
+3: apply validation checks in all over the app.
+4: Update loader
+5: if add the card then all the previous data will be removed. (Stop doing that)
+6: meeting list should be redirected to that ( "property", "post", "vendor" ).
+7: map zoom in zoom out.
+8: update map to https://github.com/google-map-react/old-examples/blob/master/web/flux/components/examples/x_main/main_map_block.jsx

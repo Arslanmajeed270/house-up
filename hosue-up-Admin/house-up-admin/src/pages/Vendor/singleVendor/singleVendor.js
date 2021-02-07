@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import * as actions from '../../store/actions/index';
-import UserPropertiesList from './userPropertiesList';
-import UserPostsList from './userPostsList';
+import * as actions from '../../../store/actions/index';
+import UserPropertiesList from '../../Users/userPropertiesList';
+import UserPostsList from '../../Users/userPostsList';
 
 class singleVendor extends Component {
   constructor(props) {
@@ -77,14 +77,11 @@ class singleVendor extends Component {
       userId,
       userStateDesc
     };
-    console.log(userData);
     this.props.onUpdateVendorsState(userData);
   }
 
     render() { 
-      const { singleVendorData , singleVendorsPropertiesData } = this.state;
-      console.log(singleVendorData)
-      console.log(singleVendorsPropertiesData)
+      const { singleVendorData } = this.state;
       
         return ( 
             <React.Fragment>
@@ -95,7 +92,7 @@ class singleVendor extends Component {
                       <div className="row ">
                       <div className="col-sm-12 col-lg-1">
                           <div className="pxp-agent-photo pxp-cover rounded-lg mt-4 mt-md-5 mt-lg-0" 
-                          style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl :  require("../../assets/images/ic_profile_placeholder.png") })`, backgroundPosition: '50% 0%'}} />
+                          style={{backgroundImage: `url(${singleVendorData && singleVendorData.profilePictureUrl ? singleVendorData.profilePictureUrl :  require("../../../assets/images/ic_profile_placeholder.png") })`, backgroundPosition: '50% 0%'}} />
                       </div>
                       <div className="col-md-10 ">
                         <div className="row">
@@ -277,7 +274,7 @@ class singleVendor extends Component {
                                     <div className="col-md-6" />
                                     <div className="col-md-6">
                                       <button 
-                                        className={`btn  ${ singleVendorData &&  singleVendorData.userStatusDesc === "Approved" || singleVendorData &&  singleVendorData.userStatusDesc === "Active" ? "btn-success" : "btn-danger"} status-btn`}
+                                        className={`btn  ${ singleVendorData &&  (singleVendorData.userStatusDesc === "Approved" || singleVendorData.userStatusDesc === "Active") ? "btn-success" : "btn-danger"} status-btn`}
                                       >
                                         {singleVendorData && singleVendorData.userStatusDesc}
                                       </button>

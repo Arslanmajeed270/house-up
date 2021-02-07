@@ -17,6 +17,9 @@ class App extends Component {
         privateRoutes: [
             '/',
             '/account',
+            '/upgrade-account',
+            '/property-fees',
+            '/account-boost',
             '/boost',
             '/charts',
             '/feature',
@@ -25,8 +28,8 @@ class App extends Component {
             '/single-prop-:id',
             '/single-user-:id',
             '/single-vendor-:id',
-            '/user',
-            '/Vendors'
+            '/users',
+            '/Vendors',
         ]
     }
     render() {

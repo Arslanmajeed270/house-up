@@ -6,7 +6,10 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-	propertiesData:[],
+	propertiesData:{
+		properties: [],
+        pagesCount: 0
+	},
 	singlePropertyData:{},
 	singleVendorsPropertiesData:{}
 };
