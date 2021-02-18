@@ -5,6 +5,7 @@ import {
 	SET_ERRORS,
 	SET_VENDORS,
 	SET_SINGLE_VENDOR,
+	UPDATE_VENDOR_STATUS
 } from './actionTypes';   
 
 import {clearErrors , clearPageLoading , setPageLoading} from './pageActions'
@@ -89,3 +90,38 @@ export const getSingleVendorData = (userData) => dispatch => {
 		.finally(() => dispatch(clearPageLoading()));
 };
 
+//Vendors  - Update Vendors State
+export const updateVendorState = ( reqPacket ) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+    	.post(backendServerURL+'/updateUserState', reqPacket)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch({
+					type: UPDATE_VENDOR_STATUS,
+					payload:{
+						userId: reqPacket.userId,
+						userStatusDesc: reqPacket.userStateDesc
+					}
+				})
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+	.finally(() => dispatch(clearPageLoading()));
+};

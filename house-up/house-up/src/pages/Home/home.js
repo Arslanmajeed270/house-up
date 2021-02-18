@@ -7,6 +7,7 @@ import Spinner from '../../components/common/Spinner';
 import ProfessionalRender from './components/professionalRender'
 import Carousel from './components/carousel'
 import NeighborhoodRender from './components/neighborhoodRender';
+import HeaderCarousel from './components/headerCarousel';
 
 class home extends Component {
 	constructor(props) {
@@ -16,6 +17,7 @@ class home extends Component {
 			errors: {},
 			homePageData: {},
 			user: {},
+			appFeatures: []
 		};
 	}
 	static getDerivedStateFromProps(props, state) {
@@ -36,6 +38,13 @@ class home extends Component {
 			stateChanged = true;
 		}
 
+		if ( page && 
+			JSON.stringify(state.appFeatures) !== JSON.stringify(page.appFeatures)
+			) {
+			changedState.appFeatures = page.appFeatures;
+			stateChanged = true;
+		}
+
 		if ( page && JSON.stringify(state.loading) !== JSON.stringify(page.loading) ) {
 			changedState.loading = page.loading;
 			stateChanged = true;
@@ -50,65 +59,30 @@ class home extends Component {
 	}
 
 	componentDidMount() {
-		if (!this.state.homePageData || !this.state.homePageData.properties)
-			this.props.onGetHomePageData();
+		const {onGetAppFeatures, onGetHomePageData  } = this.props;
+		const { homePageData, appFeatures } = this.state;
+
+		if (!homePageData || !homePageData.properties)
+			onGetHomePageData();
+		if ( !appFeatures || !appFeatures.length)
+			onGetAppFeatures();
 	}
 
 	render() {
 		
-		const { homePageData, loading } = this.state;
+		const { homePageData, loading, appFeatures } = this.state;
 		let pageContent = '';
 		if (loading && !homePageData.properties)
 			pageContent = <Spinner />;
 		else {
 			pageContent = (<React.Fragment>
 				<div className='pxp-content'>
-					<div className='pxp-hero vh-100'>
-						<div
-							className='pxp-hero-bg pxp-cover pxp-cover-bottom'
-							style={{ backgroundImage: 'url(assets/images/hero-1.jpg)' }}
-						/>
-						<div className='pxp-hero-opacity' />
-						<div className='pxp-hero-caption'>
-							<div className='container'>
-								<h1 className='text-white'>HouseUp</h1>
-								<h3 className='text-White title'>
-									Own the way you sell your home
-								</h3>
-							
-								{/* <form className='pxp-hero-search mt-4' action=''>
-									<div className='row'>
-										<div className='col-sm-12 col-md-4'>
-											<div className='form-group'>
-												<select className='custom-select'>
-													<option>Buy</option>
-													<option value={1}>Rent</option>
-												</select>
-											</div>
-										</div>
-										<div className='col-sm-12 col-md-8'>
-											<div className='form-group'>
-												<input
-													type='text'
-													className='form-control pxp-is-address'
-													placeholder='City, neighbourhood...'
-												/>
-												<img
-													className='search'
-													src='assets/images/ic_search.svg'
-													alt='logo'
-												></img>
-											</div>
-										</div>
-									</div>
-								</form>
-							 */}
-							</div>
-						</div>
-					</div>
+
+					<HeaderCarousel appFeatures={appFeatures} />
+					
 					<div className='mt-60 container'>
 						<h2 className='pxp-section-h2'>Featured Properties</h2>
-						<p className='pxp-text-light'>Browse our latest hot offers</p>
+						<p className='pxp-text-light'>Browse the latest listings</p>
 						<div className='container-fluid pxp-props-carousel-right mt-60'>
 							<div className='pxp-props-carousel-right-container mt-4 mt-md-5'>
 								<Carousel 
@@ -344,6 +318,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onGetHomePageData: () => dispatch(actions.getHomePageData()),
+		onGetAppFeatures: () => dispatch(actions.getAppFeatures()),
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(home);

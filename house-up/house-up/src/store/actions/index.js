@@ -28,7 +28,8 @@ export {
 	markCreditCardDefault,
 	chargeCustomerUsingCreditCard,
 	getPackagePlan,
-	chargeCustomerForPropertyUsingCreditCard
+	chargeCustomerForPropertyUsingCreditCard,
+	getAppFeatures
 } from './pageActions';
 
 export {

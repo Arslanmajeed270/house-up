@@ -15,6 +15,7 @@ import {
 	LOAD_ALL_CARDS,
 	SET_PACKAGE_DETAILS,
 	ADD_COMMENTS,
+	SET_APP_FEATURES
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -32,6 +33,7 @@ const initialState = {
 		packageDetails: [],
 	},
 	allCards: [],
+	appFeatures: []
 	// comments
 };
 
@@ -233,6 +235,11 @@ export default function (state = initialState, action) {
 				...state,
 				packageDetails: action.payload,
 			};
+			case SET_APP_FEATURES:
+				return {
+					...state,
+					appFeatures: action.payload,
+				};
 		default:
 			return state;
 	}

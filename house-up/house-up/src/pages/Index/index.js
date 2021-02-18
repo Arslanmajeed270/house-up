@@ -142,9 +142,6 @@ class index extends Component {
 
   }
 
-
-
-
   addLike = (type, index, like, postId, propertId, vendorId) => {
     const userId =
       this.state.user && this.state.user.userId ? this.state.user.userId : null;
@@ -192,6 +189,7 @@ class index extends Component {
       });
     }
   };
+
   AddComment = (id, typeCategory, index, commentedOnUserId) => {
     const userName =
       this.state.user && this.state.user.userName
@@ -318,6 +316,7 @@ class index extends Component {
       [model]: false,
     });
   };
+
   storyHandler = () => {
     this.setState({ storyToggle: !this.state.storyToggle });
   };
@@ -400,6 +399,39 @@ class index extends Component {
     }
     return professionalRender;
   };
+
+  imageOrVideoRenderer = (url, type) => {
+    let renderer = "";
+    if( url.indexOf(".mp4") > -1 ){
+      const videoUrl = url.replace('https://sample-video-app-hu.herokuapp.com',
+       'https://houseup-streaming-service.glitch.me');
+      renderer = ( <video id="videoPlayer" style={{maxWidth: "100%", width: "100%", height: "320px"}} controls muted="muted"> 
+      <source src={videoUrl} type="video/mp4" />
+      </video>
+      );
+    }else {
+      if( type === "property" ){
+        renderer = (<div
+          className="pxp-prop-card-featured"
+          style={{
+            backgroundImage: `url(${url} )`,
+          }}
+        >
+          <div className="d-table w-100 ">
+            <div className="d-table-cell va-bottom featured-height"></div>
+          </div>
+        </div>);
+      }else{
+        renderer = (<div
+          className={"dashboard-newsfeed-img"}
+          style={{
+            backgroundImage: `url(${url})`,
+          }}
+        ></div>);
+      }
+    }
+    return renderer;
+  }
 
   render() {
     let {
@@ -591,11 +623,14 @@ class index extends Component {
                                     )}
 
                                     {(data.category &&
-                                      data.category === "Post" && data.object.user.userStatusDesc !== 'Suspended' && data.object.user.userStatusDesc !== 'Rejected') ||
+                                      data.category === "Post" && 
+                                      data.object.user.userStatusDesc !== 'Suspended' && 
+                                      data.object.user.userStatusDesc !== 'Rejected') ||
                                     ( data &&
                                       data.category === "Property" &&
                                       data.object.propertyStatusDesc ===
-                                        "Approved" && data.object.user.userStatusDesc !== 'Suspended' && data.object.user.userStatusDesc !== 'Rejected') ? (
+                                        "Approved" && data.object.user.userStatusDesc !== 'Suspended' && 
+                                        data.object.user.userStatusDesc !== 'Rejected' ) ? (
                                       <div className="dashboard-newsfeed">
                                         <div className="dashboard-newsfeed-content">
                                           <ul className="news-feed-user-ul">
@@ -720,22 +755,16 @@ class index extends Component {
                                               data.object.postImages[0] &&
                                               data.object.postImages[0]
                                                 .imageURL ? (
-                                                <div
-                                                  className="dashboard-newsfeed-img"
-                                                  style={{
-                                                    backgroundImage: `url( ${
-                                                      data.object &&
-                                                      data.object
-                                                        .postImages[0] &&
-                                                      data.object.postImages[0]
-                                                        .imageURL
-                                                        ? data.object
-                                                            .postImages[0]
-                                                            .imageURL
-                                                        : ""
-                                                    }  )`,
-                                                  }}
-                                                ></div>
+                                                  this.imageOrVideoRenderer(data.object &&
+                                                    data.object
+                                                      .postImages[0] &&
+                                                    data.object.postImages[0]
+                                                      .imageURL
+                                                      ? data.object
+                                                          .postImages[0]
+                                                          .imageURL
+                                                      : "")
+                                                
                                               ) : (
                                                 ""
                                               )}
@@ -791,7 +820,7 @@ class index extends Component {
                                                     </span>
                                                     <Link
 													
-													className="post-navbar-items"
+													                            className="post-navbar-items"
                                                       to={`/comments-${
                                                         data &&
                                                         data.object &&
@@ -1045,11 +1074,7 @@ class index extends Component {
                                                   data.object.propertId
                                                 }`}
                                               >
-                                                <div
-                                                  className="pxp-prop-card-featured"
-                                                  style={{
-                                                    backgroundImage: `url(${
-                                                      data &&
+                                                {this.imageOrVideoRenderer( data &&
                                                       data.object &&
                                                       data.object
                                                         .imageList[0] &&
@@ -1058,14 +1083,7 @@ class index extends Component {
                                                         ? data.object
                                                             .imageList[0]
                                                             .imageURL
-                                                        : ""
-                                                    } )`,
-                                                  }}
-                                                >
-                                                  <div className="d-table w-100 ">
-                                                    <div className="d-table-cell va-bottom featured-height"></div>
-                                                  </div>
-                                                </div>
+                                                        : "", "property" )}
                                               </Link>
                                               <div className="for-rent">
                                                 {data.object &&

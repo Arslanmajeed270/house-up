@@ -47,7 +47,7 @@ class sideBar extends Component {
                          <li className="sidebar-list-item">
                              <Link to="/vendors" className={`sidebar-link ${ currentPathIs === '/vendors' ? '' : 'text-muted' }`} >
                                  <i className="o-profile-1 mr-3 text-gray"></i>
-                                 <span>Professionals</span>
+                                 <span>Vendors</span>
                             </Link>
                         </li>
                          <li className="sidebar-list-item">

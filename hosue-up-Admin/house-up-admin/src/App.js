@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import PrivateRoute from './components/common/PrivateRoute';
 import PublicRoute from './components/common/PublicRoute';
-import { setCurrentUser } from './store/actions/index';
+import { setCurrentUser, logoutUser } from './store/actions/index';
 
 import Index from "./pages";
 import LogIn from './components/Auth/Login/content'
@@ -28,16 +28,19 @@ class App extends Component {
             '/single-prop-:id',
             '/single-user-:id',
             '/single-vendor-:id',
+            '/single-vendor2',
             '/users',
             '/Vendors',
         ]
     }
     render() {
-        const { onSetCurrentUser } = this.props;
+        const { onSetCurrentUser, onLogoutUser } = this.props;
         const { publicRoutes, privateRoutes } = this.state;
         if (localStorage.jwtToken) {
 			onSetCurrentUser(JSON.parse(localStorage.jwtToken));
-		}
+		}else{
+            onLogoutUser();
+        }
         return (
             <Switch>
                 {
@@ -65,7 +68,7 @@ class App extends Component {
 const mapDispatchToProps = dispatch => {
     return {
       onSetCurrentUser: () => dispatch(setCurrentUser()),
-    //   onLogoutUser: () => dispatch(logoutUser())
+      onLogoutUser: () => dispatch(logoutUser())
     };
   };
   

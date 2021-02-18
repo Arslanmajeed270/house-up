@@ -575,10 +575,14 @@ h1.pxp-page-header {
 .pxp-nav > li.pxp-has-btns {
     display: none;
 }
-.pxp-nav > li > a,
+
 .pxp-nav > li > a:hover {
+    color: #00B0E9;
+}
+
+.pxp-nav > li > a{
     /*/* font-weight: 700; */ 
-    color: #fff;
+    color: #0000;
     text-decoration: none;
 }
 .pxp-nav > li > a {
@@ -691,7 +695,7 @@ h1.pxp-page-header {
 }
 .pxp-header-user, 
 .pxp-header-nav-trigger {
-    color: #fff;
+    color: black;
     text-decoration: none;
     border-radius: 50%;
     display: inline-block;
@@ -801,7 +805,7 @@ h1.pxp-page-header {
     transform: scale(1, 1);
 }
 .pxp-hero-opacity {
-    background-color: rgba(0,0,0,0.3);
+    /* background-color: rgba(0,0,0,0.3); */
     position: absolute;
     top: 0;
     left: 0;

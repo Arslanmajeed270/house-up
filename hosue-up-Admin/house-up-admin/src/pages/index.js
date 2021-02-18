@@ -107,6 +107,7 @@ class Index extends Component {
     render() {
         const { loading, businessRegDoc, data, businessSuppDoc, userStatus,
         vendorStatus, confirmation, rejectedReason} = this.state;
+        const { history } = this.props;
         return (
             <React.Fragment>
                 { businessRegDoc && (
@@ -154,7 +155,7 @@ class Index extends Component {
 					/>
 				)}
                 <Loader loading={loading} />
-                <Header sideBarHandler = {()=>this.sideBarHandler()}
+                <Header history={history} sideBarHandler = {()=>this.sideBarHandler()}
                  notificationToggle = { () => this.notificationToggle()} 
                  userToggleHandler = { () => this.userToggleHandler()} 
                  notificationState = {this.state.notificationShow}

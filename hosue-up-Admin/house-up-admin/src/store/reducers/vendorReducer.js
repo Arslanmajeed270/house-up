@@ -1,6 +1,7 @@
 import {
 	SET_VENDORS,
 	SET_SINGLE_VENDOR,
+	UPDATE_VENDOR_STATUS
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -23,6 +24,22 @@ export default function (state = initialState, action) {
 				...state,
 				singleVendorData: action.payload
 			};
+		case UPDATE_VENDOR_STATUS:{
+			const updateVendors = state.vendorsData.vendors;
+			updateVendors.map( vendor => {
+				if( vendor.userId === action.payload.userId ){
+					vendor.userStatusDesc = action.payload.userStatusDesc
+				}
+				return vendor;
+			} );
+			return {
+				...state,
+				vendorsData : {
+					vendors: updateVendors,
+					...state.vendorsData
+				},
+			};
+		}
 	default:
 			return state;
 	}

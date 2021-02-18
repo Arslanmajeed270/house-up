@@ -7,3 +7,5 @@ House up task:
 6: meeting list should be redirected to that ( "property", "post", "vendor" ).
 7: map zoom in zoom out.
 8: update map to https://github.com/google-map-react/old-examples/blob/master/web/flux/components/examples/x_main/main_map_block.jsx
+9: upgrade account successfull message shows without adding card (it's for the first time).
+10: Discuss on model flow.

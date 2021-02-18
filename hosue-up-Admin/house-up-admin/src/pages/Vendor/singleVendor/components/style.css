@@ -1,0 +1,24 @@
+.vendorDetailCardImgHeading {
+    line-height: 36px;
+    color: #000000;
+    font-size: 26px;
+    font-weight: 500;
+}
+
+.vendorDetailCardBlockHeading {
+    font-size: 16px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.vendorDetailCardBlockParagraph {
+    font-size: 14px;
+    color: #4D4D4D;
+}
+
+.vendorPropertiesCardImgHeading {
+    line-height: 20px;
+    color: #000000;
+    font-size: 26px;
+    font-weight: 500;
+}

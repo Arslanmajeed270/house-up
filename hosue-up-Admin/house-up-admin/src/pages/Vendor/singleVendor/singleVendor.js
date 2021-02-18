@@ -323,7 +323,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       onGetSingleVendorsData: (userData) => dispatch(actions.getSingleVendorData(userData)),
-      onUpdateVendorsState : (userData)=> dispatch(actions.updateVendorsState(userData)),
+      onUpdateVendorsState : (userData)=> dispatch(actions.updateVendorState(userData)),
       onGetSingleVendorsPropertyData: (userData) => dispatch(actions.getSingleVendorsPropertyData(userData)),
 
   }

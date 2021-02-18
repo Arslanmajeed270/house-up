@@ -51,3 +51,7 @@ code {
   padding-left: 62px;
   display: none;
 }
+
+.container-fluid {
+  background: #F8F9FB;
+}

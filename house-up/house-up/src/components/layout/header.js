@@ -110,7 +110,7 @@ class header extends Component {
 											/>
 											<img
 												className='img white-logo'
-												src='assets/images/ic_logo_white.svg'
+												src='assets/images/ic_logo_black.svg'
 												alt='logo'
 											/>
 										</>

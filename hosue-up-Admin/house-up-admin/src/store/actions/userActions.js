@@ -4,12 +4,9 @@ import axios from 'axios';
 import {
 	SET_ERRORS,
 	SET_USERS,
+	UPDATE_USER_STATUS,
 	SET_SINGLE_USER,
 } from './actionTypes'; 
-
-import { 
-	getVendorsData
- } from './index'
 
 import {clearErrors , clearPageLoading , setPageLoading} from './pageActions'
 
@@ -73,29 +70,39 @@ export const getSingleUserData = (userData) => dispatch => {
     })      
 };
 
-//Vendors  - Update Vendors State
-export const updateVendorsState = (userData) => dispatch => {
-    axios
-    .post(backendServerURL+'/updateUserState',userData)
-    .then(res => {
-		dispatch(getVendorsData());
-    })
-    .catch(err => {
-		dispatch({type: SET_ERRORS, 
-		payload: err && err.response && err.response.data ? err.response.data : {}})
-    })      
-};
-
 //Users  - Update users State
-export const updateUserState = (userData) => dispatch => {
-    axios
-    .post(backendServerURL+'/updateUserState',userData)
-    .then(res => {
-		dispatch(getUsersData());
-    })
-    .catch(err => {
-		dispatch({type: SET_ERRORS, 
-		payload: err && err.response && err.response.data ? err.response.data : {}})
-    })      
+export const updateUserState = ( reqPacket ) => (dispatch) => {
+	dispatch(setPageLoading());
+	axios
+    	.post(backendServerURL+'/updateUserState', reqPacket)
+		.then((res) => {
+			if (res && res.data && res.data.resultCode === '200') {
+				dispatch({
+					type: UPDATE_USER_STATUS,
+					payload:{
+						userId: reqPacket.userId,
+						userStatusDesc: reqPacket.userStateDesc
+					}
+				})
+				dispatch(clearErrors());
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: {
+						message: res.data.message
+							? res.data.message
+							: 'Something went wrong! Please try again.',
+					},
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+	.finally(() => dispatch(clearPageLoading()));
 };
 

@@ -17,6 +17,7 @@ import {
 	HIDE_POP_UP,
 	SHOW_POP_UP,
 	SET_PACKAGE_DETAILS,
+	SET_APP_FEATURES
 } from './actionTypes';
 import { setCurrentUser } from './authActions';
 import { Success, Error } from '../../components/common/toastify'
@@ -522,4 +523,34 @@ export const getPackagePlan = () => (dispatch) => {
 					err && err.response && err.response.data ? err.response.data : {},
 			});
 		});
+};
+
+
+// App Feature - Get App features gifs
+export const getAppFeatures = () => (dispatch) => {
+	dispatch(setPageLoading());
+
+	axios
+		.post(backendServerURL + '/getAppFeatures', {channel: "web"})
+		.then((res) => {
+			if (res.data && res.data.data && res.data.data.appFeatures) {
+				dispatch({ 
+					type: SET_APP_FEATURES,
+					payload: res.data.data.appFeatures
+				 });
+			} else {
+				dispatch({
+					type: SET_ERRORS,
+					payload: { message: 'Something went wrong! Please try again.' },
+				});
+			}
+		})
+		.catch((err) => {
+			dispatch({
+				type: SET_ERRORS,
+				payload:
+					err && err.response && err.response.data ? err.response.data : {},
+			});
+		})
+		.finally(() => dispatch(clearPageLoading()));
 };

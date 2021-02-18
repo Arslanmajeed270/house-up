@@ -17,6 +17,7 @@ import SingleUser from './Users/singleUser/singleUser';
 import Users from './Users/users';
 import Vendors from './Vendor/vendors';
 import SingleVendor from './Vendor/singleVendor/singleVendor';
+import SingleVendor2 from './Vendor/singleVendor/singleVendor2';
 
 
 class routes extends Component {
@@ -87,6 +88,11 @@ class routes extends Component {
                     exact 
                     path={"/single-vendor-:id"} 
                     component={SingleVendor}
+                />
+                <Route      
+                    exact 
+                    path={"/single-vendor2"} 
+                    component={SingleVendor2}
                 />
                 <Route      
                     exact 

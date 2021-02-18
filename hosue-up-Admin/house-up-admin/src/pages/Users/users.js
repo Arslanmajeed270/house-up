@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Table, Button, Pagination, SplitButton, Dropdown } from 'react-bootstrap';
 
-import { getUsersData, updateVendorsState } from '../../store/actions/index';
+import { getUsersData, updateUserState } from '../../store/actions/index';
 import Footer from '../../components/footer';
 import { Link } from 'react-router-dom';
 
@@ -39,16 +39,6 @@ class Vendors extends Component {
       return changedState;
     }
     return null;
-  }
-
-  updateUserState = ( userStatus , userId ) =>
-  {
-    const { onUpdateVendorsState } = this.props;
-    const reqPacket = {
-      userId,
-      userStatus
-    };
-    onUpdateVendorsState(reqPacket);
   }
 
   componentDidMount() {
@@ -94,6 +84,19 @@ class Vendors extends Component {
     onGetUsersData(reqPacket);
   }
 
+    updateUserState = ( userId, userStatus, currentActive ) =>
+  {
+    if( currentActive !== userStatus){
+      const { onUpdateUserState } = this.props;
+      const reqPacket = {
+        userId: userId,
+        userStateDesc:userStatus,
+        rejectionReason: ""
+      };
+      onUpdateUserState(reqPacket);
+    }
+  }
+
     render() { 
       const { usersData, currentPage, loading } = this.state;
       const totalPages = usersData && usersData.totalPages ? usersData.totalPages : 0 ;
@@ -120,7 +123,7 @@ class Vendors extends Component {
                           <tr key={index} >
                           <td style={{verticalAlign: 'middle'}}>{data.userId}</td>
                           <td style={{verticalAlign: 'middle'}}> <Link to={`single-user-${data.userId}`}> { data.firstName + " " + data.lastName }</Link></td>
-                          <td style={{verticalAlign: 'middle'}}>${data.emailAddress}</td>
+                          <td style={{verticalAlign: 'middle'}}>{data.emailAddress}</td>
                           <td style={{verticalAlign: 'middle'}}>{ data.msisdn}</td>
                           <td style={{verticalAlign: 'middle', textAlign: 'center'}}>
                           <SplitButton
@@ -129,11 +132,31 @@ class Vendors extends Component {
                             variant={this.userStatusColorHandler(data.userStatusDesc)}
                             title={data.userStatusDesc}
                           >
-                            <Dropdown.Item eventKey="Active" active={ data.userStatusDesc === "Active" } >Active</Dropdown.Item>
-                            <Dropdown.Item eventKey="Inactive"  active={ data.userStatusDesc === "Inactive" } >Inactive</Dropdown.Item>
-                            <Dropdown.Item eventKey="In Review" active={ data.userStatusDesc === "In Review" }  >In Review</Dropdown.Item>
-                            <Dropdown.Item eventKey="Approved"  active={ data.userStatusDesc === "Approved" } >Approved</Dropdown.Item>
-                            <Dropdown.Item eventKey="Suspended" active={ data.userStatusDesc === "Suspended" }  >Suspended</Dropdown.Item>
+                            <Dropdown.Item 
+                            eventKey="Active"  
+                            active={ data.userStatusDesc === "Active" }
+                            onClick={() => this.updateUserState( data.userId, "Active", data.userStatusDesc )}
+                            >Active</Dropdown.Item>
+                            <Dropdown.Item 
+                            eventKey="Inactive"
+                            active={ data.userStatusDesc === "Inactive" }
+                            onClick={() => this.updateUserState( data.userId, "Inactive", data.userStatusDesc )}
+                            >Inactive</Dropdown.Item>
+                            <Dropdown.Item 
+                            eventKey="In Review" 
+                            active={ data.userStatusDesc === "In Review" }
+                            onClick={() => this.updateUserState( data.userId, "In Review", data.userStatusDesc )}
+                            >In Review</Dropdown.Item>
+                            <Dropdown.Item 
+                            eventKey="Approved"  
+                            active={ data.userStatusDesc === "Approved" }
+                            onClick={() => this.updateUserState( data.userId, "Approved", data.userStatusDesc )}
+                            >Approved</Dropdown.Item>
+                            <Dropdown.Item 
+                            eventKey="Suspended" 
+                            active={ data.userStatusDesc === "Suspended" }
+                            onClick={() => this.updateUserState( data.userId, "Suspended", data.userStatusDesc )}
+                            >Suspended</Dropdown.Item>
                           </SplitButton>
                           </td>
                           <td style={{textAlign: 'center'}}>
@@ -207,7 +230,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
       onGetUsersData:(reqPacket) => dispatch( getUsersData(reqPacket) ),
-      onUpdateUserState: (reqPacket)=> dispatch(updateVendorsState(reqPacket))
+      onUpdateUserState: (reqPacket)=> dispatch(updateUserState(reqPacket))
   }
 };
 

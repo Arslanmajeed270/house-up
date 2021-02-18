@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap';
 
 // importing actions
 import { connect } from 'react-redux';
-import * as action from '../../../store/actions/index'
+import * as action from '../../../store/actions'
 
 class UserStatusAction extends Component {
 	constructor(props) {
@@ -182,7 +182,7 @@ class UserStatusAction extends Component {
 const mapDispatchToProps = (dispatch) => {
 	return{
 		onUpdateVendorsStatus: (userData, closeCodelHanlder) =>
-			dispatch(action.updateVendorsState(userData, closeCodelHanlder)),
+			dispatch(action.updateVendorState(userData, closeCodelHanlder)),
 	}
 };
 

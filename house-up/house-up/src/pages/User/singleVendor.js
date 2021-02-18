@@ -362,7 +362,8 @@ class singleVendor extends Component {
 												</p>
 											</div>
 											<div className='col-6 quality'>
-												<p>Busniess start</p>
+												{/* <p>Busniess start</p> */}
+												<p>Since</p>
 											</div>
 											<div className='col-6 detail-info'>
 												<p>
@@ -387,21 +388,21 @@ class singleVendor extends Component {
 													<p>{singleVendorData && singleVendorData.msisdn}</p>
 												)}
 											</div>
-											<div className='col-6 quality'>
+											{/* <div className='col-6 quality'>
 												<p>Account status</p>
 											</div>
 											<div className='col-6 detail-info status-red'>
 												<p>
 													{singleVendorData && singleVendorData.userStatusDesc}
 												</p>
-											</div>
+											</div> */}
 											{singleVendorData &&
 											singleVendorData.packageSubscribed ? (
 												<>
-													<div className='col-md-6'>
+													{/* <div className='col-md-6'>
 														<p>Package</p>
-													</div>
-													<div className='col-md-6'>
+													</div> */}
+													{/* <div className='col-md-6'>
 														<p>
 															{singleVendorData &&
 																singleVendorData.packageSubscribed &&
@@ -410,7 +411,7 @@ class singleVendor extends Component {
 																singleVendorData.packageSubscribed.packageDetail
 																	.packageName}
 														</p>
-													</div>
+													</div> */}
 												</>
 											) : (
 												''

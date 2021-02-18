@@ -15,7 +15,6 @@ export {
 export {
     getUsersData,
     getSingleUserData,
-    updateVendorsState,
     updateUserState
     
 } from './userActions';
@@ -23,6 +22,7 @@ export {
 export {
     getVendorsData,
     getSingleVendorData,
+    updateVendorState,
 } from './vendorActions';
 
 export {

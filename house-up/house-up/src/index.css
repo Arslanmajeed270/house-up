@@ -136,7 +136,7 @@ body {
 }
 
 .vendor-login-name {
-  color: #fff;
+  color: black;
   /* float: right;
   margin-left: 5px !important;
   margin-top: 10px; */
@@ -674,7 +674,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .pxp-nav > li > a {
   font-size: 14px;
   font-family: Condensed, sans-serif;
-  color: #fff;
+  color: black;
 }
 
 .pxp-hero-caption h1 {
@@ -1041,10 +1041,18 @@ h1.titles-property {
 .rightImages img, .leftBigImage img{
   max-width: 100%;
 }
-@media screen and (max-width: 768px){
-  
-}
 @media screen and (max-width: 485px){
   
 }
 
+@media screen and (max-width: 768px){
+  .sliderGif {
+    width: 100%;
+  }
+}
+
+.sliderGif {
+  margin: auto;
+  width: 50%;
+  display: block;
+}
