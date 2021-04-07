@@ -19,6 +19,7 @@ import AddCoupon from './wizards/addCoupon';
 import SelectLocation from './selectLocation/selectLocation';
 import MeetingList from './meetingList';
 
+import Blogs from './Blogs/blogs'
 class Routes extends React.Component {
 	render() {
 		return (
@@ -68,7 +69,7 @@ class Routes extends React.Component {
 						/>
 					)}
 				/>
-				{/* <Route exact path={'/blogs'} component={Blogs} /> */}
+				<Route exact path={'/blogs'} component={Blogs} />
 				<Route exact path={'/about'} component={About} />
 				<Route exact path={'/comming-soon'} component={ComingSoon} />
 				<Route

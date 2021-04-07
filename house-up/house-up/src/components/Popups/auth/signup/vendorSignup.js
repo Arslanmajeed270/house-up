@@ -191,9 +191,7 @@ class vendorSignup extends Component {
 					? userData.keywordsDescribeYourBusiness
 					: this.state.keywordDescriptYourBusiness,
 				countryId: userData ? userData.countryId : this.state.countryId,
-				provinceId: userData ? userData.stateId : this.state.provinceId,
 				websiteLink: userData ? userData.websiteLink : this.state.websiteLink,
-				cityId: userData ? userData.cityId : this.state.cityId,
 				unit: userData ? userData.unit : this.state.unit,
 				businessName: userData
 					? userData.businessName
@@ -290,6 +288,7 @@ class vendorSignup extends Component {
 			this.setState({ [e.target.name]: e.target.value });
 		}
 	};
+
 	updateProfile = (e) => {
 		e.preventDefault();
 		const {
@@ -319,7 +318,8 @@ class vendorSignup extends Component {
 			businessSupportingDocumentExist,
 			profileImageExist,
 		} = this.state;
-		const city = cityId.split(',')[1];
+		console.log(`checking cityId: `, cityId)
+		const city = cityId.split(',')[1] ;
 		const cId = cityId.split(',')[0];
 
 		const province = provinceId.split(',')[1];
@@ -401,6 +401,7 @@ class vendorSignup extends Component {
 			this.props.onUpdateVendor(userData, this.props.history);
 		}
 	};
+
 	onSubmit = (e) => {
 		e.preventDefault();
 		const {

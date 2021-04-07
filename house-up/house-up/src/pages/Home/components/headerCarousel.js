@@ -28,7 +28,6 @@ const responsive = {
 };
 
 export default function HeaderCarousel({ appFeatures }) {
-    console.log('checking appFeatures: ', appFeatures);
     const carouselItems = carouselItemMapper(appFeatures)
     return (
         <div class="sliderImage" style={{position: "relative", top: "60px"}}>

@@ -331,8 +331,8 @@ class index extends Component {
       indexData.vendors.map((data, index) => {
         if (
           data &&
-          data.userStatusDesc === "Active" &&
-          professionalRender.length < 6
+          (data.userStatusDesc === "Active" || data.userStatusDesc === "Approved" ) &&
+          index < 6
         ) {
           professionalRender.push(
             <div key={index} className="suggested-vendors-list">

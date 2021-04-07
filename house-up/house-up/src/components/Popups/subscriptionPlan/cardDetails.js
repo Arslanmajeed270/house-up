@@ -6,8 +6,9 @@ import * as actions from '../../../store/actions/index';
 import * as actionTypes from '../../../store/actions/actionTypes';
 import { Alert } from 'react-bootstrap';
 import Spinner from '../../../components/common/Spinner';
-var jwt = require('jsonwebtoken');
+import InputMask from 'react-input-mask';
 
+var jwt = require('jsonwebtoken');
 class AddCard extends Component {
 	constructor(props) {
 		super(props);
@@ -129,7 +130,23 @@ class AddCard extends Component {
 							)}
 							<div className='row'>
 								<div className='col-md-12' style={{ margin: '15px 0px 0px' }}>
-									<input
+											<InputMask 
+												className={"form-control"} 
+												mask="9999 9999 9999 9999"
+												placeholder='Card Number'
+												name='cardNumber'
+												value={cardNumber}
+												onChange={this.onChange}
+												required
+												>
+												{(inputProps) => 
+												<input 
+												type="text"
+													{...inputProps}
+												/>
+												}
+												</InputMask>
+									{/* <input
 										type='text'
 										className='form-control'
 										placeholder='Card Number'
@@ -139,13 +156,28 @@ class AddCard extends Component {
 										maxLength='16'
 										onChange={this.onChange}
 										required
-									/>
+									/> */}
 								</div>
 								<div
 									className='col-md-6'
 									style={{ margin: '15px 0px', paddingRight: '0px' }}
 								>
-									<input
+								<InputMask 
+									className={"form-control"} 
+									mask="99/99"
+									name='expiryDate'
+									value={expiryDate} 
+									placeholder="Expire Date"
+									onChange={this.onChange}
+									required
+									>
+									{(inputProps) => 
+									<input type="text"
+										{...inputProps}
+									/>
+									}
+								</InputMask>
+									{/* <input
 										type='text'
 										className='form-control'
 										placeholder='Expire Date'
@@ -153,7 +185,7 @@ class AddCard extends Component {
 										value={expiryDate}
 										required
 										onChange={this.onChange}
-									/>
+									/> */}
 								</div>
 								<div className='col-md-6' style={{ margin: '15px 0px' }}>
 									<input
@@ -163,6 +195,8 @@ class AddCard extends Component {
 										name='cvv'
 										value={cvv}
 										required
+										minLength='3'
+										maxLength='3'
 										onChange={this.onChange}
 									/>
 								</div>

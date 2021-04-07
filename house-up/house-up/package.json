@@ -27,6 +27,7 @@
         "react-dom": "^16.13.1",
         "react-dropzone": "^11.2.1",
         "react-image-gallery": "^1.0.8",
+        "react-input-mask": "^2.0.4",
         "react-moment": "^1.0.0",
         "react-otp-input": "^2.2.0",
         "react-owl-carousel": "^2.3.1",

@@ -322,7 +322,9 @@ class Properties extends Component {
 								<img
 									src={require('../../assets/images/ic_search@2x.png')}
 									alt=''
+									onClick={this.applyFilterHandler}
 									className='properties-search-icon'
+									style={{cursor: "pointer"}}
 								/>
 							</div>
 						</div>

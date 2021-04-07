@@ -8,14 +8,12 @@ import * as actions from '../../../../store/actions/authActions';
 import * as actionTypes from '../../../../store/actions/actionTypes';
 
 import { Alert } from 'react-bootstrap';
-import Spinner from '../../../../components/common/Spinner';
 
 class userSignup extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			errors: {},
-			loading: false,
 			profileImage: '',
 			profileImageDefault: '',
 			imagePreview: null,
@@ -81,14 +79,6 @@ class userSignup extends Component {
 
 		if (errors && JSON.stringify(state.errors) !== JSON.stringify(errors)) {
 			changedState.errors = errors;
-			stateChanged = true;
-		}
-
-		if (
-			page &&
-			JSON.stringify(state.loading) !== JSON.stringify(page.loading)
-		) {
-			changedState.loading = page.loading;
 			stateChanged = true;
 		}
 
@@ -221,7 +211,6 @@ class userSignup extends Component {
 			viewPass,
 			viewConfirmPass,
 			errors,
-			loading,
 			imagePreview,
 			firstName,
 			lastName,
@@ -230,13 +219,7 @@ class userSignup extends Component {
 			password,
 			confirmPassword,
 		} = this.state;
-		let pageContent = '';
 
-		if (loading) {
-			pageContent = <Spinner />;
-		} else {
-			pageContent = '';
-		}
 		return (
 			<Modal
 				show={this.props.show}
@@ -401,7 +384,6 @@ class userSignup extends Component {
 								</button>
 							)}
 						</div>
-						{pageContent}
 					</form>
 				</Modal.Body>
 			</Modal>

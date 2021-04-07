@@ -43,7 +43,6 @@ class MarkerInfoWindow extends Component {
 				const index = state.places.findIndex(
 					(e) => parseInt(e.propertId) === parseInt(childProps.place.propertId)
 				);
-				console.log("checking state.places[index].show: ", state.places[index].show);
 				state.places[index].show = true; // !state.places[index].show
 				return { places: state.places };
 			});

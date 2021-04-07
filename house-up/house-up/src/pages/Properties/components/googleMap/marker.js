@@ -59,7 +59,7 @@ const InfoWindow = (props) => {
 const Marker = ({ children }) => children;
 
 // Marker component
-const Marker2 = ({ show, place }) => {
+export const Marker2 = ({ show, place }) => {
   const markerStyle = {
     color: '#333',
     border: '2px solid #333',
@@ -131,7 +131,6 @@ export default function App(props) {
         onChildClick={props.onChildClickCallback}
         yesIWantToUseGoogleMapApiInternals
         onGoogleApiLoaded={({ map }) => {
-          console.log('i am into onGoogleApiLoaded')
           mapRef.current = map;
         }}
         onChange={({ zoom, bounds }) => {

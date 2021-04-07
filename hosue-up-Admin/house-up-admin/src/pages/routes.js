@@ -11,14 +11,14 @@ import Boost from './Dashboard/boost';
 import Charts from './Dashboard/charts';
 import Feature from './Dashboard/feature';
 import Helper from './Dashboard/help';
-import SingleProperty from './Property/singleProperty';
+import SingleProperty2 from './Property/singleProperty';
+import SingleProperty from './Property/singleProperty/singleProperty';
 import Properties from './Property/properties';
-import SingleUser from './Users/singleUser/singleUser';
+import SingleUser2 from './Users/singleUser/singleUserOld';
 import Users from './Users/users';
 import Vendors from './Vendor/vendors';
+import SingleUser from './Users/singleUser/singleUser';
 import SingleVendor from './Vendor/singleVendor/singleVendor';
-import SingleVendor2 from './Vendor/singleVendor/singleVendor2';
-
 
 class routes extends Component {
     render() {
@@ -79,6 +79,11 @@ class routes extends Component {
                     path={"/single-prop-:id"} 
                     component={SingleProperty }
                 />
+                 <Route      
+                    exact 
+                    path={"/single-property2"} 
+                    component={SingleProperty2}
+                />
                 <Route      
                     exact 
                     path={"/single-user-:id"} 
@@ -91,8 +96,8 @@ class routes extends Component {
                 />
                 <Route      
                     exact 
-                    path={"/single-vendor2"} 
-                    component={SingleVendor2}
+                    path={"/single-user2"} 
+                    component={SingleUser2}
                 />
                 <Route      
                     exact 

@@ -424,7 +424,7 @@ class singleVendor extends Component {
 							)}
 							{singleVendorsPropertiesData &&
 							singleVendorsPropertiesData.length ? (
-								<h2 className='pxp-section-h2 mt-100'>
+								<h2 className='pxp-section-h2'>
 									Listings by {singleVendorData && singleVendorData.firstName}{' '}
 									{singleVendorData && singleVendorData.lastName}{' '}
 								</h2>

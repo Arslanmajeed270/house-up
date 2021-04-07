@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
+import InputMask from 'react-input-mask';
 
 var jwt = require('jsonwebtoken');
 
@@ -87,9 +88,10 @@ class form4 extends Component {
 		const jwtSecretKey = process.env.REACT_APP_JWT_SECRET_KEY;
 		const now = new Date();
 		const expTime = Math.round(now.getTime() / 1000) + 2000;
+		const cardNum = cardNumber.replace(" ","");
 		var token = jwt.sign(
 			{
-				cardNumber: cardNumber,
+				cardNumber: cardNum,
 				expiryDate: expiryDate,
 				cvv: cvv,
 				exp: expTime,
@@ -164,7 +166,6 @@ class form4 extends Component {
 			expiryDate,
 			cvv,
 		} = this.state;
-
 		return (
 			<div
 				className='add-property-conatiner'
@@ -339,23 +340,43 @@ class form4 extends Component {
 												className='col-md-12'
 												style={{ margin: '15px 0px 0px' }}
 											>
-												<input
-													type='text'
-													className='form-control'
-													placeholder='Card Number'
-													name='cardNumber'
-													value={cardNumber}
-													minLength='16'
-													maxLength='16'
-													onChange={this.onChangeHandler}
-													required
+												<InputMask 
+												className={"form-control"} 
+												mask="9999 9999 9999 9999"
+												placeholder='Card Number'
+												name='cardNumber'
+												value={cardNumber}
+												onChange={this.onChangeHandler}
+												required
+												>
+												{(inputProps) => 
+												<input 
+												type="text"
+													{...inputProps}
 												/>
+												}
+												</InputMask>
 											</div>
 											<div
 												className='col-md-6'
 												style={{ margin: '15px 0px', paddingRight: '0px' }}
 											>
-												<input
+												<InputMask 
+												className={"form-control"} 
+												mask="99/99"
+												name='expiryDate'
+												value={expiryDate} 
+												placeholder="Expire Date"
+												onChange={this.onChangeHandler}
+												required
+												>
+												{(inputProps) => 
+												<input type="text"
+													{...inputProps}
+												/>
+												}
+												</InputMask>
+												{/* <input
 													type='text'
 													className='form-control'
 													placeholder='Expire Date'
@@ -363,7 +384,7 @@ class form4 extends Component {
 													value={expiryDate}
 													required
 													onChange={this.onChangeHandler}
-												/>
+												/> */}
 											</div>
 											<div className='col-md-6' style={{ margin: '15px 0px' }}>
 												<input
@@ -372,6 +393,8 @@ class form4 extends Component {
 													placeholder='CVV'
 													name='cvv'
 													value={cvv}
+													minLength='3'
+													maxLength='3'
 													required
 													onChange={this.onChangeHandler}
 												/>

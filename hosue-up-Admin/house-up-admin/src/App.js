@@ -7,7 +7,15 @@ import PublicRoute from './components/common/PublicRoute';
 import { setCurrentUser, logoutUser } from './store/actions/index';
 
 import Index from "./pages";
-import LogIn from './components/Auth/Login/content'
+import LogIn from './components/Auth/Login/content';
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onSetCurrentUser: () => dispatch(setCurrentUser()),
+        onLogoutUser: () => dispatch(logoutUser())
+    };
+};
 
 class App extends Component {
     state = {
@@ -26,9 +34,10 @@ class App extends Component {
             '/helper',
             '/properties',
             '/single-prop-:id',
+            '/single-property2',
             '/single-user-:id',
             '/single-vendor-:id',
-            '/single-vendor2',
+            '/single-user2',
             '/users',
             '/Vendors',
         ]
@@ -51,7 +60,7 @@ class App extends Component {
                         component={LogIn}
                     />) )
                 }
-                 {
+                {
                     privateRoutes.map( (route, idx) => (<PrivateRoute      
                         exact 
                         key={idx}
@@ -60,17 +69,9 @@ class App extends Component {
                     />) )
                 }
                 <Redirect to='/' />
-            </Switch>   
-  )
-                }
+            </Switch>
+        )
+    }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-      onSetCurrentUser: () => dispatch(setCurrentUser()),
-      onLogoutUser: () => dispatch(logoutUser())
-    };
-  };
-  
-  
-  export default withRouter(connect(null,mapDispatchToProps)(App));
+export default withRouter(connect(null,mapDispatchToProps)(App));

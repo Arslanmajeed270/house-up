@@ -5,6 +5,7 @@ import { Table, Button, Pagination, SplitButton, Dropdown } from 'react-bootstra
 import { getUsersData, updateUserState } from '../../store/actions/index';
 import Footer from '../../components/footer';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 class Vendors extends Component {
     
@@ -111,6 +112,8 @@ class Vendors extends Component {
                       <thead>
                         <tr>
                           <th>Id</th>
+                          <th></th>
+                          <th></th>
                           <th>Full Name</th>
                           <th>Email Address</th>
                           <th>Mobile</th>
@@ -122,6 +125,8 @@ class Vendors extends Component {
                       {  usersData && usersData.users && usersData.users.length ? usersData.users.map( (data, index) => (
                           <tr key={index} >
                           <td style={{verticalAlign: 'middle'}}>{data.userId}</td>
+                          <td style={{verticalAlign: 'middle', width: "70px", fontSize: "15px"}}>{ moment(data.createDate).format('DD MMM YYYY')}</td>
+                          <td style={{verticalAlign: 'middle'}}><img width="28" height="28" src={data.profilePictureUrl} alt="" /></td>
                           <td style={{verticalAlign: 'middle'}}> <Link to={`single-user-${data.userId}`}> { data.firstName + " " + data.lastName }</Link></td>
                           <td style={{verticalAlign: 'middle'}}>{data.emailAddress}</td>
                           <td style={{verticalAlign: 'middle'}}>{ data.msisdn}</td>

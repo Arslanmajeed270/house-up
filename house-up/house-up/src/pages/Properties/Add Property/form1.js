@@ -10,8 +10,7 @@ import PlacesAutocomplete, {
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import cloneDeep from 'lodash/cloneDeep';
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+import { Marker } from '../components/googleMap/singleMarker'
 
 class form1 extends Component {
 	constructor() {
@@ -21,8 +20,8 @@ class form1 extends Component {
 			address: '',
 			images: [],
 			previewImages: [],
-			latitude: 32.57698,
-			longitude: 78.68576,
+			latitude: 49.288219,
+			longitude: -123.115723,
 			googleMapKey:
 				process.env.REACT_APP_GOOGLE_MAP_KEY,
 			propertyPlanState: false,
@@ -42,6 +41,7 @@ class form1 extends Component {
 	};
 
 	searchCity = (address, cities) => {
+
 		for (let i = 0; i < cities.length; i++) {
 			if (cities[i].name === address) {
 				return cities[i];
@@ -68,7 +68,13 @@ class form1 extends Component {
 
 		geocodeByAddress(address)
 			.then((results) => getLatLng(results[0]))
-			.then((latLng) => console.log('Success', latLng))
+			.then((latLng) => {
+				this.setState({
+					latitude: latLng.lat,
+					longitude: latLng.lng 
+				})
+				console.log('Success', latLng)
+			})
 			.catch((error) => console.error('Error', error));
 	};
 
@@ -112,8 +118,8 @@ class form1 extends Component {
 		const { form1Data } = this.props;
 		this.setState({
 			address: form1Data.address ? form1Data.address : '',
-			longitude: form1Data.longitude ? form1Data.longitude : 78.68576,
-			latitude: form1Data.latitude ? form1Data.latitude : 32.57698,
+			longitude: form1Data.longitude ? form1Data.longitude : -123.115723,
+			latitude: form1Data.latitude ? form1Data.latitude : 49.288219,
 			state: form1Data.state ? form1Data.state : '',
 			city: form1Data.city ? form1Data.city : '',
 			image: form1Data ? form1Data.image : '',
@@ -240,7 +246,8 @@ class form1 extends Component {
 		this.imagesHandler(this.state.previewImages);
 	};
 	render() {
-		const { googleMapKey, previewImages } = this.state;
+		const { googleMapKey, previewImages, latitude, longitude } = this.state;
+		console.log(`this.state: `, this.state)
 		return (
 			<React.Fragment>
 				<form onSubmit={this.onSubmit}>
@@ -352,14 +359,22 @@ class form1 extends Component {
 							>
 								<GoogleMapReact
 									bootstrapURLKeys={{ key: googleMapKey }}
-									defaultCenter={this.props.center}
+									defaultCenter={{
+										lat: latitude,
+										lng: longitude
+									}}
+									center={
+										{
+											lat: latitude,
+											lng: longitude
+										}
+									}
 									defaultZoom={this.props.zoom}
 								>
-									<AnyReactComponent
-										lat={59.955413}
-										lng={30.337844}
-										text='My Marker'
-									/>
+									<Marker
+									  lat={latitude}
+									  lng={longitude}
+									  />
 								</GoogleMapReact>
 							</div>
 						</div>
